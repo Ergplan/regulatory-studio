@@ -14,7 +14,7 @@ export function GET() {
     `- [All orders as JSON](${SITE_URL}/api/v1/orders.json)`,
     `- [Regulation clauses as JSON](${SITE_URL}/api/v1/clauses.json)`,
     `- [Every order-to-provision link as JSON](${SITE_URL}/api/v1/links.json)`,
-    `- [RSS feed](${SITE_URL}/feed.xml)`,
+    `- [RSS feed, all orders](${SITE_URL}/feed.xml); per commission at /feeds/<commission>.xml, per topic at /feeds/topic-<topic>.xml`,
     "",
     "## Coverage",
     ...Object.entries(site.commissions).map(([k, v]) => `- [${v}](${SITE_URL}/commissions/${k})`),

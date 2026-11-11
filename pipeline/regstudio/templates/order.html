@@ -17,6 +17,7 @@
 <div class="para" id="para"><span class="muted">Click a link's paragraph id to see the passage it rests on.</span></div></div>
 <div class="side">
 <div class="card"><form method="post" action="/order/{{ d.id }}/summary">
+<label>Title on the website (plain English, e.g. "NPCL's 300 MW round-the-clock RE tender approved")</label><input name="title" value="{{ d.title or '' }}" maxlength="200">
 <label>Issue</label><textarea name="issue" style="min-height:50px">{{ o.issue or '' }}</textarea>
 <label>Outcome</label><textarea name="outcome" style="min-height:50px">{{ o.outcome or '' }}</textarea>
 <label>Summary (published as written)</label><textarea name="summary" style="min-height:180px">{{ o.summary or '' }}</textarea>

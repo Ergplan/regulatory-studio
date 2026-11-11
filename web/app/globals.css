@@ -65,7 +65,7 @@ dl.facts dd { margin: 0; }
 .subscribe label[for] { font-weight: 600; display: block; margin-bottom: 6px; }
 .subscribe .row { display: flex; gap: 8px; flex-wrap: wrap; }
 .subscribe .row.wrap { margin-top: 8px; }
-.subscribe input[type=email] { flex: 1; min-width: 200px; font: inherit; padding: 9px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); }
+.subscribe input[type=email], .subscribe input[type=search] { flex: 1; min-width: 200px; font: inherit; padding: 9px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); }
 .subscribe button { font: inherit; padding: 9px 18px; border: 0; border-radius: 8px; background: var(--accent); color: #fff; cursor: pointer; }
 .subscribe .check { font-size: 14px; margin-right: 10px; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }

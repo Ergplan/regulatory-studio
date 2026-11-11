@@ -23,7 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Link href="/" className="brand">Regulatory Studio<small>incubated by jouleWise</small></Link>
           <nav className="nav" aria-label="Main">
             <Link href="/orders">Orders</Link><Link href="/regulations">Regulations</Link>
-            <Link href="/digest">Weekly digest</Link><Link href="/about">About</Link>
+            <Link href="/digest">Weekly digest</Link><Link href="/search">Search</Link><Link href="/about">About</Link>
           </nav>
         </div></header>
         <main><div className="wrap">{children}</div></main>

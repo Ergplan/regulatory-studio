@@ -100,13 +100,16 @@ def order(request: Request, doc_id: str):
 
 @app.post("/order/{doc_id}/summary")
 def save_summary(request: Request, doc_id: str, action: str = Form(...), summary: str = Form(""),
-                 issue: str = Form(""), outcome: str = Form(""), topics: list[str] = Form([])):
+                 issue: str = Form(""), outcome: str = Form(""), topics: list[str] = Form([]),
+                 title: str = Form("")):
     name = need_reviewer(request)
     topics = [t for t in topics if t in config.TOPICS]
     with db.session() as conn:
         prev = conn.execute("SELECT summary_status FROM orders WHERE doc_id = ?", (doc_id,)).fetchone()
         if not prev:
             raise HTTPException(404)
+        if title.strip():
+            conn.execute("UPDATE documents SET title = ? WHERE id = ?", (title.strip()[:200], doc_id))
         if action == "approve":
             if not summary.strip():
                 raise HTTPException(400, "Summary is empty.")

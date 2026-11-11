@@ -121,3 +121,10 @@ def test_every_approval_is_audited(server):
     server(f"/order/{doc}/summary", {"action": "approve", "summary": "Reviewed summary.", "issue": "i", "outcome": "o"})
     rows = _db().execute("SELECT actor, action FROM audit WHERE action LIKE 'summary.%'").fetchall()
     assert [(r["actor"], r["action"]) for r in rows] == [("Test Reviewer", "summary.approve")]
+
+
+def test_reviewer_sets_the_public_title(server):
+    doc, _, _ = _ids()
+    server("/whoami", {"name": "Test Reviewer"})
+    server(f"/order/{doc}/summary", {"action": "save", "summary": "s", "title": "Plain-English title"})
+    assert _db().execute("SELECT title FROM documents WHERE id = ?", (doc,)).fetchone()[0] == "Plain-English title"
