@@ -192,3 +192,15 @@ def test_suggestion_understands_common_abbreviations(env):
                      ("rerc/geoa-2025/7", "rerc/geoa-2025"))
         assert registry.suggest_target(conn, "Regulation 7 of the GEOA Regulations, 2025", "rerc") == "clause::rerc/geoa-2025/7"
         assert registry.suggest_target(conn, "Regulation 7 of the GEOA Regulations, 2025", "gerc") is None
+
+
+def test_queue_flags_long_listing_titles(server):
+    from fastapi.testclient import TestClient
+    from regstudio import db
+    from regstudio.review_app import app
+    with db.session() as conn:
+        conn.execute("UPDATE documents SET title = ?, case_number = 'Petition No. 2416/2026' WHERE doc_type = 'order'",
+                     ("M/s Sample Ltd: Petition filed under Section 142 of the Electricity Act 2003 for contravention of "
+                      "directions in the Green Energy Open Access Regulations with respect to contract demand",))
+    page = TestClient(app).get("/").text
+    assert "Petition No. 2416/2026" in page and "needs a short title" in page

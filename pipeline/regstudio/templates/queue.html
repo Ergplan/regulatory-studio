@@ -9,7 +9,8 @@
 <table><tr><th>Commission</th><th>Order</th><th>Date</th><th>Significance</th><th>Open links</th><th>Summary</th></tr>
 {% for o in orders %}<tr>
 <td>{{ o.commission|upper }}</td>
-<td><a href="/order/{{ o.id }}">{{ o.title or o.case_number or o.id[:12] }}</a>
+<td><a href="/order/{{ o.id }}">{{ o.case_number or (o.title or o.id[:12])|truncate(110) }}</a>
+{% if o.title and o.case_number %}<div class="muted small">{{ o.title|truncate(140) }}{% if o.title|length > 120 %} <span class="pill">needs a short title</span>{% endif %}</div>{% endif %}
 {% if o.ocr %} <span class="pill proposed">OCR</span>{% endif %}{% if o.language == 'hi' %} <span class="pill">Hindi</span>{% endif %}</td>
 <td>{{ o.doc_date or '' }}</td><td>{{ o.significance }}</td><td>{{ o.open_links }}</td>
 <td><span class="pill {{ o.summary_status }}">{{ o.summary_status }}</span></td></tr>
