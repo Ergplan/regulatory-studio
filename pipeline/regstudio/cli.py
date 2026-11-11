@@ -56,7 +56,15 @@ def status() -> dict:
         }
         errors = [dict(r) for r in conn.execute(
             "SELECT id, commission, title, error FROM documents WHERE stage = 'error' LIMIT 20")]
-    return {"stages": stages, "review": review, "errors": errors}
+    out = {"stages": stages, "review": review, "errors": errors}
+    last = config.STORE / "download_last.json"
+    if last.exists():
+        d = json.loads(last.read_text())
+        out["last_download"] = {"at": d.get("at"), **{
+            k: {"newest": v.get("newest"), "downloaded": v.get("downloaded", 0),
+                **({"problems": v.get("errors", []) + v.get("warnings", [])} if v.get("errors") or v.get("warnings") else {})}
+            for k, v in d.get("sites", {}).items()}}
+    return out
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -94,7 +102,13 @@ def main(argv: list[str] | None = None) -> None:
         import datetime as dt
         from . import download
         since = dt.date.fromisoformat(args.since) if args.since else None
-        print(json.dumps(download.run(args.commission, since, args.limit, args.dry_run), indent=2, ensure_ascii=False))
+        report = download.run(args.commission, since, args.limit, args.dry_run)
+        if not args.dry_run:
+            last = config.STORE / "download_last.json"
+            prev = json.loads(last.read_text()).get("sites", {}) if last.exists() else {}
+            last.write_text(json.dumps({"at": dt.datetime.now().isoformat(timespec="minutes"),
+                                        "sites": {**prev, **report}}, indent=1, ensure_ascii=False))
+        print(json.dumps(report, indent=2, ensure_ascii=False))
     elif args.cmd == "check-inbox":
         from . import intake
         report = intake.check()

@@ -26,3 +26,4 @@ no downloads from commission sites, nothing deleted on the Mac.
 - Parser tests on trimmed extracts of the live listing pages (24 tests pass).
 - `ops/weeknight.sh` now downloads, checks the inbox, then runs the pipeline.
 - 11 Nov, 17:50 UTC check-in: download report now shows orders on each page, newest date, and warns when a page yields no orders (layout change) or undated rows. Vercel deploys of today's commits all READY. 26 tests pass.
+- 11 Nov, 19:50 UTC check-in: each real download saves its report (data/store/download_last.json); `regstudio status` and the review queue's new "Commission websites" table show newest order per site and any problems. 28 tests pass.

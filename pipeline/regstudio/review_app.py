@@ -106,7 +106,18 @@ def queue(request: Request):
         errors = conn.execute("SELECT id, commission, title, error FROM documents WHERE stage = 'error'").fetchall()
     return templates.TemplateResponse(request, "queue.html", {
         "reviewer": reviewer(request), "orders": orders, "regs": regs, "digests": digests, "amendments": amendments,
-        "listed": listed, "errors": errors})
+        "listed": listed, "errors": errors, "sources": _download_health()})
+
+
+def _download_health() -> dict | None:
+    """Last `regstudio download` result per commission, so the team can see a site that went quiet."""
+    f = config.STORE / "download_last.json"
+    if not f.exists():
+        return None
+    try:
+        return json.loads(f.read_text())
+    except ValueError:
+        return None
 
 
 @app.post("/whoami")

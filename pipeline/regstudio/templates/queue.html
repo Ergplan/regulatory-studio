@@ -27,6 +27,11 @@
 {% for d in digests %}<tr><td><a href="/digest/{{ d.id }}">{{ d.id }}</a></td><td>{{ d.from_date }} to {{ d.to_date }}</td>
 <td><span class="pill {{ d.status }}">{{ d.status }}</span></td></tr>
 {% else %}<tr><td colspan="3" class="muted">No digest drafted yet.</td></tr>{% endfor %}</table>
+{% if sources %}<h2>Commission websites</h2>
+<p class="muted">Last download {{ sources.at }}. MERC is added by hand (its site asks automated tools to stay out); APTEL by hand.</p>
+<table><tr><th>Commission</th><th>Newest order on site</th><th>Fetched</th><th>Problems</th></tr>
+{% for k, v in sources.sites.items() %}<tr><td>{{ k|upper }}</td><td>{{ v.newest or '' }}</td><td>{{ v.downloaded }}</td>
+<td>{% for p in (v.errors or []) + (v.warnings or []) %}<div>{{ p }}</div>{% else %}<span class="muted">none</span>{% endfor %}</td></tr>{% endfor %}</table>{% endif %}
 {% if errors %}<h2>Needs attention</h2><table><tr><th>Commission</th><th>Document</th><th>Problem</th></tr>
 {% for e in errors %}<tr><td>{{ e.commission|upper }}</td><td>{{ e.title or e.id[:12] }}</td><td>{{ e.error }}</td></tr>{% endfor %}</table>{% endif %}
 {% endblock %}

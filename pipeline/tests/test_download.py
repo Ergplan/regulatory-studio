@@ -86,3 +86,14 @@ def test_run_reports_layout_changes(env, monkeypatch):
     assert "no date" in out["cerc"]["warnings"][0]
     assert "layout may have changed" in out["kerc"]["warnings"][0]
     assert dl.run(since=__import__("datetime").date(2026, 11, 1))["cerc"]["new"] == 0  # remembered
+
+
+def test_status_shows_last_download(env, monkeypatch):
+    import regstudio.download as dl
+    from regstudio import cli, db
+    db.init()
+    monkeypatch.setattr(dl, "ADAPTERS", {"kerc": lambda c: []})
+    monkeypatch.setattr(dl, "Client", lambda: None)
+    cli.main(["download"])
+    last = cli.status()["last_download"]
+    assert last["at"] and "layout may have changed" in last["kerc"]["problems"][0]

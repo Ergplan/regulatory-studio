@@ -158,3 +158,13 @@ def test_amendment_page_and_history_publish(server):
     clauses = {x["number"]: x for x in json.loads((config.SNAPSHOT / "clauses.json").read_text())}
     assert len(clauses["8(3)"]["versions"]) == 1 and clauses["8(3)"]["in_force_from"] == "2026-12-01"
     assert clauses["9(2)"]["in_force_to"] == "2026-11-30"
+
+
+def test_queue_shows_commission_website_health(server):
+    (config.STORE / "download_last.json").write_text(json.dumps({"at": "2026-11-11T22:00", "sites": {
+        "kerc": {"newest": "2026-08-31", "downloaded": 0, "errors": [],
+                 "warnings": ["no orders recognised on the listing page; the site layout may have changed"]}}}))
+    from regstudio.review_app import app
+    from fastapi.testclient import TestClient
+    page = TestClient(app).get("/").text
+    assert "Commission websites" in page and "2026-08-31" in page and "layout may have changed" in page
