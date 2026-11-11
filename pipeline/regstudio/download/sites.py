@@ -105,9 +105,9 @@ def parse_rerc(page: str) -> tuple[dict, list[Item]]:
     fields = {k: htmllib.unescape(v) for k, v in
               re.findall(r'<input type="hidden" name="(__[A-Z]+)" id="__[A-Z]+" value="([^"]*)"', page)}
     items = []
-    for row in re.findall(r'<tr class="tabrow">(.*?)</tr>', page, re.S):
+    for row in re.findall(r'<tr class="tabrow(?:alt)?">(.*?)</tr>', page, re.S):  # rows alternate classes
         cells = _cells(row)
-        target = re.search(r"__doPostBack\(&#39;([^&]+LinkButton2)&#39;", row)
+        target = re.search(r"__doPostBack\(&#39;([^&]+LinkButton[12])&#39;", row)
         if len(cells) < 5 or not target:
             continue
         petition, party, subject, date = (_text(c) for c in cells[1:5])
@@ -128,6 +128,38 @@ def _rerc_fetch(target: str):
 
 def rerc(client) -> list[Item]:
     _, items = parse_rerc(client.get(RERC_URL).decode("utf-8", "ignore"))
+    return items
+
+
+RERC_REGS_URL = "https://rerc.rajasthan.gov.in/rerc-user-files/regulations"
+
+
+def parse_rerc_regulations(page: str) -> tuple[dict, list[Item]]:
+    """RERC's regulations list: S.No, notification no., date, title; PDF via the same postback."""
+    fields = {k: htmllib.unescape(v) for k, v in
+              re.findall(r'<input type="hidden" name="(__[A-Z]+)" id="__[A-Z]+" value="([^"]*)"', page)}
+    items = []
+    for row in re.findall(r'<tr class="tabrow(?:alt)?">(.*?)</tr>', page, re.S):
+        cells = _cells(row)
+        target = re.search(r"__doPostBack\(&#39;([^&]+LinkButton[12])&#39;", row)
+        if len(cells) < 5 or not target:
+            continue
+        notification, date, title = (_text(c) for c in cells[1:4])
+        kind = "amendment" if re.search(r"\bamendment\b", title, re.I) else "regulation"
+        items.append(Item("rerc", title, RERC_REGS_URL, _date(date), None, doc_type=kind,
+                          key=f"rerc-reg:{notification}:{date}", fetch=_rerc_regs_fetch(target.group(1))))
+    return fields, items
+
+
+def _rerc_regs_fetch(target: str):
+    def fetch(client):
+        fields, _ = parse_rerc_regulations(client.get(RERC_REGS_URL).decode("utf-8", "ignore"))
+        return client.post(RERC_REGS_URL, {**fields, "__EVENTTARGET": target, "__EVENTARGUMENT": ""})
+    return fetch
+
+
+def rerc_regulations(client) -> list[Item]:
+    _, items = parse_rerc_regulations(client.get(RERC_REGS_URL).decode("utf-8", "ignore"))
     return items
 
 

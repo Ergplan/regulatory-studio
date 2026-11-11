@@ -27,9 +27,9 @@ def test_uperc():
 
 def test_rerc_uses_postback_with_unique_keys():
     fields, items = sites.parse_rerc(read("rerc.html"))
-    assert "__VIEWSTATE" in fields and len(items) == 2
+    assert "__VIEWSTATE" in fields and len(items) == 3
     assert items[0].case_number == "Petition No. 2416/2026" and items[0].doc_date == "2026-11-04"
-    assert len({i.key for i in items}) == 2 and all(i.key.startswith("rerc:") for i in items)
+    assert len({i.key for i in items}) == 3 and all(i.key.startswith("rerc:") for i in items)
 
 
 def test_merc():
@@ -97,3 +97,36 @@ def test_status_shows_last_download(env, monkeypatch):
     cli.main(["download"])
     last = cli.status()["last_download"]
     assert last["at"] and "layout may have changed" in last["kerc"]["problems"][0]
+
+
+def test_fetch_one_writes_inbox_contract(env):
+    import json as _j
+    from regstudio import intake
+    from regstudio.download import fetch_one
+
+    class Fake:
+        def get(self, url):
+            return b"%PDF-1.4 regulation"
+    out = fetch_one("https://example.invalid/geoa-2025.pdf", "rerc", "regulation", "2025-03-10",
+                    "RERC (Terms and Conditions for Green Energy Open Access) Regulations, 2025", client=Fake())
+    meta = _j.loads(Path(out["saved"]).with_suffix(".json").read_text())
+    assert meta["doc_type"] == "regulation" and meta["doc_date"] == "2025-03-10"
+    assert not [p for p in intake.check()["problems"] if "geoa" in p["file"].lower()]
+
+    class Html:
+        def get(self, url):
+            return b"<html>error</html>"
+    import pytest as _p
+    with _p.raises(SystemExit):
+        fetch_one("https://example.invalid/x.pdf", "aptel", "judgment", client=Html())
+
+
+def test_rerc_alternate_rows_and_regulations():
+    _, orders = sites.parse_rerc(read("rerc.html"))
+    assert len(orders) == 3  # rows alternate between "tabrow" and "tabrowalt"
+    fields, regs = sites.parse_rerc_regulations(read("rerc_regulations.html"))
+    assert "__VIEWSTATE" in fields
+    geoa = next(i for i in regs if "Green Energy Open Access" in i.title)
+    assert geoa.doc_date == "2025-07-17" and geoa.doc_type == "regulation" and geoa.key == "rerc-reg:158:17/07/2025"
+    amend = next(i for i in regs if "Amendment" in i.title)
+    assert amend.doc_type == "amendment"

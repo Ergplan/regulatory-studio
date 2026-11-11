@@ -16,7 +16,7 @@ import datetime as dt
 
 from . import sites
 from .http import Client
-from .inbox import Seen, write_item
+from .inbox import Item, Seen, write_item
 
 ADAPTERS = {
     "cerc": sites.cerc,
@@ -25,11 +25,12 @@ ADAPTERS = {
     "merc": sites.merc,
     "gerc": sites.gerc,
     "kerc": sites.kerc,
+    "rerc-regs": sites.rerc_regulations,  # new RERC regulations and amendments
 }
 
 
 def run(commissions: list[str] | None = None, since: dt.date | None = None, limit: int | None = None,
-        dry_run: bool = False) -> dict:
+        dry_run: bool = False, match: str | None = None) -> dict:
     since = since or (dt.date.today() - dt.timedelta(days=14))
     client, seen = Client(), Seen()
     report: dict = {}
@@ -49,7 +50,8 @@ def run(commissions: list[str] | None = None, since: dt.date | None = None, limi
             out["warnings"].append("no orders recognised on the listing page; the site layout may have changed")
         elif len(dated) < len(everything):
             out["warnings"].append(f"{len(everything) - len(dated)} listed orders have no date and were left out")
-        items = [i for i in everything if i.doc_date and i.doc_date >= since.isoformat()]
+        items = [i for i in everything if i.doc_date and i.doc_date >= since.isoformat()
+                 and (not match or match.lower() in i.title.lower())]
         out["listed"] = len(items)
         fresh = [i for i in items if not seen.has(i.key)]
         out["new"] = len(fresh)
@@ -69,3 +71,21 @@ def run(commissions: list[str] | None = None, since: dt.date | None = None, limi
         seen.save()
         report[name] = out
     return report
+
+
+def fetch_one(url: str, commission: str, doc_type: str, date: str | None = None, title: str | None = None,
+              case: str | None = None, client=None) -> dict:
+    """Fetch a single document chosen by a person (APTEL judgments, MERC orders, regulations).
+
+    Uses the same polite client as the listings (robots.txt, pause, TLS chain repair) and the same
+    inbox writer, so the file and its metadata follow the inbox contract."""
+    import datetime as _dt
+    if date:
+        _dt.date.fromisoformat(date)  # refuse a malformed date rather than store it
+    client = client or Client()
+    data = client.get(url)
+    if not data.startswith(b"%PDF"):
+        raise SystemExit(f"not a PDF (the site may have returned an error page): {url}")
+    item = Item(commission, title or url.rsplit("/", 1)[-1], url, date, case, doc_type=doc_type)
+    path, sha = write_item(item, data)
+    return {"saved": path, "sha256": sha, "kb": len(data) // 1024}

@@ -85,6 +85,8 @@ OCR'd orders are flagged in the review queue for a closer check.
 regstudio download --dry-run                    # list what would be fetched (last 14 days)
 regstudio download --since 2026-10-01 --limit 20
 regstudio download --commission gerc --commission kerc
+regstudio download --commission rerc-regs --since 2025-07-01 --match "Green Energy Open Access"
+regstudio fetch https://example/judgment.pdf aptel judgment --date 2026-11-05 --case "Appeal No. 301 of 2026"
 ```
 
 | Commission | Source | Notes |
@@ -92,10 +94,11 @@ regstudio download --commission gerc --commission kerc
 | CERC | recent_orders.html | table of petitions |
 | UPERC | Order_Users.aspx | "Order dated ..." links |
 | RERC | office-orders page | PDFs come back through a form postback |
-| MERC | site's order data feed (JSON) | **Skipped:** merc.gov.in's robots.txt asks all automated clients to stay out, and the script obeys. Pick MERC orders by hand on the site and add each with `ops/fetch_one.py <url>`, or ask MERC to allow the feed |
+| MERC | site's order data feed (JSON) | **Skipped:** merc.gov.in's robots.txt asks all automated clients to stay out, and the script obeys. Pick MERC orders by hand on the site and add each with `regstudio fetch <url> merc order --date ... --case ...`, or ask MERC to allow the feed |
 | GERC | judgement orders + RE orders, paged | |
 | KERC | miscellaneous, generic tariff and tariff order pages | |
-| APTEL | no listing the script can read | add with `ops/fetch_one.py <url>` |
+| RERC regulations (`rerc-regs`) | regulations page | new regulations and amendments; `--match` picks one by title |
+| APTEL | no listing the script can read | add with `regstudio fetch <url> aptel judgment --date ... --case ...` |
 
 Each file lands in `data/inbox/<commission>/<today>/` with its metadata JSON. Already-fetched
 items are remembered in `data/store/download_seen.json`. Some state sites send an incomplete

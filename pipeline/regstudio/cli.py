@@ -74,11 +74,19 @@ def main(argv: list[str] | None = None) -> None:
     sub.add_parser("status", help="documents per stage and the review queue")
     sub.add_parser("check-inbox", help="dry run: list problems in data/inbox without registering anything")
     dl = sub.add_parser("download", help="fetch new orders from commission websites into data/inbox")
-    dl.add_argument("--commission", action="append", choices=["cerc", "uperc", "rerc", "merc", "gerc", "kerc"],
+    dl.add_argument("--commission", action="append", choices=["cerc", "uperc", "rerc", "merc", "gerc", "kerc", "rerc-regs"],
                     help="repeat to pick several; default all")
     dl.add_argument("--since", default=None, help="YYYY-MM-DD; default 14 days ago")
     dl.add_argument("--limit", type=int, default=None, help="max new documents per commission")
     dl.add_argument("--dry-run", action="store_true", help="list what would be downloaded")
+    dl.add_argument("--match", help="only items whose title contains this text, e.g. 'Green Energy Open Access'")
+    fe = sub.add_parser("fetch", help="fetch one document by its address (APTEL, MERC, a regulation) into data/inbox")
+    fe.add_argument("url")
+    fe.add_argument("commission", choices=sorted(config.COMMISSIONS))
+    fe.add_argument("doc_type", choices=["order", "judgment", "regulation", "amendment"])
+    fe.add_argument("--date", help="YYYY-MM-DD as printed on the document")
+    fe.add_argument("--title")
+    fe.add_argument("--case", help="case or petition number as written")
     r = sub.add_parser("run", help="run one or more stages in order")
     r.add_argument("stages", nargs="+", choices=STAGES)
     r.add_argument("--limit", type=int, default=None, help="max documents per stage this run")
@@ -98,11 +106,15 @@ def main(argv: list[str] | None = None) -> None:
     if args.cmd == "init":
         db.init()
         print(f"working database ready at {config.DB_PATH}")
+    elif args.cmd == "fetch":
+        from .download import fetch_one
+        print(json.dumps(fetch_one(args.url, args.commission, args.doc_type, args.date, args.title, args.case),
+                         indent=2, ensure_ascii=False))
     elif args.cmd == "download":
         import datetime as dt
         from . import download
         since = dt.date.fromisoformat(args.since) if args.since else None
-        report = download.run(args.commission, since, args.limit, args.dry_run)
+        report = download.run(args.commission, since, args.limit, args.dry_run, args.match)
         if not args.dry_run:
             last = config.STORE / "download_last.json"
             prev = json.loads(last.read_text()).get("sites", {}) if last.exists() else {}
