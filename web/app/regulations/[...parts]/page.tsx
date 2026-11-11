@@ -53,7 +53,18 @@ export default async function RegulationPage({ params }: { params: Promise<Param
         <div className="meta"><span className="tag">{reg.commission.toUpperCase()}</span><Link href={reg.path}>{reg.title}</Link></div>
         <h1>Regulation {clause.number}{clause.heading ? `: ${clause.heading}` : ""}</h1>
         <blockquote className="card summary">{clause.text || <span className="muted">Heading only; see sub-clauses.</span>}</blockquote>
-        <p className="muted small">In force {clause.in_force_from ? "from " + fmtDate(clause.in_force_from) : ""}{clause.in_force_to ? " to " + fmtDate(clause.in_force_to) : ""}.</p>
+        {clause.in_force_to
+          ? <p className="bad small">No longer in force: omitted with effect from the day after {fmtDate(clause.in_force_to)}.</p>
+          : <p className="muted small">In force{clause.in_force_from ? " from " + fmtDate(clause.in_force_from) : ""}.</p>}
+        {clause.versions && clause.versions.length > 0 && (
+          <details className="card"><summary>Earlier wording ({clause.versions.length})</summary>
+            {clause.versions.map((v, i) => (
+              <div key={i} style={{ marginTop: 12 }}>
+                <div className="small muted">In force {v.in_force_from ? "from " + fmtDate(v.in_force_from) + " " : ""}to {fmtDate(v.in_force_to)}</div>
+                <blockquote className="summary" style={{ margin: "4px 0 0" }}>{v.text}</blockquote>
+              </div>))}
+            <p className="small muted">Orders passed while earlier wording was in force applied that wording.</p>
+          </details>)}
         <h2>How orders have used this clause</h2>
         {citing.length ? <>
           <SpiderMap center={{ label: `Regulation ${clause.number}`, sub: `${reg.commission.toUpperCase()} · ${regName(reg)}` }} nodes={nodes} typeLabels={site.link_types}
@@ -73,7 +84,7 @@ export default async function RegulationPage({ params }: { params: Promise<Param
       <h1>{reg.title}</h1>
       {reg.source_url && <p><a href={reg.source_url} rel="nofollow noopener">Official text on the commission&apos;s website</a></p>}
       <table className="list"><thead><tr><th>Clause</th><th>Heading</th><th>Orders citing it</th></tr></thead>
-        <tbody>{cl.map((c) => <tr key={c.id}><td><Link href={c.path}>{c.number}</Link></td><td>{c.heading}</td><td>{citingOrders("clause", c.id).length}</td></tr>)}</tbody></table>
+        <tbody>{cl.map((c) => <tr key={c.id}><td><Link href={c.path}>{c.number}</Link></td><td>{c.heading}{c.in_force_to && <span className="tag bad"> omitted</span>}{c.versions && c.versions.length > 0 && <span className="tag"> amended</span>}</td><td>{citingOrders("clause", c.id).length}</td></tr>)}</tbody></table>
     </article>
   );
 }

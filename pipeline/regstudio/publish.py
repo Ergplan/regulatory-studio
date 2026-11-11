@@ -102,6 +102,9 @@ def run(clean: bool = False) -> dict:
                 r["sample"] = bool(src_doc and SAMPLE_MARK in src_doc["source_url"])
         for c in clauses:
             c["path"] = f"/regulations/{c['regulation_id']}/{clause_slug(c['number'])}"
+            c["versions"] = [dict(v) for v in conn.execute(
+                """SELECT text, in_force_from, in_force_to FROM clause_versions WHERE clause_id = ?
+                   ORDER BY coalesce(in_force_from, '') DESC""", (c["id"],))]
 
         digests = []
         for g in conn.execute("SELECT * FROM digests WHERE status = 'approved' ORDER BY id DESC"):

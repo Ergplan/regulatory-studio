@@ -29,7 +29,7 @@ Regulatory Studio publishes legal summaries under jouleWise's name. Accuracy bea
 Weeknights, one stage per run, with `--limit` so each run stays modest:
 
 ```
-regstudio run intake extract
+regstudio run intake extract registry amend
 regstudio run triage --limit 60
 regstudio run read --limit 15
 regstudio run draft

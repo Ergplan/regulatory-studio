@@ -45,6 +45,16 @@ ORDER = [
 ]
 
 
+AMENDMENT = [
+    "SAMPLE STATE ELECTRICITY REGULATORY COMMISSION",
+    "Sample Green Energy Open Access (First Amendment) Regulations, 2026",
+    "1. These regulations shall come into force from 1 December 2026.",
+    "2. Amendment of Regulation 8.- In sub-regulation (3) of regulation 8 of the Principal Regulations, for sub-regulation 8(3) the following shall be substituted, namely:",
+    "\u201cEnergy banked in any time block may be drawn in any other time block of the same month.\u201d",
+    "3. Sub-regulation 9(2) of the Principal Regulations shall be omitted.",
+]
+
+
 def make_pdf(lines: list[str], path: Path) -> None:
     doc = pymupdf.open()
     page = doc.new_page()
@@ -65,6 +75,8 @@ def write(inbox: Path) -> list[Path]:
     specs = [
         ("rerc", "2026-11-02", "sample-goa-regulation", "regulation", REGULATION,
          {"title": "Sample Green Energy Open Access Regulations, 2026 (SAMPLE)", "doc_date": "2026-01-15"}),
+        ("rerc", "2026-11-03", "sample-goa-amendment", "amendment", AMENDMENT,
+         {"title": "Sample Green Energy Open Access (First Amendment) Regulations, 2026 (SAMPLE)", "doc_date": "2026-11-20"}),
         ("rerc", "2026-11-09", "sample-banking-order", "order", ORDER,
          {"title": "SAMPLE petition on peak-hour banking", "doc_date": "2026-11-05",
           "case_number": "SAMPLE-12 of 2026"}),

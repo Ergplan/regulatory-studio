@@ -1,0 +1,25 @@
+{% extends "base.html" %}{% block title %}Amendment{% endblock %}
+{% block body %}
+<h1>{{ d.title or 'Amendment' }}</h1>
+<p class="muted">{{ COMMISSIONS[d.commission] }} · {{ d.doc_date or 'date not given' }} · <a href="/file/{{ d.id }}" target="_blank">PDF</a> ·
+<a href="{{ d.source_url }}" target="_blank" rel="noopener">source</a></p>
+{% if error %}<div class="flash">{{ error }}</div>{% endif %}
+<div class="card"><form method="post" action="/amendment/{{ d.id }}/meta" class="row">
+<div style="flex:3"><label>Principal regulation amended</label><select name="regulation_id"><option value="">(choose)</option>
+{% for r in regs %}<option value="{{ r.id }}" {% if r.id == reg_id %}selected{% endif %}>{{ r.title }}</option>{% endfor %}</select></div>
+<div style="flex:1"><label>In force from</label><input type="date" name="effective_date" value="{{ effective or '' }}"></div>
+<div><label>&nbsp;</label><button>Save</button></div></form>
+<p class="muted small">Applying a change updates the registry: the old wording is kept as history, in force until the day before this date.</p></div>
+{% for c in changes %}<div class="card" id="ch-{{ c.id }}">
+<div class="row"><b>{{ c.action|capitalize }} Regulation {{ c.clause_number }}</b><span class="pill {{ 'approved' if c.status == 'applied' else c.status }}">{{ c.status }}</span>
+<span class="muted">from {{ c.pid }}</span></div>
+<div class="excerpt muted">“{{ c.excerpt }}”</div>
+{% if current.get(c.id) %}<label>Current wording (in force from {{ current[c.id].in_force_from or 'notification' }})</label><div class="small">{{ current[c.id].text }}</div>{% endif %}
+{% if c.status == 'proposed' %}<form method="post" action="/amendment-change/{{ c.id }}">
+<div class="row"><div style="max-width:140px"><label>Clause number</label><input name="clause_number" value="{{ c.clause_number }}"></div></div>
+{% if c.action != 'omit' %}<label>New wording</label><textarea name="new_text">{{ c.new_text or '' }}</textarea>{% endif %}
+<p class="row"><button name="action" value="save">Save</button><button class="good" name="action" value="apply">Apply to registry</button>
+<button class="bad" name="action" value="reject">Reject</button></p></form>
+{% elif c.new_text %}<label>Wording applied</label><div class="small">{{ c.new_text }}</div>{% endif %}
+</div>{% else %}<p class="muted">No changes proposed for this amendment.</p>{% endfor %}
+{% endblock %}

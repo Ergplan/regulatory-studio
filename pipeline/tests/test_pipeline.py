@@ -1,4 +1,6 @@
 import json
+
+import pytest
 import sqlite3
 
 from regstudio import config, drafting, extract, intake, reader, registry, triage
@@ -12,13 +14,14 @@ def _db():
 
 
 def run_all():
-    intake.run(); extract.run(); registry.run(); triage.run(); reader.run(); drafting.run()
+    from regstudio import amend
+    intake.run(); extract.run(); registry.run(); amend.run(); triage.run(); reader.run(); drafting.run()
 
 
 def test_intake_is_idempotent(env):
-    assert len(intake.run().added) == 2
+    assert len(intake.run().added) == 3
     again = intake.run()
-    assert again.added == [] and again.duplicates == 2
+    assert again.added == [] and again.duplicates == 3
 
 
 def test_intake_rejects_bad_hash(env):
@@ -40,7 +43,7 @@ def test_pipeline_end_to_end(env):
     run_all()
     c = _db()
     stages = dict(c.execute("SELECT doc_type, stage FROM documents").fetchall())
-    assert stages == {"regulation": "registered", "order": "drafted"}
+    assert stages == {"regulation": "registered", "amendment": "registered", "order": "drafted"}
     links = c.execute("SELECT * FROM links").fetchall()
     assert all(l["status"] == "proposed" for l in links)
     resolved = {l["target_id"] for l in links if l["resolved"]}
@@ -91,7 +94,32 @@ def test_check_inbox_reports_without_registering(env):
     bad.write_text("{}")
     (env / "inbox" / "loose.pdf").write_bytes(b"%PDF-1.4")
     report = ik.check()
-    assert report["valid"] == 2
+    assert report["valid"] == 3
     assert report["metadata_without_pdf"] == ["rerc/2026-11-09/stray.json"]
     assert report["misplaced_files"] == ["loose.pdf"]
     assert _db().execute("SELECT count(*) FROM documents").fetchone()[0] == 0
+
+
+def test_amendment_changes_are_proposed_then_applied_with_history(env):
+    from regstudio import amend
+    intake.run(); extract.run(); registry.run(); amend.run()
+    c = _db()
+    changes = c.execute("SELECT * FROM amendment_changes ORDER BY id").fetchall()
+    assert {(ch["clause_number"], ch["action"]) for ch in changes} == {("8(3)", "substitute"), ("9(2)", "omit")}
+    assert all(ch["status"] == "proposed" for ch in changes)
+    reg = c.execute("SELECT id FROM regulations").fetchone()[0]
+    # Registry untouched until a reviewer applies a change.
+    before = c.execute("SELECT text FROM clauses WHERE id = ?", (f"{reg}/8(3)",)).fetchone()[0]
+    with pytest.raises(amend.ApplyError):
+        amend.apply_change(c, changes[0]["id"], "Test Reviewer")  # principal regulation not yet set
+    c.execute("UPDATE amendment_changes SET regulation_id = ?, effective_date = '2026-12-01'", (reg,))
+    for ch in changes:
+        amend.apply_change(c, ch["id"], "Test Reviewer")
+    c.commit()
+    sub = c.execute("SELECT text, in_force_from FROM clauses WHERE id = ?", (f"{reg}/8(3)",)).fetchone()
+    assert "any other time block" in sub["text"] and sub["in_force_from"] == "2026-12-01"
+    old = c.execute("SELECT text, in_force_to FROM clause_versions WHERE clause_id = ?", (f"{reg}/8(3)",)).fetchone()
+    assert old["text"] == before and old["in_force_to"] == "2026-11-30"
+    assert c.execute("SELECT in_force_to FROM clauses WHERE id = ?", (f"{reg}/9(2)",)).fetchone()[0] == "2026-11-30"
+    with pytest.raises(amend.ApplyError):
+        amend.apply_change(c, changes[0]["id"], "Test Reviewer")  # already applied

@@ -7,13 +7,14 @@ With reviewers added (regstudio add-reviewer), every page needs a signed-in revi
 from __future__ import annotations
 
 import json
+import urllib.parse
 from pathlib import Path
 
 from fastapi import FastAPI, Form, HTTPException, Request
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
-from . import auth, config, db
+from . import amend, auth, config, db
 
 app = FastAPI(title="Regulatory Studio review")
 templates = Jinja2Templates(directory=str(Path(__file__).parent / "templates"))
@@ -97,10 +98,14 @@ def queue(request: Request):
                GROUP BY r.id HAVING open_clauses > 0 OR r.status = 'proposed'
                ORDER BY r.commission, r.id""").fetchall()
         digests = conn.execute("SELECT id, status, from_date, to_date FROM digests ORDER BY id DESC LIMIT 6").fetchall()
+        amendments = conn.execute(
+            """SELECT d.id, d.commission, d.title, d.doc_date, count(a.id) AS open_changes
+               FROM documents d JOIN amendment_changes a ON a.amendment_doc = d.id
+               WHERE a.status = 'proposed' GROUP BY d.id ORDER BY d.doc_date DESC""").fetchall()
         listed = conn.execute("SELECT count(*) FROM documents WHERE stage = 'listed'").fetchone()[0]
         errors = conn.execute("SELECT id, commission, title, error FROM documents WHERE stage = 'error'").fetchall()
     return templates.TemplateResponse(request, "queue.html", {
-        "reviewer": reviewer(request), "orders": orders, "regs": regs, "digests": digests,
+        "reviewer": reviewer(request), "orders": orders, "regs": regs, "digests": digests, "amendments": amendments,
         "listed": listed, "errors": errors})
 
 
@@ -310,3 +315,61 @@ def save_digest(request: Request, week: str, intro: str = Form(...), action: str
                          "WHERE id = ?", (name, week))
         db.audit(conn, name, f"digest.{action}", week)
     return back(f"/digest/{week}")
+
+
+@app.get("/amendment/{doc_id}", response_class=HTMLResponse)
+def amendment(request: Request, doc_id: str):
+    with db.session() as conn:
+        d = conn.execute("SELECT * FROM documents WHERE id = ? AND doc_type = 'amendment'", (doc_id,)).fetchone()
+        if not d:
+            raise HTTPException(404)
+        changes = conn.execute("SELECT * FROM amendment_changes WHERE amendment_doc = ? ORDER BY id", (doc_id,)).fetchall()
+        current = {}
+        for c in changes:
+            if c["regulation_id"]:
+                row = conn.execute("SELECT text, in_force_from FROM clauses WHERE id = ?",
+                                   (f"{c['regulation_id']}/{c['clause_number']}",)).fetchone()
+                current[c["id"]] = row
+        regs = conn.execute("SELECT id, title FROM regulations WHERE status != 'rejected' ORDER BY id").fetchall()
+        paras = {r["pid"]: {"text": r["text"], "page": r["page"]} for r in conn.execute(
+            "SELECT pid, text, page FROM paragraphs WHERE doc_id = ?", (doc_id,))}
+    meta = changes[0] if changes else None
+    return templates.TemplateResponse(request, "amendment.html", {
+        "reviewer": reviewer(request), "d": d, "changes": changes, "current": current, "regs": regs,
+        "paras": paras, "reg_id": meta["regulation_id"] if meta else None,
+        "effective": meta["effective_date"] if meta else d["doc_date"], "error": request.query_params.get("error")})
+
+
+@app.post("/amendment/{doc_id}/meta")
+def amendment_meta(request: Request, doc_id: str, regulation_id: str = Form(""), effective_date: str = Form("")):
+    name = need_reviewer(request)
+    with db.session() as conn:
+        if regulation_id and not conn.execute("SELECT 1 FROM regulations WHERE id = ?", (regulation_id,)).fetchone():
+            raise HTTPException(400, "Unknown regulation")
+        conn.execute("UPDATE amendment_changes SET regulation_id = ?, effective_date = ? WHERE amendment_doc = ? AND status = 'proposed'",
+                     (regulation_id or None, effective_date or None, doc_id))
+        db.audit(conn, name, "amendment.meta", doc_id, {"regulation": regulation_id, "effective": effective_date})
+    return back(f"/amendment/{doc_id}")
+
+
+@app.post("/amendment-change/{change_id}")
+def amendment_change(request: Request, change_id: int, action: str = Form(...), new_text: str = Form(None),
+                     clause_number: str = Form(None)):
+    name = need_reviewer(request)
+    with db.session() as conn:
+        ch = conn.execute("SELECT * FROM amendment_changes WHERE id = ?", (change_id,)).fetchone()
+        if not ch:
+            raise HTTPException(404)
+        if ch["status"] == "proposed" and (new_text is not None or clause_number):
+            conn.execute("UPDATE amendment_changes SET new_text = coalesce(?, new_text), clause_number = coalesce(?, clause_number) WHERE id = ?",
+                         (new_text.strip() if new_text is not None else None, (clause_number or "").strip() or None, change_id))
+        if action == "apply":
+            try:
+                amend.apply_change(conn, change_id, name)
+            except amend.ApplyError as e:
+                conn.commit()
+                return back(f"/amendment/{ch['amendment_doc']}?error={urllib.parse.quote(str(e))}#ch-{change_id}")
+        elif action == "reject":
+            conn.execute("UPDATE amendment_changes SET status = 'rejected', reviewer = ? WHERE id = ?", (name, change_id))
+            db.audit(conn, name, "amendment.reject", str(change_id))
+    return back(f"/amendment/{ch['amendment_doc']}#ch-{change_id}")

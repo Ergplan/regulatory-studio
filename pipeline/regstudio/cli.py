@@ -8,7 +8,7 @@ import sys
 
 from . import config, db
 
-STAGES = ["intake", "extract", "registry", "triage", "read", "draft"]
+STAGES = ["intake", "extract", "registry", "amend", "triage", "read", "draft"]
 
 
 def _run_stage(name: str, limit: int | None) -> dict:
@@ -25,6 +25,9 @@ def _run_stage(name: str, limit: int | None) -> dict:
     if name == "registry":
         from . import registry
         return registry.run(limit)
+    if name == "amend":
+        from . import amend
+        return amend.run(limit)
     if name == "triage":
         from . import triage
         return triage.run(limit)
@@ -103,6 +106,7 @@ def main(argv: list[str] | None = None) -> None:
         print(f"{args.name} added; the review screen now requires sign-in")
     elif args.cmd == "review":
         from . import auth
+        db.init()  # apply any pending migrations before serving
         if args.host not in ("127.0.0.1", "localhost") and not auth.enabled():
             raise SystemExit("add at least one reviewer (regstudio add-reviewer NAME) before opening the review screen to the network")
         import uvicorn

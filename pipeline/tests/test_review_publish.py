@@ -141,3 +141,20 @@ def test_sign_in_required_once_reviewers_exist(server):
     assert server("/login", {"name": "Legal One", "password": "correct horse battery"}) == 303
     assert server(f"/order/{doc}/summary", {"action": "approve", "summary": "Reviewed.", "issue": "i", "outcome": "o"}) == 303
     assert _db().execute("SELECT reviewer FROM orders").fetchone()[0] == "Legal One"
+
+
+def test_amendment_page_and_history_publish(server):
+    from regstudio import amend
+    amend.run()
+    c = _db()
+    doc = c.execute("SELECT id FROM documents WHERE doc_type = 'amendment'").fetchone()[0]
+    reg = c.execute("SELECT id FROM regulations").fetchone()[0]
+    server("/whoami", {"name": "Test Reviewer"})
+    assert server(f"/amendment/{doc}/meta", {"regulation_id": reg, "effective_date": "2026-12-01"}) == 303
+    for (cid,) in c.execute("SELECT id FROM amendment_changes").fetchall():
+        assert server(f"/amendment-change/{cid}", {"action": "apply"}) == 303
+    server(f"/regulation/{reg}/meta", {"title": "Sample regulation", "action": "approve"})
+    publish.run()
+    clauses = {x["number"]: x for x in json.loads((config.SNAPSHOT / "clauses.json").read_text())}
+    assert len(clauses["8(3)"]["versions"]) == 1 and clauses["8(3)"]["in_force_from"] == "2026-12-01"
+    assert clauses["9(2)"]["in_force_to"] == "2026-11-30"

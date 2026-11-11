@@ -19,6 +19,9 @@
 {% for r in regs %}<tr><td>{{ r.commission|upper }}</td><td><a href="/regulation/{{ r.id }}">{{ r.title }}</a><div class="muted">{{ r.id }}</div></td>
 <td>{{ r.open_clauses or 0 }} of {{ r.clauses }}</td></tr>
 {% else %}<tr><td colspan="3" class="muted">Registry fully reviewed.</td></tr>{% endfor %}</table>
+{% if amendments %}<h2>Amendments to apply</h2>
+<table><tr><th>Commission</th><th>Amendment</th><th>Changes to check</th></tr>
+{% for a in amendments %}<tr><td>{{ a.commission|upper }}</td><td><a href="/amendment/{{ a.id }}">{{ a.title or a.id[:12] }}</a></td><td>{{ a.open_changes }}</td></tr>{% endfor %}</table>{% endif %}
 <h2>Weekly digests</h2>
 <table><tr><th>Week</th><th>Dates</th><th>Status</th></tr>
 {% for d in digests %}<tr><td><a href="/digest/{{ d.id }}">{{ d.id }}</a></td><td>{{ d.from_date }} to {{ d.to_date }}</td>

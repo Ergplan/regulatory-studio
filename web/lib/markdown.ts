@@ -36,7 +36,9 @@ export function pageMd(path: string): string | null {
   if (c) {
     const r = regulationById.get(c.regulation_id)!;
     return [`# Regulation ${c.number}${c.heading ? ": " + c.heading : ""}`, "", `Part of: [${r.title}](${abs(r.path + ".md")})`, "",
-      "## Text", "", c.text, "", "## Reviewed orders citing this clause", "",
+      "## Text", "", c.text, "", c.in_force_to ? `Omitted: in force until ${c.in_force_to}.` : `In force${c.in_force_from ? " from " + c.in_force_from : ""}.`, "",
+      ...(c.versions?.length ? ["## Earlier wording", "", ...c.versions.map((v) => `- In force ${v.in_force_from ? "from " + v.in_force_from + " " : ""}to ${v.in_force_to}: ${v.text}`), ""] : []),
+      "## Reviewed orders citing this clause", "",
       ...citingOrders("clause", c.id).map(({ order, links }) => `- [${order.title ?? orderLabel(order)}](${abs(order.path + ".md")}) (${order.commission.toUpperCase()}, ${order.date ?? ""}): ${[...new Set(links.map((l) => linkTypeLabel(l.type)))].join(", ")}`)].join("\n") + "\n";
   }
   if (path.startsWith("/act/")) {

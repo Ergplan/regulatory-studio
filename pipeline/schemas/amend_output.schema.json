@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Amendment reader output",
+  "type": "object",
+  "required": ["regulation_id", "effective_date", "changes"],
+  "additionalProperties": false,
+  "properties": {
+    "regulation_id": {"type": ["string", "null"], "description": "id from the REGULATIONS list of the principal regulation amended, or null if not listed"},
+    "effective_date": {"type": ["string", "null"], "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+    "changes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["clause_number", "action", "new_text", "pid", "excerpt"],
+        "additionalProperties": false,
+        "properties": {
+          "clause_number": {"type": "string", "pattern": "^\\d{1,3}[A-Z]?(\\(\\d{1,2}[a-z]?\\))?$"},
+          "action": {"enum": ["substitute", "insert", "omit"]},
+          "new_text": {"type": ["string", "null"]},
+          "pid": {"type": "string", "pattern": "^p\\d+\\.\\d+$"},
+          "excerpt": {"type": "string", "maxLength": 400}
+        }
+      }
+    }
+  }
+}

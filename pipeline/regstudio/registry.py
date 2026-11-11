@@ -4,8 +4,8 @@ This is a rule-based first pass for Indian regulation layouts:
   '8. Banking.-(1) ...'  starts regulation 8 with heading 'Banking'
   '(2) ...'              starts sub-regulation 8(2)
 Everything it writes is 'proposed'; the review app approves registry entries.
-Amendments are registered as their own regulation entries; linking an amendment to the
-clauses it changes (and setting in_force_to) is done at review.
+Amendments are handled by the amend stage (amend.py), which proposes clause changes that a
+reviewer applies.
 """
 
 from __future__ import annotations
@@ -93,7 +93,7 @@ def run(limit: int | None = None) -> dict:
     with db.session() as conn:
         run_id = db.start_run(conn, "registry")
         docs = conn.execute(
-            "SELECT * FROM documents WHERE stage = 'extracted' AND doc_type IN ('regulation', 'amendment')"
+            "SELECT * FROM documents WHERE stage = 'extracted' AND doc_type = 'regulation'"
             + (f" LIMIT {int(limit)}" if limit else "")
         ).fetchall()
         for d in docs:
@@ -101,8 +101,6 @@ def run(limit: int | None = None) -> dict:
                 "SELECT pid, text FROM paragraphs WHERE doc_id = ? ORDER BY page, idx", (d["id"],))]
             title = d["title"] or (paras[0]["text"][:200] if paras else "Untitled regulation")
             reg_id = regulation_id(d["commission"], title, d["doc_date"])
-            if d["doc_type"] == "amendment":
-                reg_id += "-amendment-" + d["id"][:8]
             clauses = split_clauses(paras)
             if not clauses:
                 db.set_stage(conn, d["id"], "error", "registry: no numbered clauses found")
