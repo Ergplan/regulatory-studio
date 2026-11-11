@@ -150,3 +150,22 @@ def test_bilingual_gazette_uses_english_version():
     assert {c["number"]: c["pid"] for c in split_clauses(kept)}["7"] == "p2.2"
     english_only = paras[2:]
     assert english_part(english_only) == english_only
+
+
+def test_running_heads_merged_into_first_paragraph_are_removed():
+    from regstudio.extract import strip_running_heads
+    paras = []
+    for page in range(1, 7):
+        head = (f"भाग 7 राजस्थान राज-पत्र, जुलाई 17, 2025 {100 + page}" if page % 2
+                else f"{100 + page} राजस्थान राज-पत्र, जुलाई 17, 2025 भाग 7")
+        topic = ["Short title", "Definitions", "Eligibility", "Nodal agency", "Charges", "Banking"][page - 1]
+        paras.append({"pid": f"p{page}.1", "text": f"{head} {page}. {topic} Text."})
+        paras.append({"pid": f"p{page}.2", "text": "Provided that the body continues."})
+    out = strip_running_heads(paras)
+    assert out[0]["text"] == "1. Short title Text."
+    assert out[2]["text"] == "2. Definitions Text."
+    assert out[1]["text"] == "Provided that the body continues."
+    openings = ["The Commission heard the parties", "Provided that the licensee shall", "In the matter of",
+                "Having considered the submissions", "Accordingly, the petition is"]
+    plain = [{"pid": f"p{i}.1", "text": f"{openings[i - 1]} on page {i}"} for i in range(1, 6)]
+    assert strip_running_heads(plain) == plain

@@ -104,6 +104,37 @@ def repair_ligatures(texts: list[str]) -> tuple[list[str], int]:
     return out, fixed
 
 
+def strip_running_heads(paragraphs: list[dict]) -> list[dict]:
+    """Remove a page's running head when it got merged into the first paragraph of the page, e.g.
+    "भाग 7 राजस्थान राज-पत्र, जुलाई 17, 2025 110 4. Categorization of ...". Gazettes alternate odd
+    and even heads, so a prefix counts as a head when it starts the first paragraph of at least 30%
+    of pages (and of three pages)."""
+    firsts: dict[int, dict] = {}
+    for p in paragraphs:
+        page = int(p["pid"][1:].split(".")[0])
+        firsts.setdefault(page, p)
+    if len(firsts) < 3:
+        return paragraphs
+    # Page numbers and dates vary ("110", "17,"); clause numbers ("4.", "(2)") must not be absorbed.
+    norm_words = {page: [re.sub(r"^\d+(,?)$", r"#\1", w) for w in p["text"].split()] for page, p in firsts.items()}
+    counts: Counter = Counter()
+    for words in norm_words.values():
+        for n in range(3, min(13, len(words))):
+            counts[tuple(words[:n])] += 1
+    need = max(3, int(0.3 * len(firsts)))
+    heads = {k for k, c in counts.items() if c >= need}
+    out = []
+    for p in paragraphs:
+        page = int(p["pid"][1:].split(".")[0])
+        if firsts.get(page) is p:
+            words = norm_words[page]
+            n = max((len(h) for h in heads if tuple(words[:len(h)]) == h), default=0)
+            if n and n < len(words):
+                p = {**p, "text": " ".join(p["text"].split()[n:])}
+        out.append(p)
+    return out
+
+
 def extract_pdf(path) -> tuple[list[dict], int, list[int]]:
     """Return (paragraphs, page_count, pages_without_text)."""
     doc = pymupdf.open(path)
@@ -144,6 +175,7 @@ def extract_pdf(path) -> tuple[list[dict], int, list[int]]:
                 continue
             n += 1
             paragraphs.append({"pid": f"p{pno}.{n}", "page": pno, "idx": n, "text": text, "bbox": bbox})
+    paragraphs = strip_running_heads(paragraphs)
     texts, _ = repair_ligatures([p["text"] for p in paragraphs])
     for p, t in zip(paragraphs, texts):
         p["text"] = t

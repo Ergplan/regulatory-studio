@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import re
 
+from .extract import strip_running_heads
 from . import config, db
 
 TOP = re.compile(r"^(\d{1,3}[A-Z]?)\.\s+(?:([A-Z][^.:]{2,100}?)\s*[.:]\s*[-—–]+\s*)?(.*)$", re.S)
@@ -123,7 +124,7 @@ def run(limit: int | None = None) -> dict:
                 "SELECT pid, text FROM paragraphs WHERE doc_id = ? ORDER BY page, idx", (d["id"],))]
             title = d["title"] or (paras[0]["text"][:200] if paras else "Untitled regulation")
             reg_id = regulation_id(d["commission"], title, d["doc_date"])
-            clauses = split_clauses(english_part(paras))
+            clauses = split_clauses(english_part(strip_running_heads(paras)))
             if not clauses:
                 db.set_stage(conn, d["id"], "error", "registry: no numbered clauses found")
                 failed += 1
