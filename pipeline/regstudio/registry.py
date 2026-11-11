@@ -43,6 +43,28 @@ def regulation_id(commission: str, title: str, doc_date: str | None) -> str:
     return f"{commission}/{base}-{year}" if year else f"{commission}/{base}"
 
 
+DEVANAGARI = re.compile(r"[\u0900-\u097F]")
+LATIN = re.compile(r"[A-Za-z]")
+
+
+def _hindi_share(text: str) -> float:
+    dev, lat = len(DEVANAGARI.findall(text)), len(LATIN.findall(text))
+    return dev / (dev + lat) if dev + lat else 0.0
+
+
+def english_part(paragraphs: list[dict]) -> list[dict]:
+    """State gazettes print the Hindi and English versions in one PDF. Hindi text from these PDFs is
+    often in legacy fonts and comes out garbled, and the two versions repeat the same clause numbers,
+    so the registry uses the English version when a document has a substantial one."""
+    if not paragraphs:
+        return paragraphs
+    english = [p for p in paragraphs if _hindi_share(p["text"]) < 0.2]
+    hindi = len(paragraphs) - len(english)
+    if hindi >= 0.15 * len(paragraphs) and len(english) >= 0.25 * len(paragraphs):
+        return english
+    return paragraphs
+
+
 def split_clauses(paragraphs: list[dict]) -> list[dict]:
     clauses: list[dict] = []
     current_top: str | None = None
@@ -101,7 +123,7 @@ def run(limit: int | None = None) -> dict:
                 "SELECT pid, text FROM paragraphs WHERE doc_id = ? ORDER BY page, idx", (d["id"],))]
             title = d["title"] or (paras[0]["text"][:200] if paras else "Untitled regulation")
             reg_id = regulation_id(d["commission"], title, d["doc_date"])
-            clauses = split_clauses(paras)
+            clauses = split_clauses(english_part(paras))
             if not clauses:
                 db.set_stage(conn, d["id"], "error", "registry: no numbered clauses found")
                 failed += 1

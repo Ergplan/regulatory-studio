@@ -136,3 +136,17 @@ def test_broken_ligature_map_is_repaired_only_when_present():
                    "Nigam Limited, Nimesh Patel and Nisarg; Till date.", "The fixed charge is fit."]
     clean = ["Nigam Limited filed the petition before NLDC.", "Mr. Nimesh Patel appeared. Till then."]
     assert repair_ligatures(clean) == (clean, 0)
+
+
+def test_bilingual_gazette_uses_english_version():
+    from regstudio.registry import english_part, split_clauses
+    paras = [{"pid": "p1.1", "text": "5. जीईओए आवेदन के लिये पात्रता मानदंड इन विनियमों के प्रावधान"},
+             {"pid": "p1.2", "text": "7. विद्यमान उपभोक्ताओं के लिये संव्यवहार"},
+             {"pid": "p2.1", "text": "5. Eligibility criteria for GEOA application (i) Subject to these Regulations"},
+             {"pid": "p2.2", "text": "7. Treatment for existing consumers Existing consumers may continue."},
+             {"pid": "p2.3", "text": "Rajasthan Electricity Regulatory Commission, Jaipur"}]
+    kept = english_part(paras)
+    assert [p["pid"] for p in kept] == ["p2.1", "p2.2", "p2.3"]
+    assert {c["number"]: c["pid"] for c in split_clauses(kept)}["7"] == "p2.2"
+    english_only = paras[2:]
+    assert english_part(english_only) == english_only
