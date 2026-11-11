@@ -1,0 +1,49 @@
+{
+ "data": [
+  {
+   "id": 1,
+   "order_date": "06-11-2026",
+   "timestamp": "20261106",
+   "order_desc": "Petition of M/s. Ramsons Industries Limited seeking directions with regard to laying of EHT infrastructure for EHV supply and seeking direction to MSEDCL for levying of wheeling charges applicable to EHV level.",
+   "case_no": "201 of 2025",
+   "terms": "Complaint or CGRF",
+   "attachment": [
+    {
+     "name": "Order -Case No. 201 of 2025",
+     "url_id": 57755,
+     "url": "https://merc.gov.in/wp-content/uploads/2026/11/Order-Case-No.-201-of-2025.pdf"
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "order_date": "06-11-2026",
+   "timestamp": "20261106",
+   "order_desc": "Petition of Tata Motors Ltd. seeking clarification in respect of interpretation and applicability of Paragraph 7.26 of MYT Order dated 28 March 2025 in Case No. 217 of 2024",
+   "case_no": "80 of 2026",
+   "terms": "Clarification or Review",
+   "attachment": [
+    {
+     "name": "Final Order-Case No.80 of 2026",
+     "url_id": 57758,
+     "url": "https://merc.gov.in/wp-content/uploads/2026/11/Final-Order-Case-No.80-of-2026.pdf"
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "order_date": "06-11-2026",
+   "timestamp": "20261106",
+   "order_desc": "Petition filed by Bhimashankar Sahakari Sakhar Karkhana Ltd. seeking clarification regarding applicability of paragraph 7.26 of the MYT Order dated 28 March 2025 in Case No. 217 of 2024",
+   "case_no": "109 of 2026",
+   "terms": "Clarification or Review",
+   "attachment": [
+    {
+     "name": "Final Order in Case No.109 of 2026",
+     "url_id": 57761,
+     "url": "https://merc.gov.in/wp-content/uploads/2026/11/Final-Order-in-Case-No.109-of-2026.pdf"
+    }
+   ]
+  }
+ ]
+}

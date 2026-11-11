@@ -8,6 +8,9 @@ mkdir -p data/store/logs
 LOG="data/store/logs/$(date +%Y-%m-%d).log"
 {
   echo "=== $(date) ==="
+  # Fetch recent orders (last 14 days, skipping ones already fetched); a site being down is not fatal
+  regstudio download --limit 40 || echo "download: some sites failed; see above"
+  regstudio check-inbox || echo "check-inbox: problems listed above; intake skips bad files"
   regstudio run intake extract registry amend
   regstudio run triage --limit 60
   regstudio run read --limit 15

@@ -13,7 +13,11 @@ Regulatory Studio publishes legal summaries under jouleWise's name. Accuracy bea
    record it with `resolved = 0` and the citation as written. Never invent a clause id.
 4. **No fabricated orders.** Test data lives in `pipeline/tests/fixtures/` and is marked
    SAMPLE. Never put sample data in `data/snapshot` for a production build.
-5. **Downloads are someone else's job.** The pipeline only reads `data/inbox/`.
+5. **Downloads only land in the inbox.** `regstudio download` fetches recent orders from the
+   commission sites into `data/inbox/` with the same metadata contract the download team uses;
+   every later stage reads only `data/inbox/`. Be polite to the sites (robots.txt, a pause per
+   host, modest `--limit`), never turn off TLS verification, and fix a broken parser rather than
+   guessing fields.
 
 ## Working on the build
 
@@ -29,6 +33,7 @@ Regulatory Studio publishes legal summaries under jouleWise's name. Accuracy bea
 Weeknights, one stage per run, with `--limit` so each run stays modest:
 
 ```
+regstudio download --limit 40
 regstudio run intake extract registry amend
 regstudio run triage --limit 60
 regstudio run read --limit 15

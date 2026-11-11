@@ -11,7 +11,7 @@ Architecture: https://claude.ai/artifact/E3uwohVAYcGw4XAJUgJUb4
 ## How it fits together
 
 ```
-download script (separate)  ->  data/inbox/<commission>/<YYYY-MM-DD>/<file>.pdf + .json
+regstudio download         ->  data/inbox/<commission>/<YYYY-MM-DD>/<file>.pdf + .json
                                      |
 Mac mini: pipeline/  intake -> extract -> registry -> triage -> read -> draft
                                      |            (working DB: data/store/working.db)
@@ -33,7 +33,7 @@ Nothing unapproved ever reaches `data/snapshot/`. The site builds only from the 
 | `pipeline/schemas/` | JSON schemas: inbox metadata, model outputs |
 | `pipeline/regstudio/review_app.py` | Local review app for the legal team (FastAPI); templates beside it |
 | `web/` | Next.js site deployed on Vercel |
-| `data/inbox/` | Where the download script drops files (git-ignored) |
+| `data/inbox/` | Where `regstudio download` (or the download team) drops files (git-ignored) |
 | `data/store/` | Working database and extracted text (git-ignored) |
 | `data/snapshot/` | Published, approved data the site builds from |
 

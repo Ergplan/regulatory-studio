@@ -75,9 +75,33 @@ OCR'd orders are flagged in the review queue for a closer check.
 
 | When | What | Who |
 | --- | --- | --- |
-| Mon–Fri nights | Download script, then `ops/weeknight.sh` | Automatic |
+| Mon–Fri nights | `ops/weeknight.sh` (downloads, then the pipeline) | Automatic |
 | Saturday | Review queue: summaries, links, registry, digest | Legal team |
 | Sunday | `regstudio publish`, commit `data/snapshot`, push (Vercel deploys), `send-digest` | You |
+
+## Downloading orders
+
+```bash
+regstudio download --dry-run                    # list what would be fetched (last 14 days)
+regstudio download --since 2026-10-01 --limit 20
+regstudio download --commission gerc --commission kerc
+```
+
+| Commission | Source | Notes |
+| --- | --- | --- |
+| CERC | recent_orders.html | table of petitions |
+| UPERC | Order_Users.aspx | "Order dated ..." links |
+| RERC | office-orders page | PDFs come back through a form postback |
+| MERC | site's order data feed (JSON) | |
+| GERC | judgement orders + RE orders, paged | |
+| KERC | miscellaneous, generic tariff and tariff order pages | |
+| APTEL | no listing the script can read | add with `ops/fetch_one.py <url>` |
+
+Each file lands in `data/inbox/<commission>/<today>/` with its metadata JSON. Already-fetched
+items are remembered in `data/store/download_seen.json`. Some state sites send an incomplete
+certificate chain; the script fetches the missing intermediate certificate from the address the
+site's own certificate names and still checks the full chain against the Mac's trusted roots.
+Anything that is not a PDF (an error page, say) is skipped and reported.
 
 ## For the download team
 

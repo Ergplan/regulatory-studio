@@ -16,3 +16,12 @@ no downloads from commission sites, nothing deleted on the Mac.
 1. Extend the morning batch: state orders (UPERC 2408 and 2418 of 2026, RERC Shree Cement 04.11.2026, a MERC open access order) and the CERC Sharing Regulations 2020 and Trading Licence Regulations in the registry. Work on the Mac copy in ~/Downloads/regulatory-studio with REGSTUDIO_STORE=$HOME/rs-live/store, then copy working.db (journal_mode=DELETE) into data/store before 9 am.
 2. Vercel project once GitHub access is granted.
 3. Backlog: inbox checker, review/publish tests, map polish, search and feeds, reviewer sign-in, amendment assist.
+
+## 11 Nov 2026 — commission downloaders
+
+- `regstudio download` with adapters for CERC, UPERC, RERC (form postback), MERC (JSON feed),
+  GERC (paged tables) and KERC (three order pages). APTEL stays on `ops/fetch_one.py`.
+- Polite client: robots.txt, 3 s pause per host, retries; repairs incomplete TLS chains by
+  fetching the named intermediate, with full verification kept.
+- Parser tests on trimmed extracts of the live listing pages (24 tests pass).
+- `ops/weeknight.sh` now downloads, checks the inbox, then runs the pipeline.
