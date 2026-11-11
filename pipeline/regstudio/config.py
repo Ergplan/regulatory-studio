@@ -18,8 +18,10 @@ PIPELINE = REPO_ROOT / "pipeline"
 PROMPTS = PIPELINE / "prompts"
 SCHEMAS = PIPELINE / "schemas"
 
-# "claude" runs the Claude Code CLI headless; "mock" uses rule-based stand-ins.
+# "claude" runs the Claude Code CLI headless; "mock" uses rule-based stand-ins;
+# "file" loads outputs prepared in an interactive Claude session from READER_OUTPUTS.
 READER = os.environ.get("REGSTUDIO_READER", "claude")
+READER_OUTPUTS = Path(os.environ.get("REGSTUDIO_READER_OUTPUTS", DATA / "reader_outputs"))
 CLAUDE_BIN = os.environ.get("REGSTUDIO_CLAUDE_BIN", "claude")
 CLAUDE_MODEL = os.environ.get("REGSTUDIO_CLAUDE_MODEL", "")
 CLAUDE_TIMEOUT_S = int(os.environ.get("REGSTUDIO_CLAUDE_TIMEOUT", "900"))
@@ -46,6 +48,10 @@ TOPICS = {
     "transmission-tariff": "Transmission tariff",
     "arr-true-up": "ARR and true-up",
     "ppa-adoption": "Tariff adoption and PPA approval",
+    "dsm": "Deviation settlement and scheduling",
+    "power-market": "Power market",
+    "connectivity-gna": "Connectivity and GNA",
+    "ists-charges": "ISTS charges and waivers",
 }
 
 LINK_TYPES = {

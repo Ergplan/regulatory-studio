@@ -6,7 +6,7 @@ import json
 
 from . import config, db, mock
 from .claude_runner import ClaudeError, UsageLimitReached, ask_json
-from .common import fill, load_prompt, load_schema, order_text
+from .common import NotPrepared, fill, prepared_output, load_prompt, load_schema, order_text
 
 
 def run(limit: int | None = None) -> dict:
@@ -22,13 +22,17 @@ def run(limit: int | None = None) -> dict:
         for d in docs:
             text, _ = order_text(conn, d["id"], budget=40_000)  # triage needs the gist, not everything
             try:
-                if config.READER == "mock":
+                if config.READER == "file":
+                    out = prepared_output(f"{d['id']}.triage.json", schema)
+                elif config.READER == "mock":
                     out = mock.triage(text)
                 else:
                     prompt = fill(template, topics=", ".join(config.TOPICS), schema=json.dumps(schema),
                                   commission=config.COMMISSIONS[d["commission"]],
                                   title=d["title"] or "(none)", text=text)
                     out = ask_json(prompt, schema)
+            except NotPrepared:
+                continue  # left at its stage until an output is prepared
             except UsageLimitReached as e:
                 stopped = f"usage limit: {e}"[:300]
                 break

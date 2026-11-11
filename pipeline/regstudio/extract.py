@@ -31,6 +31,30 @@ def _language(text: str) -> str:
     return "hi" if dev / len(letters) > 0.3 else "en"
 
 
+STARTS_NEW = re.compile(r"^(\(?[0-9ivxlc]{1,5}[.)]\s|\(?[a-z][.)]\s|\d+(\.\d+)+\s|[A-Z][A-Z .&,-]{6,}$|Page \d|Order in Petition|In the matter of|ORDER$)", re.I)
+
+
+def _merge_lines(blocks: list) -> list:
+    """Join line-level blocks into paragraphs. A block continues the previous one when the gap
+    between them is no wider than this page's usual line gap, and it does not start with a
+    number, letter label or heading. A block starting in lower case always continues."""
+    gaps = sorted(b[1][1] - a[1][3] for a, b in zip(blocks, blocks[1:]) if 0 <= b[1][1] - a[1][3] < 30)
+    usual = gaps[len(gaps) // 2] if gaps else 4.0
+    out: list = []
+    for text, bbox in blocks:
+        if out:
+            ptext, pbox = out[-1]
+            gap = bbox[1] - pbox[3]
+            lower = text[:1].islower()
+            close = -2 <= gap <= usual * 1.35 + 1.5
+            if len(ptext) < 4000 and (lower and gap < 30 or close and not STARTS_NEW.match(text)
+                                      and not ptext.endswith(":")):
+                out[-1] = (ptext + " " + text, [min(pbox[0], bbox[0]), pbox[1], max(pbox[2], bbox[2]), bbox[3]])
+                continue
+        out.append((text, bbox))
+    return out
+
+
 def _ocr_blocks(page) -> list:
     """OCR one page with Tesseract (English and Hindi) when it is installed; else no text."""
     if not shutil.which("tesseract"):
@@ -63,7 +87,7 @@ def extract_pdf(path) -> tuple[list[dict], int, list[int]]:
                 blocks.append((t, [round(x0, 1), round(y0, 1), round(x1, 1), round(y1, 1)]))
         if not blocks and pno not in empty:
             empty.append(pno)
-        pages.append(blocks)
+        pages.append(_merge_lines(blocks))
     page_count = len(doc)
     doc.close()
 

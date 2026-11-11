@@ -14,7 +14,7 @@ import re
 
 from . import config, db, mock, registry
 from .claude_runner import ClaudeError, UsageLimitReached, ask_json
-from .common import fill, load_prompt, load_schema, norm, order_text
+from .common import NotPrepared, fill, prepared_output, load_prompt, load_schema, norm, order_text
 
 CASE_NO = re.compile(r"(?:petition|appeal|case|o\.?p\.?|i\.?a\.?)\s*no\.?\s*([\w\-/]+\s*(?:of|/)\s*\d{4})", re.I)
 
@@ -81,7 +81,9 @@ def run(limit: int | None = None) -> dict:
         for d in docs:
             text, paras = order_text(conn, d["id"])
             try:
-                if config.READER == "mock":
+                if config.READER == "file":
+                    out = prepared_output(f"{d['id']}.read.json", schema)
+                elif config.READER == "mock":
                     out = mock.read(paras, registry.lookup_index(conn), d["commission"])
                 else:
                     prompt = fill(template, schema=json.dumps(schema),
@@ -90,6 +92,8 @@ def run(limit: int | None = None) -> dict:
                                   registry=_registry_listing(conn, d["commission"]),
                                   act_sections=acts, text=text)
                     out = ask_json(prompt, schema)
+            except NotPrepared:
+                continue  # left at its stage until an output is prepared
             except UsageLimitReached as e:
                 stopped = f"usage limit: {e}"[:300]
                 break

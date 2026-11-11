@@ -65,3 +65,21 @@ def test_reader_drops_references_it_cannot_ground(env):
     kept, dropped = reader.check_references(c, refs, paras)
     assert len(kept) == 1 and kept[0]["target_id"] is None and kept[0]["resolved"] == 0
     assert len(dropped) == 2
+
+
+def test_line_fragments_merge_into_paragraphs():
+    from regstudio.extract import _merge_lines
+    blocks = [("2. Regulation 9(7) provides for settlement of a deficit. In terms of the said", [50, 100, 500, 112]),
+              ("provision, any deficit is shared.", [50, 114, 300, 126]),
+              ("16.09.2024, except for Regulation 8(8).", [50, 128, 300, 140]),
+              ("3. The extract is as follows:", [50, 160, 300, 172]),
+              ("(i) first item", [50, 174, 300, 186])]
+    out = _merge_lines(blocks)
+    assert [t[:2] for t, _ in out] == ["2.", "3.", "(i"]
+    assert "16.09.2024" in out[0][0]
+
+
+def test_regulation_ids_are_readable():
+    from regstudio.registry import regulation_id
+    title = "Central Electricity Regulatory Commission (Deviation Settlement Mechanism and Related Matters) Regulations, 2024"
+    assert regulation_id("cerc", title, "2024-08-05") == "cerc/deviation-settlement-mechanism-related-matters-2024"

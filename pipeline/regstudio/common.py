@@ -46,3 +46,17 @@ def order_text(conn, doc_id: str, budget: int = 150_000) -> tuple[str, dict[str,
         if i <= j and used < budget:
             tail.insert(0, lines[j]); used += len(lines[j]) + 1; j -= 1
     return "\n".join(head + ["[...] (middle of the order omitted for length)"] + tail), paras
+
+
+class NotPrepared(Exception):
+    """READER=file and no prepared output exists yet for this document."""
+
+
+def prepared_output(name: str, schema: dict) -> dict:
+    import jsonschema
+    path = config.READER_OUTPUTS / name
+    if not path.exists():
+        raise NotPrepared(name)
+    data = json.loads(path.read_text())
+    jsonschema.validators.validator_for(schema)(schema).validate(data)
+    return data

@@ -7,7 +7,7 @@ import json
 
 from . import config, db, mock
 from .claude_runner import ClaudeError, UsageLimitReached, ask_json
-from .common import fill, load_prompt, load_schema
+from .common import NotPrepared, fill, load_prompt, load_schema, prepared_output
 
 
 def week_bounds(day: dt.date) -> tuple[str, dt.date, dt.date]:
@@ -32,7 +32,9 @@ def run(limit: int | None = None, day: dt.date | None = None) -> dict:
         if not items:
             return {"digest": week_id, "items": 0}
         try:
-            if config.READER == "mock":
+            if config.READER == "file":
+                out = prepared_output(f"{week_id}.digest.json", load_schema("digest_output.schema.json"))
+            elif config.READER == "mock":
                 out = mock.digest(items)
             else:
                 schema = load_schema("digest_output.schema.json")
@@ -40,6 +42,8 @@ def run(limit: int | None = None, day: dt.date | None = None) -> dict:
                     f"id: {i['id']}\ncommission: {i['commission'].upper()}\nsignificance: {i['significance']}\n"
                     f"title: {i['title']}\nsummary: {i['summary']}" for i in items)
                 out = ask_json(fill(load_prompt("digest.md"), schema=json.dumps(schema), items=listing), schema)
+        except NotPrepared:
+            return {"digest": week_id, "items": len(items), "note": "digest intro not prepared yet"}
         except UsageLimitReached as e:
             return {"digest": week_id, "stopped": f"usage limit: {e}"[:300]}
         except ClaudeError as e:

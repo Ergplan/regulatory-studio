@@ -24,13 +24,23 @@ def slugify(text: str, max_len: int = 60) -> str:
     return s[:max_len].rstrip("-") or "untitled"
 
 
+STOP = {"the", "of", "and", "for", "to", "in", "regulation", "regulations", "electricity", "regulatory",
+        "commission", "central", "state", "cerc", "aptel", "uperc", "merc", "gerc", "kerc", "rerc",
+        "uttar", "pradesh", "maharashtra", "gujarat", "karnataka", "rajasthan", "sample"}
+
+
 def regulation_id(commission: str, title: str, doc_date: str | None) -> str:
-    year = doc_date[:4] if doc_date else (YEAR.search(title).group(0) if YEAR.search(title) else "")
-    base = re.sub(r"\b(the|of|and|for|regulations?|electricity|regulatory|commission)\b", " ",
-                  title.lower())
-    base = re.sub(r"\b(19|20)\d{2}\b", " ", base)
-    slug = slugify(base, 40)
-    return f"{commission}/{slug}-{year}" if year else f"{commission}/{slug}"
+    """Readable, permanent id such as 'cerc/deviation-settlement-mechanism-related-matters-2024'."""
+    m = YEAR.search(title)
+    year = m.group(0) if m else (doc_date[:4] if doc_date else "")
+    words = [w for w in re.findall(r"[a-z0-9]+", title.lower()) if w not in STOP and not YEAR.fullmatch(w)]
+    slug, n = [], 0
+    for w in words:
+        if n + len(w) > 55:
+            break
+        slug.append(w); n += len(w) + 1
+    base = "-".join(slug) or "untitled"
+    return f"{commission}/{base}-{year}" if year else f"{commission}/{base}"
 
 
 def split_clauses(paragraphs: list[dict]) -> list[dict]:
@@ -59,6 +69,17 @@ def split_clauses(paragraphs: list[dict]) -> list[dict]:
             continue
         if clauses:  # continuation of the previous clause
             clauses[-1]["text"] = (clauses[-1]["text"] + " " + text).strip()
+    for c in clauses:
+        if not c["heading"] and "(" not in c["number"] and 0 < len(c["text"]) <= 70 and not c["text"].endswith("."):
+            c["heading"], c["text"] = c["text"], ""
+        elif not c["heading"] and "(" not in c["number"]:
+            m = re.match(r"^([A-Z][A-Za-z ,'&-]{3,60}?)\s+(These|This|The|In|If|Every|For|Save|Deviation|Charges|Notwithstanding)\b", c["text"])
+            if m:
+                c["heading"], c["text"] = m.group(1).strip(), c["text"][len(m.group(1)):].strip()
+    heads = {c["number"]: c["heading"] for c in clauses if "(" not in c["number"]}
+    for c in clauses:
+        if "(" in c["number"] and not c["heading"]:
+            c["heading"] = heads.get(c["number"].split("(")[0])
     # Merge duplicates (same number seen twice, e.g. a table of contents) keeping the longer text.
     merged: dict[str, dict] = {}
     for c in clauses:
