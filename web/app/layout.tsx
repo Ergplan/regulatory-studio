@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
-import { SITE_URL, site } from "@/lib/data";
+import { LAUNCHED, SITE_URL, site } from "@/lib/data";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   description: "Weekly, legally reviewed summaries of CERC, APTEL and state electricity commission orders, traced to the regulations they rest on.",
   alternates: { types: { "application/rss+xml": "/feed.xml" } },
   openGraph: { siteName: "Regulatory Studio", type: "website", locale: "en_IN" },
+  robots: LAUNCHED ? undefined : { index: false, follow: false },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

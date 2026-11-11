@@ -26,7 +26,9 @@ function load<T>(name: string, fallback: T): T {
   return existsSync(p) ? (JSON.parse(readFileSync(p, "utf8")) as T) : fallback;
 }
 
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://regulatorystudio.in").replace(/\/$/, "");
+// Until the real domain is set, the site is not indexed (see robots.ts and layout.tsx).
+export const LAUNCHED = Boolean(process.env.NEXT_PUBLIC_SITE_URL);
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000")).replace(/\/$/, "");
 export const site = load<Site>("site.json", { generated_at: "", commissions: {}, topics: {}, link_types: {}, contains_sample_data: false });
 export const orders = load<Order[]>("orders.json", []).sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
 export const regulations = load<Regulation[]>("regulations.json", []);
