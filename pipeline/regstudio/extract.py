@@ -55,12 +55,28 @@ def _merge_lines(blocks: list) -> list:
     return out
 
 
+_LANGS: str | None = None
+
+
+def _ocr_languages() -> str:
+    """'eng+hin' when both are installed, else whichever is; '' when Tesseract is missing."""
+    global _LANGS
+    if _LANGS is None:
+        _LANGS = ""
+        if shutil.which("tesseract"):
+            import subprocess
+            out = subprocess.run(["tesseract", "--list-langs"], capture_output=True, text=True).stdout.split()
+            _LANGS = "+".join(l for l in ("eng", "hin") if l in out)
+    return _LANGS
+
+
 def _ocr_blocks(page) -> list:
     """OCR one page with Tesseract (English and Hindi) when it is installed; else no text."""
-    if not shutil.which("tesseract"):
+    langs = _ocr_languages()
+    if not langs:
         return []
     try:
-        tp = page.get_textpage_ocr(language="eng+hin", dpi=300, full=True)
+        tp = page.get_textpage_ocr(language=langs, dpi=300, full=True)
         return page.get_text("blocks", textpage=tp, sort=True)
     except Exception:
         return []
