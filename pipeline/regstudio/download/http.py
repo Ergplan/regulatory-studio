@@ -4,11 +4,13 @@ from __future__ import annotations
 
 import http.cookiejar
 import ssl
+import socket
+import os
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
-import urllib.robotparser
+import re
 
 from .. import config
 
@@ -30,31 +32,99 @@ def tls_context() -> ssl.SSLContext:
     return ctx
 
 
+def _decode(pem: str) -> dict:
+    import tempfile
+    with tempfile.NamedTemporaryFile("w", suffix=".pem", delete=False) as f:
+        f.write(pem)
+    try:
+        return ssl._ssl._test_decode_cert(f.name)  # noqa: SLF001 - stdlib decoder, read-only
+    finally:
+        os.unlink(f.name)
+
+
+def _handshake_ok(host: str) -> bool:
+    try:
+        with socket.create_connection((host, 443), timeout=30) as sock:
+            with tls_context().wrap_socket(sock, server_hostname=host):
+                return True
+    except ssl.SSLCertVerificationError:
+        return False
+
+
 def fetch_missing_intermediates(host: str) -> int:
     """For a site that omits its intermediate certificate, fetch it from the CA Issuers address
-    in the site's own certificate (AIA). Returns how many certificates were added."""
-    import tempfile
-    leaf_pem = ssl.get_server_certificate((host, 443), timeout=30)
-    added, current = 0, leaf_pem
+    in the site's own certificate (AIA), one level at a time, until the chain verifies.
+
+    Only intermediates are kept: a self-signed (root) certificate or a PKCS#7 bundle is never
+    added, so trust still has to end at a root the operating system already trusts.
+    Returns how many certificates were added (0 if the chain still does not verify)."""
+    current = ssl.get_server_certificate((host, 443), timeout=30)
     existing = _extra_file().read_text() if _extra_file().exists() else ""
+    added = 0
     for _ in range(3):
-        with tempfile.NamedTemporaryFile("w", suffix=".pem", delete=False) as f:
-            f.write(current)
-        info = ssl._ssl._test_decode_cert(f.name)  # noqa: SLF001 - stdlib decoder, read-only
+        info = _decode(current)
         issuers = [u for u in info.get("caIssuers", ()) if u.startswith("http")]
         if not issuers:
             break
-        der = urllib.request.urlopen(issuers[0], timeout=30).read()
-        pem = der.decode() if der.startswith(b"-----BEGIN") else ssl.DER_cert_to_PEM_cert(der)
-        if pem.strip() in existing:
+        raw = urllib.request.urlopen(issuers[0], timeout=30).read()
+        if raw.startswith(b"-----BEGIN CERTIFICATE"):
+            pem = raw.decode()
+        elif raw[:1] == b"\x30" and not issuers[0].lower().endswith((".p7c", ".p7b")):
+            pem = ssl.DER_cert_to_PEM_cert(raw)
+        else:
+            break  # PKCS#7 bundles carry roots; don't add those
+        try:
+            issued = _decode(pem)
+        except ssl.SSLError:
             break
-        existing += pem
-        added += 1
+        if issued.get("subject") == issued.get("issuer"):
+            break  # a root: must already be trusted by the system, never added here
+        if pem.strip() not in existing:
+            existing += ("" if existing.endswith("\n") or not existing else "\n") + pem
+            added += 1
+            config.STORE.mkdir(parents=True, exist_ok=True)
+            _extra_file().write_text(existing)
+        if _handshake_ok(host):
+            return added or 1
         current = pem
-    if added:
-        config.STORE.mkdir(parents=True, exist_ok=True)
-        _extra_file().write_text(existing)
-    return added
+    return 0
+
+
+def robots_rules(text: str, agent: str = "regulatorystudio") -> list[tuple[bool, str]]:
+    """Rules for our agent (or '*') from robots.txt, as (allow, path pattern) pairs."""
+    groups, agents, rules, in_rules = {}, [], [], False
+    for line in text.splitlines():
+        line = line.split("#", 1)[0].strip()
+        if ":" not in line:
+            continue
+        key, val = (x.strip() for x in line.split(":", 1))
+        key = key.lower()
+        if key == "user-agent":
+            if in_rules:
+                for a in agents:
+                    groups.setdefault(a, []).extend(rules)
+                agents, rules, in_rules = [], [], False
+            agents.append(val.lower())
+        elif key in ("allow", "disallow"):
+            in_rules = True
+            if val:
+                rules.append((key == "allow", val))
+    for a in agents:
+        groups.setdefault(a, []).extend(rules)
+    mine = next((r for a, r in groups.items() if a != "*" and a in agent), None)
+    return mine if mine is not None else groups.get("*", [])
+
+
+def robots_allows(rules: list[tuple[bool, str]], path: str) -> bool:
+    """RFC 9309: the longest matching rule wins; on a tie, allow wins."""
+    best = None
+    for allow, pattern in rules:
+        rx = "^" + re.escape(pattern).replace(r"\*", ".*")
+        rx = rx[:-2] + "$" if rx.endswith(r"\$") else rx
+        if re.match(rx, path):
+            key = (len(pattern), allow)
+            best = key if best is None or key > best else best
+    return best is None or best[1]
 
 
 class Client:
@@ -62,7 +132,7 @@ class Client:
         self.pause_s = pause_s
         self.jar = http.cookiejar.CookieJar()
         self._last: dict[str, float] = {}
-        self._robots: dict[str, urllib.robotparser.RobotFileParser | None] = {}
+        self._robots: dict[str, list[tuple[bool, str]]] = {}
         self._build()
 
     def _build(self):
@@ -80,15 +150,13 @@ class Client:
         parts = urllib.parse.urlsplit(url)
         base = f"{parts.scheme}://{parts.netloc}"
         if base not in self._robots:
-            rp = urllib.robotparser.RobotFileParser()
             try:
                 raw = self._open(base + "/robots.txt", check_robots=False).decode("utf-8", "ignore")
-                rp.parse(raw.splitlines())
-                self._robots[base] = rp
-            except Exception:
-                self._robots[base] = None  # no robots.txt: allowed
-        rp = self._robots[base]
-        return rp is None or rp.can_fetch(USER_AGENT, url)
+            except urllib.error.HTTPError as e:
+                raw = "" if e.code < 500 else "User-agent: *\nDisallow: /"  # 4xx: no rules; 5xx: stay out
+            self._robots[base] = robots_rules(raw)
+        path = parts.path or "/"
+        return robots_allows(self._robots[base], path + (f"?{parts.query}" if parts.query else ""))
 
     def _open(self, url: str, data: bytes | None = None, headers: dict | None = None, check_robots: bool = True,
               timeout: int = 120) -> bytes:

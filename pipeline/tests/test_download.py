@@ -61,3 +61,15 @@ def test_dates_and_inbox_contract(env):
     assert {"file": str(Path(path).relative_to(intake.config.INBOX)), "problem": "file is not a PDF (check for an HTML error page saved as .pdf)"} not in report["problems"]
     seen = Seen(); seen.add(item.key, sha); seen.save()
     assert Seen().has(item.key)
+
+
+def test_robots_longest_match():
+    from regstudio.download.http import robots_allows, robots_rules
+    wp = robots_rules("User-agent: *\nDisallow: /wp-admin/\nAllow: /wp-admin/admin-ajax.php\n")
+    assert robots_allows(wp, "/wp-admin/admin-ajax.php?action=x")
+    assert not robots_allows(wp, "/wp-admin/options.php")
+    assert robots_allows(wp, "/orders/")
+    assert not robots_allows(robots_rules("User-agent: *\nDisallow: /\n"), "/anything")
+    assert robots_allows(robots_rules(""), "/x")
+    own = robots_rules("User-agent: *\nDisallow: /\n\nUser-agent: RegulatoryStudio\nAllow: /\n")
+    assert robots_allows(own, "/orders")

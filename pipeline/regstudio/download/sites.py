@@ -6,6 +6,7 @@ Listing pages, as found in November 2026:
   UPERC  https://www.uperc.org/Order_Users.aspx                           links "Order dated DD/MM/YY for ..."
   RERC   https://rerc.rajasthan.gov.in/rerc-user-files/office-orders      ASP.NET table; PDF via postback
   MERC   https://merc.gov.in/wp-admin/admin-ajax.php?action=getpostsfororderdatatables   JSON
+         (merc.gov.in's robots.txt disallows all bots as of Nov 2026, so the client refuses it)
   GERC   https://gercin.org/orders/orders_petition/judgement_orders?page=N              HTML table, paged
   KERC   https://kerc.karnataka.gov.in/42/miscellaneous-orders/en (and tariff pages)    HTML table
 APTEL's judgment list is rendered in the browser with no data endpoint; use ops/fetch_one.py.

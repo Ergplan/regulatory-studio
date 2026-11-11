@@ -92,7 +92,7 @@ regstudio download --commission gerc --commission kerc
 | CERC | recent_orders.html | table of petitions |
 | UPERC | Order_Users.aspx | "Order dated ..." links |
 | RERC | office-orders page | PDFs come back through a form postback |
-| MERC | site's order data feed (JSON) | |
+| MERC | site's order data feed (JSON) | **Skipped:** merc.gov.in's robots.txt asks all automated clients to stay out, and the script obeys. Pick MERC orders by hand on the site and add each with `ops/fetch_one.py <url>`, or ask MERC to allow the feed |
 | GERC | judgement orders + RE orders, paged | |
 | KERC | miscellaneous, generic tariff and tariff order pages | |
 | APTEL | no listing the script can read | add with `ops/fetch_one.py <url>` |
@@ -100,7 +100,8 @@ regstudio download --commission gerc --commission kerc
 Each file lands in `data/inbox/<commission>/<today>/` with its metadata JSON. Already-fetched
 items are remembered in `data/store/download_seen.json`. Some state sites send an incomplete
 certificate chain; the script fetches the missing intermediate certificate from the address the
-site's own certificate names and still checks the full chain against the Mac's trusted roots.
+site's own certificate names (never a root) and still checks the full chain against the Mac's
+trusted roots. The script reads each site's robots.txt and skips anything it disallows.
 Anything that is not a PDF (an error page, say) is skipped and reported.
 
 ## For the download team
