@@ -169,3 +169,18 @@ def test_running_heads_merged_into_first_paragraph_are_removed():
                 "Having considered the submissions", "Accordingly, the petition is"]
     plain = [{"pid": f"p{i}.1", "text": f"{openings[i - 1]} on page {i}"} for i in range(1, 6)]
     assert strip_running_heads(plain) == plain
+
+
+def test_regulations_starting_mid_paragraph_are_split_in_sequence():
+    from regstudio.registry import split_clauses
+    paras = [{"pid": "p1.1", "text": "4. Categorization of Green Energy Open Access: consumers are classified. "
+                                     "Charges of Rs. 2. Per unit apply. 5. Eligibility Criteria for applying GEOA "
+                                     "i. Subject to the provisions, any consumer may apply."},
+             {"pid": "p2.1", "text": "Text continues for 5. 6. Nodal Agency i. All applications go to SLDC. "
+                                     "7. Treatment for existing Consumers: The existing consumers may continue."}]
+    got = {c["number"]: c for c in split_clauses(paras)}
+    assert set(got) == {"4", "5", "6", "7"}
+    assert got["5"]["heading"] == "Eligibility Criteria for applying GEOA"
+    assert got["5"]["text"].startswith("i. Subject to the provisions")
+    assert got["7"]["heading"] == "Treatment for existing Consumers" and got["7"]["pid"] == "p2.1"
+    assert "Rs. 2. Per unit" in got["4"]["text"]

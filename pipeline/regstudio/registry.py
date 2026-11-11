@@ -66,7 +66,33 @@ def english_part(paragraphs: list[dict]) -> list[dict]:
     return paragraphs
 
 
+INLINE = re.compile(r"(?<=[.:;)])\s+(\d{1,3})\.\s+(?=[A-Z])")
+
+
+def split_inline(paragraphs: list[dict]) -> list[dict]:
+    """Some PDFs merge a whole page into one block, so regulation 5 starts mid-paragraph:
+    '... separate order. 5. Eligibility Criteria ...'. Split there, but only at the next number in
+    sequence after the last regulation seen, so 'Rs. 2. ' or a year cannot start a clause."""
+    out: list[dict] = []
+    last = 0
+    for p in paragraphs:
+        text = p["text"]
+        m = TOP.match(text)
+        if m and m.group(1).isdigit():
+            last = int(m.group(1))
+        pieces, start = [], 0
+        for im in INLINE.finditer(text):
+            if int(im.group(1)) == last + 1:
+                pieces.append(text[start:im.start()].strip())
+                start = im.start(1)
+                last += 1
+        pieces.append(text[start:].strip())
+        out.extend({**p, "text": t} for t in pieces if t)
+    return out
+
+
 def split_clauses(paragraphs: list[dict]) -> list[dict]:
+    paragraphs = split_inline(paragraphs)
     clauses: list[dict] = []
     current_top: str | None = None
     current_heading: str | None = None
@@ -96,9 +122,12 @@ def split_clauses(paragraphs: list[dict]) -> list[dict]:
         if not c["heading"] and "(" not in c["number"] and 0 < len(c["text"]) <= 70 and not c["text"].endswith("."):
             c["heading"], c["text"] = c["text"], ""
         elif not c["heading"] and "(" not in c["number"]:
-            m = re.match(r"^([A-Z][A-Za-z ,'&-]{3,60}?)\s+(These|This|The|In|If|Every|For|Save|Deviation|Charges|Notwithstanding)\b", c["text"])
+            m = (re.match(r"^(?!(?:The|This|These|In|If|Every|For|Where|When|Subject|Provided|Notwithstanding|Any|No|A|An)\b)"
+                          r"([A-Z][^:.]{3,80}?)\s*:\s*", c["text"])
+                 or re.match(r"^([A-Z][A-Za-z ,'&/()-]{3,80}?)\s+(?=(?:i|\(i\)|\(1\)|\(a\))[.)]?\s)", c["text"])
+                 or re.match(r"^([A-Z][A-Za-z ,'&-]{3,60}?)\s+(?=(These|This|The|In|If|Every|For|Save|Deviation|Charges|Notwithstanding)\b)", c["text"]))
             if m:
-                c["heading"], c["text"] = m.group(1).strip(), c["text"][len(m.group(1)):].strip()
+                c["heading"], c["text"] = m.group(1).strip(), c["text"][m.end():].strip()
     heads = {c["number"]: c["heading"] for c in clauses if "(" not in c["number"]}
     for c in clauses:
         if "(" in c["number"] and not c["heading"]:
