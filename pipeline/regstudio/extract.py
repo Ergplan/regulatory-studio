@@ -82,6 +82,28 @@ def _ocr_blocks(page) -> list:
         return []
 
 
+# Some PDFs (seen in GERC orders) map the "fi" and "fl" ligature glyphs to "N" or "T" followed by
+# the second letter: "Niled", "notiNied", "speciTied", "Nlow". Inside a word, a capital N or T
+# before "i" or "l" almost never occurs in Indian orders, so a document with several has the
+# broken map; only then are those letters repaired, mid-word and in a short list of fi/fl words.
+MID = re.compile(r"(?<=[a-z])[NT](?=[il])")
+START = re.compile(r"\b[NT](?=(?:iled|iles?|iling|irst|inal|inally|inali[sz]ed|ind|inds|inding|indings|ixed|inanc\w*"
+                   r"|irms?|irmly|ifth|igures?|ield|inished|ines?|its?|itted|lows?|lowing|lowed|lexib\w*|luctuat\w*|loor)\b)")
+
+
+def repair_ligatures(texts: list[str]) -> tuple[list[str], int]:
+    """Repair the broken fi/fl ligature map when a document clearly has it; else leave text alone."""
+    if sum(len(MID.findall(t)) for t in texts) < 3:
+        return texts, 0
+    fixed, out = 0, []
+    for t in texts:
+        t, a = MID.subn("f", t)
+        t, b = START.subn("f", t)
+        fixed += a + b
+        out.append(t)
+    return out, fixed
+
+
 def extract_pdf(path) -> tuple[list[dict], int, list[int]]:
     """Return (paragraphs, page_count, pages_without_text)."""
     doc = pymupdf.open(path)
@@ -122,6 +144,9 @@ def extract_pdf(path) -> tuple[list[dict], int, list[int]]:
                 continue
             n += 1
             paragraphs.append({"pid": f"p{pno}.{n}", "page": pno, "idx": n, "text": text, "bbox": bbox})
+    texts, _ = repair_ligatures([p["text"] for p in paragraphs])
+    for p, t in zip(paragraphs, texts):
+        p["text"] = t
     return paragraphs, page_count, empty
 
 

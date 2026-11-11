@@ -123,3 +123,16 @@ def test_amendment_changes_are_proposed_then_applied_with_history(env):
     assert c.execute("SELECT in_force_to FROM clauses WHERE id = ?", (f"{reg}/9(2)",)).fetchone()[0] == "2026-11-30"
     with pytest.raises(amend.ApplyError):
         amend.apply_change(c, changes[0]["id"], "Test Reviewer")  # already applied
+
+
+def test_broken_ligature_map_is_repaired_only_when_present():
+    from regstudio.extract import repair_ligatures
+    broken = ["This Petition has been Niled by the Petitioner.", "The Rules are notiNied and speciTied.",
+              "The beneNits and modiNications, Nirst and Ninal.", "BrieTly stated, the Nlow is sufNicient.",
+              "Nigam Limited, Nimesh Patel and Nisarg; Till date.", "The Nixed charge is Tit."]
+    out, n = repair_ligatures(broken)
+    assert out == ["This Petition has been filed by the Petitioner.", "The Rules are notified and specified.",
+                   "The benefits and modifications, first and final.", "Briefly stated, the flow is sufficient.",
+                   "Nigam Limited, Nimesh Patel and Nisarg; Till date.", "The fixed charge is fit."]
+    clean = ["Nigam Limited filed the petition before NLDC.", "Mr. Nimesh Patel appeared. Till then."]
+    assert repair_ligatures(clean) == (clean, 0)
