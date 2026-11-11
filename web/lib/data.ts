@@ -29,7 +29,14 @@ function load<T>(name: string, fallback: T): T {
 // Until the real domain is set, the site is not indexed (see robots.ts and layout.tsx).
 export const LAUNCHED = Boolean(process.env.NEXT_PUBLIC_SITE_URL);
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000")).replace(/\/$/, "");
-export const site = load<Site>("site.json", { generated_at: "", commissions: {}, topics: {}, link_types: {}, contains_sample_data: false });
+// Coverage shown before the first publish; the published site.json replaces it.
+const DEFAULT_COMMISSIONS: Record<string, string> = {
+  cerc: "Central Electricity Regulatory Commission", aptel: "Appellate Tribunal for Electricity",
+  uperc: "Uttar Pradesh Electricity Regulatory Commission", merc: "Maharashtra Electricity Regulatory Commission",
+  gerc: "Gujarat Electricity Regulatory Commission", kerc: "Karnataka Electricity Regulatory Commission",
+  rerc: "Rajasthan Electricity Regulatory Commission",
+};
+export const site = load<Site>("site.json", { generated_at: "", commissions: DEFAULT_COMMISSIONS, topics: {}, link_types: {}, contains_sample_data: false });
 export const orders = load<Order[]>("orders.json", []).sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
 export const regulations = load<Regulation[]>("regulations.json", []);
 export const clauses = load<Clause[]>("clauses.json", []);
