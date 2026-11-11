@@ -36,6 +36,54 @@ def _schema() -> dict:
     return json.loads((config.SCHEMAS / "inbox_metadata.schema.json").read_text())
 
 
+def check_file(pdf: Path, validator) -> tuple[dict | None, str | None, str | None]:
+    """Validate one inbox PDF against the contract. Returns (metadata, sha256, problem)."""
+    meta_path = pdf.with_suffix(".json")
+    if not meta_path.exists():
+        return None, None, "no metadata file beside the PDF"
+    try:
+        meta = json.loads(meta_path.read_text())
+    except json.JSONDecodeError as e:
+        return None, None, f"metadata is not valid JSON: {e}"
+    errors = sorted(validator.iter_errors(meta), key=lambda e: list(e.path))
+    if errors:
+        return None, None, "; ".join(e.message for e in errors[:3])
+    with pdf.open("rb") as f:
+        if f.read(5) != b"%PDF-":
+            return None, None, "file is not a PDF (check for an HTML error page saved as .pdf)"
+    actual = sha256_file(pdf)
+    if actual != meta["sha256"]:
+        return None, None, "sha256 in metadata does not match the file"
+    if pdf.parent.parent.name != meta["commission"]:
+        return None, None, "folder commission differs from metadata commission"
+    if not re_date(pdf.parent.name):
+        return None, None, "folder name is not a date (YYYY-MM-DD)"
+    return meta, actual, None
+
+
+def re_date(name: str) -> bool:
+    import re
+    return bool(re.fullmatch(r"\d{4}-\d{2}-\d{2}", name))
+
+
+def check() -> dict:
+    """Dry run for the download team: report every problem in the inbox, register nothing."""
+    schema = _schema()
+    validator = jsonschema.validators.validator_for(schema)(schema)
+    ok, problems = 0, []
+    for pdf in sorted(config.INBOX.glob("*/*/*.pdf")):
+        _, _, problem = check_file(pdf, validator)
+        if problem:
+            problems.append({"file": str(pdf.relative_to(config.INBOX)), "problem": problem})
+        else:
+            ok += 1
+    orphans = [str(j.relative_to(config.INBOX)) for j in sorted(config.INBOX.glob("*/*/*.json"))
+               if not j.with_suffix(".pdf").exists()]
+    misplaced = [str(f.relative_to(config.INBOX)) for f in sorted(config.INBOX.rglob("*"))
+                 if f.is_file() and f.name != ".gitkeep" and len(f.relative_to(config.INBOX).parts) != 3]
+    return {"valid": ok, "problems": problems, "metadata_without_pdf": orphans, "misplaced_files": misplaced}
+
+
 def run(limit: int | None = None) -> IntakeResult:
     config.ensure_dirs()
     result = IntakeResult()
@@ -48,25 +96,9 @@ def run(limit: int | None = None) -> IntakeResult:
             if limit is not None and len(result.added) >= limit:
                 break
             rel = str(pdf.relative_to(config.INBOX))
-            meta_path = pdf.with_suffix(".json")
-            if not meta_path.exists():
-                result.rejected.append((rel, "no metadata file beside the PDF"))
-                continue
-            try:
-                meta = json.loads(meta_path.read_text())
-            except json.JSONDecodeError as e:
-                result.rejected.append((rel, f"metadata is not valid JSON: {e}"))
-                continue
-            errors = sorted(validator.iter_errors(meta), key=lambda e: e.path)
-            if errors:
-                result.rejected.append((rel, "; ".join(e.message for e in errors[:3])))
-                continue
-            actual = sha256_file(pdf)
-            if actual != meta["sha256"]:
-                result.rejected.append((rel, "sha256 in metadata does not match the file"))
-                continue
-            if pdf.parent.parent.name != meta["commission"]:
-                result.rejected.append((rel, "folder commission differs from metadata commission"))
+            meta, actual, problem = check_file(pdf, validator)
+            if problem:
+                result.rejected.append((rel, problem))
                 continue
             if conn.execute("SELECT 1 FROM documents WHERE id = ?", (actual,)).fetchone():
                 result.duplicates += 1

@@ -83,3 +83,15 @@ def test_regulation_ids_are_readable():
     from regstudio.registry import regulation_id
     title = "Central Electricity Regulatory Commission (Deviation Settlement Mechanism and Related Matters) Regulations, 2024"
     assert regulation_id("cerc", title, "2024-08-05") == "cerc/deviation-settlement-mechanism-related-matters-2024"
+
+
+def test_check_inbox_reports_without_registering(env):
+    from regstudio import intake as ik
+    bad = env / "inbox" / "rerc" / "2026-11-09" / "stray.json"
+    bad.write_text("{}")
+    (env / "inbox" / "loose.pdf").write_bytes(b"%PDF-1.4")
+    report = ik.check()
+    assert report["valid"] == 2
+    assert report["metadata_without_pdf"] == ["rerc/2026-11-09/stray.json"]
+    assert report["misplaced_files"] == ["loose.pdf"]
+    assert _db().execute("SELECT count(*) FROM documents").fetchone()[0] == 0

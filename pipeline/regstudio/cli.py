@@ -61,6 +61,7 @@ def main(argv: list[str] | None = None) -> None:
     sub = p.add_subparsers(dest="cmd", required=True)
     sub.add_parser("init", help="create or migrate the working database")
     sub.add_parser("status", help="documents per stage and the review queue")
+    sub.add_parser("check-inbox", help="dry run: list problems in data/inbox without registering anything")
     r = sub.add_parser("run", help="run one or more stages in order")
     r.add_argument("stages", nargs="+", choices=STAGES)
     r.add_argument("--limit", type=int, default=None, help="max documents per stage this run")
@@ -78,6 +79,12 @@ def main(argv: list[str] | None = None) -> None:
     if args.cmd == "init":
         db.init()
         print(f"working database ready at {config.DB_PATH}")
+    elif args.cmd == "check-inbox":
+        from . import intake
+        report = intake.check()
+        print(json.dumps(report, indent=2))
+        if report["problems"] or report["metadata_without_pdf"] or report["misplaced_files"]:
+            raise SystemExit(1)
     elif args.cmd == "status":
         print(json.dumps(status(), indent=2))
     elif args.cmd == "run":

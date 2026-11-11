@@ -78,3 +78,9 @@ OCR'd orders are flagged in the review queue for a closer check.
 | Mon–Fri nights | Download script, then `ops/weeknight.sh` | Automatic |
 | Saturday | Review queue: summaries, links, registry, digest | Legal team |
 | Sunday | `regstudio publish`, commit `data/snapshot`, push (Vercel deploys), `send-digest` | You |
+
+## For the download team
+
+Before handing files over, run `regstudio check-inbox`. It lists every PDF whose metadata is
+missing or invalid, whose hash does not match, or that sits in the wrong folder, and registers
+nothing. It exits with status 1 if anything needs fixing, so it can gate the download script.
