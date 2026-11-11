@@ -13,3 +13,4 @@ web/out/
 .env.local
 .DS_Store
 web/public/pdf/
+web/next-env.d.ts
