@@ -1,6 +1,7 @@
 """Legal review screen. Runs on the Mac mini at http://127.0.0.1:8765.
 
 Only this app moves anything from 'proposed' to 'approved', and it records who did it.
+With reviewers added (regstudio add-reviewer), every page needs a signed-in reviewer.
 """
 
 from __future__ import annotations
@@ -12,7 +13,7 @@ from fastapi import FastAPI, Form, HTTPException, Request
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
-from . import config, db
+from . import auth, config, db
 
 app = FastAPI(title="Regulatory Studio review")
 templates = Jinja2Templates(directory=str(Path(__file__).parent / "templates"))
@@ -20,8 +21,52 @@ templates.env.globals.update(COMMISSIONS=config.COMMISSIONS, LINK_TYPES=config.L
                              TOPICS=config.TOPICS)
 
 
+@app.middleware("http")
+async def require_sign_in(request: Request, call_next):
+    if auth.enabled() and request.url.path not in ("/login",) and not reviewer(request):
+        return RedirectResponse("/login", status_code=303)
+    return await call_next(request)
+
+
 def reviewer(request: Request) -> str | None:
+    if auth.enabled():
+        return auth.read_session(request.cookies.get("rs_session"))
     return request.cookies.get("reviewer")
+
+
+LOGIN_PAGE = """<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sign in · Regulatory Studio review</title><style>body{font:15px -apple-system,sans-serif;background:#f7f8fa;display:grid;place-items:center;height:100vh;margin:0}
+form{background:#fff;border:1px solid #d9dde5;border-radius:10px;padding:24px;width:320px}label{display:block;margin:10px 0 4px;color:#5b6475;font-size:13px}
+input{width:100%;padding:8px;border:1px solid #d9dde5;border-radius:6px;box-sizing:border-box}button{margin-top:16px;width:100%;padding:9px;border:0;border-radius:6px;background:#1f5fbf;color:#fff}
+p{color:#b3261e}</style></head><body><form method="post" action="/login"><b>Regulatory Studio review</b>{error}
+<label>Name</label><input name="name" autocomplete="username" required><label>Password</label>
+<input name="password" type="password" autocomplete="current-password" required><button>Sign in</button></form></body></html>"""
+
+
+@app.get("/login", response_class=HTMLResponse)
+def login_form():
+    if not auth.enabled():
+        return back("/")
+    return LOGIN_PAGE.replace("{error}", "")
+
+
+@app.post("/login")
+def login(name: str = Form(...), password: str = Form(...)):
+    if not auth.enabled():
+        return back("/")
+    if not auth.check_password(name, password):
+        return HTMLResponse(LOGIN_PAGE.replace("{error}", "<p>Name or password not recognised.</p>"), status_code=401)
+    resp = back("/")
+    resp.set_cookie("rs_session", auth.make_session(name.strip()), max_age=auth.SESSION_HOURS * 3600,
+                    httponly=True, samesite="strict")
+    return resp
+
+
+@app.get("/logout")
+def logout():
+    resp = back("/login")
+    resp.delete_cookie("rs_session")
+    return resp
 
 
 def need_reviewer(request: Request) -> str:
@@ -61,6 +106,8 @@ def queue(request: Request):
 
 @app.post("/whoami")
 def set_reviewer(name: str = Form(...)):
+    if auth.enabled():
+        raise HTTPException(403, "Reviewers sign in with a password.")
     resp = back("/")
     resp.set_cookie("reviewer", name.strip()[:80], max_age=60 * 60 * 24 * 180, samesite="lax")
     return resp

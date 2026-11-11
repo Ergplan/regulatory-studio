@@ -84,3 +84,17 @@ OCR'd orders are flagged in the review queue for a closer check.
 Before handing files over, run `regstudio check-inbox`. It lists every PDF whose metadata is
 missing or invalid, whose hash does not match, or that sits in the wrong folder, and registers
 nothing. It exits with status 1 if anything needs fixing, so it can gate the download script.
+
+## Reviewers on other machines
+
+By default the review screen listens only on the Mac itself (127.0.0.1). To let the legal team
+review from their own laptops on the office network:
+
+```bash
+regstudio add-reviewer "Full Name"        # once per reviewer; asks for a password (10+ characters)
+regstudio review --host 0.0.0.0           # then open http://<mac-mini-ip>:8765 from another machine
+```
+
+Once any reviewer is added, every page needs sign-in and each approval is recorded under the
+signed-in name. Passwords are stored as salted hashes in `data/store/reviewers.json`, never in git.
+The screen is plain HTTP, so use it only on the office network, not over the internet.

@@ -128,3 +128,16 @@ def test_reviewer_sets_the_public_title(server):
     server("/whoami", {"name": "Test Reviewer"})
     server(f"/order/{doc}/summary", {"action": "save", "summary": "s", "title": "Plain-English title"})
     assert _db().execute("SELECT title FROM documents WHERE id = ?", (doc,)).fetchone()[0] == "Plain-English title"
+
+
+def test_sign_in_required_once_reviewers_exist(server):
+    from regstudio import auth
+    doc, _, _ = _ids()
+    auth.add_reviewer("Legal One", "correct horse battery")
+    assert server("/whoami", {"name": "Anyone"}) in (303, 403)  # redirected to sign-in or refused
+    assert server(f"/order/{doc}/summary", {"action": "approve", "summary": "x"}) == 303  # redirect to /login
+    assert _db().execute("SELECT summary_status FROM orders").fetchone()[0] == "proposed"
+    assert server("/login", {"name": "Legal One", "password": "wrong password"}) == 401
+    assert server("/login", {"name": "Legal One", "password": "correct horse battery"}) == 303
+    assert server(f"/order/{doc}/summary", {"action": "approve", "summary": "Reviewed.", "issue": "i", "outcome": "o"}) == 303
+    assert _db().execute("SELECT reviewer FROM orders").fetchone()[0] == "Legal One"

@@ -68,6 +68,8 @@ def main(argv: list[str] | None = None) -> None:
     rv = sub.add_parser("review", help="start the legal review screen")
     rv.add_argument("--host", default="127.0.0.1")
     rv.add_argument("--port", type=int, default=8765)
+    ar = sub.add_parser("add-reviewer", help="add or reset a reviewer's password (turns on sign-in)")
+    ar.add_argument("name")
     pb = sub.add_parser("publish", help="write approved items to data/snapshot")
     pb.add_argument("--clean", action="store_true", help="drop sample documents from the snapshot")
     sd = sub.add_parser("send-digest", help="email an approved, published digest via Resend")
@@ -91,7 +93,18 @@ def main(argv: list[str] | None = None) -> None:
         db.init()
         for s in args.stages:
             print(s, json.dumps(_run_stage(s, args.limit)))
+    elif args.cmd == "add-reviewer":
+        import getpass
+        from . import auth
+        pw = getpass.getpass(f"Password for {args.name} (10+ characters): ")
+        if pw != getpass.getpass("Again: "):
+            raise SystemExit("passwords differ")
+        auth.add_reviewer(args.name, pw)
+        print(f"{args.name} added; the review screen now requires sign-in")
     elif args.cmd == "review":
+        from . import auth
+        if args.host not in ("127.0.0.1", "localhost") and not auth.enabled():
+            raise SystemExit("add at least one reviewer (regstudio add-reviewer NAME) before opening the review screen to the network")
         import uvicorn
         from .review_app import app
         uvicorn.run(app, host=args.host, port=args.port)
