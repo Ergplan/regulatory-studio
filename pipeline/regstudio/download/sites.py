@@ -175,8 +175,15 @@ def parse_gerc(page: str) -> list[Item]:
         party = " v. ".join(x for x in (cell.get("Petitioner"), cell.get("Respondent")) if x)
         subject = cell.get("Download Matter", "")
         items.append(Item("gerc", f"{party}: {subject}" if party else subject, link.group(1), _date(cell["Order Date"]),
-                          f"Petition No. {petition}" if petition else None))
+                          _case(petition)))
     return items
+
+
+def _case(petition: str) -> str | None:
+    """'2695/2026' -> 'Petition No. 2695/2026'; 'IA No. 85/2026 in Petition No. 2749/2026' stays as is."""
+    if not petition:
+        return None
+    return petition if re.match(r"[A-Za-z]", petition) else f"Petition No. {petition}"
 
 
 def gerc(client, max_pages: int = 5) -> list[Item]:
