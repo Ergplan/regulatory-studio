@@ -179,3 +179,16 @@ def test_unresolved_citation_gets_a_suggested_target(server):
         cite = f"Regulation {clause} of the {reg['title']}"
         assert registry.suggest_target(conn, cite) == f"clause::{reg['id']}/{clause}"
         assert registry.suggest_target(conn, "Regulation 4 of some unrelated Grid Code") is None
+
+
+def test_suggestion_understands_common_abbreviations(env):
+    import sqlite3 as _s
+    from regstudio import db, registry
+    db.init()
+    with db.session() as conn:
+        conn.execute("INSERT INTO regulations(id, commission, title, status) VALUES (?, 'rerc', ?, 'proposed')",
+                     ("rerc/geoa-2025", "RERC (Terms and Conditions for Green Energy Open Access) Regulations, 2025"))
+        conn.execute("INSERT INTO clauses(id, regulation_id, number, text, status) VALUES (?, ?, '7', 'x', 'proposed')",
+                     ("rerc/geoa-2025/7", "rerc/geoa-2025"))
+        assert registry.suggest_target(conn, "Regulation 7 of the GEOA Regulations, 2025", "rerc") == "clause::rerc/geoa-2025/7"
+        assert registry.suggest_target(conn, "Regulation 7 of the GEOA Regulations, 2025", "gerc") is None

@@ -194,7 +194,14 @@ STOPWORDS = {"the", "of", "and", "for", "rerc", "cerc", "gerc", "kerc", "merc", 
              "regulations", "regulation", "to", "in", "on", "by", "a", "an", "under", "from"}
 
 
+ABBREVIATIONS = {"GEOA": "green energy open access", "DSM": "deviation settlement mechanism",
+                 "GNA": "general network access", "RE": "renewable energy", "OA": "open access",
+                 "ISTS": "inter-state transmission system", "MYT": "multi year tariff"}
+
+
 def _words(text: str) -> set[str]:
+    for short, full in ABBREVIATIONS.items():
+        text = re.sub(rf"\b{short}\b", full, text)
     return {w for w in re.findall(r"[a-z]+", text.lower()) if w not in STOPWORDS and len(w) > 2}
 
 
