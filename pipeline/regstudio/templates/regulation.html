@@ -1,0 +1,18 @@
+{% extends "base.html" %}{% block title %}{{ r.title }}{% endblock %}
+{% block body %}
+<h1>{{ r.title }}</h1><p class="muted"><code>{{ r.id }}</code> · {{ COMMISSIONS[r.commission] }} · <span class="pill {{ r.status }}">{{ r.status }}</span>
+{% if r.doc_id %} · <a href="/file/{{ r.doc_id }}" target="_blank">PDF</a>{% endif %}</p>
+<div class="card"><form method="post" action="/regulation/{{ r.id }}/meta">
+<div class="row"><div style="flex:3"><label>Title</label><input name="title" value="{{ r.title }}"></div>
+<div style="flex:1"><label>Short title</label><input name="short_title" value="{{ r.short_title or '' }}"></div>
+<div style="flex:1"><label>Notified</label><input type="date" name="notified_date" value="{{ r.notified_date or '' }}"></div></div>
+<p class="row"><button name="action" value="save">Save</button><button class="primary" name="action" value="approve">Approve regulation and all remaining clauses</button></p></form></div>
+<p class="muted">Clause ids are permanent once approved: orders link to them. Fix the text and dates here; set "in force to" when an amendment replaces a clause.</p>
+{% for c in clauses %}<div class="card" id="c-{{ c.id }}"><form method="post" action="/clause/{{ c.id }}">
+<div class="row"><b>{{ c.number }}</b><code class="muted">{{ c.id }}</code><span class="pill {{ c.status }}">{{ c.status }}</span></div>
+<label>Heading</label><input name="heading" value="{{ c.heading or '' }}"><label>Text</label><textarea name="text">{{ c.text }}</textarea>
+<div class="row"><div><label>In force from</label><input type="date" name="in_force_from" value="{{ c.in_force_from or '' }}"></div>
+<div><label>In force to</label><input type="date" name="in_force_to" value="{{ c.in_force_to or '' }}"></div></div>
+<p class="row"><button name="action" value="save">Save</button><button class="good" name="action" value="approve">Approve</button><button class="bad" name="action" value="reject">Reject</button></p>
+</form></div>{% endfor %}
+{% endblock %}

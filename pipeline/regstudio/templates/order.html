@@ -1,0 +1,57 @@
+{% extends "base.html" %}{% block title %}{{ d.case_number or d.title }}{% endblock %}
+{% block head %}<style>
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;height:calc(100vh - 140px)}
+.pdf{border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;background:#fff}
+.pdf iframe{flex:1;border:0;width:100%}.para{padding:10px;border-top:1px solid var(--line);background:#fffbe6;max-height:30%;overflow:auto}
+.side{overflow:auto;padding-right:4px}.link{border:1px solid var(--line);border-radius:8px;padding:10px;margin-bottom:8px;background:#fff}
+.link.approved{border-left:4px solid var(--good)}.link.rejected{border-left:4px solid var(--bad);opacity:.6}.link.proposed{border-left:4px solid var(--warn)}
+.excerpt{font-style:italic;color:var(--quiet);margin:4px 0}.unres{color:var(--bad);font-weight:600}
+</style>{% endblock %}
+{% block body %}
+<h1>{{ d.title or d.case_number }}</h1>
+<p class="muted">{{ COMMISSIONS[d.commission] }} · {{ d.case_number or '' }} · {{ d.doc_date or 'date not given' }} ·
+<a href="{{ d.source_url }}" target="_blank" rel="noopener">source</a> · significance {{ o.significance }} — {{ o.triage_reason }}</p>
+{% if not reviewer %}<div class="flash">Set your name on the <a href="/">queue page</a> before approving.</div>{% endif %}
+<div class="split">
+<div class="pdf"><iframe id="pdf" src="/file/{{ d.id }}#page=1" title="Order PDF"></iframe>
+<div class="para" id="para"><span class="muted">Click a link's paragraph id to see the passage it rests on.</span></div></div>
+<div class="side">
+<div class="card"><form method="post" action="/order/{{ d.id }}/summary">
+<label>Issue</label><textarea name="issue" style="min-height:50px">{{ o.issue or '' }}</textarea>
+<label>Outcome</label><textarea name="outcome" style="min-height:50px">{{ o.outcome or '' }}</textarea>
+<label>Summary (published as written)</label><textarea name="summary" style="min-height:180px">{{ o.summary or '' }}</textarea>
+<label>Topics</label><div class="row">{% for slug, name in TOPICS.items() %}
+<label style="margin:0;color:var(--ink)"><input type="checkbox" name="topics" value="{{ slug }}" style="width:auto" {% if slug in topics %}checked{% endif %}> {{ name }}</label>{% endfor %}</div>
+<p class="muted">Parties: {% for p in parties %}{{ p.name }} ({{ p.role }}){% if not loop.last %}; {% endif %}{% endfor %}</p>
+<div class="row"><span class="pill {{ o.summary_status }}">{{ o.summary_status }}</span>
+<button name="action" value="save">Save draft</button><button class="primary" name="action" value="approve">Approve summary</button>
+<button class="bad" name="action" value="reject" onclick="return confirm('Drop this order from the digest?')">Not for publication</button></div>
+</form></div>
+<h2>Links ({{ links|length }})</h2><p class="muted">Each link is published only if approved. Approving requires a target.</p>
+{% for l in links %}<div class="link {{ l.status }}" id="link-{{ l.id }}">
+<div class="row"><b>{{ LINK_TYPES[l.link_type] }}</b> → {% if l.target_id %}<code>{{ l.target_id }}</code>{% else %}<span class="unres">unresolved</span>{% endif %}
+<span class="pill {{ l.status }}">{{ l.status }}</span>{% if l.added_by == 'reviewer' %}<span class="pill">added by {{ l.reviewer }}</span>{% endif %}</div>
+<div>Cited as “{{ l.citation_text }}” in <a href="#" onclick="return show('{{ l.pid }}')">{{ l.pid }}</a></div>
+<div class="excerpt">“{{ l.excerpt }}”</div>
+{% if l.status == 'proposed' %}<form method="post" action="/link/{{ l.id }}" class="row">
+<select name="link_type" style="max-width:170px">{% for k, v in LINK_TYPES.items() %}<option value="{{ k }}" {% if k == l.link_type %}selected{% endif %}>{{ v }}</option>{% endfor %}</select>
+<input name="target" list="targets" placeholder="{{ 'keep ' ~ l.target_id if l.target_id else 'pick the provision' }}" style="max-width:260px">
+<button class="good" name="action" value="approve">Approve</button><button class="bad" name="action" value="reject">Reject</button></form>
+{% else %}<form method="post" action="/link/{{ l.id }}" class="inline"><button name="action" value="reopen">Reopen</button></form>{% endif %}
+</div>{% endfor %}
+<h2>Add a link the reader missed</h2>
+<div class="card"><form method="post" action="/order/{{ d.id }}/link">
+<div class="row"><select name="link_type" style="max-width:180px">{% for k, v in LINK_TYPES.items() %}<option value="{{ k }}">{{ v }}</option>{% endfor %}</select>
+<input name="target" list="targets" placeholder="target" required style="max-width:260px"><input name="pid" placeholder="paragraph, e.g. p3.12" required style="max-width:150px"></div>
+<label>Cited as</label><input name="citation_text" required><label>Excerpt (word for word)</label><input name="excerpt" required>
+<p><button class="primary">Add approved link</button></p></form></div>
+</div></div>
+<datalist id="targets">{% for t in targets %}<option value="{{ t.kind }}::{{ t.id }}">{{ t.label }}</option>{% endfor %}</datalist>
+<script>
+const paras = {{ paras|tojson }};
+function show(pid){const p=paras[pid];if(!p)return false;
+document.getElementById('pdf').src='/file/{{ d.id }}#page='+p.page;
+const el=document.getElementById('para');el.innerHTML='';const b=document.createElement('b');b.textContent=pid+' (page '+p.page+'): ';
+el.appendChild(b);el.appendChild(document.createTextNode(p.text));return false;}
+</script>
+{% endblock %}

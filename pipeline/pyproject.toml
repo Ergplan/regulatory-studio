@@ -1,0 +1,29 @@
+[project]
+name = "regstudio"
+version = "0.1.0"
+description = "Regulatory Studio pipeline"
+requires-python = ">=3.10"
+dependencies = [
+  "pymupdf>=1.24",
+  "jsonschema>=4.20",
+  "fastapi>=0.110",
+  "uvicorn>=0.29",
+  "jinja2>=3.1",
+  "python-multipart>=0.0.9",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[project.scripts]
+regstudio = "regstudio.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["regstudio*"]
+
+[tool.setuptools.package-data]
+regstudio = ["schema.sql", "migrations/*.sql", "templates/*.html"]

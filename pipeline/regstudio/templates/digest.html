@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block title %}Digest {{ dg.id }}{% endblock %}
+{% block body %}
+<h1>Weekly digest {{ dg.id }}</h1><p class="muted">{{ dg.from_date }} to {{ dg.to_date }} · <span class="pill {{ dg.status }}">{{ dg.status }}</span></p>
+<div class="card"><form method="post" action="/digest/{{ dg.id }}"><label>Introduction</label><textarea name="intro" style="min-height:120px">{{ dg.intro }}</textarea>
+<p class="row"><button name="action" value="save">Save</button><button class="primary" name="action" value="approve">Approve digest</button></p></form></div>
+<p class="muted">Only items whose summary is approved are published and emailed.</p>
+{% for i in items %}<div class="card"><div class="row"><b>{{ i.commission|upper }}</b><a href="/order/{{ i.id }}">{{ i.title }}</a><span class="pill {{ i.summary_status }}">{{ i.summary_status }}</span></div>
+<p>{{ i.summary }}</p></div>{% endfor %}
+{% endblock %}

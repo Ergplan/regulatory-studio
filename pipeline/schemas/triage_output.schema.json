@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Triage output",
+  "type": "object",
+  "required": ["in_scope", "topics", "significance", "reason"],
+  "additionalProperties": false,
+  "properties": {
+    "in_scope": {"type": "boolean", "description": "true if the order concerns open access or tariff matters"},
+    "topics": {"type": "array", "items": {"type": "string"}, "maxItems": 5},
+    "significance": {"type": "integer", "minimum": 1, "maximum": 5},
+    "reason": {"type": "string", "maxLength": 400}
+  }
+}

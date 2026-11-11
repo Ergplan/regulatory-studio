@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Digest output",
+  "type": "object",
+  "required": ["intro", "order"],
+  "additionalProperties": false,
+  "properties": {
+    "intro": {"type": "string", "maxLength": 1200},
+    "order": {"type": "array", "items": {"type": "string"}}
+  }
+}

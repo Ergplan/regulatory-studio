@@ -1,0 +1,29 @@
+{% extends "base.html" %}{% block title %}Queue{% endblock %}
+{% block body %}
+{% if not reviewer %}<div class="card"><form method="post" action="/whoami" class="row">
+<label style="margin:0">Your name, recorded against every approval</label><input name="name" required style="max-width:280px">
+<button class="primary">Start reviewing</button></form></div>{% endif %}
+<h1>Review queue</h1>
+<p class="muted">{{ orders|length }} orders with summaries · {{ listed }} routine orders listed without summary</p>
+<h2>Orders</h2>
+<table><tr><th>Commission</th><th>Order</th><th>Date</th><th>Significance</th><th>Open links</th><th>Summary</th></tr>
+{% for o in orders %}<tr>
+<td>{{ o.commission|upper }}</td>
+<td><a href="/order/{{ o.id }}">{{ o.title or o.case_number or o.id[:12] }}</a>
+{% if o.ocr %} <span class="pill proposed">OCR</span>{% endif %}{% if o.language == 'hi' %} <span class="pill">Hindi</span>{% endif %}</td>
+<td>{{ o.doc_date or '' }}</td><td>{{ o.significance }}</td><td>{{ o.open_links }}</td>
+<td><span class="pill {{ o.summary_status }}">{{ o.summary_status }}</span></td></tr>
+{% else %}<tr><td colspan="6" class="muted">Nothing waiting.</td></tr>{% endfor %}</table>
+<h2>Regulation registry</h2>
+<table><tr><th>Commission</th><th>Regulation</th><th>Clauses to check</th></tr>
+{% for r in regs %}<tr><td>{{ r.commission|upper }}</td><td><a href="/regulation/{{ r.id }}">{{ r.title }}</a><div class="muted">{{ r.id }}</div></td>
+<td>{{ r.open_clauses or 0 }} of {{ r.clauses }}</td></tr>
+{% else %}<tr><td colspan="3" class="muted">Registry fully reviewed.</td></tr>{% endfor %}</table>
+<h2>Weekly digests</h2>
+<table><tr><th>Week</th><th>Dates</th><th>Status</th></tr>
+{% for d in digests %}<tr><td><a href="/digest/{{ d.id }}">{{ d.id }}</a></td><td>{{ d.from_date }} to {{ d.to_date }}</td>
+<td><span class="pill {{ d.status }}">{{ d.status }}</span></td></tr>
+{% else %}<tr><td colspan="3" class="muted">No digest drafted yet.</td></tr>{% endfor %}</table>
+{% if errors %}<h2>Needs attention</h2><table><tr><th>Commission</th><th>Document</th><th>Problem</th></tr>
+{% for e in errors %}<tr><td>{{ e.commission|upper }}</td><td>{{ e.title or e.id[:12] }}</td><td>{{ e.error }}</td></tr>{% endfor %}</table>{% endif %}
+{% endblock %}
