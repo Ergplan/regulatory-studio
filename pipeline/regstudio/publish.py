@@ -26,7 +26,8 @@ def clause_slug(number: str) -> str:
 
 def order_path(d) -> str:
     year = (d["doc_date"] or d["downloaded_at"])[:4]
-    name = slug(d["case_number"] or d["title"] or d["id"][:12], 60)
+    label = re.sub(r"^\s*(petition|appeal|case|o\.?p\.?)s?\s+nos?\.?\s*", "", d["case_number"] or "", flags=re.I)
+    name = slug(label or d["title"] or d["id"][:12], 60)
     return f"/orders/{d['commission']}/{year}/{name}-{d['id'][:6]}"
 
 

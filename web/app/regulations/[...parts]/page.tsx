@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import SpiderMap, { type MapNode } from "@/components/SpiderMap";
-import { citingOrders, clauses, clausesOf, commissionName, linkTypeLabel, orderLabel, regulationById, regulations, site } from "@/lib/data";
+import { citingOrders, clauses, clausesOf, commissionName, linkTypeLabel, orderLabel, regName, regulationById, regulations, site } from "@/lib/data";
 import { fmtDate } from "@/lib/format";
 
 type Params = { parts: string[] };
@@ -41,9 +41,9 @@ export default async function RegulationPage({ params }: { params: Promise<Param
   if (clause) {
     const citing = citingOrders("clause", clause.id);
     const nodes: MapNode[] = citing.map(({ order, links }) => ({
-      key: order.id, label: orderLabel(order), sub: `${order.commission.toUpperCase()} · ${order.date ?? ""}`, href: order.path,
+      key: order.id, label: orderLabel(order), sub: `${order.commission.toUpperCase()} · ${fmtDate(order.date)}`, href: order.path,
       kind: "document", side: "right", types: [...new Set(links.map((l) => l.type))] }));
-    nodes.unshift({ key: reg.id, label: reg.short_title ?? reg.title, sub: "Parent regulation", href: reg.path, kind: "regulation", side: "left", types: ["made_under"] });
+    nodes.unshift({ key: reg.id, label: regName(reg), sub: `${reg.commission.toUpperCase()} · parent regulation`, href: reg.path, kind: "regulation", side: "left", types: ["part_of"] });
     const jsonLd = { "@context": "https://schema.org", "@type": "Legislation", name: `Regulation ${clause.number}, ${reg.title}`,
       legislationJurisdiction: "IN", isPartOf: { "@type": "Legislation", name: reg.title }, text: clause.text,
       legislationPassedBy: { "@type": "GovernmentOrganization", name: commissionName(reg.commission) } };
@@ -56,9 +56,9 @@ export default async function RegulationPage({ params }: { params: Promise<Param
         <p className="muted small">In force {clause.in_force_from ? "from " + fmtDate(clause.in_force_from) : ""}{clause.in_force_to ? " to " + fmtDate(clause.in_force_to) : ""}.</p>
         <h2>How orders have used this clause</h2>
         {citing.length ? <>
-          <SpiderMap center={{ label: `Reg. ${clause.number}`, sub: reg.short_title ?? reg.title }} nodes={nodes} typeLabels={site.link_types}
+          <SpiderMap center={{ label: `Regulation ${clause.number}`, sub: `${reg.commission.toUpperCase()} · ${regName(reg)}` }} nodes={nodes} typeLabels={site.link_types}
             title={`Orders citing regulation ${clause.number}`} />
-          <ul className="links-list">{citing.map(({ order, links }) => (
+          <ul className="links-list" id="all-links">{citing.map(({ order, links }) => (
             <li key={order.id}><Link href={order.path}>{order.title ?? orderLabel(order)}</Link> <span className="muted">{order.commission.toUpperCase()} · {fmtDate(order.date)}</span>
               {links.map((l, i) => <blockquote key={i}><strong>{linkTypeLabel(l.type)}</strong>: {l.excerpt}</blockquote>)}</li>
           ))}</ul></> : <p className="muted">No reviewed order cites this clause yet.</p>}

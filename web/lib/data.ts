@@ -50,15 +50,23 @@ export const actById = new Map(actSections.map((a) => [a.id, a]));
 
 export const actPath = (id: string) => `/act/${id}`;
 
+/** "Central Electricity Regulatory Commission (Deviation Settlement Mechanism and Related Matters) Regulations, 2024"
+ *  -> "Deviation Settlement Mechanism and Related Matters Regulations, 2024", unless a reviewer set a short title. */
+export function regName(r: Regulation): string {
+  if (r.short_title) return r.short_title;
+  const m = r.title.match(/\(([^)]+)\)\s*(Regulations?,?\s*\d{4})/);
+  return m ? `${m[1]} ${m[2]}` : r.title;
+}
+
 export function targetInfo(kind: TargetKind, id: string): { label: string; sub: string; href: string } | null {
   if (kind === "clause") {
     const c = clauseById.get(id); if (!c) return null;
     const r = regulationById.get(c.regulation_id);
-    return { label: `Reg. ${c.number}${c.heading ? " · " + c.heading : ""}`, sub: r?.short_title ?? r?.title ?? "", href: c.path };
+    return { label: `Reg. ${c.number}${c.heading ? " · " + c.heading : ""}`, sub: r ? `${r.commission.toUpperCase()} · ${regName(r)}` : "", href: c.path };
   }
   if (kind === "regulation") {
     const r = regulationById.get(id); if (!r) return null;
-    return { label: r.short_title ?? r.title, sub: r.commission.toUpperCase(), href: r.path };
+    return { label: regName(r), sub: r.commission.toUpperCase(), href: r.path };
   }
   if (kind === "act_section") {
     const a = actById.get(id); if (!a) return null;

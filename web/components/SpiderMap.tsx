@@ -8,8 +8,10 @@ export interface MapNode {
   side: "left" | "right"; types: string[]; kind: string;
 }
 
-const W = 760, BOX_W = 214, BOX_H = 46, GAP = 58, CENTER_W = 220;
+const W = 760, BOX_W = 226, BOX_H = 62, GAP = 74, CENTER_W = 220;
 const STYLE: Record<string, { dash?: string; tone: string }> = {
+  part_of: { tone: "var(--edge)", dash: "2 4" },
+  more: { tone: "var(--edge)", dash: "2 4" },
   applies: { tone: "var(--edge)" },
   interprets: { tone: "var(--accent)" },
   relaxes: { tone: "var(--warn)", dash: "6 4" },
@@ -33,6 +35,13 @@ export default function SpiderMap({ center, nodes, typeLabels, title }: {
   let right = nodes.filter((n) => n.side === "right");
   if (!left.length && right.length > 3) { left = right.filter((_, i) => i % 2 === 1); right = right.filter((_, i) => i % 2 === 0); }
   if (!right.length && left.length > 3) { right = left.filter((_, i) => i % 2 === 1); left = left.filter((_, i) => i % 2 === 0); }
+  // Cap each side so a much-cited clause stays readable; the full list sits under the map.
+  const MAX = 8;
+  const cap = (list: MapNode[], side: "left" | "right"): MapNode[] => list.length <= MAX ? list :
+    [...list.slice(0, MAX - 1), { key: `more-${side}`, label: `+${list.length - MAX + 1} more`, sub: "See the full list below",
+      href: "#all-links", side, types: ["more"], kind: "more" }];
+  left = cap(left, "left");
+  right = cap(right, "right");
   const rows = Math.max(left.length, right.length, 1);
   const H = Math.max(150, rows * GAP + 48);
   const cy = H / 2, cx = W / 2;
@@ -43,7 +52,7 @@ export default function SpiderMap({ center, nodes, typeLabels, title }: {
     return { ...n, x, y, placedSide: side };
   });
   const placed = [...place(left, "left"), ...place(right, "right")];
-  const types = Array.from(new Set(nodes.flatMap((n) => n.types)));
+  const types = Array.from(new Set(nodes.flatMap((n) => n.types))).filter((t) => t !== "part_of" && t !== "more");
 
   return (
     <figure className="map">
@@ -59,26 +68,25 @@ export default function SpiderMap({ center, nodes, typeLabels, title }: {
             <g key={"e" + n.key} className={"edge " + n.types.map((x) => "t-" + x).join(" ")}>
               <path d={`M${x1} ${cy} C${mx} ${cy} ${mx} ${n.y} ${x2} ${n.y}`} fill="none" stroke={st.tone}
                 strokeWidth={1.4} strokeDasharray={st.dash} />
-              <text x={n.placedSide === "left" ? x2 + 6 : x2 - 6} y={n.y - 6} textAnchor={n.placedSide === "left" ? "start" : "end"}
-                className="edge-label">{n.types.map((x) => typeLabels[x] ?? x).join(" · ")}</text>
             </g>
           );
         })}
         <g className="center">
           <rect x={cx - CENTER_W / 2} y={cy - 30} width={CENTER_W} height={60} rx={8} />
-          <text x={cx} y={cy - 4} textAnchor="middle" className="node-label">{clip(center.label, 30)}</text>
-          {center.sub && <text x={cx} y={cy + 14} textAnchor="middle" className="node-sub">{clip(center.sub, 34)}</text>}
+          <text x={cx} y={cy - 4} textAnchor="middle" className="node-label">{clip(center.label, 28)}</text>
+          {center.sub && <text x={cx} y={cy + 14} textAnchor="middle" className="node-sub">{clip(center.sub, 32)}</text>}
         </g>
         {placed.map((n) => (
           <a key={n.key} href={n.href} className={"node k-" + n.kind + " " + n.types.map((x) => "t-" + x).join(" ")}>
             <title>{n.label}{n.sub ? " — " + n.sub : ""}</title>
             <rect x={n.x} y={n.y - BOX_H / 2} width={BOX_W} height={BOX_H} rx={8} />
-            <text x={n.x + 10} y={n.y - 3} className="node-label">{clip(n.label, 28)}</text>
-            {n.sub && <text x={n.x + 10} y={n.y + 13} className="node-sub">{clip(n.sub, 32)}</text>}
+            <text x={n.x + 10} y={n.y - 13} className="node-type">{n.types.map((x) => ({ part_of: "Part of", more: "" } as Record<string, string>)[x] ?? typeLabels[x] ?? x).join(" · ")}</text>
+            <text x={n.x + 10} y={n.y + 4} className="node-label">{clip(n.label, 30)}</text>
+            {n.sub && <text x={n.x + 10} y={n.y + 21} className="node-sub">{clip(n.sub, 36)}</text>}
           </a>
         ))}
       </svg>
-      <figcaption className="muted">Left: provisions relied on. Right: related decisions. Select any box to recentre the map on it.</figcaption>
+      <figcaption className="muted">Left: provisions relied on. Right: related decisions. Line style shows the kind of link; select any box to open it and see its own map.</figcaption>
     </figure>
   );
 }

@@ -92,12 +92,12 @@ export default async function OrderPage({ params }: { params: Promise<Params> })
       </div>
 
       <h2>Order trace</h2>
-      {nodes.length ? <SpiderMap center={{ label: orderLabel(o), sub: commissionName(o.commission) }} nodes={nodes}
+      {nodes.length ? <SpiderMap center={{ label: orderLabel(o), sub: `${o.commission.toUpperCase()} · ${fmtDate(o.date)}` }} nodes={nodes}
         typeLabels={site.link_types} title={`Provisions and decisions linked to ${orderLabel(o)}`} />
         : <p className="muted">No reviewed links for this order yet.</p>}
 
       <h2>Every link, with the passage it rests on</h2>
-      <ul className="links-list">{o.links.map((l, i) => {
+      <ul className="links-list" id="all-links">{o.links.map((l, i) => {
         const info = targetInfo(l.kind, l.target);
         return (
           <li key={i}><strong>{linkTypeLabel(l.type)}</strong> {info ? <Link href={info.href}>{info.label}</Link> : l.target}
