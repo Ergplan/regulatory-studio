@@ -74,7 +74,7 @@ def run(commissions: list[str] | None = None, since: dt.date | None = None, limi
 
 
 def fetch_one(url: str, commission: str, doc_type: str, date: str | None = None, title: str | None = None,
-              case: str | None = None, client=None) -> dict:
+              case: str | None = None, client=None, source: str | None = None) -> dict:
     """Fetch a single document chosen by a person (APTEL judgments, MERC orders, regulations).
 
     Uses the same polite client as the listings (robots.txt, pause, TLS chain repair) and the same
@@ -82,8 +82,15 @@ def fetch_one(url: str, commission: str, doc_type: str, date: str | None = None,
     import datetime as _dt
     if date:
         _dt.date.fromisoformat(date)  # refuse a malformed date rather than store it
-    client = client or Client()
-    data = client.get(url)
+    from pathlib import Path as _P
+    local = _P(url).expanduser()
+    if local.is_file():  # a PDF a person saved from the site in their browser (e.g. MERC)
+        if not source:
+            raise SystemExit("give --source-url: the page or PDF address the file was saved from")
+        data, url = local.read_bytes(), source
+    else:
+        client = client or Client()
+        data = client.get(url)
     if not data.startswith(b"%PDF"):
         raise SystemExit(f"not a PDF (the site may have returned an error page): {url}")
     item = Item(commission, title or url.rsplit("/", 1)[-1], url, date, case, doc_type=doc_type)

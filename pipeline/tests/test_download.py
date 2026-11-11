@@ -130,3 +130,15 @@ def test_rerc_alternate_rows_and_regulations():
     assert geoa.doc_date == "2025-07-17" and geoa.doc_type == "regulation" and geoa.key == "rerc-reg:158:17/07/2025"
     amend = next(i for i in regs if "Amendment" in i.title)
     assert amend.doc_type == "amendment"
+
+
+def test_fetch_saved_pdf_needs_its_source(env, tmp_path):
+    import pytest as _p
+    from regstudio.download import fetch_one
+    pdf = tmp_path / "merc-order.pdf"
+    pdf.write_bytes(b"%PDF-1.4 merc")
+    with _p.raises(SystemExit):
+        fetch_one(str(pdf), "merc", "order", "2026-11-06")
+    out = fetch_one(str(pdf), "merc", "order", "2026-11-06", case="Case No. 101 of 2026",
+                    source="https://merc.gov.in/wp-content/uploads/2026/11/Order-101.pdf")
+    assert json.loads(Path(out["saved"]).with_suffix(".json").read_text())["source_url"].startswith("https://merc.gov.in/")

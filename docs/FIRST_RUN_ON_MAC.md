@@ -94,7 +94,7 @@ regstudio fetch https://example/judgment.pdf aptel judgment --date 2026-11-05 --
 | CERC | recent_orders.html | table of petitions |
 | UPERC | Order_Users.aspx | "Order dated ..." links |
 | RERC | office-orders page | PDFs come back through a form postback |
-| MERC | site's order data feed (JSON) | **Skipped:** merc.gov.in's robots.txt asks all automated clients to stay out, and the script obeys. Pick MERC orders by hand on the site and add each with `regstudio fetch <url> merc order --date ... --case ...`, or ask MERC to allow the feed |
+| MERC | site's order data feed (JSON) | **Skipped:** merc.gov.in's robots.txt asks all automated clients to stay out, and the script obeys. Save MERC orders from the site in your browser, then add each with `regstudio fetch ~/Downloads/<file>.pdf merc order --source-url <its address> --date ... --case ...`, or ask MERC to allow automated access |
 | GERC | judgement orders + RE orders, paged | |
 | KERC | miscellaneous, generic tariff and tariff order pages | |
 | RERC regulations (`rerc-regs`) | regulations page | new regulations and amendments; `--match` picks one by title |

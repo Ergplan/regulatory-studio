@@ -80,8 +80,9 @@ def main(argv: list[str] | None = None) -> None:
     dl.add_argument("--limit", type=int, default=None, help="max new documents per commission")
     dl.add_argument("--dry-run", action="store_true", help="list what would be downloaded")
     dl.add_argument("--match", help="only items whose title contains this text, e.g. 'Green Energy Open Access'")
-    fe = sub.add_parser("fetch", help="fetch one document by its address (APTEL, MERC, a regulation) into data/inbox")
-    fe.add_argument("url")
+    fe = sub.add_parser("fetch", help="add one document to data/inbox: by its address, or a PDF saved in the browser")
+    fe.add_argument("url", help="the PDF's address, or the path of a PDF saved from the site")
+    fe.add_argument("--source-url", help="for a saved PDF: the address it came from")
     fe.add_argument("commission", choices=sorted(config.COMMISSIONS))
     fe.add_argument("doc_type", choices=["order", "judgment", "regulation", "amendment"])
     fe.add_argument("--date", help="YYYY-MM-DD as printed on the document")
@@ -108,7 +109,8 @@ def main(argv: list[str] | None = None) -> None:
         print(f"working database ready at {config.DB_PATH}")
     elif args.cmd == "fetch":
         from .download import fetch_one
-        print(json.dumps(fetch_one(args.url, args.commission, args.doc_type, args.date, args.title, args.case),
+        print(json.dumps(fetch_one(args.url, args.commission, args.doc_type, args.date, args.title, args.case,
+                                   source=args.source_url),
                          indent=2, ensure_ascii=False))
     elif args.cmd == "download":
         import datetime as dt
