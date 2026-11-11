@@ -73,3 +73,16 @@ def test_robots_longest_match():
     assert robots_allows(robots_rules(""), "/x")
     own = robots_rules("User-agent: *\nDisallow: /\n\nUser-agent: RegulatoryStudio\nAllow: /\n")
     assert robots_allows(own, "/orders")
+
+
+def test_run_reports_layout_changes(env, monkeypatch):
+    import regstudio.download as dl
+    ok = [Item("cerc", "A", "https://example.invalid/a.pdf", "2026-11-04", "P1", fetch=lambda c: b"%PDF-1.4 a"),
+          Item("cerc", "B", "https://example.invalid/b.pdf", None, "P2")]
+    monkeypatch.setattr(dl, "ADAPTERS", {"cerc": lambda c: ok, "kerc": lambda c: []})
+    monkeypatch.setattr(dl, "Client", lambda: None)
+    out = dl.run(since=__import__("datetime").date(2026, 11, 1))
+    assert out["cerc"]["downloaded"] == 1 and out["cerc"]["newest"] == "2026-11-04"
+    assert "no date" in out["cerc"]["warnings"][0]
+    assert "layout may have changed" in out["kerc"]["warnings"][0]
+    assert dl.run(since=__import__("datetime").date(2026, 11, 1))["cerc"]["new"] == 0  # remembered

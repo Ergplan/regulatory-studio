@@ -34,13 +34,22 @@ def run(commissions: list[str] | None = None, since: dt.date | None = None, limi
     client, seen = Client(), Seen()
     report: dict = {}
     for name in commissions or list(ADAPTERS):
-        out = {"listed": 0, "new": 0, "downloaded": 0, "skipped": [], "errors": []}
+        out = {"on_page": 0, "newest": None, "listed": 0, "new": 0, "downloaded": 0,
+               "skipped": [], "errors": [], "warnings": []}
         try:
-            items = [i for i in ADAPTERS[name](client) if i.doc_date and i.doc_date >= since.isoformat()]
+            everything = ADAPTERS[name](client)
         except Exception as e:  # one site failing must not stop the others
             out["errors"].append(f"listing failed: {e}")
             report[name] = out
             continue
+        out["on_page"] = len(everything)
+        dated = [i.doc_date for i in everything if i.doc_date]
+        out["newest"] = max(dated) if dated else None
+        if not everything:
+            out["warnings"].append("no orders recognised on the listing page; the site layout may have changed")
+        elif len(dated) < len(everything):
+            out["warnings"].append(f"{len(everything) - len(dated)} listed orders have no date and were left out")
+        items = [i for i in everything if i.doc_date and i.doc_date >= since.isoformat()]
         out["listed"] = len(items)
         fresh = [i for i in items if not seen.has(i.key)]
         out["new"] = len(fresh)

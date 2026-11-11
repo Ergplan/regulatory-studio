@@ -25,3 +25,4 @@ no downloads from commission sites, nothing deleted on the Mac.
   fetching the named intermediate, with full verification kept.
 - Parser tests on trimmed extracts of the live listing pages (24 tests pass).
 - `ops/weeknight.sh` now downloads, checks the inbox, then runs the pipeline.
+- 11 Nov, 17:50 UTC check-in: download report now shows orders on each page, newest date, and warns when a page yields no orders (layout change) or undated rows. Vercel deploys of today's commits all READY. 26 tests pass.
