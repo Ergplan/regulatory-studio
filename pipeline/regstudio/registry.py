@@ -190,4 +190,43 @@ def lookup_index(conn) -> list[dict]:
     return [dict(r) for r in rows]
 
 
+STOPWORDS = {"the", "of", "and", "for", "rerc", "cerc", "gerc", "kerc", "merc", "uperc", "terms", "conditions",
+             "regulations", "regulation", "to", "in", "on", "by", "a", "an", "under", "from"}
+
+
+def _words(text: str) -> set[str]:
+    return {w for w in re.findall(r"[a-z]+", text.lower()) if w not in STOPWORDS and len(w) > 2}
+
+
+def suggest_target(conn, citation: str, commission: str | None = None) -> str | None:
+    """Suggest a registry target for an unresolved citation, for the reviewer to confirm.
+
+    Matches the regulation by title words (at least three shared, and most of the title) and the
+    clause by the number cited ('Regulation 5(ii)' -> clause 5(2) if it exists, else 5). Returns
+    'clause::<id>' or 'regulation::<id>', or None when nothing matches clearly."""
+    cited = _words(citation)
+    best, best_score = None, 0.0
+    for r in conn.execute("SELECT id, commission, title FROM regulations WHERE status != 'rejected'"):
+        if commission and r["commission"] != commission:
+            continue
+        title = _words(r["title"])
+        shared = len(cited & title)
+        if shared >= 3 and shared / max(len(title), 1) >= 0.6 and shared / max(len(title), 1) > best_score:
+            best, best_score = r["id"], shared / len(title)
+    if not best:
+        return None
+    m = re.search(r"Regulations?\s+(\d{1,3}[A-Z]?)\s*(?:\((\w{1,4})\))?", citation)
+    if not m:
+        return f"regulation::{best}"
+    top, sub = m.group(1), m.group(2)
+    roman = {"i": 1, "ii": 2, "iii": 3, "iv": 4, "v": 5, "vi": 6, "vii": 7, "viii": 8, "ix": 9, "x": 10}
+    if sub:
+        n = sub if sub.isdigit() else str(roman.get(sub.lower(), "")) or sub
+        if conn.execute("SELECT 1 FROM clauses WHERE id = ?", (f"{best}/{top}({n})",)).fetchone():
+            return f"clause::{best}/{top}({n})"
+    if conn.execute("SELECT 1 FROM clauses WHERE id = ?", (f"{best}/{top}",)).fetchone():
+        return f"clause::{best}/{top}"
+    return f"regulation::{best}"
+
+
 _ = config  # config imported for callers that patch paths in tests

@@ -168,3 +168,14 @@ def test_queue_shows_commission_website_health(server):
     from fastapi.testclient import TestClient
     page = TestClient(app).get("/").text
     assert "Commission websites" in page and "2026-08-31" in page and "layout may have changed" in page
+
+
+def test_unresolved_citation_gets_a_suggested_target(server):
+    from regstudio import db, registry
+    with db.session() as conn:
+        reg = conn.execute("SELECT id, title FROM regulations").fetchone()
+        clause = conn.execute("SELECT number FROM clauses WHERE regulation_id = ? AND number NOT LIKE '%(%' LIMIT 1",
+                              (reg["id"],)).fetchone()["number"]
+        cite = f"Regulation {clause} of the {reg['title']}"
+        assert registry.suggest_target(conn, cite) == f"clause::{reg['id']}/{clause}"
+        assert registry.suggest_target(conn, "Regulation 4 of some unrelated Grid Code") is None

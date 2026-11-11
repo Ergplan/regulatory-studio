@@ -36,7 +36,8 @@
 <div class="excerpt">“{{ l.excerpt }}”</div>
 {% if l.status == 'proposed' %}<form method="post" action="/link/{{ l.id }}" class="row">
 <select name="link_type" style="max-width:170px">{% for k, v in LINK_TYPES.items() %}<option value="{{ k }}" {% if k == l.link_type %}selected{% endif %}>{{ v }}</option>{% endfor %}</select>
-<input name="target" list="targets" placeholder="{{ 'keep ' ~ l.target_id if l.target_id else 'pick the provision' }}" style="max-width:260px">
+<input name="target" list="targets" placeholder="{{ 'keep ' ~ l.target_id if l.target_id else 'pick the provision' }}" style="max-width:260px"{% if suggest.get(l.id) %} value="{{ suggest[l.id] }}"{% endif %}>
+{% if suggest.get(l.id) %}<span class="muted small">suggested from the registry; check before approving</span>{% endif %}
 <button class="good" name="action" value="approve">Approve</button><button class="bad" name="action" value="reject">Reject</button></form>
 {% else %}<form method="post" action="/link/{{ l.id }}" class="inline"><button name="action" value="reopen">Reopen</button></form>{% endif %}
 </div>{% endfor %}

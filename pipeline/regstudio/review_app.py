@@ -14,7 +14,7 @@ from fastapi import FastAPI, Form, HTTPException, Request
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
-from . import amend, auth, config, db
+from . import amend, auth, config, db, registry
 
 app = FastAPI(title="Regulatory Studio review")
 templates = Jinja2Templates(directory=str(Path(__file__).parent / "templates"))
@@ -155,10 +155,13 @@ def order(request: Request, doc_id: str):
                UNION ALL SELECT id, 'regulation', title FROM regulations WHERE status != 'rejected'
                UNION ALL SELECT id, 'document', coalesce(case_number, title, id) FROM documents
                  WHERE doc_type IN ('order', 'judgment') AND id != ?""", (doc_id,))]
+        # A suggested provision for unresolved links; the reviewer still has to approve it.
+        suggest = {l["id"]: registry.suggest_target(conn, l["citation_text"], d["commission"])
+                   for l in links if not l["target_id"] and l["status"] == "proposed"}
     return templates.TemplateResponse(request, "order.html", {
         "reviewer": reviewer(request), "d": d, "o": o, "links": links, "paras": paras,
         "parties": json.loads(o["parties"] or "[]"), "topics": json.loads(o["topics"] or "[]"),
-        "targets": targets})
+        "targets": targets, "suggest": suggest})
 
 
 @app.post("/order/{doc_id}/summary")
