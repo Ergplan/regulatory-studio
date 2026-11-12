@@ -1,3 +1,4 @@
+import Trail from "@/components/Trail";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -40,6 +41,7 @@ export default async function ConsultationPage({ params }: { params: Promise<Par
         {c.impact && <Brief impact={c.impact} status={`Proposal, not law · ${consultationStatus(c)}`}
           analysis={c.draft ? "prepared with AI, awaiting legal review" : `reviewed ${fmtDate(c.approved_at)}${c.reviewed_by ? ` by ${c.reviewed_by}` : ""}`}
           ask={ask} about={c.title} path={c.path} />}
+        <Trail checked={c.checked} draft={c.draft} approvedAt={c.approved_at} reviewer={c.reviewed_by} />
     </div>
     <div className="two">
       <section>

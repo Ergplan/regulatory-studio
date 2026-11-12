@@ -36,6 +36,9 @@ def order_text(conn, doc_id: str, budget: int = 150_000) -> tuple[str, dict[str,
                         (doc_id,)).fetchall()
     paras = {r["pid"]: r["text"] for r in rows}
     lines = [f"[{r['pid']}] {r['text']}" for r in rows]
+    if any(r["text"].startswith("Table: ") for r in rows):
+        lines.insert(0, "(Paragraphs beginning 'Table:' repeat a table row by row: cells are separated by |, rows by ||. "
+                        "Use them to tie a figure to its row and column heading.)")
     total = sum(len(l) + 1 for l in lines)
     if total <= budget:
         return "\n".join(lines), paras

@@ -15,6 +15,11 @@ Choose by what the text contains:
 - timeline: two or more dated periods or events (supply period, comment deadline, a cut-off, the date a
   rule starts or stops). Use ISO dates; a single day has `start` only.
 
+- flow (a schematic, at most one): two to seven steps in order that show how the rule or decision works: who
+  qualifies, what condition comes next, what follows if it is not met (`otherwise`), and the result. Use it
+  when the logic is a chain of conditions that a sentence makes hard to follow. Each step states only what the
+  text states.
+
 Rules:
 1. Every item cites the paragraph ids it is read from (e.g. "p4.2"). Items without a valid citation are
    discarded, and a chart left with too few items is dropped.

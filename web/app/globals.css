@@ -500,3 +500,41 @@ ol.cols li { display: grid; gap: 6px; min-width: 0; } .c-plot { height: 150px; d
 .chart-data td { padding: 5px 8px 5px 0; vertical-align: top; color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums; } .chart-data td:last-child { white-space: normal; }
 .chart-data tr + tr th, .chart-data tr + tr td { border-top: 1px solid var(--line); }
 .t-label em { display: block; margin: 2px 0 0; color: var(--mute); }
+
+/* ---- Schematics: a rule or decision as numbered steps with the branch taken when a condition fails ---- */
+.chart-flow { margin: 22px 0 12px; }
+ol.flowchart { list-style: none; margin: 0; padding: 0; display: grid; }
+ol.flowchart li { position: relative; display: grid; grid-template-columns: 30px minmax(0, 1.25fr) minmax(0, 1fr); gap: 4px 14px; align-items: start; padding-bottom: 18px; }
+ol.flowchart li::before { content: ""; position: absolute; left: 14px; top: 30px; bottom: 0; width: 2px; background: var(--line-2); }
+ol.flowchart li:last-child { padding-bottom: 0; } ol.flowchart li:last-child::before { display: none; }
+.f-n { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--ink); background: var(--solid); border: 2px solid var(--mark); position: relative; z-index: 1; }
+ol.flowchart li.end .f-n { background: var(--mark); color: #03170a; }
+.f-step { min-width: 0; padding-top: 3px; } .f-step b { display: block; font-weight: 600; font-size: 15.5px; line-height: 1.35; color: var(--ink); }
+.f-step p { margin: 3px 0 2px; font-size: 14.5px; line-height: 1.45; color: var(--body); } .f-step .cites { font-size: 12px; }
+.f-else { margin: 2px 0 0; padding: 8px 12px; border-radius: 8px; border: 1px dashed var(--line-2); font-size: 14px; line-height: 1.4; color: var(--body); position: relative; }
+.f-else::before { content: ""; position: absolute; left: -15px; top: 16px; width: 14px; border-top: 1px dashed var(--line-2); }
+.f-else span { display: block; font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--heat); margin-bottom: 2px; }
+@media (max-width: 760px) { ol.flowchart li { grid-template-columns: 30px minmax(0, 1fr); } .f-else { grid-column: 2; } .f-else::before { display: none; } }
+
+/* ---- Charts across documents ---- */
+.charts.overview { margin: 26px 0 0; } .b-label a { color: inherit; text-decoration: none; } .b-label a:hover { color: var(--power); text-decoration: underline; }
+ul.bars li.soon .b-fill { background: var(--gold); } ul.bars .b-val em { display: block; font-style: normal; font-weight: 400; font-size: 10px; color: var(--mute); }
+ul.bars.ranges .b-track { position: relative; } ul.bars.ranges .b-val { min-width: 7.5em; }
+.r-span { position: absolute; top: 0; bottom: 0; border-radius: 4px; background: var(--mark); } .r-dot { position: absolute; top: 50%; width: 12px; height: 12px; border-radius: 50%; background: var(--mark); transform: translate(-50%, -50%); }
+
+/* ---- Check trail: the steps an analysis passes before it is published as reviewed ---- */
+.trail { margin: 18px 0 0; } .trail ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; }
+.trail li { position: relative; display: grid; gap: 3px; padding: 0 10px 0 0; align-content: start; }
+.trail li::before { content: ""; position: absolute; left: 22px; right: 0; top: 10px; border-top: 2px solid var(--line-2); } .trail li:last-child::before { display: none; }
+.tr-mark { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 700; position: relative; z-index: 1; background: var(--solid); border: 2px solid var(--line-2); color: var(--mute); }
+.trail li.done .tr-mark { border-color: var(--mark); background: var(--mark); color: #03170a; } .trail li.wait .tr-mark { border-color: var(--heat); color: var(--heat); }
+.trail li b { font-size: 14px; font-weight: 600; color: var(--ink); margin-top: 4px; } .trail li.skip b { color: var(--mute); }
+.tr-note { font-size: 12.5px; line-height: 1.35; color: var(--mute); } .trail li.wait .tr-note { color: var(--heat); }
+.trail > p { margin: 12px 0 0; font-size: 13.5px; color: var(--mute); max-width: 90ch; }
+@media (max-width: 760px) { .trail ol { grid-template-columns: 1fr; gap: 10px; } .trail li { grid-template-columns: 22px minmax(0, 1fr); gap: 0 10px; padding: 0; } .trail li::before { left: 10px; right: auto; top: 22px; bottom: -10px; border-top: 0; border-left: 2px solid var(--line-2); }
+  .trail li b { margin: 1px 0 0; grid-column: 2; } .tr-note { grid-column: 2; } }
+ol.pipeline { list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+ol.pipeline li { padding: 16px 18px; border-radius: 14px; background: var(--panel); border: 1px solid var(--line); } ol.pipeline li p { margin: 4px 0 0; font-size: 14.5px; line-height: 1.45; color: var(--body); }
+ol.pipeline li span { font-family: var(--mono); font-size: 11px; color: var(--power); letter-spacing: .14em; display: block; margin-bottom: 6px; } ol.pipeline li b { color: var(--ink); font-size: 16px; }
+ul.bars.ranges .b-label em, .overview .b-label em { display: block; margin: 3px 0 0; white-space: normal; }
+.across .charts.overview { grid-template-columns: 1fr; margin-top: 12px; } .across { margin-top: 28px; }

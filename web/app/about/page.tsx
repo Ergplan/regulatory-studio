@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Pipeline } from "@/components/Trail";
 import { site } from "@/lib/data";
 
 export const metadata: Metadata = { title: "About", alternates: { canonical: "/about" } };
 export default function About() {
-  return (<article style={{ maxWidth: 760 }}>
+  return (<article style={{ maxWidth: 900 }}>
     <h1>About Regulatory Studio</h1>
     <p>Regulatory Studio tracks orders of the Central Electricity Regulatory Commission, the Appellate Tribunal for Electricity
       and state electricity regulatory commissions, starting with open access and tariff matters. It is a joint venture of jouleWise and Urja Praxis.</p>
     <h2>How a summary is made</h2>
-    <ol><li>New orders are collected from commission websites every week.</li>
-      <li>Software reads each order, drafts a summary and proposes links to the regulations, Act sections and earlier decisions it relies on, each tied to the paragraph that supports it.</li>
-      <li>Our legal team checks every summary and every link against the order. Nothing is published until they approve it, and the approval date is shown on each page.</li></ol>
+    <Pipeline />
+    <p>The AI reviewers cannot change or approve anything. What they find is shown to the legal reviewer beside the summary and is not published.
+      Nothing is published as reviewed until a named reviewer approves it, and the approval date is shown on each page.</p>
     <h2>Two kinds of status</h2>
     <p>Every page shows two things separately. <b>Document status</b> says what the underlying text is: a proposal open for comment, a
       proposal whose comment period has closed, a notified regulation in force, or an order that binds the parties to a case.{" "}

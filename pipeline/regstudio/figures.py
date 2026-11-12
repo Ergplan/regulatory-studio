@@ -17,8 +17,8 @@ from .claude_runner import ClaudeError, UsageLimitReached, ask_json
 from .common import NotPrepared, fill, load_prompt, load_schema, order_text, prepared_output
 from .impact import PID, paragraph_ids
 
-MIN_ITEMS = {"bars": 2, "series": 3, "timeline": 2}
-MAX_ITEMS = {"bars": 8, "series": 12, "timeline": 8}
+MIN_ITEMS = {"bars": 2, "series": 3, "timeline": 2, "flow": 2}
+MAX_ITEMS = {"bars": 8, "series": 12, "timeline": 8, "flow": 7}
 TABLES = {  # table -> (kind label, summary expression, extra condition)
     "orders": ("order", "o.summary", "o.summary IS NOT NULL"),
     "consultations": ("draft regulation", "o.summary", "o.summary IS NOT NULL"),
@@ -36,18 +36,22 @@ def _date(s) -> str | None:
 def clean(out: dict, pids: set[str] | None = None) -> list[dict]:
     """Keep only charts that are sound: known type, enough cited items, usable values or dates."""
     charts = []
-    for ch in (out.get("charts") or [])[:3]:
+    for ch in (out.get("charts") or [])[:4]:
         kind = ch.get("type")
         if kind not in MIN_ITEMS:
             continue
         items = []
         for it in ch.get("items") or []:
-            basis = [b for b in it.get("basis") or [] if isinstance(b, str) and PID.match(b) and (pids is None or b in pids)][:3]
+            basis = [b for b in it.get("basis") or [] if isinstance(b, str) and PID.match(b) and (pids is None or b in pids)][:4]
             label = (it.get("label") or "").strip()[:60]
             if not label or not (basis or pids is None):
                 continue
             item = {"label": label, "basis": basis}
-            if kind == "timeline":
+            if kind == "flow":
+                for k, n in (("detail", 160), ("otherwise", 140)):
+                    if (it.get(k) or "").strip():
+                        item[k] = it[k].strip()[:n]
+            elif kind == "timeline":
                 start, end = _date(it.get("start")), _date(it.get("end")) if it.get("end") else None
                 if not start or (end and end < start):
                     continue
@@ -72,7 +76,7 @@ def clean(out: dict, pids: set[str] | None = None) -> list[dict]:
             for i in items:
                 i.pop("context", None)
         chart = {"type": kind, "title": title, "items": items}
-        if kind != "timeline":
+        if kind in ("bars", "series"):
             chart["unit"] = (ch.get("unit") or "").strip()[:16]
         if (ch.get("note") or "").strip():
             chart["note"] = ch["note"].strip()[:180]

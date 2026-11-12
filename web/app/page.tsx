@@ -1,3 +1,4 @@
+import Overview from "@/components/Overview";
 import Link from "next/link";
 import GroupIcon from "@/components/GroupIcon";
 import AnalysisBlock, { HighBadge, type Block } from "@/components/AnalysisBlock";
@@ -83,6 +84,11 @@ export default function Home() {
             {c.blocks.map((b) => <AnalysisBlock key={b.id} {...b} />)}
             {c.total > c.blocks.length && <p className="more rise"><Link href={`/commissions/${c.code}`}>All {c.total} items from {c.code.toUpperCase()} →</Link></p>}
           </section>))}
+
+        <section className="rise across">
+          <h2 className="label">Across the commissions</h2>
+          <Overview show={["deadlines", "tariffs"]} />
+        </section>
 
         <section className="glass rise tail">
           <h2 className="label">Get the weekly digest</h2>

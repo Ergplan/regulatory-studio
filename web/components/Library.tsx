@@ -2,6 +2,7 @@ import Link from "next/link";
 import { HighBadge } from "@/components/AnalysisBlock";
 import GroupIcon from "@/components/GroupIcon";
 import { GEO } from "@/components/IndiaMap";
+import Overview from "@/components/Overview";
 import {
   GROUPS, byDeadline, citingOrders, clausesOf, commentable, commissionName, consultationStatus, consultations, isOpen, orderLabel, orders, regulations, site,
   type Consultation, type Impact, type Order,
@@ -69,6 +70,8 @@ export default function Library({ kind }: { kind: LibraryKind }) {
     <nav className="seg" aria-label="Type of update">{(Object.keys(KINDS) as LibraryKind[]).map((x) => (
       <Link key={x} href={KINDS[x].href} className={x === kind ? "on" : ""} aria-current={x === kind ? "page" : undefined}>{KINDS[x].label}<b>{count[x]}</b></Link>))}</nav>
     {codes.length > 1 && <nav className="jump" aria-label="Jump to a commission">{codes.map((c) => <a key={c} href={`#c-${c}`}>{c.toUpperCase()}<b>{all.filter((r) => r.code === c).length}</b></a>)}</nav>}
+    {kind === "drafts" && <Overview show={["deadlines"]} />}
+    {kind === "orders" && <Overview show={["tariffs"]} />}
     {all.length === 0 && <div className="glass empty-state"><p>Nothing published here yet.</p></div>}
     {codes.map((c) => (
       <section key={c} id={`c-${c}`} className="lib-sec">

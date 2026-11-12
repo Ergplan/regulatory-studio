@@ -11,7 +11,7 @@ export interface Order {
   id: string; path: string; commission: string; doc_type: string; title: string | null; case_number: string | null;
   date: string | null; source_url: string; source_listing?: boolean; pdf: string | null; topics: string[]; significance: number;
   parties: { name: string; role: string }[]; issue: string; outcome: string; summary: string;
-  reviewed_by: string; approved_at: string; revised_at: string | null; language: string | null; sample: boolean; draft?: boolean; links: Link[]; impact?: Impact | null; rating?: Rating; figures?: Figure[];
+  reviewed_by: string; approved_at: string; revised_at: string | null; language: string | null; sample: boolean; draft?: boolean; links: Link[]; impact?: Impact | null; rating?: Rating; figures?: Figure[]; checked?: Checked | null;
 }
 export interface Regulation { id: string; path: string; commission: string; title: string; short_title: string | null; notified_date: string | null; source_url: string | null; source_listing?: boolean; pdf?: string | null; sample: boolean; impact?: Impact | null; rating?: Rating; figures?: Figure[] }
 export interface ClauseVersion { text: string; in_force_from: string | null; in_force_to: string | null }
@@ -21,8 +21,10 @@ export interface Digest { id: string; path: string; from: string; to: string; in
 /** Overall impact, set by the review team (never by the model). Only "high" is shown as a badge. */
 export type Rating = "high" | "medium" | "low" | null;
 /** A small chart in a summary. Every item cites paragraphs of the source, except dates taken from a commission's listing. */
-export interface FigureItem { label: string; value?: number; start?: string; end?: string; tag?: string; context?: boolean; basis: string[] }
-export interface Figure { type: "bars" | "series" | "timeline"; title: string; unit?: string; note?: string; items: FigureItem[] }
+export interface FigureItem { label: string; value?: number; start?: string; end?: string; tag?: string; context?: boolean; detail?: string; otherwise?: string; href?: string; basis: string[] }
+/** Pre-review checks that ran on a summary: an automatic number check and up to two independent AI reviewers. Findings are not published. */
+export interface Checked { reviewers: number; numbers: boolean }
+export interface Figure { type: "bars" | "series" | "timeline" | "flow"; title: string; unit?: string; note?: string; items: FigureItem[] }
 export type Effect = "opportunity" | "cost" | "mixed";
 export interface Cited { text: string; basis: string[] }
 export interface ImpactCell { effect: Effect; comment: string; basis: string[] }
@@ -45,7 +47,7 @@ export interface Consultation {
   id: string; path: string; commission: string; title: string; kind: "draft_regulation" | "draft_amendment" | "consultation_paper" | "proposal";
   issued: string | null; comment_deadline: string | null; hearing_date: string | null; summary: string; proposes: string[];
   amends: string | null; source_url: string; related: { label: string; url: string }[]; reviewed_by: string | null;
-  approved_at: string | null; draft?: boolean; sample: boolean; impact?: Impact | null; comments?: Record<string, CommentDraft>; rating?: Rating; figures?: Figure[];
+  approved_at: string | null; draft?: boolean; sample: boolean; impact?: Impact | null; comments?: Record<string, CommentDraft>; rating?: Rating; figures?: Figure[]; checked?: Checked | null;
 }
 export interface Site { generated_at: string; commissions: Record<string, string>; topics: Record<string, string>; link_types: Record<string, string>; contains_sample_data: boolean; preview?: boolean }
 
