@@ -40,3 +40,14 @@
 <form method="post" action="/impact/{{ impact_doc }}"><button name="action" value="request">Request market impact assessment</button></form>
 {% endif %}
 </div>
+
+{% if impact_doc %}<div class="card" id="figures"><h2 style="margin-top:0">Charts in the summary</h2>
+<p class="muted small">Chosen automatically from figures and dates in the text; shown on the website with the approved summary.
+Each item cites paragraph ids. Tick a chart to remove it, or edit the list below. Charts with too few valid items are dropped on save.</p>
+<form method="post" action="/figures/{{ impact_doc }}">
+{% for ch in figures %}<p><label style="display:inline"><input type="checkbox" name="drop_{{ loop.index0 }}" style="width:auto"> remove</label>
+<b>{{ ch.title }}</b> <span class="muted">({{ ch.type }}{% if ch.unit %}, {{ ch.unit }}{% endif %})</span><br>
+<span class="small">{% for it in ch['items'] %}{{ it.label }}: {% if it.value is defined %}{{ it.value }}{% else %}{{ it.start }}{% if it.end %} to {{ it.end }}{% endif %}{% endif %}{% if it.tag %} ({{ it.tag }}){% endif %} [{{ it.basis|join(', ') }}]{% if not loop.last %} · {% endif %}{% endfor %}</span></p>
+{% else %}<p class="muted">No charts for this document.</p>{% endfor %}
+<details><summary>Edit the chart list (JSON)</summary><textarea name="figures_json" style="min-height:220px;font-family:monospace;font-size:12px">{{ figures_json }}</textarea></details>
+<div class="row"><button name="action" value="save">Save charts</button><button name="action" value="redo">Choose again on the next run</button></div></form></div>{% endif %}

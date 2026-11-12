@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { HighBadge } from "@/components/AnalysisBlock";
 import Brief from "@/components/Brief";
+import Charts, { consultationTimeline } from "@/components/Charts";
 import Impact from "@/components/Impact";
 import ProjectCta, { askFor } from "@/components/ProjectCta";
 import { Deadline } from "@/components/ConsultationCard";
@@ -27,6 +28,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 export default async function ConsultationPage({ params }: { params: Promise<Params> }) {
   const c = find(await params);
   if (!c) notFound();
+  const own = c.figures ?? []; const auto = own.some((f) => f.type === "timeline") ? null : consultationTimeline(c);
+  const figs = auto ? [...own, auto] : own;
   const ask = askFor({ consultation: true, closed: !isOpen(c), impact: c.impact, text: `${c.title} ${c.summary}` });
   return (<>
     <div className="head-block">
@@ -44,6 +47,7 @@ export default async function ConsultationPage({ params }: { params: Promise<Par
         <p>{c.summary}</p>
         {c.proposes.length > 0 && <ul>{c.proposes.map((p, i) => <li key={i}>{p}</li>)}</ul>}
         {c.amends && <p className="muted">Would amend: {c.amends}</p>}
+        <Charts figures={figs} pdf={c.source_url} pending={c.draft} />
         {c.impact && <Impact impact={c.impact} pdf={c.source_url} draft={c.draft} />}
         {!c.impact && <ProjectCta ask={ask} about={c.title} path={c.path} />}
       </section>

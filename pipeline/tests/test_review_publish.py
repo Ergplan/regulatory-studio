@@ -354,3 +354,36 @@ def test_comment_drafts_are_requested_cited_reviewed_and_published(server):
     publish.run()
     pub = [c for c in json.loads((config.SNAPSHOT / "consultations.json").read_text()) if c["id"] == draft][0]
     assert pub["comments"]["captive"]["position"] == "Edited position." and pub["comments"]["captive"]["draft"] is False
+
+
+def test_figures_keep_only_sound_cited_charts_and_publish_with_the_summary(server):
+    from regstudio import figures
+    doc, _, _ = _ids()
+    pids = [r[0] for r in _db().execute("SELECT pid FROM paragraphs WHERE doc_id = ? ORDER BY page, idx", (doc,))][:2]
+    config.READER_OUTPUTS.mkdir(parents=True, exist_ok=True)
+    (config.READER_OUTPUTS / f"{doc}.figures.json").write_text(json.dumps({"charts": [
+        {"type": "bars", "title": "Banking charge", "unit": "%", "items": [
+            {"label": "Before", "value": 8, "basis": [pids[0]], "context": True}, {"label": "After", "value": 5, "basis": [pids[1]]},
+            {"label": "Invented", "value": 3, "basis": ["p99.9"]}]},
+        {"type": "bars", "title": "One number is not a chart", "unit": "MW", "items": [
+            {"label": "Only", "value": 5, "basis": [pids[0]]}, {"label": "Uncited", "value": 7, "basis": ["p99.9"]}]},
+        {"type": "timeline", "title": "Dates", "items": [
+            {"label": "Order", "start": "2026-11-04", "basis": [pids[0]]}, {"label": "Bad", "start": "2026-13-40", "basis": [pids[0]]},
+            {"label": "Period", "start": "2026-11-01", "end": "2027-03-31", "basis": [pids[1]]}]}]}))
+    import os
+    os.environ["REGSTUDIO_READER"] = "file"; config.READER = "file"
+    try:
+        r = figures.run()
+        assert r["figures"] == 1 and r["charts"] == 2  # the one-number chart is dropped
+    finally:
+        os.environ["REGSTUDIO_READER"] = "mock"; config.READER = "mock"
+    charts = json.loads(_db().execute("SELECT figures FROM orders WHERE doc_id = ?", (doc,)).fetchone()[0])
+    assert [c["type"] for c in charts] == ["bars", "timeline"]
+    assert [i["label"] for i in charts[0]["items"]] == ["Before", "After"] and [i["label"] for i in charts[1]["items"]] == ["Order", "Period"]
+    server("/whoami", {"name": "Test Reviewer"})
+    assert "Charts in the summary" in server.get(f"/order/{doc}")
+    assert server(f"/figures/{doc}", {"action": "save", "figures_json": json.dumps(charts), "drop_1": "on"}) == 303
+    server(f"/order/{doc}/summary", {"action": "approve", "summary": "Reviewed.", "issue": "i", "outcome": "o"})
+    publish.run()
+    pub = json.loads((config.SNAPSHOT / "orders.json").read_text())[0]["figures"]
+    assert len(pub) == 1 and pub[0]["title"] == "Banking charge" and pub[0]["unit"] == "%"
