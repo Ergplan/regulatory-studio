@@ -34,7 +34,7 @@ export default function Home() {
           <div className="card"><Subscribe /></div>
           <h2>Coverage</h2>
           <ul>{Object.entries(site.commissions).map(([k, v]) => <li key={k}><Link href={`/commissions/${k}`}>{v}</Link></li>)}</ul>
-          <p className="muted small">{orders.length} reviewed orders · {regulations.length} regulations in the registry</p>
+          <p className="muted small">{orders.length} {site.preview ? "draft" : "reviewed"} orders · {regulations.length} regulations in the registry</p>
         </aside>
       </div>
     </>
