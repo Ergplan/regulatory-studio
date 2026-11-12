@@ -1,0 +1,43 @@
+{
+ "generated_at": "2026-11-12T06:26:18+00:00",
+ "commissions": {
+  "cerc": "Central Electricity Regulatory Commission",
+  "aptel": "Appellate Tribunal for Electricity",
+  "uperc": "Uttar Pradesh Electricity Regulatory Commission",
+  "merc": "Maharashtra Electricity Regulatory Commission",
+  "gerc": "Gujarat Electricity Regulatory Commission",
+  "kerc": "Karnataka Electricity Regulatory Commission",
+  "rerc": "Rajasthan Electricity Regulatory Commission"
+ },
+ "topics": {
+  "open-access": "Open access",
+  "banking": "Banking",
+  "wheeling": "Wheeling charges",
+  "css": "Cross-subsidy surcharge",
+  "additional-surcharge": "Additional surcharge",
+  "green-energy-oa": "Green energy open access",
+  "retail-tariff": "Retail tariff",
+  "generation-tariff": "Generation tariff",
+  "transmission-tariff": "Transmission tariff",
+  "arr-true-up": "ARR and true-up",
+  "ppa-adoption": "Tariff adoption and PPA approval",
+  "dsm": "Deviation settlement and scheduling",
+  "power-market": "Power market",
+  "connectivity-gna": "Connectivity and GNA",
+  "ists-charges": "ISTS charges and waivers"
+ },
+ "link_types": {
+  "applies": "Applies",
+  "interprets": "Interprets",
+  "relaxes": "Relaxes or deviates from",
+  "follows": "Follows",
+  "distinguishes": "Distinguishes",
+  "appealed_in": "Appealed in",
+  "upholds": "Upholds",
+  "sets_aside": "Sets aside",
+  "remands": "Remands",
+  "amends": "Amends",
+  "made_under": "Made under"
+ },
+ "contains_sample_data": false
+}
