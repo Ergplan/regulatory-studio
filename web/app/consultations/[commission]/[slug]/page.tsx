@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Impact from "@/components/Impact";
 import { Deadline } from "@/components/ConsultationCard";
 import { KIND_LABEL, commissionName, consultations, type Consultation } from "@/lib/data";
 import { fmtDate } from "@/lib/format";
@@ -32,6 +33,7 @@ export default async function ConsultationPage({ params }: { params: Promise<Par
         <p>{c.summary}</p>
         {c.proposes.length > 0 && <ul>{c.proposes.map((p, i) => <li key={i}>{p}</li>)}</ul>}
         {c.amends && <p className="muted">Would amend: {c.amends}</p>}
+        {c.impact && <Impact impact={c.impact} draft={c.draft} />}
       </section>
       <aside>
         <h2>Documents</h2>

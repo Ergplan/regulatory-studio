@@ -39,7 +39,8 @@ export default function Home() {
             {consultations.filter(isOpen).sort(byDeadline).slice(0, 4).map((c) => <ConsultationCard key={c.id} c={c} />)}
             <p className="small"><Link href="/consultations">All {consultations.filter(isOpen).length} open drafts</Link> ·{" "}
               {[...new Set(consultations.filter(isOpen).map((c) => c.commission))].map((k, i) => (
-                <span key={k}>{i ? ", " : ""}<Link href={`/consultations/${k}`}>{k.toUpperCase()}</Link></span>))}</p>
+                <span key={k}>{i ? ", " : ""}<Link href={`/consultations/${k}`}>{k.toUpperCase()}</Link></span>))}
+              {" "}· <Link href="/impact">Market impact heat map</Link></p>
           </>)}
           <h2>Coverage</h2>
           <ul>{Object.entries(site.commissions).map(([k, v]) => <li key={k}><Link href={`/commissions/${k}`}>{v}</Link></li>)}</ul>

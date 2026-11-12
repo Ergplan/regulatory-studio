@@ -40,6 +40,7 @@ regstudio run intake extract registry amend
 regstudio run consult --limit 10
 regstudio run triage --limit 60
 regstudio run read --limit 15
+regstudio run impact --limit 15
 regstudio run draft
 ```
 

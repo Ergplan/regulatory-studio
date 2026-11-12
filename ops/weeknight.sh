@@ -15,6 +15,7 @@ LOG="data/store/logs/$(date +%Y-%m-%d).log"
   regstudio run consult --limit 10
   regstudio run triage --limit 60
   regstudio run read --limit 15
+  regstudio run impact --limit 15
   # Friday: assemble the week's digest for Saturday review
   [ "$(date +%u)" = "5" ] && regstudio run draft
   regstudio status

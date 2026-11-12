@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Impact assessment",
+  "type": "object",
+  "required": ["market_note", "key_points", "procurement", "stakeholders"],
+  "additionalProperties": false,
+  "properties": {
+    "market_note": {"type": "string", "maxLength": 400, "description": "one or two sentences: what changes in the market and for whom"},
+    "key_points": {"type": "array", "maxItems": 5, "items": {"type": "string", "maxLength": 240},
+                   "description": "insights a commercial reader would act on: costs, prices, deadlines, eligibility, precedent"},
+    "procurement": {"type": "array", "maxItems": 6, "items": {"type": "string", "maxLength": 240},
+                    "description": "procurement requirements created or changed: obligations, quantities, bidding rules, tenders, contract terms"},
+    "stakeholders": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "discoms": {"$ref": "#/$defs/cell"}, "ci_consumers": {"$ref": "#/$defs/cell"}, "captive": {"$ref": "#/$defs/cell"},
+        "re_developers": {"$ref": "#/$defs/cell"}, "storage": {"$ref": "#/$defs/cell"}, "conventional": {"$ref": "#/$defs/cell"},
+        "transmission": {"$ref": "#/$defs/cell"}, "traders": {"$ref": "#/$defs/cell"}
+      }
+    }
+  },
+  "$defs": {
+    "cell": {"type": "object", "required": ["level", "effect", "why"], "additionalProperties": false,
+             "properties": {"level": {"type": "integer", "minimum": 0, "maximum": 3},
+                            "effect": {"enum": ["opportunity", "cost", "mixed", "neutral"]},
+                            "why": {"type": "string", "maxLength": 200}}}
+  }
+}

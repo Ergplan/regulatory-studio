@@ -11,18 +11,28 @@ export interface Order {
   id: string; path: string; commission: string; doc_type: string; title: string | null; case_number: string | null;
   date: string | null; source_url: string; pdf: string; topics: string[]; significance: number;
   parties: { name: string; role: string }[]; issue: string; outcome: string; summary: string;
-  reviewed_by: string; approved_at: string; revised_at: string | null; language: string | null; sample: boolean; draft?: boolean; links: Link[];
+  reviewed_by: string; approved_at: string; revised_at: string | null; language: string | null; sample: boolean; draft?: boolean; links: Link[]; impact?: Impact | null;
 }
 export interface Regulation { id: string; path: string; commission: string; title: string; short_title: string | null; notified_date: string | null; source_url: string | null; sample: boolean }
 export interface ClauseVersion { text: string; in_force_from: string | null; in_force_to: string | null }
 export interface Clause { id: string; path: string; regulation_id: string; number: string; heading: string | null; text: string; in_force_from: string | null; in_force_to: string | null; versions?: ClauseVersion[] }
 export interface ActSection { id: string; act: string; number: string; title: string }
 export interface Digest { id: string; path: string; from: string; to: string; intro: string; items: string[]; approved_at: string; reviewed_by: string; draft?: boolean }
+export type Effect = "opportunity" | "cost" | "mixed" | "neutral";
+export interface ImpactCell { level: 0 | 1 | 2 | 3; effect: Effect; why: string }
+export interface Impact { market_note: string; key_points: string[]; procurement: string[]; stakeholders: Record<string, ImpactCell> }
+export const GROUPS: [string, string, string][] = [
+  ["discoms", "Discoms", "Discoms"], ["ci_consumers", "C&I / OA", "C&I and open access consumers"], ["captive", "Captive", "Captive users"],
+  ["re_developers", "RE dev.", "RE developers"], ["storage", "Storage", "Storage (BESS, pumped hydro)"],
+  ["conventional", "Thermal / hydro", "Thermal and hydro generators"], ["transmission", "Grid", "Transmission and system operators"],
+  ["traders", "Traders", "Traders and exchanges"],
+];
+export const EFFECT_LABEL: Record<Effect, string> = { opportunity: "Opportunity", cost: "Cost or obligation", mixed: "Mixed", neutral: "No effect" };
 export interface Consultation {
   id: string; path: string; commission: string; title: string; kind: "draft_regulation" | "draft_amendment" | "consultation_paper" | "proposal";
   issued: string | null; comment_deadline: string | null; hearing_date: string | null; summary: string; proposes: string[];
   amends: string | null; source_url: string; related: { label: string; url: string }[]; reviewed_by: string | null;
-  approved_at: string | null; draft?: boolean; sample: boolean;
+  approved_at: string | null; draft?: boolean; sample: boolean; impact?: Impact | null;
 }
 export interface Site { generated_at: string; commissions: Record<string, string>; topics: Record<string, string>; link_types: Record<string, string>; contains_sample_data: boolean; preview?: boolean }
 

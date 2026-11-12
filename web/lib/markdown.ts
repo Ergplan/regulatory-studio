@@ -1,8 +1,18 @@
 // Markdown twins of site pages, for language models and other readers that prefer plain text.
 import {
-  KIND_LABEL, SITE_URL, actById, citingOrders, clauses, clausesOf, commissionName, consultations, digests, linkTypeLabel, orderById, orderLabel,
-  orders, regulations, regulationById, targetInfo, topicName, type Order,
+  EFFECT_LABEL, GROUPS, KIND_LABEL, SITE_URL, actById, citingOrders, clauses, clausesOf, commissionName, consultations, digests, linkTypeLabel, orderById, orderLabel,
+  orders, regulations, regulationById, targetInfo, topicName, type Impact, type Order,
 } from "./data";
+
+export function impactMd(i: Impact | null | undefined, draft?: boolean): string[] {
+  if (!i) return [];
+  const hit = GROUPS.filter(([g]) => (i.stakeholders[g]?.level ?? 0) > 0);
+  return ["## Market impact" + (draft ? " (AI draft, not reviewed)" : ""), "", i.market_note, "",
+    ...(i.key_points.length ? ["### Key points", "", ...i.key_points.map((k) => `- ${k}`), ""] : []),
+    ...(i.procurement.length ? ["### Procurement requirements", "", ...i.procurement.map((k) => `- ${k}`), ""] : []),
+    ...(hit.length ? ["### Who it affects (level 1 to 3)", "", "| Group | Effect | Level | Why |", "|---|---|---|---|",
+      ...hit.map(([g, , long]) => { const c = i.stakeholders[g]; return `| ${long} | ${EFFECT_LABEL[c.effect]} | ${c.level} | ${c.why.replace(/\|/g, "/")} |`; }), ""] : [])];
+}
 
 const abs = (p: string) => (/^https?:\/\//.test(p) ? p : SITE_URL + p);
 
@@ -17,6 +27,7 @@ export function orderMd(o: Order): string {
       : `- Reviewed by the Regulatory Studio legal team: ${o.approved_at}${o.revised_at ? `, revised ${o.revised_at}` : ""}`,
     o.sample ? "- NOTE: SAMPLE DATA, NOT A REAL ORDER" : "", "",
     "## Summary", "", o.summary, "", "## Issue", "", o.issue, "", "## Outcome", "", o.outcome, "",
+    ...impactMd(o.impact, o.draft),
     "## Provisions and decisions linked", "",
     ...o.links.map((l) => {
       const t = targetInfo(l.kind, l.target);
@@ -53,7 +64,7 @@ export function pageMd(path: string): string | null {
     ...(k.hearing_date ? [`- Public hearing: ${k.hearing_date}`] : []), `- Draft: ${k.source_url}`,
     ...k.related.map((r) => `- ${r.label}: ${r.url}`),
     k.draft ? "- Status: DRAFT summary by AI, not yet reviewed by the legal team" : `- Summary reviewed by the Regulatory Studio legal team: ${k.approved_at}`,
-    "", "## What is proposed", "", k.summary, "", ...k.proposes.map((p) => `- ${p}`), "",
+    "", "## What is proposed", "", k.summary, "", ...k.proposes.map((p) => `- ${p}`), "", ...impactMd(k.impact, k.draft),
     "This is a proposal published for comment, not a notified regulation."].join("\n") + "\n";
   const d = digests.find((x) => x.path === path);
   if (d) return [`# Weekly digest ${d.from} to ${d.to}`, "", d.intro, "",
