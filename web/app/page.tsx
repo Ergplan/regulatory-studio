@@ -48,7 +48,7 @@ export default function Home() {
         <p className="lede">Explore updates on open access, captive power, tariffs and storage. Understand what may affect your plant
           or project, then ask for an assessment of what it means commercially.{" "}
           {site.preview ? "This is a preview edition: the analysis is awaiting legal review." : "Every analysis is checked by our legal team before it is published."}</p>
-        <p className="cta"><a href="#who" className="btn">See what affects my business</a><a href="#updates" className="btn ghost">Browse regulatory updates</a></p>
+        <p className="cta"><a href="#who" className="btn">See what affects my business</a><Link href="/consultations" className="btn ghost">Browse regulatory updates</Link></p>
       </div>
       <nav className="chooser" id="who" aria-label="Choose your business">
         <h2 className="label">I am a</h2>
