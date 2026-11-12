@@ -21,7 +21,18 @@ export default function ImpactMap() {
   const overall = tally(all.flatMap((s) => s.rows));
   const count = (id: string) => all.find((s) => s.id === id)?.rows.length ?? 0;
 
-  return (
+  return (<>
+        <section className="glass areas-box across">
+      <h2 className="label">Across all commissions · {count("drafts")} drafts · {count("regulations")} regulations · {count("orders")} orders</h2>
+      {overall.length ? (
+        <ul className="tally">{overall.map((t) => (
+          <li key={t.g}><Link href={`/impact/${t.g}`} title={`Everything that affects ${t.long.toLowerCase()}`}>
+            <GroupIcon g={t.g} size={22} /><span>{t.short}</span>
+            <em>{t.gains > 0 && <i className="d-opportunity">▲{t.gains}</i>}{t.costs > 0 && <i className="d-cost">▼{t.costs}</i>}{t.mixed > 0 && <i className="d-mixed">◆{t.mixed}</i>}</em>
+          </Link></li>))}</ul>
+      ) : <p className="muted">No impact assessments published yet.</p>}
+      <p className="muted small">Pick a group to see only what affects it. Counts are documents, by direction.</p>
+    </section>
     <div className="cover">
       <Stage items={codes.map((code) => { const s = states.find((x) => x.code === code);
         return { code, href: s ? `#c-${code}` : `/commissions/${code}`, idle: !s, note: s ? `${s.n} assessed` : "not assessed" }; })} />
@@ -33,18 +44,6 @@ export default function ImpactMap() {
             the groups it touches. Open any item for the reason and the paragraphs it rests on.</p>
           <p className="legend small"><Direction effect="opportunity" /> <Direction effect="cost" /> <Direction effect="mixed" />
             <span className="muted">Direction only, no scores.</span></p>
-        </section>
-
-        <section className="glass areas-box">
-          <h2 className="label">Across all commissions · {count("drafts")} drafts · {count("regulations")} regulations · {count("orders")} orders</h2>
-          {overall.length ? (
-            <ul className="tally">{overall.map((t) => (
-              <li key={t.g}><Link href={`/impact/${t.g}`} title={`Everything that affects ${t.long.toLowerCase()}`}>
-                <GroupIcon g={t.g} size={22} /><span>{t.short}</span>
-                <em>{t.gains > 0 && <i className="d-opportunity">▲{t.gains}</i>}{t.costs > 0 && <i className="d-cost">▼{t.costs}</i>}{t.mixed > 0 && <i className="d-mixed">◆{t.mixed}</i>}</em>
-              </Link></li>))}</ul>
-          ) : <p className="muted">No impact assessments published yet.</p>}
-          <p className="muted small">Pick a group to see only what affects it. Counts are documents, by direction.</p>
         </section>
 
         {states.map((s) => (
@@ -94,5 +93,5 @@ export default function ImpactMap() {
         </section>
       </div>
     </div>
-  );
+  </>);
 }
