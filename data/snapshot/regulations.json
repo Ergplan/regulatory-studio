@@ -14,6 +14,13 @@
   "path": "/regulations/cerc/deviation-settlement-mechanism-related-matters-2024",
   "sample": false,
   "impact": {
+   "headline": "Selling or buying power on the inter-State grid? Check how deviation from schedule is priced for your type of plant.",
+   "checks": [
+    "Are you a wind, solar or hybrid seller, a general seller, a storage system or a buyer?",
+    "What is your contract rate or reference charge rate?",
+    "How far does your actual injection or drawal usually deviate from schedule?",
+    "Do wind, solar or storage share one interconnection point?"
+   ],
    "market_note": "Deviation is priced off the market: the normal rate is the highest of the DAM price, the RTM price, or a blend that includes ancillary service cost. Wind and solar sellers settle at their own contract rate without frequency linkage, inside bands that tightened from 01.04.2026 to 5% for solar and hybrids and 10% for wind.",
    "key_points": [
     {
@@ -145,7 +152,9 @@
     "CERC has since deferred reserve-shortfall based deficit recovery (to 05.04.2027 by a later order); this reads the 2024 text as notified."
    ]
   },
-  "source_url": "https://cercind.gov.in/regulations/192-Noti.pdf"
+  "source_url": "https://cercind.gov.in/regulations/192-Noti.pdf",
+  "pdf": "https://cercind.gov.in/regulations/192-Noti.pdf",
+  "source_listing": false
  },
  {
   "id": "rerc/terms-conditions-green-energy-open-access-2025",
@@ -162,6 +171,13 @@
   "path": "/regulations/rerc/terms-conditions-green-energy-open-access-2025",
   "sample": false,
   "impact": {
+   "headline": "Planning green open access or captive renewables in Rajasthan? Check the capacity limit, storage and banking conditions.",
+   "checks": [
+    "What is your contract demand, and how much renewable capacity do you have or plan against it?",
+    "Is the plant captive, third-party or behind the meter?",
+    "Is it a new plant, or an existing one that would need to convert to the new regime?",
+    "Will the project connect to the State transmission network above 5 MW?"
+   ],
    "market_note": "Rajasthan opens green open access from 100 kW of contract demand (no floor for captive). New captive RE can go up to 200% of contract demand if 20% of the extra energy is stored in BESS. New STU-connected RE above 5 MW must add 2-hour storage of at least 5% of capacity, and storage earns transmission and wheeling charge exemptions.",
    "key_points": [
     {
@@ -304,6 +320,8 @@
     "RERC's order of 04.11.2026 (Petition 2416/2026) reads the 200% limit as available to existing behind-the-meter plants only after migrating under Regulation 7."
    ]
   },
-  "source_url": "https://rerc.rajasthan.gov.in/rerc-user-files/regulations"
+  "source_url": "https://rerc.rajasthan.gov.in/rerc-user-files/regulations",
+  "pdf": "/pdf/9273c10489c1d805.pdf",
+  "source_listing": true
  }
 ]

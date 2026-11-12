@@ -20,6 +20,13 @@
   ],
   "amends": "CERC (Sharing of Inter-State Transmission Charges and Losses) Regulations, 2020",
   "impact": {
+   "headline": "Renewable project delayed by transmission? A proposed ISTS charge waiver depends on a contract signed by 31.03.2027.",
+   "checks": [
+    "Is your delay due to non-availability of the transmission system, beyond your connectivity start date or SCOD?",
+    "Do you have, or can you sign, a PPA or PSA of at least seven years with a drawee DIC by 31.03.2027?",
+    "Can you reach COD within two months of your GNA becoming effective?",
+    "Is your contract direct, or through a trader or REIA (both legs must then be signed and filed)?"
+   ],
    "market_note": "If adopted, wind, solar and wind-solar projects whose COD slipped because ISTS was not ready keep the transmission-charge waiver for the whole contract term, up to 25 years from COD. Eligibility turns on a contract: a PPA or PSA of at least seven years with a drawee DIC, signed by 31.03.2027.",
    "key_points": [
     {
@@ -587,6 +594,13 @@
   ],
   "amends": "Replaces KERC (Power Procurement from Renewable Sources by Distribution Licensee) Regulations, 2011",
   "impact": {
+   "headline": "Open access above 1 MW or a captive plant in Karnataka? Check whether the proposed renewable obligation would cover you.",
+   "checks": [
+    "Is your contract demand 1 MW or more, and do you draw more than 1 MW through open access?",
+    "Do you have a grid-connected captive plant of 1 MW or more, and on what fuel?",
+    "What share of your consumption is already renewable, and from which sources?",
+    "Do you have several sites in Karnataka under one legal entity?"
+   ],
    "market_note": "If adopted, Karnataka's RPO rises from 35.95% of consumption in 2026-27 to 43.33% in 2029-30. It binds open access consumers above 1 MW and captive users with plants of 1 MW and above, not only ESCOMs. ESCOMs face separate wind, hydro and distributed-RE sub-targets; OA and captive users can meet the total from any RE.",
    "key_points": [
     {

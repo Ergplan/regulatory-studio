@@ -8,6 +8,7 @@
   "case_number": "Petition No. 13/SM/2026",
   "date": "2026-10-28",
   "source_url": "https://cercind.gov.in/2026/Orders/13-SM-2026.pdf",
+  "source_listing": false,
   "pdf": "https://cercind.gov.in/2026/Orders/13-SM-2026.pdf",
   "draft": true,
   "topics": [
@@ -36,6 +37,7 @@
   "case_number": "Petition No. 16/SM/2026",
   "date": "2026-10-03",
   "source_url": "https://cercind.gov.in/2026/Orders/16-SM-2026.pdf",
+  "source_listing": false,
   "pdf": "https://cercind.gov.in/2026/Orders/16-SM-2026.pdf",
   "draft": true,
   "topics": [
@@ -83,6 +85,7 @@
   "case_number": "Petition No. 233/AT/2026",
   "date": "2026-10-26",
   "source_url": "https://cercind.gov.in/2026/Orders/233-AT-2026.pdf",
+  "source_listing": false,
   "pdf": "https://cercind.gov.in/2026/Orders/233-AT-2026.pdf",
   "draft": true,
   "topics": [
@@ -147,6 +150,7 @@
   "case_number": "Petition No. 779/MP/2025",
   "date": "2026-10-26",
   "source_url": "https://cercind.gov.in/2026/Orders/779-MP-2025-Ors.pdf",
+  "source_listing": false,
   "pdf": "https://cercind.gov.in/2026/Orders/779-MP-2025-Ors.pdf",
   "draft": true,
   "topics": [
@@ -197,6 +201,7 @@
   "case_number": "Petition No. 979/MP/2025",
   "date": "2026-11-02",
   "source_url": "https://cercind.gov.in/2026/Orders/979-MP-2025.pdf",
+  "source_listing": false,
   "pdf": "https://cercind.gov.in/2026/Orders/979-MP-2025.pdf",
   "draft": true,
   "topics": [
@@ -228,6 +233,13 @@
   "issue": "Whether a 160 MW blended wind project (81% wind, 19% solar, single injection point) built under the 2020 Blended Wind Guidelines can be treated as a generating station based on wind resource for deviation charges under Regulation 8(4) of the DSM Regulations, 2024, using the power to relax (Regulation 11) or remove difficulty (Regulation 12).",
   "outcome": "Petition rejected. The project is treated as a wind-solar hybrid under Regulation 8(4). The Commission held that Regulations 11 and 12 cannot be used to create a new category or classification of generating station, and that setting a threshold for predominantly wind projects would be akin to amending the Regulations.",
   "impact": {
+   "headline": "Building wind with some solar behind one injection point? Check which deviation band the project falls in.",
+   "checks": [
+    "Does any solar capacity share the injection point with the wind capacity?",
+    "What deviation band did your bid tariff assume?",
+    "How accurate is your forecasting against available capacity?",
+    "Has the project reached COD, and under which deviation regulations?"
+   ],
    "market_note": "CERC refuses to treat an 81% wind, 19% solar blended project as a wind station for deviation settlement. A wind project with any solar behind the same injection point settles in the solar and hybrid bands, 5% from 01.04.2026 against 10% for wind.",
    "key_points": [
     {
@@ -360,6 +372,7 @@
   "case_number": "Petition No. 2416 of 2026",
   "date": "2026-10-14",
   "source_url": "https://www.uperc.org/App_File/Pt-no-2416of2026NIDP-14-10-2026-PDF1014202661203PM.pdf",
+  "source_listing": false,
   "pdf": "https://www.uperc.org/App_File/Pt-no-2416of2026NIDP-14-10-2026-PDF1014202661203PM.pdf",
   "draft": true,
   "topics": [
@@ -413,6 +426,7 @@
   "case_number": "Petition No. 2418 of 2026",
   "date": "2026-10-27",
   "source_url": "https://www.uperc.org/App_File/Pt-no-2418of2026NPCL-27-10-2026-pdf1028202641617PM.pdf",
+  "source_listing": false,
   "pdf": "https://www.uperc.org/App_File/Pt-no-2418of2026NPCL-27-10-2026-pdf1028202641617PM.pdf",
   "draft": true,
   "topics": [
@@ -457,6 +471,7 @@
   "case_number": "Petition No. 2695/2026",
   "date": "2026-11-07",
   "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU4OTRfMDctMTEtMjAyNl80MjY4MDE2",
+  "source_listing": false,
   "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU4OTRfMDctMTEtMjAyNl80MjY4MDE2",
   "draft": true,
   "topics": [
@@ -513,7 +528,8 @@
   "case_number": "Petition No. 2416/2026",
   "date": "2026-11-04",
   "source_url": "https://rerc.rajasthan.gov.in/rerc-user-files/office-orders",
-  "pdf": "https://rerc.rajasthan.gov.in/rerc-user-files/office-orders",
+  "source_listing": true,
+  "pdf": "/pdf/1834b0d3b5aa0976.pdf",
   "draft": true,
   "topics": [
    "green-energy-oa",
@@ -533,6 +549,13 @@
   "issue": "Whether a consumer with an existing 7.08 MW behind-the-meter captive solar plant may cut its contract demand from 7.40 MVA to about half the plant's capacity, installing BESS, under the fourth proviso to Regulation 5(ii) of the RERC GEOA Regulations, 2025, and whether JVVNL's refusal contravened the Regulations.",
   "outcome": "Petition dismissed. The 200% limit is available to existing plants only after one-time migration to the GEOA regime under Regulation 7, and it supports adding RE capacity, not cutting contract demand to save fixed charges. RERC also found the petitioner had not disclosed that it raised the same point in the GEOA procedure hearings.",
   "impact": {
+   "headline": "Planning to reduce contract demand alongside captive solar in Rajasthan? Check the applicable restrictions.",
+   "checks": [
+    "Is your captive plant existing or new, and is it behind the meter?",
+    "What is its capacity as a share of your contract demand?",
+    "Have you converted, or do you plan to convert, to the Green Energy Open Access regime?",
+    "Are you adding renewable capacity, or only seeking to reduce contract demand?"
+   ],
    "market_note": "RERC holds that the 200% captive RE limit in the GEOA Regulations, 2025 is for adding RE capacity, not for halving contract demand to cut fixed charges. Existing behind-the-meter plants stay at 100% of contract demand unless they migrate to GEOA under Regulation 7 and meet the BESS condition.",
    "key_points": [
     {
@@ -694,7 +717,8 @@
   "case_number": "Petition No. 2451/2026",
   "date": "2026-10-29",
   "source_url": "https://rerc.rajasthan.gov.in/rerc-user-files/office-orders",
-  "pdf": "https://rerc.rajasthan.gov.in/rerc-user-files/office-orders",
+  "source_listing": true,
+  "pdf": "/pdf/99882e10af2925e8.pdf",
   "draft": true,
   "topics": [
    "generation-tariff",
