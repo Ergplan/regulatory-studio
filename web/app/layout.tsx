@@ -16,6 +16,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en-IN">
       <body>
+        {site.preview && (
+          <div className="banner"><div className="wrap"><b>Preview only.</b> These summaries are AI drafts that the legal team has not reviewed yet. They are shown to check the site, not to rely on.</div></div>
+        )}
         {site.contains_sample_data && (
           <div className="banner"><div className="wrap">This build contains SAMPLE data for testing. Sample items are not real orders.</div></div>
         )}

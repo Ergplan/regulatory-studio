@@ -13,7 +13,8 @@ export function orderMd(o: Order): string {
     o.case_number ? `- Case: ${o.case_number}` : "", o.date ? `- Order date: ${o.date}` : "",
     `- Topics: ${o.topics.map(topicName).join(", ")}`,
     `- Original order: ${abs(o.pdf)} (commission page: ${o.source_url})`,
-    `- Reviewed by the Regulatory Studio legal team: ${o.approved_at}${o.revised_at ? `, revised ${o.revised_at}` : ""}`,
+    o.draft ? "- Status: DRAFT drafted by AI, not yet reviewed by the legal team"
+      : `- Reviewed by the Regulatory Studio legal team: ${o.approved_at}${o.revised_at ? `, revised ${o.revised_at}` : ""}`,
     o.sample ? "- NOTE: SAMPLE DATA, NOT A REAL ORDER" : "", "",
     "## Summary", "", o.summary, "", "## Issue", "", o.issue, "", "## Outcome", "", o.outcome, "",
     "## Provisions and decisions linked", "",

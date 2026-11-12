@@ -86,8 +86,10 @@ export default async function OrderPage({ params }: { params: Promise<Params> })
         <aside>
           <h2>Original order</h2>
           <p><a href={o.pdf}>Read the order (PDF)</a><br /><a href={o.source_url} rel="nofollow noopener">On the commission&apos;s website</a></p>
-          <p className="note">Reviewed by the Regulatory Studio legal team on {fmtDate(o.approved_at)}{o.revised_at && <>, revised {fmtDate(o.revised_at)}</>}.
-            This summary is for information only and is not legal advice.</p>
+          {o.draft
+            ? <p className="note"><b>Draft, not yet reviewed.</b> This summary and its links were drafted by AI and are waiting for the legal team. Read the original order.</p>
+            : <p className="note">Reviewed by the Regulatory Studio legal team on {fmtDate(o.approved_at)}{o.revised_at && <>, revised {fmtDate(o.revised_at)}</>}.
+            This summary is for information only and is not legal advice.</p>}
         </aside>
       </div>
 

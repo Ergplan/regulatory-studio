@@ -98,6 +98,8 @@ def main(argv: list[str] | None = None) -> None:
     ar.add_argument("name")
     pb = sub.add_parser("publish", help="write approved items to data/snapshot")
     pb.add_argument("--clean", action="store_true", help="drop sample documents from the snapshot")
+    pb.add_argument("--preview", action="store_true",
+                    help="private look before review: include proposed drafts, marked as such, in data/preview_snapshot")
     sd = sub.add_parser("send-digest", help="email an approved, published digest via Resend")
     sd.add_argument("--week", default=None, help="digest id such as 2026-W46; default the latest published")
     sd.add_argument("--send", action="store_true", help="send now; without it a draft broadcast is created")
@@ -153,7 +155,7 @@ def main(argv: list[str] | None = None) -> None:
         uvicorn.run(app, host=args.host, port=args.port)
     elif args.cmd == "publish":
         from . import publish
-        print(json.dumps(publish.run(clean=args.clean), indent=2))
+        print(json.dumps(publish.run(clean=args.clean, preview=args.preview), indent=2))
     elif args.cmd == "send-digest":
         from . import send_digest
         try:

@@ -10,6 +10,7 @@ DATA = REPO_ROOT / "data"
 INBOX = Path(os.environ.get("REGSTUDIO_INBOX", DATA / "inbox"))
 STORE = Path(os.environ.get("REGSTUDIO_STORE", DATA / "store"))
 SNAPSHOT = Path(os.environ.get("REGSTUDIO_SNAPSHOT", DATA / "snapshot"))
+PREVIEW = Path(os.environ.get("REGSTUDIO_PREVIEW", DATA / "preview_snapshot"))
 DB_PATH = STORE / "working.db"
 FILES = STORE / "files"   # PDFs copied out of the inbox, named by hash
 TEXT = STORE / "text"     # extracted paragraphs, one JSON per document

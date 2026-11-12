@@ -204,3 +204,18 @@ def test_queue_flags_long_listing_titles(server):
                       "directions in the Green Energy Open Access Regulations with respect to contract demand",))
     page = TestClient(app).get("/").text
     assert "Petition No. 2416/2026" in page and "needs a short title" in page
+
+
+def test_preview_marks_drafts_and_never_touches_the_real_snapshot(server):
+    out = publish.run(preview=True)
+    prev = config.PREVIEW
+    site = json.loads((prev / "site.json").read_text())
+    orders = json.loads((prev / "orders.json").read_text())
+    assert site["preview"] is True and orders and all(o["draft"] for o in orders)
+    assert all(o["reviewed_by"] is None for o in orders)
+    assert not list((prev / "pdf").iterdir())  # PDFs are linked, not copied, in a preview
+    assert json.loads((config.SNAPSHOT / "orders.json").read_text() if (config.SNAPSHOT / "orders.json").exists() else "[]") == []
+    import pytest as _p
+    with _p.raises(ValueError):
+        publish.run(preview=True, out=config.SNAPSHOT)
+    assert out["orders"] == len(orders)

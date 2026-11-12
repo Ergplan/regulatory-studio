@@ -7,7 +7,8 @@ export default function OrderCard({ o, showSummary = true }: { o: Order; showSum
   return (
     <article className="card order-card">
       <div className="meta"><span className="tag">{o.commission.toUpperCase()}</span> {fmtDate(o.date)}
-        {o.sample && <span className="tag bad">Sample</span>}</div>
+        {o.sample && <span className="tag bad">Sample</span>}
+        {o.draft && <span className="tag bad">Draft, not reviewed</span>}</div>
       <h3><Link href={o.path}>{o.title ?? orderLabel(o)}</Link></h3>
       {o.case_number && o.title && <div className="muted small">{o.case_number}</div>}
       {showSummary && <p>{o.issue}</p>}
