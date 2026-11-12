@@ -1,7 +1,8 @@
 import Link from "next/link";
 import OrderCard from "@/components/OrderCard";
 import Subscribe from "@/components/Subscribe";
-import { digests, orderById, orders, site, regulations } from "@/lib/data";
+import ConsultationCard from "@/components/ConsultationCard";
+import { consultations, digests, isOpen, orderById, orders, site, regulations } from "@/lib/data";
 import { fmtDate } from "@/lib/format";
 
 export default function Home() {
@@ -32,6 +33,12 @@ export default function Home() {
         <aside>
           <h2>Get the weekly digest</h2>
           <div className="card"><Subscribe /></div>
+          {consultations.some(isOpen) && (<>
+            <h2>Open for comment</h2>
+            {consultations.filter(isOpen).sort((a, b) => (a.comment_deadline ?? "9").localeCompare(b.comment_deadline ?? "9"))
+              .slice(0, 4).map((c) => <ConsultationCard key={c.id} c={c} />)}
+            <p className="small"><Link href="/consultations">All draft regulations and consultations</Link></p>
+          </>)}
           <h2>Coverage</h2>
           <ul>{Object.entries(site.commissions).map(([k, v]) => <li key={k}><Link href={`/commissions/${k}`}>{v}</Link></li>)}</ul>
           <p className="muted small">{orders.length} {site.preview ? "draft" : "reviewed"} orders · {regulations.length} regulations in the registry</p>

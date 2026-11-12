@@ -18,6 +18,12 @@ export interface ClauseVersion { text: string; in_force_from: string | null; in_
 export interface Clause { id: string; path: string; regulation_id: string; number: string; heading: string | null; text: string; in_force_from: string | null; in_force_to: string | null; versions?: ClauseVersion[] }
 export interface ActSection { id: string; act: string; number: string; title: string }
 export interface Digest { id: string; path: string; from: string; to: string; intro: string; items: string[]; approved_at: string; reviewed_by: string; draft?: boolean }
+export interface Consultation {
+  id: string; path: string; commission: string; title: string; kind: "draft_regulation" | "draft_amendment" | "consultation_paper" | "proposal";
+  issued: string | null; comment_deadline: string | null; hearing_date: string | null; summary: string; proposes: string[];
+  amends: string | null; source_url: string; related: { label: string; url: string }[]; reviewed_by: string | null;
+  approved_at: string | null; draft?: boolean; sample: boolean;
+}
 export interface Site { generated_at: string; commissions: Record<string, string>; topics: Record<string, string>; link_types: Record<string, string>; contains_sample_data: boolean; preview?: boolean }
 
 const DIR = resolve(process.cwd(), process.env.SNAPSHOT_DIR ?? "../data/snapshot");
@@ -43,6 +49,20 @@ export const regulations = load<Regulation[]>("regulations.json", []);
 export const clauses = load<Clause[]>("clauses.json", []);
 export const actSections = load<ActSection[]>("act_sections.json", []);
 export const digests = load<Digest[]>("digests.json", []);
+export const consultations = load<Consultation[]>("consultations.json", []);
+
+export const KIND_LABEL: Record<Consultation["kind"], string> = {
+  draft_regulation: "Draft regulations", draft_amendment: "Draft amendment",
+  consultation_paper: "Consultation paper", proposal: "Proposal",
+};
+/** The site is static, so "open" means open on the day the site was built; the date is always shown. */
+export const BUILD_DAY = new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" });
+export const lastDay = (c: Consultation) => [c.comment_deadline, c.hearing_date].filter(Boolean).sort().pop() ?? null;
+export const isOpen = (c: Consultation) => { const d = lastDay(c); return d !== null && d >= BUILD_DAY; };
+export function daysLeft(iso: string | null): number | null {
+  if (!iso) return null;
+  return Math.round((Date.parse(iso + "T00:00:00Z") - Date.parse(BUILD_DAY + "T00:00:00Z")) / 86_400_000);
+}
 
 export const orderById = new Map(orders.map((o) => [o.id, o]));
 export const clauseById = new Map(clauses.map((c) => [c.id, c]));

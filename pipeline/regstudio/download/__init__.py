@@ -26,7 +26,17 @@ ADAPTERS = {
     "gerc": sites.gerc,
     "kerc": sites.kerc,
     "rerc-regs": sites.rerc_regulations,  # new RERC regulations and amendments
+    "cerc-drafts": sites.cerc_drafts,     # draft regulations and consultations
+    "gerc-drafts": sites.gerc_drafts,
+    "kerc-drafts": sites.kerc_drafts,
 }
+
+
+def _recent(item, since: str) -> bool:
+    """Orders by their date; a draft also counts while its comment deadline or hearing is ahead."""
+    dates = [item.doc_date] + ([item.extra.get("comment_deadline"), item.extra.get("hearing_date")]
+                               if item.doc_type == "draft" else [])
+    return any(d and d >= since for d in dates)
 
 
 def run(commissions: list[str] | None = None, since: dt.date | None = None, limit: int | None = None,
@@ -44,13 +54,14 @@ def run(commissions: list[str] | None = None, since: dt.date | None = None, limi
             report[name] = out
             continue
         out["on_page"] = len(everything)
-        dated = [i.doc_date for i in everything if i.doc_date]
+        dated = [i.doc_date or i.extra.get("comment_deadline") or i.extra.get("hearing_date")
+                 for i in everything if i.doc_date or i.extra.get("comment_deadline") or i.extra.get("hearing_date")]
         out["newest"] = max(dated) if dated else None
         if not everything:
             out["warnings"].append("no orders recognised on the listing page; the site layout may have changed")
         elif len(dated) < len(everything):
             out["warnings"].append(f"{len(everything) - len(dated)} listed orders have no date and were left out")
-        items = [i for i in everything if i.doc_date and i.doc_date >= since.isoformat()
+        items = [i for i in everything if _recent(i, since.isoformat())
                  and (not match or match.lower() in i.title.lower())]
         out["listed"] = len(items)
         fresh = [i for i in items if not seen.has(i.key)]

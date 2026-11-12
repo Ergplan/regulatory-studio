@@ -12,6 +12,7 @@ LOG="data/store/logs/$(date +%Y-%m-%d).log"
   regstudio download --limit 40 || echo "download: some sites failed; see above"
   regstudio check-inbox || echo "check-inbox: problems listed above; intake skips bad files"
   regstudio run intake extract registry amend
+  regstudio run consult --limit 10
   regstudio run triage --limit 60
   regstudio run read --limit 15
   # Friday: assemble the week's digest for Saturday review

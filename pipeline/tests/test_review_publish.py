@@ -220,3 +220,53 @@ def test_preview_marks_drafts_and_never_touches_the_real_snapshot(server):
     with _p.raises(ValueError):
         publish.run(preview=True, out=config.SNAPSHOT)
     assert out["orders"] == len(orders)
+
+
+def _sample_draft():
+    """A SAMPLE draft regulation dropped into the inbox the way the downloader would."""
+    import hashlib
+    import pymupdf
+    doc = pymupdf.open()
+    page = doc.new_page()
+    page.insert_textbox(pymupdf.Rect(50, 50, 550, 800),
+                        "SAMPLE - NOT A REAL ORDER OR REGULATION - FOR SOFTWARE TESTING ONLY\n"
+                        "SAMPLE STATE ELECTRICITY REGULATORY COMMISSION\n"
+                        "Draft Sample Green Energy Open Access (First Amendment) Regulations, 2026\n"
+                        "The Commission proposes to amend Regulation 8 so that banking is settled monthly and "
+                        "banking charges fall from eight to five percent of the energy banked.\n"
+                        "Comments may be sent on or before 27.11.2026. A public hearing will be held on 03.12.2026.",
+                        fontsize=11)
+    data = doc.tobytes()
+    folder = config.INBOX / "rerc" / "2026-11-12"
+    folder.mkdir(parents=True, exist_ok=True)
+    (folder / "sample-draft.pdf").write_bytes(data)
+    (folder / "sample-draft.json").write_text(json.dumps({
+        "commission": "rerc", "doc_type": "draft", "source_url": "https://example.invalid/sample-draft.pdf",
+        "downloaded_at": "2026-11-12T10:00:00+05:30", "sha256": hashlib.sha256(data).hexdigest(),
+        "title": "Draft Sample Green Energy Open Access (First Amendment) Regulations, 2026",
+        "doc_date": "2026-11-10", "related": [{"label": "Public Notice", "url": "https://example.invalid/pn.pdf"}]}))
+
+
+def test_draft_regulation_is_summarised_reviewed_and_published(server):
+    from regstudio import consult
+    _sample_draft()
+    intake.run(); extract.run()
+    assert consult.run()["consultations"] == 1
+    c = _db().execute("SELECT * FROM consultations").fetchone()
+    assert c["summary_status"] == "proposed" and c["kind"] == "draft_amendment"
+    assert c["comment_deadline"] == "2026-11-27" and c["hearing_date"] == "2026-12-03"  # read from the text
+    assert publish.run()["consultations"] == 0  # nothing until a reviewer approves
+    assert server(f"/consultation/{c['doc_id']}", {"action": "approve", "summary": "x"}) == 403
+    server("/whoami", {"name": "Test Reviewer"})
+    page = server.get(f"/consultation/{c['doc_id']}")
+    assert "Approve for the website" in page and "Public Notice" in page
+    assert "Draft regulations and consultations" in server.get("/")
+    assert server(f"/consultation/{c['doc_id']}", {"action": "approve", "summary": "Proposal: monthly banking.",
+                                                   "kind": "draft_amendment", "comment_deadline": "2026-11-28",
+                                                   "proposes": "Banking monthly\nCharges 5%"}) == 303
+    assert server(f"/consultation/{c['doc_id']}", {"action": "save", "comment_deadline": "28/11/2026"}) == 400
+    assert publish.run()["consultations"] == 1
+    pub = json.loads((config.SNAPSHOT / "consultations.json").read_text())[0]
+    assert pub["comment_deadline"] == "2026-11-28" and pub["proposes"] == ["Banking monthly", "Charges 5%"]
+    assert pub["reviewed_by"] == "Test Reviewer" and pub["sample"] is True and pub["related"][0]["label"] == "Public Notice"
+    assert publish.run(clean=True)["consultations"] == 0

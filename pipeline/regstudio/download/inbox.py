@@ -22,6 +22,7 @@ class Item:
     doc_type: str = "order"
     key: str = ""                        # unique per document; defaults to source_url
     fetch: Callable = field(default=None, repr=False)
+    extra: dict = field(default_factory=dict)  # drafts: comment_deadline, hearing_date, related
 
     def __post_init__(self):
         self.key = self.key or self.source_url
@@ -61,5 +62,6 @@ def write_item(item: Item, data: bytes) -> tuple[str, str]:
         meta["doc_date"] = item.doc_date
     if item.case_number:
         meta["case_number"] = item.case_number
+    meta.update({k: v for k, v in item.extra.items() if v})
     pdf.with_suffix(".json").write_text(json.dumps(meta, indent=2, ensure_ascii=False))
     return str(pdf), sha

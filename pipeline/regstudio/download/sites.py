@@ -254,3 +254,113 @@ def kerc(client) -> list[Item]:
     for url in KERC_PAGES:
         items += parse_kerc(client.get(url).decode("utf-8", "ignore"))
     return items
+
+
+# --- Draft regulations and consultations --------------------------------------------------------
+MONTHS = {m: i for i, m in enumerate(["january", "february", "march", "april", "may", "june", "july", "august",
+                                      "september", "october", "november", "december"], 1)}
+
+
+def _any_date(s: str) -> str | None:
+    """'02.11.2026', '27th November, 2026' or '27 Nov 2026' -> ISO date."""
+    d = _date(s)
+    if d:
+        return d
+    m = re.search(r"(\d{1,2})(?:st|nd|rd|th)?\s+([A-Za-z]{3,9})\.?,?\s+(\d{4})", s or "")
+    if m:
+        month = next((n for name, n in MONTHS.items() if name.startswith(m.group(2).lower()[:3])), None)
+        if month:
+            return f"{int(m.group(3)):04d}-{month:02d}-{int(m.group(1)):02d}"
+    return None
+
+
+CERC_DRAFTS_URL = "https://cercind.gov.in/Draft_reg.html"
+
+
+def parse_cerc_drafts(page: str, base: str = CERC_DRAFTS_URL) -> list[Item]:
+    """One row per draft: title, then numbered links (public notices, draft, memorandum, hearing).
+
+    The main document is the newest draft text ('Supplementary Draft Notification' before 'Draft
+    Amendment'); the comment deadline is the latest 'Last date' given; the hearing date is read
+    from 'Public Hearing will be held on ...'."""
+    items = []
+    for row in re.findall(r"<tr[^>]*>(.*?)</tr>", page, re.S | re.I):
+        cells = _cells(row)
+        if len(cells) < 2 or not re.match(r"\s*\d+\.\s*$", _text(cells[0])):
+            continue
+        body = cells[1]
+        title = _text(re.split(r"<br\s*/?>|<a\s", body, maxsplit=1, flags=re.I)[0]).rstrip(" .-")
+        title = re.sub(r"\s*\(Last date[^)]*\)\s*$", "", title, flags=re.I).strip(" .-")
+        links = [(urllib.parse.urljoin(base, h.strip()), re.sub(r"^\d+\.\s*", "", _text(t)))
+                 for h, t in re.findall(r'<a\s+href="([^"]+)"[^>]*>(.*?)</a>', body, re.S | re.I)]
+        pdfs = [(u, t) for u, t in links if u.lower().endswith(".pdf")]
+        if not pdfs:
+            continue
+        main = next((p for p in pdfs if re.search(r"draft (amendment|notification|regulation)", p[1], re.I)), None) \
+            or next((p for p in pdfs if re.search(r"\b(order|draft)\b", p[1], re.I)), pdfs[0])
+        text = _text(body)
+        deadlines = [d for d in (_any_date(m) for m in re.findall(
+            r"Last date[^:)]*?[:\-–]+\s*([^)]{6,30})", text, re.I)) if d]
+        hearing = re.search(r"Public Hearing will be held on\s+([\d./-]{8,10})", text, re.I)
+        kind_title = title if title.lower().startswith("draft") else f"Proposal: {title}"
+        items.append(Item(
+            "cerc", kind_title[:300], main[0], None, None, doc_type="draft",
+            key=f"cerc-draft:{main[0]}",
+            extra={"comment_deadline": max(deadlines) if deadlines else None,
+                   "hearing_date": _date(hearing.group(1)) if hearing else None,
+                   "related": [{"label": t, "url": u} for u, t in pdfs if u != main[0]][:8]}))
+    return items
+
+
+def cerc_drafts(client) -> list[Item]:
+    return parse_cerc_drafts(client.get(CERC_DRAFTS_URL).decode("utf-8", "ignore"))
+
+
+GERC_DRAFTS_URL = "https://gercin.org/regulations/draft_regulations"
+
+
+def parse_gerc_drafts(page: str) -> list[Item]:
+    """Rows of draft regulations; an 'Explanatory Memorandum' or 'Consultation Paper' row belongs
+    to the draft above it. GERC's listing gives no comment deadline."""
+    items: list[Item] = []
+    for row in re.findall(r"<tr>(.*?)</tr>", page, re.S):
+        cell = dict((label, _text(v)) for label, v in re.findall(r'data-label="([^"]+)"[^>]*>(.*?)</td>', row, re.S))
+        link = re.search(r'href="(https://gercin\.org/viewdocument/[^"]+)"', row)
+        title = cell.get("Regulations", "")
+        if not link or not title:
+            continue
+        if re.match(r"(explanatory memorandum|consultation paper)", title, re.I) and items:
+            items[-1].extra["related"].append({"label": title, "url": link.group(1)})
+            continue
+        if not re.search(r"\bdraft\b", title, re.I):
+            continue  # final regulations also appear here briefly; the regulations adapter covers them
+        items.append(Item("gerc", title[:300], link.group(1), _date(cell.get("Date", "")), None, doc_type="draft",
+                          key=f"gerc-draft:{link.group(1)}", extra={"related": []}))
+    return items
+
+
+def gerc_drafts(client) -> list[Item]:
+    return parse_gerc_drafts(client.get(GERC_DRAFTS_URL).decode("utf-8", "ignore"))
+
+
+KERC_DRAFTS_URL = "https://kerc.karnataka.gov.in/28/draft-regulations/en"
+
+
+def parse_kerc_drafts(page: str) -> list[Item]:
+    """Columns: Sl No., Date of issue, Description (linked), Last date for suggestions."""
+    items = []
+    for row in re.findall(r"<tr[^>]*>(.*?)</tr>", page, re.S | re.I):
+        cells = _cells(row)
+        link = re.search(r'href="([^"]+\.pdf)\s*"', row, re.I)
+        if len(cells) < 3 or not link or not _date(_text(cells[1])):
+            continue
+        title = re.sub(r"^Drat\b", "Draft", _text(cells[2]))
+        deadline = _date(_text(cells[3])) if len(cells) > 3 else None
+        items.append(Item("kerc", title[:300], link.group(1).strip(), _date(_text(cells[1])), None,
+                          doc_type="draft", key=f"kerc-draft:{link.group(1).strip()}",
+                          extra={"comment_deadline": deadline}))
+    return items
+
+
+def kerc_drafts(client) -> list[Item]:
+    return parse_kerc_drafts(client.get(KERC_DRAFTS_URL).decode("utf-8", "ignore"))

@@ -6,6 +6,7 @@ With reviewers added (regstudio add-reviewer), every page needs a signed-in revi
 
 from __future__ import annotations
 
+import datetime as dt
 import json
 import urllib.parse
 from pathlib import Path
@@ -102,11 +103,17 @@ def queue(request: Request):
             """SELECT d.id, d.commission, d.title, d.doc_date, count(a.id) AS open_changes
                FROM documents d JOIN amendment_changes a ON a.amendment_doc = d.id
                WHERE a.status = 'proposed' GROUP BY d.id ORDER BY d.doc_date DESC""").fetchall()
+        consultations = conn.execute(
+            """SELECT d.id, d.commission, d.title, c.kind, c.comment_deadline, c.hearing_date, c.summary_status
+               FROM documents d JOIN consultations c ON c.doc_id = d.id
+               WHERE c.summary_status IN ('proposed', 'approved')
+               ORDER BY c.summary_status = 'approved', coalesce(c.comment_deadline, '9999') ASC""").fetchall()
         listed = conn.execute("SELECT count(*) FROM documents WHERE stage = 'listed'").fetchone()[0]
         errors = conn.execute("SELECT id, commission, title, error FROM documents WHERE stage = 'error'").fetchall()
     return templates.TemplateResponse(request, "queue.html", {
         "reviewer": reviewer(request), "orders": orders, "regs": regs, "digests": digests, "amendments": amendments,
-        "listed": listed, "errors": errors, "sources": _download_health()})
+        "listed": listed, "errors": errors, "sources": _download_health(),
+        "consultations": consultations})
 
 
 def _download_health() -> dict | None:
@@ -387,3 +394,68 @@ def amendment_change(request: Request, change_id: int, action: str = Form(...), 
             conn.execute("UPDATE amendment_changes SET status = 'rejected', reviewer = ? WHERE id = ?", (name, change_id))
             db.audit(conn, name, "amendment.reject", str(change_id))
     return back(f"/amendment/{ch['amendment_doc']}#ch-{change_id}")
+
+
+# --- Draft regulations and consultations ---------------------------------------------------------
+KINDS = {"draft_regulation": "Draft regulations", "draft_amendment": "Draft amendment",
+         "consultation_paper": "Consultation paper", "proposal": "Proposal"}
+
+
+@app.get("/consultation/{doc_id}", response_class=HTMLResponse)
+def consultation(request: Request, doc_id: str):
+    with db.session() as conn:
+        d = conn.execute("SELECT * FROM documents WHERE id = ?", (doc_id,)).fetchone()
+        c = conn.execute("SELECT * FROM consultations WHERE doc_id = ?", (doc_id,)).fetchone()
+        if not d or not c:
+            raise HTTPException(404)
+        paras = {r["pid"]: {"text": r["text"], "page": r["page"]} for r in conn.execute(
+            "SELECT pid, text, page FROM paragraphs WHERE doc_id = ? ORDER BY page, idx", (doc_id,))}
+    return templates.TemplateResponse(request, "consultation.html", {
+        "reviewer": reviewer(request), "d": d, "c": c, "paras": paras, "KINDS": KINDS,
+        "proposes": json.loads(c["proposes"] or "[]"), "related": json.loads(c["related"] or "[]")})
+
+
+def _iso_or_none(value: str) -> str | None:
+    value = value.strip()
+    if not value:
+        return None
+    try:
+        return dt.date.fromisoformat(value).isoformat()
+    except ValueError:
+        raise HTTPException(400, f"Dates are YYYY-MM-DD: {value!r}")
+
+
+@app.post("/consultation/{doc_id}")
+def save_consultation(request: Request, doc_id: str, action: str = Form(...), title: str = Form(""),
+                      kind: str = Form("draft_regulation"), summary: str = Form(""), proposes: str = Form(""),
+                      comment_deadline: str = Form(""), hearing_date: str = Form(""), amends: str = Form("")):
+    name = need_reviewer(request)
+    if kind not in KINDS:
+        raise HTTPException(400, "Unknown kind.")
+    lines = [l.strip(" -•\t") for l in proposes.splitlines() if l.strip(" -•\t")][:8]
+    deadline, hearing = _iso_or_none(comment_deadline), _iso_or_none(hearing_date)
+    with db.session() as conn:
+        if not conn.execute("SELECT 1 FROM consultations WHERE doc_id = ?", (doc_id,)).fetchone():
+            raise HTTPException(404)
+        if title.strip():
+            conn.execute("UPDATE documents SET title = ? WHERE id = ?", (title.strip()[:300], doc_id))
+        fields = (kind, summary.strip(), json.dumps(lines, ensure_ascii=False), deadline, hearing,
+                  amends.strip() or None)
+        if action == "approve":
+            if not summary.strip():
+                raise HTTPException(400, "Summary is empty.")
+            conn.execute("""UPDATE consultations SET kind = ?, summary = ?, proposes = ?, comment_deadline = ?,
+                                hearing_date = ?, amends = ?, summary_status = 'approved', reviewer = ?,
+                                approved_at = datetime('now') WHERE doc_id = ?""", (*fields, name, doc_id))
+        elif action == "save":
+            conn.execute("""UPDATE consultations SET kind = ?, summary = ?, proposes = ?, comment_deadline = ?,
+                                hearing_date = ?, amends = ? WHERE doc_id = ?""", (*fields, doc_id))
+        elif action == "reject":
+            conn.execute("UPDATE consultations SET summary_status = 'rejected', reviewer = ? WHERE doc_id = ?",
+                         (name, doc_id))
+        elif action == "reopen":
+            conn.execute("UPDATE consultations SET summary_status = 'proposed' WHERE doc_id = ?", (doc_id,))
+        else:
+            raise HTTPException(400, "Unknown action.")
+        db.audit(conn, name, f"consultation.{action}", doc_id)
+    return back(f"/consultation/{doc_id}" if action != "reject" else "/")

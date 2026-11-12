@@ -20,6 +20,10 @@
 {% for r in regs %}<tr><td>{{ r.commission|upper }}</td><td><a href="/regulation/{{ r.id }}">{{ r.title }}</a><div class="muted">{{ r.id }}</div></td>
 <td>{{ r.open_clauses or 0 }} of {{ r.clauses }}</td></tr>
 {% else %}<tr><td colspan="3" class="muted">Registry fully reviewed.</td></tr>{% endfor %}</table>
+{% if consultations %}<h2>Draft regulations and consultations</h2>
+<table><tr><th>Commission</th><th>Draft</th><th>Comments due</th><th>Hearing</th><th>Status</th></tr>
+{% for c in consultations %}<tr><td>{{ c.commission|upper }}</td><td><a href="/consultation/{{ c.id }}">{{ (c.title or c.id[:12])|truncate(120) }}</a></td>
+<td>{{ c.comment_deadline or 'not stated' }}</td><td>{{ c.hearing_date or '' }}</td><td><span class="pill {{ c.summary_status }}">{{ c.summary_status }}</span></td></tr>{% endfor %}</table>{% endif %}
 {% if amendments %}<h2>Amendments to apply</h2>
 <table><tr><th>Commission</th><th>Amendment</th><th>Changes to check</th></tr>
 {% for a in amendments %}<tr><td>{{ a.commission|upper }}</td><td><a href="/amendment/{{ a.id }}">{{ a.title or a.id[:12] }}</a></td><td>{{ a.open_changes }}</td></tr>{% endfor %}</table>{% endif %}

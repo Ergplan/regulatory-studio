@@ -142,3 +142,40 @@ def test_fetch_saved_pdf_needs_its_source(env, tmp_path):
     out = fetch_one(str(pdf), "merc", "order", "2026-11-06", case="Case No. 101 of 2026",
                     source="https://merc.gov.in/wp-content/uploads/2026/11/Order-101.pdf")
     assert json.loads(Path(out["saved"]).with_suffix(".json").read_text())["source_url"].startswith("https://merc.gov.in/")
+
+
+def test_draft_listings():
+    cerc = sites.parse_cerc_drafts(read("cerc_drafts_fixture.html"))
+    iegc = next(i for i in cerc if "Grid Code" in i.title)
+    assert iegc.doc_type == "draft" and iegc.source_url.endswith("DR_IEGC-2ndAmnd.pdf")
+    assert iegc.extra["comment_deadline"] == "2026-11-02" and iegc.extra["hearing_date"] == "2026-11-04"
+    sharing = next(i for i in cerc if "Sharing" in i.title)
+    assert sharing.source_url.endswith("Supplementary-Draft-Notification2026.pdf")
+    assert sharing.extra["comment_deadline"] == "2026-11-27"  # "27th November, 2026", the latest date given
+    assert any(r["label"].startswith("Public Notice") for r in sharing.extra["related"])
+    gerc = sites.parse_gerc_drafts(read("gerc_drafts_fixture.html"))
+    assert gerc[0].doc_date == "2026-10-17" and gerc[0].extra["related"][0]["label"].startswith("Explanatory")
+    assert all(i.title.lower().startswith("draft") for i in gerc)
+    kerc = sites.parse_kerc_drafts(read("kerc_drafts_fixture.html"))
+    assert kerc[0].title.startswith("Draft KERC Procurement") and kerc[0].extra["comment_deadline"] == "2026-11-11"
+    assert sites._any_date("27th November, 2026") == "2026-11-27"
+
+
+def test_drafts_count_while_their_deadline_is_ahead(env, monkeypatch):
+    import datetime as _dt
+    import regstudio.download as dl
+    old = Item("cerc", "Draft X", "https://example.invalid/x.pdf", None, doc_type="draft",
+               extra={"comment_deadline": "2026-11-27"}, fetch=lambda c: b"%PDF-1.4 x")
+    stale = Item("cerc", "Draft Y", "https://example.invalid/y.pdf", None, doc_type="draft",
+                 extra={"comment_deadline": "2026-06-26"})
+    monkeypatch.setattr(dl, "ADAPTERS", {"cerc-drafts": lambda c: [old, stale]})
+    monkeypatch.setattr(dl, "Client", lambda: None)
+    out = dl.run(since=_dt.date(2026, 10, 29))["cerc-drafts"]
+    assert out["downloaded"] == 1 and out["listed"] == 1
+    meta = json.loads(next((config_inbox() / "cerc").rglob("*.json")).read_text())
+    assert meta["doc_type"] == "draft" and meta["comment_deadline"] == "2026-11-27"
+
+
+def config_inbox():
+    from regstudio import config
+    return config.INBOX
