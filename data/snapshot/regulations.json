@@ -12,6 +12,138 @@
   "approved_at": null,
   "path": "/regulations/cerc/deviation-settlement-mechanism-related-matters-2024",
   "sample": false,
+  "impact": {
+   "market_note": "Deviation is priced off the market: the normal rate is the highest of the DAM price, the RTM price, or a blend that includes ancillary service cost. Wind and solar sellers settle at their own contract rate without frequency linkage, inside bands that tightened from 01.04.2026 to 5% for solar and hybrids and 10% for wind.",
+   "key_points": [
+    {
+     "text": "Normal rate = highest of the weighted average DAM price, RTM price, or one third each of DAM, RTM and the ancillary service charge",
+     "basis": [
+      "p6.7",
+      "p6.8",
+      "p6.9",
+      "p6.11"
+     ]
+    },
+    {
+     "text": "Wind and solar: under-injection beyond the outer band costs 200% of contract rate; over-injection beyond it earns nothing",
+     "basis": [
+      "p9.4",
+      "p9.5",
+      "p9.6"
+     ]
+    },
+    {
+     "text": "From 01.04.2026 the inner band is 5% for solar and hybrids and 10% for wind; the denominator moves to X% of available capacity plus (100-X)% of schedule, X set by separate order",
+     "basis": [
+      "p9.18",
+      "p9.21",
+      "p6.1",
+      "p6.2"
+     ]
+    },
+    {
+     "text": "Pool deficits are recovered from drawee DICs: 50% on drawal and 50% on GNA to 31.03.2026, then by each DIC's reserve shortfall",
+     "basis": [
+      "p14.13",
+      "p14.14",
+      "p15.1"
+     ]
+    },
+    {
+     "text": "Deviation charges are payable within 10 days; a defaulter must open an LC of 110% of its average payable",
+     "basis": [
+      "p15.5",
+      "p15.6"
+     ]
+    }
+   ],
+   "procurement": [
+    {
+     "text": "Each generator and ESS at a shared interconnection point needs its own Special Energy Meter",
+     "basis": [
+      "p10.11"
+     ]
+    },
+    {
+     "text": "Aggregation at a pooling station through a QCA settles at the weighted average contract rate; de-pooling is by agreement",
+     "basis": [
+      "p9.24",
+      "p9.25",
+      "p10.2"
+     ]
+    },
+    {
+     "text": "Sellers cleared in HP-DAM: under-injection on that quantum is priced at the HP-DAM price",
+     "basis": [
+      "p13.2"
+     ]
+    }
+   ],
+   "stakeholders": {
+    "discoms": {
+     "effect": "cost",
+     "comment": "States as buyers pay over-drawal at up to 200% of the market-linked normal rate beyond the outer volume limit; RE-rich and RE super-rich states get wider limits (200 MW and 250 MW inner).",
+     "basis": [
+      "p11.13",
+      "p12.4",
+      "p12.6",
+      "p12.8"
+     ]
+    },
+    "re_developers": {
+     "effect": "cost",
+     "comment": "Deviation is settled at contract rate without frequency linkage; beyond the outer band under-injection costs 200% of contract rate and over-injection earns nothing. From 01.04.2026 the inner band is 5% for solar and hybrids, 10% for wind.",
+     "basis": [
+      "p9.2",
+      "p9.6",
+      "p9.18",
+      "p9.21"
+     ]
+    },
+    "storage": {
+     "effect": "mixed",
+     "comment": "Standalone ESS settles like a general seller, with over-drawal while charging treated as under-injection; pumped-storage charging follows the solar rules for the initial period.",
+     "basis": [
+      "p10.3",
+      "p10.4",
+      "p10.6"
+     ]
+    },
+    "conventional": {
+     "effect": "cost",
+     "comment": "General sellers settle at their reference charge rate with frequency linkage: beyond 10% or 100 MW, under-injection pays up to 200% of RR below 49.90 Hz, and over-injection earns nothing below 50.10 Hz.",
+     "basis": [
+      "p7.19",
+      "p7.20",
+      "p7.24"
+     ]
+    },
+    "transmission": {
+     "effect": "mixed",
+     "comment": "RLDCs and RPCs run weekly deviation accounts and the pool; NLDC frames the deficit-recovery procedure and the reserve-shortfall method.",
+     "basis": [
+      "p13.5",
+      "p13.7",
+      "p15.2",
+      "p15.3"
+     ]
+    },
+    "traders": {
+     "effect": "mixed",
+     "comment": "Because the normal rate tracks DAM and RTM prices, deviation cost moves with exchange prices; HP-DAM sellers' under-injection is priced at the HP-DAM price.",
+     "basis": [
+      "p6.7",
+      "p6.8",
+      "p6.9",
+      "p13.2"
+     ]
+    }
+   },
+   "open_questions": [
+    "The value of X in the post-01.04.2026 formula for wind and solar is set by a separate CERC order; check the one in force.",
+    "CERC has since deferred reserve-shortfall based deficit recovery (to 05.04.2027 by a later order); this reads the 2024 text as notified."
+   ]
+  },
   "source_url": "https://cercind.gov.in/regulations/192-Noti.pdf"
  },
  {
@@ -27,6 +159,149 @@
   "approved_at": null,
   "path": "/regulations/rerc/terms-conditions-green-energy-open-access-2025",
   "sample": false,
+  "impact": {
+   "market_note": "Rajasthan opens green open access from 100 kW of contract demand (no floor for captive). New captive RE can go up to 200% of contract demand if 20% of the extra energy is stored in BESS. New STU-connected RE above 5 MW must add 2-hour storage of at least 5% of capacity, and storage earns transmission and wheeling charge exemptions.",
+   "key_points": [
+    {
+     "text": "Eligibility from 100 kW of contract demand, aggregated within an electricity division; no lower limit for captive use",
+     "basis": [
+      "p37.1"
+     ]
+    },
+    {
+     "text": "New captive RE up to 200% of contract demand; capacity above 100% must store at least 20% of its energy in BESS, operated as SLDC or the discom directs",
+     "basis": [
+      "p37.1"
+     ]
+    },
+    {
+     "text": "BESS supplying in peak or non-solar hours: 75% T&W exemption at 5% storage, +1% per extra 1% up to 30%, 100% above 30%, for seven years, capped at 2,000 MW or 2030",
+     "basis": [
+      "p42.2",
+      "p42.3"
+     ]
+    },
+    {
+     "text": "Banking up to 100% of contract demand: annual, capped at the higher of 25% of injection or 30% of consumption; from 100% to 200%: within the billing cycle, 30% cap; 8% charge in kind; none for third-party sale or behind-the-meter",
+     "basis": [
+      "p45.1",
+      "p47.2",
+      "p47.7",
+      "p48.1"
+     ]
+    },
+    {
+     "text": "Generators with a discom PPA cannot take open access for that capacity except under the PPA",
+     "basis": [
+      "p36.2"
+     ]
+    }
+   ],
+   "procurement": [
+    {
+     "text": "BESS for at least 20% of the energy from captive capacity above 100% of contract demand",
+     "basis": [
+      "p37.1"
+     ]
+    },
+    {
+     "text": "New STU-connected RE over 5 MW (excluding hydro): ESS of at least 2 hours for at least 5% of RE capacity",
+     "basis": [
+      "p37.1"
+     ]
+    },
+    {
+     "text": "ABT-compliant 15-minute Special Energy Meters at generator, interface and consumption points",
+     "basis": [
+      "p48.1"
+     ]
+    },
+    {
+     "text": "Fees: Rs 1 lakh long-term, Rs 20,000 medium-term, Rs 5,000 short-term; bank guarantee of Rs 10,000/MW; three months' charges as deposit",
+     "basis": [
+      "p49.2",
+      "p50.1",
+      "p50.3"
+     ]
+    },
+    {
+     "text": "Green tariff from the discom: requisitions for at least a year, in steps of 25%",
+     "basis": [
+      "p52.8"
+     ]
+    },
+    {
+     "text": "Relinquishing long-term access early costs 66% of transmission and wheeling charges for the stranded period",
+     "basis": [
+      "p39.2",
+      "p40.2"
+     ]
+    }
+   ],
+   "stakeholders": {
+    "discoms": {
+     "effect": "mixed",
+     "comment": "Sales to OA consumers from 100 kW are exposed, but cross-subsidy and additional surcharges, standby charges and the 8% banking charge stay; green energy bought above RPO counts towards the discom's RPO.",
+     "basis": [
+      "p43.1",
+      "p44.1",
+      "p48.1",
+      "p52.8"
+     ]
+    },
+    "ci_consumers": {
+     "effect": "opportunity",
+     "comment": "Consumers from 100 kW can source green power through OA or ask the discom for green tariff in 25% steps. They pay cross-subsidy and additional surcharge, and additional surcharge also applies to OA above contract demand.",
+     "basis": [
+      "p37.1",
+      "p52.8",
+      "p43.1",
+      "p44.1"
+     ]
+    },
+    "captive": {
+     "effect": "opportunity",
+     "comment": "New captive RE up to 200% of contract demand (BESS for 20% of the extra energy); no additional surcharge on captive supply; annual banking for plants up to 100% of contract demand.",
+     "basis": [
+      "p37.1",
+      "p44.2",
+      "p45.1"
+     ]
+    },
+    "re_developers": {
+     "effect": "mixed",
+     "comment": "Captive and OA demand opens up, but new STU-connected projects above 5 MW must add storage, and hybrid injection above contracted capacity is neither paid nor settled.",
+     "basis": [
+      "p37.1",
+      "p42.2"
+     ]
+    },
+    "storage": {
+     "effect": "opportunity",
+     "comment": "Demand from two mandates (20% storage for captive capacity above 100%, 5% two-hour ESS for new STU RE above 5 MW) and T&W exemptions of 75% to 100% for BESS supply in peak or non-solar hours.",
+     "basis": [
+      "p37.1",
+      "p42.2",
+      "p42.3",
+      "p42.4"
+     ]
+    },
+    "transmission": {
+     "effect": "mixed",
+     "comment": "STU is the nodal agency for long and medium term, SLDC for short term; applications from the central portal are decided within 15 days, and system strengthening for RE is paid by the applicant.",
+     "basis": [
+      "p35.3",
+      "p37.2",
+      "p38.1"
+     ]
+    }
+   },
+   "open_questions": [
+    "How BESS for 100% to 200% captive plants is operated is left to a separate SLDC or discom order.",
+    "The green energy tariff is to be set by a separate RERC order.",
+    "RERC's order of 04.11.2026 (Petition 2416/2026) reads the 200% limit as available to existing behind-the-meter plants only after migrating under Regulation 7."
+   ]
+  },
   "source_url": "https://rerc.rajasthan.gov.in/rerc-user-files/regulations"
  }
 ]
