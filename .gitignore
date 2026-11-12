@@ -27,3 +27,4 @@ pipeline/tests/fixtures/inbox/
 *token*.docx
 *Token*.docx
 data/preview_snapshot/
+web/tsconfig.tsbuildinfo
