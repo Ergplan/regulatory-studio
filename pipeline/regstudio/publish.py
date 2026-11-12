@@ -148,7 +148,7 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
             if clean and SAMPLE_MARK in c["source_url"]:
                 continue
             consultations.append({
-                "id": c["id"], "path": f"/consultations/{c['commission']}/{slug(re.sub(r'^draft\s+', '', c['title'] or c['id'][:12], flags=re.I), 90)}-{c['id'][:6]}",
+                "id": c["id"], "path": f"/consultations/{c['commission']}/{slug(re.sub(r'^(draft\s+)?(central electricity regulatory commission|[a-z]*erc|karnataka electricity regulatory commission)\s*', '', c['title'] or c['id'][:12], flags=re.I), 90)}-{c['id'][:6]}",
                 "commission": c["commission"], "title": c["title"], "kind": c["kind"],
                 "issued": c["issued_date"], "comment_deadline": c["comment_deadline"], "hearing_date": c["hearing_date"],
                 "summary": c["summary"], "proposes": json.loads(c["proposes"] or "[]"), "amends": c["amends"],
