@@ -79,7 +79,7 @@ def main(argv: list[str] | None = None) -> None:
     sub.add_parser("status", help="documents per stage and the review queue")
     sub.add_parser("check-inbox", help="dry run: list problems in data/inbox without registering anything")
     dl = sub.add_parser("download", help="fetch new orders from commission websites into data/inbox")
-    dl.add_argument("--commission", action="append", choices=["cerc", "uperc", "rerc", "merc", "gerc", "kerc", "rerc-regs", "cerc-drafts", "gerc-drafts", "kerc-drafts"],
+    dl.add_argument("--commission", action="append", choices=["cerc", "uperc", "rerc", "merc", "gerc", "kerc", "rerc-regs", "cerc-drafts", "gerc-drafts", "kerc-drafts", "tnerc", "tnerc-drafts"],
                     help="repeat to pick several; default all")
     dl.add_argument("--since", default=None, help="YYYY-MM-DD; default 14 days ago")
     dl.add_argument("--limit", type=int, default=None, help="max new documents per commission")

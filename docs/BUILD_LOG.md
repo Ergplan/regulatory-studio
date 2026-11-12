@@ -33,3 +33,4 @@ no downloads from commission sites, nothing deleted on the Mac.
 - 12 Nov, 23:50 UTC check-in: review queue now leads with the case number and marks orders still carrying a long listing title ("needs a short title"). 38 tests pass.
 - 12 Nov, 01:50 UTC check-in: smoke-tested the GEOA regulation page, suggested targets and queue flags on the Mac; morning review notes updated for ten orders, suggestions and the GEOA registry approval.
 - 12 Nov, 03:50 UTC wrap-up: 38 pipeline tests pass, web build passes, everything pushed.
+- 12 Nov, afternoon IST: draft regulations and consultations (CERC, GERC, KERC drafts; consult stage; review page; /consultations on the site). TNERC added as the eighth commission: case orders (CaseOrders.aspx) and draft regulations (ViewDR.aspx). 43 tests pass.

@@ -101,6 +101,8 @@ regstudio fetch https://example/judgment.pdf aptel judgment --date 2026-11-05 --
 | CERC drafts (`cerc-drafts`) | Draft_reg.html | draft regulations and proposals, with the comment deadline and hearing date |
 | GERC drafts (`gerc-drafts`) | draft regulations page | GERC lists no deadline: enter it from the public notice on the review screen |
 | KERC drafts (`kerc-drafts`) | draft regulations page | issue date and last date for suggestions |
+| TNERC (`tnerc`) | CaseOrders.aspx | case orders with petitioner, respondent and order date |
+| TNERC drafts (`tnerc-drafts`) | ViewDR.aspx | draft regulations with last date; the link is TNERC's public notice with the draft |
 | APTEL | no listing the script can read | add with `regstudio fetch <url> aptel judgment --date ... --case ...` |
 
 Each file lands in `data/inbox/<commission>/<today>/` with its metadata JSON. Already-fetched

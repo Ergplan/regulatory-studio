@@ -35,6 +35,7 @@ COMMISSIONS = {
     "gerc": "Gujarat Electricity Regulatory Commission",
     "kerc": "Karnataka Electricity Regulatory Commission",
     "rerc": "Rajasthan Electricity Regulatory Commission",
+    "tnerc": "Tamil Nadu Electricity Regulatory Commission",
 }
 
 TOPICS = {
