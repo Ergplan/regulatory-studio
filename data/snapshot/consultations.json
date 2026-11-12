@@ -175,8 +175,72 @@
       "start": "2027-04-30"
      }
     ]
+   },
+   {
+    "type": "flow",
+    "title": "Who would get the proposed ISTS charge waiver",
+    "items": [
+     {
+      "label": "Wind, solar or hybrid project delayed by transmission",
+      "basis": [
+       "p1.7",
+       "p1.8",
+       "p1.10"
+      ],
+      "detail": "Transmission not available beyond the later of the connectivity start date or the SCOD"
+     },
+     {
+      "label": "PPA or PSA of at least 7 years signed by 31.03.2027",
+      "basis": [
+       "p1.7",
+       "p2.14"
+      ],
+      "detail": "With a drawee DIC, directly or through a trader or REIA",
+      "otherwise": "A contract signed later is not eligible"
+     },
+     {
+      "label": "Copies filed with CTUIL and NLDC by 30.04.2027",
+      "basis": [
+       "p2.10",
+       "p2.14"
+      ],
+      "otherwise": "Not filed in time: not eligible"
+     },
+     {
+      "label": "COD within two months of GNA becoming effective",
+      "basis": [
+       "p1.10",
+       "p2.1",
+       "p2.17",
+       "p3.1"
+      ],
+      "otherwise": "Waiver follows the Table 1 trajectory instead"
+     },
+     {
+      "label": "Choice declared within 30 days of COD",
+      "basis": [
+       "p3.2",
+       "p3.3"
+      ],
+      "detail": "If the project also qualifies under sub-clause (a), it states which route it claims"
+     },
+     {
+      "label": "Waiver for the tenure of the contract",
+      "basis": [
+       "p2.8",
+       "p2.17",
+       "p3.1"
+      ],
+      "detail": "Up to 25 years from COD; back to the Table 1 trajectory if the filed contract is terminated early"
+     }
+    ],
+    "note": "A proposal, not in force. Steps as set out in the draft sub-clause (h-i)."
    }
   ],
+  "checked": {
+   "reviewers": 0,
+   "numbers": true
+  },
   "comments": {
    "discoms": {
     "position": "As a drawee DIC we support certainty on transmission charges for renewable power contracted before 31.03.2027. We ask the Commission to state who bears the charges that are waived, and to protect the buyer where a waiver ends through no act of the buyer.",
@@ -367,6 +431,10 @@
   "impact": null,
   "rating": null,
   "figures": [],
+  "checked": {
+   "reviewers": 0,
+   "numbers": true
+  },
   "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-290520262212Eng.pdf",
   "related": [],
@@ -398,6 +466,10 @@
   "impact": null,
   "rating": null,
   "figures": [],
+  "checked": {
+   "reviewers": 0,
+   "numbers": true
+  },
   "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-150520262110Eng.pdf",
   "related": [],
@@ -428,6 +500,10 @@
   "impact": null,
   "rating": null,
   "figures": [],
+  "checked": {
+   "reviewers": 0,
+   "numbers": true
+  },
   "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-140520261750Eng.pdf",
   "related": [],
@@ -458,6 +534,10 @@
   "impact": null,
   "rating": null,
   "figures": [],
+  "checked": {
+   "reviewers": 0,
+   "numbers": true
+  },
   "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-270520261445Eng.pdf",
   "related": [],
@@ -489,6 +569,10 @@
   "impact": null,
   "rating": null,
   "figures": [],
+  "checked": {
+   "reviewers": 0,
+   "numbers": true
+  },
   "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-120520262047Eng.pdf",
   "related": [],
@@ -519,6 +603,10 @@
   "impact": null,
   "rating": null,
   "figures": [],
+  "checked": {
+   "reviewers": 0,
+   "numbers": true
+  },
   "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-030620262218Eng.pdf",
   "related": [],
@@ -550,6 +638,10 @@
   "impact": null,
   "rating": null,
   "figures": [],
+  "checked": {
+   "reviewers": 0,
+   "numbers": true
+  },
   "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-030620262110Eng.pdf",
   "related": [],
@@ -580,6 +672,10 @@
   "impact": null,
   "rating": null,
   "figures": [],
+  "checked": {
+   "reviewers": 0,
+   "numbers": true
+  },
   "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-010620262127Eng.pdf",
   "related": [],
@@ -610,6 +706,10 @@
   "impact": null,
   "rating": null,
   "figures": [],
+  "checked": {
+   "reviewers": 0,
+   "numbers": true
+  },
   "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-310520262022Eng.pdf",
   "related": [],
@@ -862,8 +962,68 @@
      }
     ],
     "unit": "% of consumption"
+   },
+   {
+    "type": "flow",
+    "title": "Would the proposed obligation apply, and how could it be met",
+    "items": [
+     {
+      "label": "Are you an obligated entity?",
+      "basis": [
+       "p3.9",
+       "p3.10"
+      ],
+      "detail": "A distribution licensee; an open access consumer of 1 MW and above drawing over 1 MW; a captive consumer with a grid-connected plant of 1 MW and above"
+     },
+     {
+      "label": "Meet the yearly percentage",
+      "basis": [
+       "p5.8"
+      ],
+      "detail": "35.95% of consumption in 2026-27, rising to 43.33% in 2029-30"
+     },
+     {
+      "label": "Route 1: use renewable power",
+      "basis": [
+       "p7.5",
+       "p7.6"
+      ],
+      "detail": "From a captive source of at least 250 kW, or bought from any source, including traders, the market or storage"
+     },
+     {
+      "label": "Route 2: renewable energy certificates",
+      "basis": [
+       "p7.7",
+       "p7.8"
+      ],
+      "detail": "Bought or self-generated, including those acquired under virtual PPAs"
+     },
+     {
+      "label": "Route 3: pay the buyout price",
+      "basis": [
+       "p7.9"
+      ],
+      "detail": "At the price specified by CERC"
+     },
+     {
+      "label": "Report to the State Agency by 31 July",
+      "basis": [
+       "p8.6",
+       "p8.9",
+       "p8.11",
+       "p8.12"
+      ],
+      "detail": "The State Agency reports on every obligated entity to the Commission by 31 August",
+      "otherwise": "Non-compliance or not giving information can lead to Section 142 proceedings"
+     }
+    ],
+    "note": "A proposal, not in force. Steps as set out in the draft regulations."
    }
   ],
+  "checked": {
+   "reviewers": 0,
+   "numbers": true
+  },
   "comments": {
    "captive": {
     "position": "We support the exclusions for waste heat and by-product gas generation, which recognise how industrial captive plants operate. We ask the Commission to clarify the coverage of renewable captive plants and to remove limits that keep smaller captive renewable capacity from counting.",
@@ -1088,6 +1248,10 @@
   "impact": null,
   "rating": null,
   "figures": [],
+  "checked": {
+   "reviewers": 0,
+   "numbers": true
+  },
   "comments": {},
   "source_url": "https://cercind.gov.in/2026/draft_reg/DR_IEGC-2ndAmnd.pdf",
   "related": [
@@ -1137,6 +1301,10 @@
   "impact": null,
   "rating": null,
   "figures": [],
+  "checked": {
+   "reviewers": 0,
+   "numbers": true
+  },
   "comments": {},
   "source_url": "https://gercin.org/viewdocument/cmVndWxhdGlvbl9lbmdfMTc5MjI0NzU1Nl8yMzg4",
   "related": [
@@ -1172,6 +1340,10 @@
   "impact": null,
   "rating": null,
   "figures": [],
+  "checked": {
+   "reviewers": 0,
+   "numbers": true
+  },
   "comments": {},
   "source_url": "https://gercin.org/viewdocument/cmVndWxhdGlvbl9lbmdfMTc5MjI0NzgyM18yNzg4",
   "related": [

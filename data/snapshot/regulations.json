@@ -193,6 +193,38 @@
      }
     ],
     "unit": "% deviation"
+   },
+   {
+    "type": "flow",
+    "title": "How a wind or solar seller's deviation is priced from 1 April 2026",
+    "items": [
+     {
+      "label": "Within the first band",
+      "basis": [
+       "p9.2",
+       "p9.18",
+       "p9.21"
+      ],
+      "detail": "Up to 5% for solar and hybrid, up to 10% for wind: settled at the contract rate either way"
+     },
+     {
+      "label": "Within the second band",
+      "basis": [
+       "p9.3",
+       "p9.4"
+      ],
+      "detail": "Under-injection pays 110% of the contract rate; over-injection receives 90%"
+     },
+     {
+      "label": "Beyond the second band",
+      "basis": [
+       "p9.5",
+       "p9.6"
+      ],
+      "detail": "Under-injection pays 200% of the contract rate; over-injection receives nothing"
+     }
+    ],
+    "note": "Deviation is measured against the bands in Regulation 8(4)."
    }
   ],
   "source_url": "https://cercind.gov.in/regulations/192-Noti.pdf",
@@ -363,7 +395,39 @@
     "RERC's order of 04.11.2026 (Petition 2416/2026) reads the 200% limit as available to existing behind-the-meter plants only after migrating under Regulation 7."
    ]
   },
-  "figures": [],
+  "figures": [
+   {
+    "type": "flow",
+    "title": "How large a new captive renewable plant can be",
+    "items": [
+     {
+      "label": "Up to 100% of contract demand",
+      "basis": [
+       "p37.1",
+       "p45.1"
+      ],
+      "detail": "Banking terms for plants up to 100% of contract demand apply"
+     },
+     {
+      "label": "Above 100% and up to 200%",
+      "basis": [
+       "p37.1",
+       "p47.2",
+       "p47.7"
+      ],
+      "detail": "BESS for at least 20% of the energy from the capacity above 100%; banked energy is adjusted within the same billing cycle"
+     },
+     {
+      "label": "200% of contract demand is the ceiling",
+      "basis": [
+       "p37.1"
+      ],
+      "detail": "The maximum for a new captive plant, including one behind the meter"
+     }
+    ],
+    "note": "Fourth and fifth provisos to Regulation 5(ii), and the banking terms in Regulation 11.8."
+   }
+  ],
   "source_url": "https://rerc.rajasthan.gov.in/rerc-user-files/regulations",
   "pdf": "/pdf/9273c10489c1d805.pdf",
   "source_listing": true
