@@ -49,6 +49,11 @@ def server(env):
         except urllib.error.HTTPError as e:
             return e.code
 
+    def get(path):
+        with opener.open(f"http://127.0.0.1:{port}{path}") as r:
+            return r.read().decode("utf-8")
+
+    post.get = get  # page text, using the same signed-in cookie jar
     yield post
     srv.should_exit = True
     t.join(timeout=5)
@@ -164,9 +169,7 @@ def test_queue_shows_commission_website_health(server):
     (config.STORE / "download_last.json").write_text(json.dumps({"at": "2026-11-11T22:00", "sites": {
         "kerc": {"newest": "2026-08-31", "downloaded": 0, "errors": [],
                  "warnings": ["no orders recognised on the listing page; the site layout may have changed"]}}}))
-    from regstudio.review_app import app
-    from fastapi.testclient import TestClient
-    page = TestClient(app).get("/").text
+    page = server.get("/")
     assert "Commission websites" in page and "2026-08-31" in page and "layout may have changed" in page
 
 
@@ -195,14 +198,12 @@ def test_suggestion_understands_common_abbreviations(env):
 
 
 def test_queue_flags_long_listing_titles(server):
-    from fastapi.testclient import TestClient
     from regstudio import db
-    from regstudio.review_app import app
     with db.session() as conn:
         conn.execute("UPDATE documents SET title = ?, case_number = 'Petition No. 2416/2026' WHERE doc_type = 'order'",
                      ("M/s Sample Ltd: Petition filed under Section 142 of the Electricity Act 2003 for contravention of "
                       "directions in the Green Energy Open Access Regulations with respect to contract demand",))
-    page = TestClient(app).get("/").text
+    page = server.get("/")
     assert "Petition No. 2416/2026" in page and "needs a short title" in page
 
 

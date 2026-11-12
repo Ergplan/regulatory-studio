@@ -24,7 +24,9 @@ Regulatory Studio publishes legal summaries under jouleWise's name. Accuracy bea
 - Python 3.10+. Dependencies: pymupdf, jsonschema, fastapi, uvicorn, jinja2.
 - Working DB is SQLite at `data/store/working.db`; schema in `pipeline/regstudio/schema.sql`.
   Change it only through a new numbered file in `pipeline/regstudio/migrations/`.
-- Run `pytest pipeline/tests` before committing. Tests use `REGSTUDIO_READER=mock`.
+- Run `pytest pipeline/tests` before committing. Tests use `REGSTUDIO_READER=mock`. Review-screen
+  tests use the real uvicorn `server` fixture, not `fastapi.testclient` (it needs httpx2, which CI
+  does not install).
 - The site in `web/` builds only from `data/snapshot/*.json`. Pages must be fully readable
   without JavaScript; the spider map sits on top of a plain list of links.
 
