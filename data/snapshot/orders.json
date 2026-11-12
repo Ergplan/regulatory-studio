@@ -1,1 +1,542 @@
-[]
+[
+ {
+  "id": "f36d5dc4d09d199719553d0d7a4edec081c13b1898fe33f8d10403e386d2d04c",
+  "path": "/orders/cerc/2026/13-sm-2026-f36d5d",
+  "commission": "cerc",
+  "doc_type": "order",
+  "title": null,
+  "case_number": "Petition No. 13/SM/2026",
+  "date": "2026-10-28",
+  "source_url": "https://cercind.gov.in/2026/Orders/13-SM-2026.pdf",
+  "pdf": "https://cercind.gov.in/2026/Orders/13-SM-2026.pdf",
+  "draft": true,
+  "topics": [
+   "power-market"
+  ],
+  "significance": 4,
+  "parties": [],
+  "issue": "Whether pumped storage plants (PSPs) should be added to the categories of generating stations eligible to participate in the High Price Day Ahead Market (HP-DAM) on the power exchanges.",
+  "outcome": "The Commission formed a prima facie view in favour and proposed including PSPs as an eligible HP-DAM category. It initiated suo motu proceedings under Regulation 56 of the Conduct of Business Regulations, 2023, issued a public notice, and directed parties to file written submissions within 15 days. No final decision has been taken.",
+  "summary": "CERC has proposed that pumped storage plants (PSPs) be allowed to sell in the High Price Day Ahead Market (HP-DAM), which is currently open only to gas stations using imported RLNG or naphtha, imported-coal stations and battery storage. The proposal follows NLDC recommendations of July 2026 and a Ministry of Power letter of 30.07.2026. NLDC's analysis noted that operational PSP capacity (7,425.6 MW) is largely tied up, and that HP-DAM cleared on only 47 days between April 2025 and July 2026. It also found a solar-hour to evening-peak price spread in the DAM of about ₹4.37 per unit. The Commission took the prima facie view that the DAM alone may not give PSPs enough opportunity and that HP-DAM access could improve their viability and support grid flexibility. This is a proposal, not a final order: CERC has started suo motu proceedings, issued a public notice, and asked parties to file written submissions within 15 days of the order dated 28.10.2026.",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "d506f89fd88361790ac6b16ea1c34b6178d2be93c01cea645f7f624a02a1670d",
+  "path": "/orders/cerc/2026/16-sm-2026-d506f8",
+  "commission": "cerc",
+  "doc_type": "order",
+  "title": null,
+  "case_number": "Petition No. 16/SM/2026",
+  "date": "2026-10-03",
+  "source_url": "https://cercind.gov.in/2026/Orders/16-SM-2026.pdf",
+  "pdf": "https://cercind.gov.in/2026/Orders/16-SM-2026.pdf",
+  "draft": true,
+  "topics": [
+   "dsm"
+  ],
+  "significance": 4,
+  "parties": [],
+  "issue": "Whether to defer again the start of Regulation 9(7)(ii) of the DSM Regulations, 2024, under which a deficit in the Deviation and Ancillary Service (DAS) Pool Account is recovered from drawee DICs in the ratio of the shortfall of reserves allocated by NLDC.",
+  "outcome": "Using its power to remove difficulty under Regulation 12, the Commission kept the existing recovery basis in Regulation 9(7)(i) in force until 04.04.2027 and deferred Regulation 9(7)(ii) to 05.04.2027. Grid-India must submit the detailed recovery procedure for approval before 04.04.2027.",
+  "summary": "CERC has deferred, for a second time, the change in how deficits in the Deviation and Ancillary Service (DAS) Pool Account are recovered from drawee DICs. Under Regulation 9(7) of the DSM Regulations, 2024, a deficit not covered by other regions' pool surpluses is recovered 50% by drawal at the ISTS periphery and 50% by GNA; from the second stage, it was to be recovered in proportion to each DIC's shortfall of reserves allocated by NLDC. The second stage had already been moved to 05.10.2026 by the order in Petition No. 02/SM/2026. Grid-India reported on 29.09.2026 that state-level reserve frameworks are not ready and that only 7 of 34 States/entities had furnished reserve information. Acting suo motu under Regulation 12 (power to remove difficulty), the Commission kept the first-stage basis in force until 04.04.2027 and deferred the reserve-shortfall basis to 05.04.2027. Grid-India must prepare the detailed recovery procedure and methodology before 04.04.2027 for the Commission's approval.",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": [
+   {
+    "type": "applies",
+    "kind": "clause",
+    "target": "cerc/deviation-settlement-mechanism-related-matters-2024/12",
+    "cited_as": "Regulation 12 of the DSM Regulations, 2024",
+    "pid": "p3.4",
+    "excerpt": "9. Accordingly, in exercise of the powers conferred under Regulation 12 of the DSM Regulations, 2024, the Commission issues the following directions:",
+    "page": 3
+   },
+   {
+    "type": "relaxes",
+    "kind": "clause",
+    "target": "cerc/deviation-settlement-mechanism-related-matters-2024/9(7)",
+    "cited_as": "Regulation 9(7) of the DSM Regulations, 2024",
+    "pid": "p3.5",
+    "excerpt": "(i) Sub-clause(i) of Regulation 9(7) of the DSM Regulations, 2024 shall, unless notified otherwise, continue to remain in force till 04.04.2027 (as against 04.10.2026)",
+    "page": 3
+   }
+  ]
+ },
+ {
+  "id": "c2e7bf7e60c745127c604248070d1e46ab5050c13d974f4efdea32a7abd87ad6",
+  "path": "/orders/cerc/2026/233-at-2026-c2e7bf",
+  "commission": "cerc",
+  "doc_type": "order",
+  "title": null,
+  "case_number": "Petition No. 233/AT/2026",
+  "date": "2026-10-26",
+  "source_url": "https://cercind.gov.in/2026/Orders/233-AT-2026.pdf",
+  "pdf": "https://cercind.gov.in/2026/Orders/233-AT-2026.pdf",
+  "draft": true,
+  "topics": [
+   "ppa-adoption",
+   "generation-tariff"
+  ],
+  "significance": 3,
+  "parties": [
+   {
+    "name": "SJVN Limited",
+    "role": "petitioner"
+   },
+   {
+    "name": "ReNew Solar Power Private Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "EG Energy Development Private Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Dineshchandra R Agrawal Infracon Pvt. Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Serentica Renewables India Private Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Tata Power Renewable Energy Limited",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Whether to adopt under Section 63 the tariffs discovered in SJVN's tender for firm and dispatchable round-the-clock RE power, and whether SJVN may charge a trading margin of ₹0.07/kWh.",
+  "outcome": "Tariffs of ₹4.82–4.91/kWh adopted for 448 MW across five developers, subject to SJVN tying up the capacity under PPAs and PSAs. The ₹0.07/kWh margin stands if discoms agree, but falls to ₹0.02/kWh if SJVN does not give developers an escrow or revolving letter of credit.",
+  "summary": "CERC has adopted the tariffs discovered in SJVN's tender for firm and dispatchable round-the-clock (FDRE) power from ISTS-connected renewable projects, under the Ministry of Power's FDRE guidelines of 09.06.2023. Although 1,200 MW was tendered, five bidders offered only 560 MW, and under the tender rules 448 MW was awarded. The tariffs are ReNew Solar Power ₹4.82 for 100 MW, EG Energy Development ₹4.83 for 60 MW and Dineshchandra R Agrawal Infracon ₹4.86 for 100 MW. Serentica Renewables won 100 MW at ₹4.89 and Tata Power Renewable Energy 88 MW at ₹4.91 (all per kWh). The Commission noted these were consistent with other FDRE results. Adoption is conditional on SJVN signing PPAs and PSAs: at the time of the order, HPSEBL had given only in-principle approval for October to March supply and no PSA had been executed. SJVN must file the PPAs and PSAs, or report if the capacity does not tie up. The Commission accepted SJVN's reasons for filing late but directed it to keep to the 15-day timeline in future. A ₹0.07/kWh trading margin is allowed if discoms agree; without an escrow or revolving letter of credit for developers, it is capped at ₹0.02/kWh.",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s63",
+    "cited_as": "Section 63 of the Act",
+    "pid": "p25.2",
+    "excerpt": "Accordingly, under Section 63 of the Act, the Commission adopts the individual tariffs for the Solar Power Developers, as discovered and agreed to by the successful bidder(s), subject to the Petitioner tying up the capacity under the PPAs and PSAs.",
+    "page": 25
+   }
+  ]
+ },
+ {
+  "id": "198e334df752469fe2028c92019ac36eddcd05df15f6e8868503782d5c9d0ee1",
+  "path": "/orders/cerc/2026/779-mp-2025-198e33",
+  "commission": "cerc",
+  "doc_type": "order",
+  "title": null,
+  "case_number": "Petition No. 779/MP/2025",
+  "date": "2026-10-26",
+  "source_url": "https://cercind.gov.in/2026/Orders/779-MP-2025-Ors.pdf",
+  "pdf": "https://cercind.gov.in/2026/Orders/779-MP-2025-Ors.pdf",
+  "draft": true,
+  "topics": [
+   "ists-charges",
+   "open-access"
+  ],
+  "significance": 3,
+  "parties": [
+   {
+    "name": "Mounting Renewable Power Limited",
+    "role": "petitioner"
+   },
+   {
+    "name": "Welspun Living Limited",
+    "role": "petitioner"
+   },
+   {
+    "name": "Welspun Corp Limited",
+    "role": "petitioner"
+   },
+   {
+    "name": "Central Transmission Utility of India Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Power Grid Corporation of India Limited",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Whether MRPL's 250 MW wind-solar hybrid project in Jamnagar, supplying Welspun group consumers, is entitled to an extension of its SCOD from 30.06.2025 and a 100% waiver of ISTS charges under Regulation 13(2)(h) of the 2020 Sharing Regulations.",
+  "outcome": "Allowed on the Committee's recommendation: SCOD extended to 30.06.2026 and ISTS charges waived as if COD were 30.06.2025, but only for the capacity that actually achieved COD by 30.06.2026. NLDC is to verify the COD certificates.",
+  "summary": "CERC has extended the scheduled commercial operation date of Mounting Renewable Power's 250 MW wind-solar hybrid project at Jamnagar, Gujarat, from 30.06.2025 to 30.06.2026. The project supplies power to Welspun Living and Welspun Corp under PPAs dated 26.02.2024. The petitioners cited delays in transmission bays, right-of-way disputes on the dedicated line, land allotment, and the effects of cyclone Biparjoy and heavy rainfall. Because the PPAs were not under Section 63 bidding, the extension fell to the Commission on the recommendation of the Committee it set up under Regulation 13(2)(h) of the 2020 Sharing Regulations. The Committee's report of 19.06.2026 found the delay not attributable to the generator. The Commission adopted that recommendation and allowed the waiver of inter-State transmission charges as if COD had been 30.06.2025. The waiver covers only the capacity that achieved COD by 30.06.2026: the petitioner reported 174.9 MW of the planned 250 MW. NLDC must verify the COD certificates before allowing the waiver.",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "5e7d1a2d457deaf42685c115e63a398f5b702c1b9c831fc6c495e346fd2ad550",
+  "path": "/orders/cerc/2026/979-mp-2025-5e7d1a",
+  "commission": "cerc",
+  "doc_type": "order",
+  "title": null,
+  "case_number": "Petition No. 979/MP/2025",
+  "date": "2026-11-02",
+  "source_url": "https://cercind.gov.in/2026/Orders/979-MP-2025.pdf",
+  "pdf": "https://cercind.gov.in/2026/Orders/979-MP-2025.pdf",
+  "draft": true,
+  "topics": [
+   "dsm"
+  ],
+  "significance": 4,
+  "parties": [
+   {
+    "name": "Vena Energy Vidyuth Private Limited",
+    "role": "petitioner"
+   },
+   {
+    "name": "Southern Regional Power Committee",
+    "role": "respondent"
+   },
+   {
+    "name": "Southern Regional Load Despatch Centre",
+    "role": "respondent"
+   },
+   {
+    "name": "Ministry of New and Renewable Energy",
+    "role": "respondent"
+   },
+   {
+    "name": "Solar Energy Corporation of India Limited",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Whether a 160 MW blended wind project (81% wind, 19% solar, single injection point) built under the 2020 Blended Wind Guidelines can be treated as a generating station based on wind resource for deviation charges under Regulation 8(4) of the DSM Regulations, 2024, using the power to relax (Regulation 11) or remove difficulty (Regulation 12).",
+  "outcome": "Petition rejected. The project is treated as a wind-solar hybrid under Regulation 8(4). The Commission held that Regulations 11 and 12 cannot be used to create a new category or classification of generating station, and that setting a threshold for predominantly wind projects would be akin to amending the Regulations.",
+  "summary": "CERC has rejected Vena Energy's plea to treat its 160 MW blended wind project in Koppal, Karnataka (129.6 MW wind, 30.4 MW solar) as a wind generator for deviation settlement. The project was bid under MNRE's 2020 Blended Wind Guidelines and commissioned on 29.10.2024. SRPC treats it as a hybrid because it has wind and solar behind one injection point, which puts it in the tighter deviation band for solar and hybrid sellers under Regulation 8(4) of the DSM Regulations, 2024. Vena said this raised its DSM liability to about 5.3% of revenue, against about 3.0% if treated as wind. The Commission held that qualifying under the Blended Wind Guidelines does not decide treatment under the DSM Regulations. The 33% hybrid threshold in other guidelines is not relevant either, and the developer could have built a wind-only project, as another bidder in the same tranche did. Crucially, the Commission said its powers to relax and remove difficulty under Regulations 11 and 12 cannot be used to create a new category of generating station.",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": [
+   {
+    "type": "interprets",
+    "kind": "clause",
+    "target": "cerc/deviation-settlement-mechanism-related-matters-2024/8(4)",
+    "cited_as": "Regulation 8(4) of the DSM Regulations, 2024",
+    "pid": "p14.10",
+    "excerpt": "The Petitioner’s Project cannot be considered as a generating station based exclusively on wind resource for the purpose of Regulation 8(4) under the DSM Regulations 2024.",
+    "page": 14
+   },
+   {
+    "type": "interprets",
+    "kind": "clause",
+    "target": "cerc/deviation-settlement-mechanism-related-matters-2024/11",
+    "cited_as": "Regulations 11 and 12 of the DSM Regulations, 2024",
+    "pid": "p15.4",
+    "excerpt": "the power to relax or the power to remove difficulty under Regulations 11 and 12 of the DSM Regulations, 2024, respectively, cannot be exercised to create a new category or classification of generating station.",
+    "page": 15
+   },
+   {
+    "type": "interprets",
+    "kind": "clause",
+    "target": "cerc/deviation-settlement-mechanism-related-matters-2024/12",
+    "cited_as": "Regulations 11 and 12 of the DSM Regulations, 2024",
+    "pid": "p15.4",
+    "excerpt": "the power to relax or the power to remove difficulty under Regulations 11 and 12 of the DSM Regulations, 2024, respectively, cannot be exercised to create a new category or classification of generating station.",
+    "page": 15
+   },
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s79",
+    "cited_as": "Section 79 of the Electricity Act",
+    "pid": "p3.10",
+    "excerpt": "The Petitioner has filed the present petition under Section 79 of the Electricity Act read with Regulations 11 and 12 of the Central Electricity Regulatory Commission (Deviation Settlement Mechanism and Related Matters) Regulations, 2024",
+    "page": 3
+   }
+  ]
+ },
+ {
+  "id": "9bff38cc7767cd3bc02ea6d7fbd0968c225fb308ebb6fe9bfb728e4359b6b3f1",
+  "path": "/orders/uperc/2026/2416-of-2026-9bff38",
+  "commission": "uperc",
+  "doc_type": "order",
+  "title": null,
+  "case_number": "Petition No. 2416 of 2026",
+  "date": "2026-10-14",
+  "source_url": "https://www.uperc.org/App_File/Pt-no-2416of2026NIDP-14-10-2026-PDF1014202661203PM.pdf",
+  "pdf": "https://www.uperc.org/App_File/Pt-no-2416of2026NIDP-14-10-2026-PDF1014202661203PM.pdf",
+  "draft": true,
+  "topics": [
+   "ppa-adoption",
+   "retail-tariff"
+  ],
+  "significance": 3,
+  "parties": [
+   {
+    "name": "NIDP Developers Pvt. Ltd.",
+    "role": "petitioner"
+   }
+  ],
+  "issue": "Whether to adopt under Section 63 the tariffs discovered by NIDP, a distribution licensee, in its short-term tender for round-the-clock renewable power for FY 2026-27, approve the resulting PPAs, and allow deficit purchases on power exchanges.",
+  "outcome": "Tariffs adopted and PPAs approved: 5 MW at ₹5.12/unit for 01.11.2026–31.03.2027 (DCM Shriram, bagasse) and 3 MW at ₹5.10/unit for 01.01.2027–31.03.2027 (Shubheksha Advisors, from Dalmia Bharat Sugar). NIDP may buy deficit power on exchanges through a trading licensee at a margin of up to 2 paise/kWh.",
+  "summary": "UPERC has adopted the tariffs from NIDP Developers' short-term tender for round-the-clock renewable power, run on the DEEP portal under the Ministry of Power's 2016 short-term bidding guidelines. NIDP is a distribution licensee whose round-the-clock load is about 8.5 MW. Two of four requisitions were awarded, both bagasse-based: 5 MW from DCM Shriram at ₹5.12/unit for November 2026 to March 2027, and 3 MW through Shubheksha Advisors from Dalmia Bharat Sugar at ₹5.10/unit for January to March 2027. The tender committee annulled the other two requisitions, where offers of ₹7.09 and ₹8.05/kWh were considered too high. The Commission found the discovered tariffs competitive against recent DEEP-portal results of other utilities and noted they help NIDP meet its renewable purchase obligations. It approved the PPAs of 10.08.2026 and 12.08.2026 and, as in its earlier NIDP orders, allowed deficit power to be bought on the exchanges through a trading licensee with a ceiling margin of 2 paise/kWh.",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s63",
+    "cited_as": "Section 63 of the Electricity Act, 2003",
+    "pid": "p11.2",
+    "excerpt": "the Commission adopts the tariff of Rs. 5.12/unit for procurement of 5 MW for the period 01.11.2026 to 31.03.2027 and Rs. 5.10/unit for procurement of 3 MW for the period 01.01.2027 to 31.03.2027 and approves the PPAs",
+    "page": 11
+   },
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s86",
+    "cited_as": "Section 86(1)(b) of the Electricity Act, 2003",
+    "pid": "p2.2",
+    "excerpt": "a) Approve the PPA under Section 86(1)(b) of the Electricity Act, 2003 and adopt the tariff of Rs. 5.12/kWh at the Uttar Pradesh State (STU) Periphery",
+    "page": 2
+   }
+  ]
+ },
+ {
+  "id": "6e2c51e21f8db2c588709bfb26b0f82af9e7eaad0fda9c15aacb62b75cdc6fc1",
+  "path": "/orders/uperc/2026/2418-of-2026-6e2c51",
+  "commission": "uperc",
+  "doc_type": "order",
+  "title": null,
+  "case_number": "Petition No. 2418 of 2026",
+  "date": "2026-10-27",
+  "source_url": "https://www.uperc.org/App_File/Pt-no-2418of2026NPCL-27-10-2026-pdf1028202641617PM.pdf",
+  "pdf": "https://www.uperc.org/App_File/Pt-no-2418of2026NPCL-27-10-2026-pdf1028202641617PM.pdf",
+  "draft": true,
+  "topics": [
+   "ppa-adoption",
+   "connectivity-gna"
+  ],
+  "significance": 4,
+  "parties": [
+   {
+    "name": "Noida Power Company Limited",
+    "role": "petitioner"
+   }
+  ],
+  "issue": "Whether to approve NPCL's long-term procurement of 300 MW of firm and dispatchable RE (round-the-clock) power through competitive bidding under the FDRE Guidelines of 09.06.2023, and its proposed deviations, including awarding the whole capacity to a single bidder.",
+  "outcome": "Procurement and tender documents approved with changes. The whole 300 MW may go to a single bidder, but only at the L1 tariff; otherwise capacity is allocated within L1 + 2%. Only bidders holding a final CTU/STU connectivity grant starting on or before 31.12.2028 may bid. Several RfS and PPA clauses must be revised to follow SECI's documents.",
+  "summary": "UPERC has approved Noida Power Company's plan to buy 300 MW of firm and dispatchable renewable power round the clock for 25 years, with supply from December 2028, under the Ministry of Power's FDRE Guidelines. The Commission linked the purchase to the long-term firm capacity it had directed NPCL to secure in June 2026. It accepted NPCL's deviation to award the entire 300 MW to one bidder, reasoning that splitting a small quantum would lose economies of scale. That is allowed only at the L1 tariff; otherwise capacity goes to bidders within L1 plus 2%. Bidding is restricted to developers holding a final connectivity grant from the CTU or STU with a start date on or before 31.12.2028. Storage may be tied up with a third party, though the developer stays fully liable under the PPA. Consortium finances are assessed in aggregate, and a debarment clause mirroring Rule 8 of the Late Payment Surcharge Rules, 2022 was found consistent. NPCL must align its PPA's due date, rebate and dispute clauses with SECI's documents.",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": [
+   {
+    "type": "interprets",
+    "kind": "act_section",
+    "target": "ea2003/s63",
+    "cited_as": "Section 63 of the Electricity Act read with the FDRE Guidelines",
+    "pid": "p18.3",
+    "excerpt": "The Commission is satisfied that small-scale allocation to multiple bidders would not bring economies of scale for sellers and thereby, not helping in discovering the lowest and competitive tariff as per the mandate of Section 63 of the Electricity Act read with the FDRE Guidelines.",
+    "page": 18
+   }
+  ]
+ },
+ {
+  "id": "235f8a14010455416701a8beb7d1642698ff1ded3e2fc270076d055d611320a2",
+  "path": "/orders/gerc/2026/2695-2026-235f8a",
+  "commission": "gerc",
+  "doc_type": "order",
+  "title": "GUVNL v. M/s Welspun Renewable Energy Limited & Others",
+  "case_number": "Petition No. 2695/2026",
+  "date": "2026-11-07",
+  "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU4OTRfMDctMTEtMjAyNl80MjY4MDE2",
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU4OTRfMDctMTEtMjAyNl80MjY4MDE2",
+  "draft": true,
+  "topics": [
+   "ppa-adoption",
+   "generation-tariff"
+  ],
+  "significance": 3,
+  "parties": [
+   {
+    "name": "Gujarat Urja Vikas Nigam Limited",
+    "role": "petitioner"
+   },
+   {
+    "name": "Welspun Renewable Energy Pvt. Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "NLC India Renewables Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Meghmani Renew Energy Pvt. Limited",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Adoption under Section 63 of the tariff discovered in GUVNL's e-reverse auction under RfS No. GUVNL/625 MW/Solar (Phase XXVIII) dated 21.11.2025, for 625 MW of grid-connected solar PV anywhere in India without storage, with a greenshoe option of up to 625 MW more.",
+  "outcome": "Tariff of Rs 2.34/kWh adopted for 1,250 MW in total: Welspun 300 MW, NLC India Renewables 900 MW (300 base + 600 greenshoe) and Meghmani 50 MW (25 + 25). GUVNL to sign PPAs aligned with the Late Payment Surcharge Rules, file executed PPAs with an affidavit, and publish the results for 30 days.",
+  "summary": "GERC has adopted the tariff of Rs 2.34/kWh discovered in GUVNL's solar Phase XXVIII tender (RfS dated 21.11.2025) for 625 MW of grid-connected solar projects anywhere in India, without storage, with a greenshoe option of up to 625 MW. Three L1 bidders won the base 625 MW: Welspun Renewable Energy 300 MW, NLC India Renewables 300 MW and Meghmani Renew Energy 25 MW. With greenshoe, the allocation totals 1,250 MW, NLC rising to 900 MW and Meghmani to 50 MW, all at Rs 2.34/kWh. GUVNL issued LoIs on 24.07.2026; PPAs are to be signed only after adoption. The Commission accepted the bid evaluation committee's certificate under Clause 10.2 of the MoP solar bidding guidelines of 28.07.2023 that the process conformed to the RfS, and was satisfied the process was transparent. It directed GUVNL to align the PPAs with the Electricity (Late Payment Surcharge and Related Matters) Rules, 2022, to file executed PPAs with an affidavit confirming no deviations beyond those approved, and to publish the winners and tariffs on its website for 30 days.",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s63",
+    "cited_as": "Section 63 read with Section 86(1)(b) of the Electricity Act, 2003",
+    "pid": "p23.2",
+    "excerpt": "The Petitioner has sought the approval of the Commission for adoption of discovered tariff of Rs. 2.34 per unit quoted by successful bidders under Competitive Bidding Process followed by e-reverse auction",
+    "page": 23
+   }
+  ]
+ },
+ {
+  "id": "1834b0d3b5aa0976a7b4166f8a5f1c1c8d512833051eb46210b8a50b22794c9c",
+  "path": "/orders/rerc/2026/2416-2026-1834b0",
+  "commission": "rerc",
+  "doc_type": "order",
+  "title": "M/s Shree Cement Limited",
+  "case_number": "Petition No. 2416/2026",
+  "date": "2026-11-04",
+  "source_url": "https://rerc.rajasthan.gov.in/rerc-user-files/office-orders",
+  "pdf": "https://rerc.rajasthan.gov.in/rerc-user-files/office-orders",
+  "draft": true,
+  "topics": [
+   "green-energy-oa",
+   "open-access"
+  ],
+  "significance": 4,
+  "parties": [
+   {
+    "name": "Shree Cement Limited",
+    "role": "petitioner"
+   },
+   {
+    "name": "Jaipur Vidyut Vitran Nigam Ltd.",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Whether a consumer with an existing 7.08 MW behind-the-meter captive solar plant may cut its contract demand from 7.40 MVA to about half the plant's capacity, installing BESS, under the fourth proviso to Regulation 5(ii) of the RERC GEOA Regulations, 2025, and whether JVVNL's refusal contravened the Regulations.",
+  "outcome": "Petition dismissed. The 200% limit is available to existing plants only after one-time migration to the GEOA regime under Regulation 7, and it supports adding RE capacity, not cutting contract demand to save fixed charges. RERC also found the petitioner had not disclosed that it raised the same point in the GEOA procedure hearings.",
+  "summary": "RERC has dismissed Shree Cement's petition under Section 142 against JVVNL. Shree Cement's Jobner grinding unit has a contract demand of 7.40 MVA and a 7.08 MW behind-the-meter captive solar plant commissioned in March 2023. It asked JVVNL to reduce its contract demand to 3,540 kVA and add BESS, relying on the fourth and fifth provisos to Regulation 5(ii) of the RERC (Terms and Conditions for Green Energy Open Access) Regulations, 2025, which allow captive RE capacity up to 200% of contract demand with BESS for energy from capacity above 100%. JVVNL refused. The Commission held that the GEOA Regulations deal expressly with existing plants through the one-time conversion option in Regulation 7, so the saving clause in Regulation 31 cannot be used to bring in the 200% limit for a plant that stays under the earlier regime, where captive capacity was capped at 100% of contract demand. Read with its object, the enhanced limit is meant to encourage additional RE capacity, not to let a consumer reduce contract demand and fixed charges with no new capacity. RERC agreed that, on a plain reading, the provisos limit a behind-the-meter plant to contract demand, and noted that the petitioner had made the same suggestion in the GEOA procedure hearings (order of 12.12.2025) without disclosing it.",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s142",
+    "cited_as": "Section 142 of the Electricity Act, 2003",
+    "pid": "p10.5",
+    "excerpt": "The instant petition has been filed under Section 142 of the Electricity Act, 2003",
+    "page": 10
+   },
+   {
+    "type": "interprets",
+    "kind": "clause",
+    "target": "rerc/terms-conditions-green-energy-open-access-2025/31",
+    "cited_as": "Regulation 31 of the GEOA Regulations, 2025 (saving clause)",
+    "pid": "p13.1",
+    "excerpt": "such migration is expressly addressed, recourse to the mutatis mutandis application of the RERC (Open Access) Regulations, 2016, under Regulation 31 of the GEOA Regulations does not arise for this purpose.",
+    "page": 13
+   },
+   {
+    "type": "applies",
+    "kind": "clause",
+    "target": "rerc/terms-conditions-green-energy-open-access-2025/7",
+    "cited_as": "Regulation 7 of the GEOA Regulations, 2025 (treatment for existing consumers)",
+    "pid": "p13.2",
+    "excerpt": "must exercise the prescribed option for conversion and comply with the applicable conditions of the GEOA Regulations, 2025, including the BESS requirement.",
+    "page": 13
+   },
+   {
+    "type": "interprets",
+    "kind": "clause",
+    "target": "rerc/terms-conditions-green-energy-open-access-2025/5",
+    "cited_as": "fourth proviso to Regulation 5(ii) of the RERC (Terms and Conditions for Green Energy Open Access) Regulations, 2025",
+    "pid": "p19.1",
+    "excerpt": "The fourth proviso to Regulation 5(ii) was intended to facilitate additional RE-based captive capacity, subject to the prescribed BESS requirement, and not to confer an entitlement to reduce contract demand merely to obtain a reduction in fixed charges.",
+    "page": 19
+   },
+   {
+    "type": "applies",
+    "kind": "clause",
+    "target": "rerc/terms-conditions-green-energy-open-access-2025/5",
+    "cited_as": "fourth and fifth provisos to Regulation 5(ii) of the GEOA Regulations, 2025",
+    "pid": "p19.3",
+    "excerpt": "The Commission holds that the fourth and fifth provisos to Regulation 5(ii) are unambiguous and that, on a plain reading, the interpretation adopted by the DISCOMs is justified.",
+    "page": 19
+   }
+  ]
+ },
+ {
+  "id": "99882e10af2925e826ae6068acbc493f6379c2f9a9e1ca82c960f1baabb0cda3",
+  "path": "/orders/rerc/2026/2451-2026-99882e",
+  "commission": "rerc",
+  "doc_type": "order",
+  "title": "RUVITL",
+  "case_number": "Petition No. 2451/2026",
+  "date": "2026-10-29",
+  "source_url": "https://rerc.rajasthan.gov.in/rerc-user-files/office-orders",
+  "pdf": "https://rerc.rajasthan.gov.in/rerc-user-files/office-orders",
+  "draft": true,
+  "topics": [
+   "generation-tariff",
+   "power-market"
+  ],
+  "significance": 4,
+  "parties": [
+   {
+    "name": "Rajasthan Urja Vikas & IT Services Limited (RUVITL), for the Rajasthan Discoms",
+    "role": "petitioner"
+   },
+   {
+    "name": "Rajasthan State Load Despatch Centre",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Whether the Rajasthan Discoms may buy up to 1,300 MW of hydro power from the Government of Himachal Pradesh through PTC, day-ahead, for November 2026 to February 2027 at Rs 15.50/kWh at the seller's CTU periphery, under a negotiated bilateral arrangement instead of tariff-based bidding under the MoP short-term guidelines of 30.03.2016.",
+  "outcome": "Approved under Section 86(1)(b) given the exceptional shortage, but not as a precedent. Quantum scheduled and cost incurred are subject to prudence check in the FY 2026-27 true-up. The Discoms must keep looking for cheaper peak power and act on BESS, FDRE, demand flexibility and resource adequacy plans.",
+  "summary": "RERC has approved RUVITL's purchase, for the Rajasthan Discoms, of up to 1,300 MW from the Government of Himachal Pradesh through PTC India for November 2026 to February 2027. The power is hydro, scheduled day-ahead and concentrated in morning and evening peaks, at Rs 15.50/kWh including trading margin at the seller's CTU periphery; with ISTS charges and losses the landed cost is about Rs 16.62/kWh. RUVITL cited a supply crisis from September 2026: average demand of about 14,518 MW against 12,340 MW a year earlier, peak demand of 17,557 MW, RVUNL availability well below plan, coal constraints, and exchange and DEEP portal tenders that drew no or limited response or higher effective peak prices. SLDC supported the petition on grid security grounds, citing NRLDC alerts for overdrawal. The Commission held that Regulation 77(6) of the RERC Tariff Regulations, 2025 and Regulation 17 of the Resource Adequacy Regulations allow some short-term buys without prior approval, but a four-month negotiated deal well above the Rs 4.59/kWh ceiling in the FY 2026-27 tariff order is not one of them, so approval under Section 86(1)(b) was needed. It approved the deal as an exception, not a precedent, with costs open to prudence check at true-up, and directed the Discoms to prefer cheaper peak power when available and to move on storage, FDRE and demand flexibility.",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s86",
+    "cited_as": "Section 86(1)(b) of the Electricity Act, 2003",
+    "pid": "p16.6",
+    "excerpt": "in exercise of its powers under Section 86(1)(b) of the Act, approves prayer (a) of the Petition",
+    "page": 16
+   }
+  ]
+ }
+]

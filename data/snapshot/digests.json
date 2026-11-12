@@ -1,1 +1,21 @@
-[]
+[
+ {
+  "id": "2026-W46",
+  "from": "2026-11-09",
+  "to": "2026-11-15",
+  "intro": "Deviation settlement leads this edition. CERC has held that its powers to relax and remove difficulty under the DSM Regulations, 2024 cannot create a new generator category, so a 160 MW blended wind project stays in the tighter hybrid band. It has also deferred reserve-shortfall recovery of DAS Pool deficits to April 2027. In Uttar Pradesh, UPERC has cleared NPCL's 300 MW round-the-clock RE tender, allowing the whole capacity to go to one L1 bidder and limiting bidding to holders of a final connectivity grant. Also included: CERC's proposal to admit pumped storage to the HP-DAM, SJVN's ₹4.82–4.91/kWh FDRE tariffs for 448 MW, an ISTS waiver limited to commissioned capacity, and short-term RTC bagasse power at ₹5.10–5.12/kWh for NIDP.",
+  "items": [
+   "5e7d1a2d457deaf42685c115e63a398f5b702c1b9c831fc6c495e346fd2ad550",
+   "d506f89fd88361790ac6b16ea1c34b6178d2be93c01cea645f7f624a02a1670d",
+   "6e2c51e21f8db2c588709bfb26b0f82af9e7eaad0fda9c15aacb62b75cdc6fc1",
+   "f36d5dc4d09d199719553d0d7a4edec081c13b1898fe33f8d10403e386d2d04c",
+   "c2e7bf7e60c745127c604248070d1e46ab5050c13d974f4efdea32a7abd87ad6",
+   "198e334df752469fe2028c92019ac36eddcd05df15f6e8868503782d5c9d0ee1",
+   "9bff38cc7767cd3bc02ea6d7fbd0968c225fb308ebb6fe9bfb728e4359b6b3f1"
+  ],
+  "approved_at": null,
+  "reviewed_by": null,
+  "draft": true,
+  "path": "/digest/2026-w46"
+ }
+]

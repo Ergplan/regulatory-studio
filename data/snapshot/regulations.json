@@ -1,1 +1,32 @@
-[]
+[
+ {
+  "id": "cerc/deviation-settlement-mechanism-related-matters-2024",
+  "commission": "cerc",
+  "title": "Central Electricity Regulatory Commission (Deviation Settlement Mechanism and Related Matters) Regulations, 2024",
+  "short_title": null,
+  "notified_date": "2024-08-05",
+  "doc_id": "65391e07c38be35426f6d83e2713dfe5325dca56a0a8eb2149c827bddd8c3838",
+  "made_under": [],
+  "status": "proposed",
+  "reviewer": null,
+  "approved_at": null,
+  "path": "/regulations/cerc/deviation-settlement-mechanism-related-matters-2024",
+  "sample": false,
+  "source_url": "https://cercind.gov.in/regulations/192-Noti.pdf"
+ },
+ {
+  "id": "rerc/terms-conditions-green-energy-open-access-2025",
+  "commission": "rerc",
+  "title": "RERC (Terms and Conditions for Green Energy Open Access) Regulations, 2025",
+  "short_title": null,
+  "notified_date": "2025-07-17",
+  "doc_id": "9273c10489c1d8052b2f0215dd2a49d78cfb036f1f5da2a0d9dd033df861f9a4",
+  "made_under": [],
+  "status": "proposed",
+  "reviewer": null,
+  "approved_at": null,
+  "path": "/regulations/rerc/terms-conditions-green-energy-open-access-2025",
+  "sample": false,
+  "source_url": "https://rerc.rajasthan.gov.in/rerc-user-files/regulations"
+ }
+]
