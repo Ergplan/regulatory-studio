@@ -19,6 +19,63 @@
    "Projects already commissioned may opt in within one month of the amendment taking effect"
   ],
   "amends": "CERC (Sharing of Inter-State Transmission Charges and Losses) Regulations, 2020",
+  "impact": {
+   "market_note": "If adopted, ISTS RE projects stranded by transmission delays would keep the charge waiver for up to 25 years, provided they sign a 7-year PPA or PSA by 31.03.2027. That creates a rush to contract before the cut-off.",
+   "key_points": [
+    "New ISTS waiver for wind, solar and hybrids delayed by non-availability of transmission",
+    "Needs a PPA or PSA of at least 7 years with a drawee DIC signed on or before 31.03.2027",
+    "COD within two months of GNA becoming effective",
+    "One-time binding choice between the existing trajectory and the new route",
+    "Comments due 27.11.2026"
+   ],
+   "procurement": [
+    "Sign PPAs or PSAs of 7 years or more by 31.03.2027 to qualify",
+    "File PPA and PSA copies with CTUIL and NLDC by 30.04.2027",
+    "Declare the chosen waiver route within 30 days of COD"
+   ],
+   "stakeholders": {
+    "discoms": {
+     "level": 2,
+     "effect": "opportunity",
+     "why": "Contracts signed before 31.03.2027 carry no ISTS charges for the term"
+    },
+    "ci_consumers": {
+     "level": 1,
+     "effect": "opportunity",
+     "why": "Drawee DICs contracting via traders or REIAs can benefit"
+    },
+    "captive": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "re_developers": {
+     "level": 3,
+     "effect": "opportunity",
+     "why": "Waiver protects projects delayed by transmission"
+    },
+    "storage": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "conventional": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "transmission": {
+     "level": 1,
+     "effect": "mixed",
+     "why": "Waived charges are recovered from other ISTS users"
+    },
+    "traders": {
+     "level": 1,
+     "effect": "opportunity",
+     "why": "Trader-intermediated PPAs and PSAs are eligible"
+    }
+   }
+  },
   "source_url": "https://cercind.gov.in/2026/draft_reg/Supplementary-Draft-Notification2026.pdf",
   "related": [
    {
@@ -72,6 +129,59 @@
    "State-specific frequency discipline provisions"
   ],
   "amends": "Replaces TNERC (Deviation Settlement Mechanism and Related Matters) Regulations, 2019",
+  "impact": {
+   "market_note": "If adopted, deviation charges for Tamil Nadu's conventional generators and buyers would track exchange prices, raising the cost of deviating in high-price hours.",
+   "key_points": [
+    "Replaces the TNERC DSM Regulations, 2019",
+    "Covers generators other than wind and solar, and intra-State buyers",
+    "Deviation charges linked to power exchange prices",
+    "State-specific frequency discipline provisions",
+    "TNERC has extended the comment deadline to 16.11.2026"
+   ],
+   "procurement": [],
+   "stakeholders": {
+    "discoms": {
+     "level": 2,
+     "effect": "cost",
+     "why": "Market-linked charges raise cost of under or over-drawal"
+    },
+    "ci_consumers": {
+     "level": 1,
+     "effect": "cost",
+     "why": "Intra-State buyers on OA face market-linked DSM"
+    },
+    "captive": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "re_developers": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "storage": {
+     "level": 1,
+     "effect": "opportunity",
+     "why": "Flexibility to manage deviations gains value"
+    },
+    "conventional": {
+     "level": 2,
+     "effect": "cost",
+     "why": "Deviation exposure linked to exchange prices"
+    },
+    "transmission": {
+     "level": 1,
+     "effect": "opportunity",
+     "why": "Better schedule discipline for the SLDC"
+    },
+    "traders": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    }
+   }
+  },
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-290520262212Eng.pdf",
   "related": [],
   "reviewed_by": null,
@@ -99,6 +209,63 @@
    "Third-party commercial agreements, settlement timelines and technical standards"
   ],
   "amends": null,
+  "impact": {
+   "market_note": "If adopted, Tamil Nadu gets a full BESS rulebook: many configurations and ownership models, a two-part tariff and several procurement routes, including merchant and third-party models. A significant opening for storage developers and C&I users.",
+   "key_points": [
+    "BESS classes: standalone, co-located, embedded, behind-the-meter, hybrid, multi-location",
+    "Captive, utility, third-party, merchant and hybrid ownership",
+    "Two-part tariff: storage capacity charge and energy charge",
+    "Minimum project size; grid-forming PCS required",
+    "TNERC has extended the comment deadline to 16.11.2026"
+   ],
+   "procurement": [
+    "Routes: Section 63 bidding, Section 62, EPC, central or state agencies, developer-led",
+    "Grid-forming PCS and minimum project size for installations",
+    "Third-party agreements with settlement timelines"
+   ],
+   "stakeholders": {
+    "discoms": {
+     "level": 2,
+     "effect": "mixed",
+     "why": "New procurement routes; tariff obligations for contracted storage"
+    },
+    "ci_consumers": {
+     "level": 2,
+     "effect": "opportunity",
+     "why": "Behind-the-meter and third-party storage models"
+    },
+    "captive": {
+     "level": 2,
+     "effect": "opportunity",
+     "why": "Captive BESS ownership recognised"
+    },
+    "re_developers": {
+     "level": 2,
+     "effect": "opportunity",
+     "why": "Co-located RE-BESS tariff rules"
+    },
+    "storage": {
+     "level": 3,
+     "effect": "opportunity",
+     "why": "Comprehensive framework for BESS ownership, tariff and procurement"
+    },
+    "conventional": {
+     "level": 1,
+     "effect": "opportunity",
+     "why": "BESS co-located with conventional plants covered"
+    },
+    "transmission": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "traders": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    }
+   }
+  },
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-150520262110Eng.pdf",
   "related": [],
   "reviewed_by": null,
@@ -125,6 +292,59 @@
    "True-up of FY 2022-23 to FY 2026-27 as a transitional provision"
   ],
   "amends": null,
+  "impact": {
+   "market_note": "If adopted, SLDC charges in Tamil Nadu move to a multi-year cost-plus framework, with registration, system operation and scheduling charges for users. Minor cost line for generators and OA users.",
+   "key_points": [
+    "MYT framework for SLDC with business and capex plans",
+    "SLDC ARR includes RLDC fees, SRPC charges and BESS-related expenditure",
+    "System operation and scheduling charges; registration with SLDC",
+    "True-up for FY 2022-23 to FY 2026-27",
+    "TNERC has extended the comment deadline to 16.11.2026"
+   ],
+   "procurement": [],
+   "stakeholders": {
+    "discoms": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "ci_consumers": {
+     "level": 1,
+     "effect": "cost",
+     "why": "OA users pay SLDC charges"
+    },
+    "captive": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "re_developers": {
+     "level": 1,
+     "effect": "cost",
+     "why": "Registration and scheduling charges"
+    },
+    "storage": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "conventional": {
+     "level": 1,
+     "effect": "cost",
+     "why": "Scheduling charges for generators"
+    },
+    "transmission": {
+     "level": 2,
+     "effect": "opportunity",
+     "why": "Defined cost recovery for SLDC"
+    },
+    "traders": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    }
+   }
+  },
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-140520261750Eng.pdf",
   "related": [],
   "reviewed_by": null,
@@ -151,6 +371,61 @@
    "Intimation of curtailment and energy accounting"
   ],
   "amends": "TNERC (Forecasting, Scheduling and Deviation Settlement and Related Matters for Wind and Solar Generation) Regulations, 2024",
+  "impact": {
+   "market_note": "If adopted, wind, solar and hybrid generators in Tamil Nadu face a revised forecasting and DSM regime with stronger consequences for not appointing a QCA and rules against gaming.",
+   "key_points": [
+    "Framework extended to wind-solar hybrids, with or without ESS",
+    "Gaming provisions and QCA appointment rules",
+    "Stronger consequences for not appointing a QCA",
+    "Deviation settlement for intra-State and inter-State transactions",
+    "TNERC has extended the comment deadline to 16.11.2026"
+   ],
+   "procurement": [
+    "Generators to appoint Qualified Coordinating Agencies"
+   ],
+   "stakeholders": {
+    "discoms": {
+     "level": 1,
+     "effect": "mixed",
+     "why": "De-pooling of deviation charges changes cost allocation"
+    },
+    "ci_consumers": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "captive": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "re_developers": {
+     "level": 3,
+     "effect": "cost",
+     "why": "Forecasting, QCA and deviation obligations"
+    },
+    "storage": {
+     "level": 1,
+     "effect": "opportunity",
+     "why": "ESS co-located with RE helps meet schedules"
+    },
+    "conventional": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "transmission": {
+     "level": 1,
+     "effect": "opportunity",
+     "why": "Better forecasts and curtailment intimation for SLDC"
+    },
+    "traders": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    }
+   }
+  },
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-270520261445Eng.pdf",
   "related": [],
   "reviewed_by": null,
@@ -178,6 +453,61 @@
    "Cross-subsidy surcharge and additional surcharge for open access consumers"
   ],
   "amends": "Replaces the TNERC multi-year tariff framework for distribution licensees",
+  "impact": {
+   "market_note": "If adopted, sets how TANGEDCO's revenue and retail tariffs are fixed for the next control period, including FPPAS pass-through and the cross-subsidy and additional surcharges that open access consumers pay.",
+   "key_points": [
+    "MYT, mid-term review and true-up for distribution",
+    "Fuel and Power Purchase Adjustment Surcharge (FPPAS)",
+    "Power procurement plan and treatment of surplus power",
+    "Cross-subsidy surcharge and additional surcharge for OA consumers",
+    "TNERC has extended the comment deadline to 16.11.2026"
+   ],
+   "procurement": [
+    "Distribution licensee to file a power procurement plan"
+   ],
+   "stakeholders": {
+    "discoms": {
+     "level": 3,
+     "effect": "mixed",
+     "why": "Sets ARR, loss and O&M norms and pass-through rules"
+    },
+    "ci_consumers": {
+     "level": 3,
+     "effect": "cost",
+     "why": "CSS, additional surcharge and FPPAS affect OA and retail costs"
+    },
+    "captive": {
+     "level": 1,
+     "effect": "mixed",
+     "why": "Surcharge framework is relevant to captive OA users"
+    },
+    "re_developers": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "storage": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "conventional": {
+     "level": 1,
+     "effect": "mixed",
+     "why": "Procurement plan and surplus power treatment"
+    },
+    "transmission": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "traders": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    }
+   }
+  },
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-120520262047Eng.pdf",
   "related": [],
   "reviewed_by": null,
@@ -204,6 +534,59 @@
    "Schedule of charges, transparency and grievance redressal"
   ],
   "amends": null,
+  "impact": {
+   "market_note": "If adopted, standardises what Tamil Nadu licensees and SLDC can charge for connections, connectivity, studies and registration, with an aggregation framework for common evacuation that may help smaller RE projects.",
+   "key_points": [
+    "Schedule of charges for new connections and applicant-executed works",
+    "Transmission connectivity, evacuation, system study and processing charges",
+    "Aggregation framework with common evacuation",
+    "Enabling provision for a policy facilitation fee",
+    "TNERC has extended the comment deadline to 16.11.2026"
+   ],
+   "procurement": [],
+   "stakeholders": {
+    "discoms": {
+     "level": 1,
+     "effect": "opportunity",
+     "why": "Clear cost recovery for connection works"
+    },
+    "ci_consumers": {
+     "level": 2,
+     "effect": "mixed",
+     "why": "Connection and OA charges standardised"
+    },
+    "captive": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "re_developers": {
+     "level": 2,
+     "effect": "mixed",
+     "why": "Connectivity charges defined; common evacuation may cut costs"
+    },
+    "storage": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "conventional": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "transmission": {
+     "level": 2,
+     "effect": "opportunity",
+     "why": "Defined deposit works, study and processing charges"
+    },
+    "traders": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    }
+   }
+  },
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-030620262218Eng.pdf",
   "related": [],
   "reviewed_by": null,
@@ -231,6 +614,59 @@
    "Sharing of gains from operational norms, loan refinancing and non-tariff income"
   ],
   "amends": null,
+  "impact": {
+   "market_note": "If adopted, resets cost-plus tariff rules for Tamil Nadu's thermal, hydro and pumped storage plants, including part-load compensation and a tariff method for pumped hydro.",
+   "key_points": [
+    "Capacity and energy charges, including supplementary energy charges",
+    "Compensation for part-load operation",
+    "Tariff determination for pumped hydro storage",
+    "True-up for FY 2022-23 to FY 2026-27",
+    "TNERC has extended the comment deadline to 16.11.2026"
+   ],
+   "procurement": [],
+   "stakeholders": {
+    "discoms": {
+     "level": 2,
+     "effect": "mixed",
+     "why": "Generation tariffs drive power purchase cost"
+    },
+    "ci_consumers": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "captive": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "re_developers": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "storage": {
+     "level": 2,
+     "effect": "opportunity",
+     "why": "Tariff method for pumped hydro storage"
+    },
+    "conventional": {
+     "level": 3,
+     "effect": "mixed",
+     "why": "New norms for capital cost, RoE and operations"
+    },
+    "transmission": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "traders": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    }
+   }
+  },
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-030620262110Eng.pdf",
   "related": [],
   "reviewed_by": null,
@@ -257,6 +693,61 @@
    "Tariff determination for battery energy storage"
   ],
   "amends": null,
+  "impact": {
+   "market_note": "If adopted, competitive bidding becomes the default route for buying grid-connected RE in Tamil Nadu, with generic tariffs as fallback. Includes repowering and BESS tariff parameters and carbon credit sharing.",
+   "key_points": [
+    "Competitive bidding for grid-connected RE",
+    "Generic and project-specific tariffs remain",
+    "Wind repowering, refurbishment and life extension parameters",
+    "Carbon credit and environmental attribute sharing",
+    "TNERC has extended the comment deadline to 16.11.2026"
+   ],
+   "procurement": [
+    "Grid-connected RE procurement through competitive bidding"
+   ],
+   "stakeholders": {
+    "discoms": {
+     "level": 2,
+     "effect": "opportunity",
+     "why": "Bidding should lower RE procurement cost"
+    },
+    "ci_consumers": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "captive": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "re_developers": {
+     "level": 3,
+     "effect": "mixed",
+     "why": "Bidding default; repowering and technology parameters"
+    },
+    "storage": {
+     "level": 1,
+     "effect": "opportunity",
+     "why": "BESS tariff determination"
+    },
+    "conventional": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "transmission": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "traders": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    }
+   }
+  },
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-010620262127Eng.pdf",
   "related": [],
   "reviewed_by": null,
@@ -283,6 +774,59 @@
    "Exemptions, waivers and rebates; billing and recovery; operational norms"
   ],
   "amends": null,
+  "impact": {
+   "market_note": "If adopted, sets intra-State transmission tariffs under MYT and how charges are shared, with special provisions for open access customers.",
+   "key_points": [
+    "MYT for transmission licensees; true-up FY 2022-23 to FY 2026-27",
+    "Treatment of TBCB transmission projects",
+    "Total Transmission Capacity determination",
+    "Sharing of charges with provisions for OA customers",
+    "TNERC has extended the comment deadline to 16.11.2026"
+   ],
+   "procurement": [],
+   "stakeholders": {
+    "discoms": {
+     "level": 2,
+     "effect": "mixed",
+     "why": "Share of intra-State transmission charges"
+    },
+    "ci_consumers": {
+     "level": 2,
+     "effect": "mixed",
+     "why": "Transmission charges for OA customers"
+    },
+    "captive": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "re_developers": {
+     "level": 1,
+     "effect": "mixed",
+     "why": "Exemptions and waivers may apply"
+    },
+    "storage": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "conventional": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "transmission": {
+     "level": 3,
+     "effect": "mixed",
+     "why": "ARR, capital base and operational norms"
+    },
+    "traders": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    }
+   }
+  },
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-310520262022Eng.pdf",
   "related": [],
   "reviewed_by": null,
@@ -310,6 +854,63 @@
    "REC-route generators to sell to ESCOMs at the lower of pooled power purchase cost or 75% of generic tariff"
   ],
   "amends": "Replaces KERC (Power Procurement from Renewable Sources by Distribution Licensee) Regulations, 2011",
+  "impact": {
+   "market_note": "If adopted, Karnataka's RPO rises from 35.95% in 2026-27 to 43.33% in 2029-30, and binds open access consumers above 1 MW and captive users of 1 MW and above, not only ESCOMs. This drives demand for RE, RECs and wind, hydro and distributed RE components.",
+   "key_points": [
+    "Total RPO 35.95% (2026-27) rising to 43.33% (2029-30)",
+    "Separate wind, hydro, distributed RE and other RE components",
+    "Open access consumers above 1 MW and captive users of 1 MW and above are obligated",
+    "Compliance via RE, RECs or the CERC buyout price; Section 142 for non-compliance",
+    "Deadline: KERC lists 11.11.2026; gazette allows 30 days from 22.10.2026"
+   ],
+   "procurement": [
+    "ESCOMs to buy RE by component; tariffs via Section 63 bidding",
+    "OA and captive users to source RE, RECs or pay the buyout price",
+    "SLDC compliance reporting by 31 August each year"
+   ],
+   "stakeholders": {
+    "discoms": {
+     "level": 2,
+     "effect": "cost",
+     "why": "Rising RPO targets with component-wise compliance"
+    },
+    "ci_consumers": {
+     "level": 2,
+     "effect": "cost",
+     "why": "OA consumers above 1 MW take on an RPO"
+    },
+    "captive": {
+     "level": 2,
+     "effect": "cost",
+     "why": "Captive users of 1 MW and above become obligated"
+    },
+    "re_developers": {
+     "level": 3,
+     "effect": "opportunity",
+     "why": "More RE demand, including wind, hydro and distributed RE"
+    },
+    "storage": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "conventional": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "transmission": {
+     "level": 1,
+     "effect": "mixed",
+     "why": "SLDC monitors and reports compliance"
+    },
+    "traders": {
+     "level": 1,
+     "effect": "opportunity",
+     "why": "REC demand from obligated entities"
+    }
+   }
+  },
   "source_url": "https://kerc.karnataka.gov.in/uploads/media_to_upload1793079162.pdf",
   "related": [],
   "reviewed_by": null,
@@ -337,6 +938,61 @@
    "New definitions including congestion charge, default trigger date (75 days after RPC accounts) and REIA"
   ],
   "amends": "CERC (Indian Electricity Grid Code) Regulations, 2023",
+  "impact": {
+   "market_note": "If adopted, deviations that push flows beyond TTC would pay a congestion charge on top of DSM, raising the cost of poor scheduling. Storage and pumped hydro get fuller scheduling and ancillary roles, and shorter revision gaps favour flexible resources.",
+   "key_points": [
+    "New congestion charge on regional entities whose deviations push flows beyond TTC",
+    "Infirm power scheduled only after a successful trial run, offered first to contracted buyers",
+    "PSPs and ESS brought into scheduling, despatch and reserve provisions",
+    "Shorter revision timelines in two phases, the second from 01.04.2027",
+    "Comments closed 02.11.2026; hearing held 04.11.2026"
+   ],
+   "procurement": [
+    "Infirm power: 7 days' notice to contracted buyers before sale"
+   ],
+   "stakeholders": {
+    "discoms": {
+     "level": 2,
+     "effect": "cost",
+     "why": "Congestion charge adds cost for deviations beyond TTC"
+    },
+    "ci_consumers": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "captive": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "re_developers": {
+     "level": 1,
+     "effect": "cost",
+     "why": "Infirm power sale only after trial run; tighter revision windows"
+    },
+    "storage": {
+     "level": 2,
+     "effect": "opportunity",
+     "why": "PSPs and ESS gain scheduling and ancillary roles"
+    },
+    "conventional": {
+     "level": 2,
+     "effect": "mixed",
+     "why": "New reserve shutdown timelines and SCUC commitment rules"
+    },
+    "transmission": {
+     "level": 2,
+     "effect": "opportunity",
+     "why": "More tools for NLDC: congestion signal and SCUC at any time"
+    },
+    "traders": {
+     "level": 1,
+     "effect": "mixed",
+     "why": "Shorter revision gaps change intraday positions"
+    }
+   }
+  },
   "source_url": "https://cercind.gov.in/2026/draft_reg/DR_IEGC-2ndAmnd.pdf",
   "related": [
    {
@@ -382,6 +1038,62 @@
    "Safety, wiring and protection requirements aligned with CEA safety regulations, 2023"
   ],
   "amends": "GERC (Electricity Supply Code and Related Matters) Regulations, 2015",
+  "impact": {
+   "market_note": "If adopted, every new Gujarat connection gets a smart prepaid meter, LT loads up to 150 kW connect on declaration, and bills above ₹10,000 must be paid electronically. Faster connections for small C&I; metering spend for the discoms.",
+   "key_points": [
+    "Smart prepaid or prepayment meters for all new connections",
+    "LT connections up to 150 kW released on declaration; test report within 45 days",
+    "Mandatory e-payment for bills above ₹10,000",
+    "Temporary construction connections up to 3 years",
+    "No comment deadline on GERC's listing; check the public notice"
+   ],
+   "procurement": [
+    "Discoms to procure smart prepaid meters for all new connections",
+    "Applicant-executed works pay supervision charges only, if done within time"
+   ],
+   "stakeholders": {
+    "discoms": {
+     "level": 2,
+     "effect": "mixed",
+     "why": "Smart metering capex, with better collections and faster billing"
+    },
+    "ci_consumers": {
+     "level": 2,
+     "effect": "opportunity",
+     "why": "Faster LT connections up to 150 kW; prepaid metering"
+    },
+    "captive": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "re_developers": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "storage": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "conventional": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "transmission": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "traders": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    }
+   }
+  },
   "source_url": "https://gercin.org/viewdocument/cmVndWxhdGlvbl9lbmdfMTc5MjI0NzU1Nl8yMzg4",
   "related": [
    {
@@ -413,6 +1125,59 @@
    "Construction, maintenance and earthing testing under CEA safety regulations, 2023"
   ],
   "amends": "GERC (Standards of Performance of Distribution Licensees) Regulations, 2023",
+  "impact": {
+   "market_note": "If adopted, Gujarat discoms face hard energisation deadlines (3, 7 and 10 days without network work) with automatic ₹50/day compensation, and IEEE 1366 reliability reporting with CAIFI.",
+   "key_points": [
+    "Connection in 3 days (metro), 7 (other urban), 10 (rural) without network work",
+    "Network extensions: 15 days (LT up to 150 m) up to 180 days (EHT)",
+    "Automatic compensation of ₹50 per day of delay",
+    "Reliability indices under IEEE 1366-2022, adding CAIFI",
+    "No comment deadline on GERC's listing; check the public notice"
+   ],
+   "procurement": [],
+   "stakeholders": {
+    "discoms": {
+     "level": 2,
+     "effect": "cost",
+     "why": "Tighter timelines, automatic compensation and more reporting"
+    },
+    "ci_consumers": {
+     "level": 2,
+     "effect": "opportunity",
+     "why": "Faster connections and compensation for delays"
+    },
+    "captive": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "re_developers": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "storage": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "conventional": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "transmission": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    },
+    "traders": {
+     "level": 0,
+     "effect": "neutral",
+     "why": ""
+    }
+   }
+  },
   "source_url": "https://gercin.org/viewdocument/cmVndWxhdGlvbl9lbmdfMTc5MjI0NzgyM18yNzg4",
   "related": [
    {
