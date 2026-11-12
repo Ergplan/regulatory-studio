@@ -10,6 +10,7 @@
   "status": "proposed",
   "reviewer": null,
   "approved_at": null,
+  "rating": null,
   "path": "/regulations/cerc/deviation-settlement-mechanism-related-matters-2024",
   "sample": false,
   "impact": {
@@ -157,6 +158,7 @@
   "status": "proposed",
   "reviewer": null,
   "approved_at": null,
+  "rating": null,
   "path": "/regulations/rerc/terms-conditions-green-energy-open-access-2025",
   "sample": false,
   "impact": {
