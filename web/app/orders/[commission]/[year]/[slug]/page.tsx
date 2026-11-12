@@ -83,7 +83,7 @@ export default async function OrderPage({ params }: { params: Promise<Params> })
             {o.parties.length > 0 && <><dt>Parties</dt><dd>{o.parties.map((p) => `${p.name} (${p.role})`).join("; ")}</dd></>}
             <dt>Topics</dt><dd>{o.topics.map((t) => <Link key={t} href={`/topics/${t}`} className="chip">{topicName(t)}</Link>)}</dd>
           </dl>
-          {o.impact && <Impact impact={o.impact} draft={o.draft} />}
+          {o.impact && <Impact impact={o.impact} pdf={o.pdf} draft={o.draft} />}
         </section>
         <aside>
           <h2>Original order</h2>

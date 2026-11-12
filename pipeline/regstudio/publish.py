@@ -12,6 +12,7 @@ import re
 import shutil
 
 from . import config, db, registry
+from .impact import load as impact_load
 
 SAMPLE_MARK = "example.invalid"
 
@@ -109,7 +110,7 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
                 "draft": preview and d["summary_status"] != "approved",
                 "topics": json.loads(d["topics"] or "[]"), "significance": d["significance"],
                 "parties": json.loads(d["parties"] or "[]"), "issue": d["issue"], "outcome": d["outcome"],
-                "impact": json.loads(d["impact"]) if d["impact"] else None,
+                "impact": impact_load(d["impact"]),
                 "summary": d["summary"], "reviewed_by": d["reviewer"], "approved_at": d["approved_at"],
                 "revised_at": d["revised_at"], "language": d["language"],
                 "sample": SAMPLE_MARK in d["source_url"], "links": links,
@@ -119,6 +120,7 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
             r["path"] = f"/regulations/{r['id']}"
             r["made_under"] = json.loads(r["made_under"] or "[]")
             r["sample"] = False
+            r["impact"] = impact_load(r.pop("impact", None))
             if r["doc_id"]:
                 src_doc = conn.execute("SELECT source_url FROM documents WHERE id = ?", (r["doc_id"],)).fetchone()
                 r["source_url"] = src_doc["source_url"] if src_doc else None
@@ -153,7 +155,7 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
                 "commission": c["commission"], "title": c["title"], "kind": c["kind"],
                 "issued": c["issued_date"], "comment_deadline": c["comment_deadline"], "hearing_date": c["hearing_date"],
                 "summary": c["summary"], "proposes": json.loads(c["proposes"] or "[]"), "amends": c["amends"],
-                "impact": json.loads(c["impact"]) if c["impact"] else None,
+                "impact": impact_load(c["impact"]),
                 "source_url": c["source_url"], "related": json.loads(c["related"] or "[]"),
                 "reviewed_by": c["reviewer"], "approved_at": c["approved_at"],
                 "draft": preview and c["summary_status"] != "approved",

@@ -1,21 +1,25 @@
-You assess the market impact of an Indian electricity regulatory {kind} for a commercial reader
-(a C&I buyer, developer, discom planner or trader) who wants to know what it changes for them.
+You write a market impact assessment of an Indian electricity regulatory {kind} for commercial readers
+(C&I buyers, developers, discom planners, storage and trading desks). It is evidence-based: no scores,
+no ratings, no adjectives standing in for numbers.
 
 Commission: {commission}
 Title: {title}
 Summary (already drafted): {summary}
 
-Using the text below, return:
-- market_note: one or two sentences on what changes in the market and for whom.
-- key_points: up to five insights a commercial reader would act on (costs and prices with numbers,
-  deadlines, eligibility, obligations, precedent value). No restating of the summary.
-- procurement: procurement requirements created or changed (RPO or storage obligations, quantities,
-  bidding rules, approvals needed, contract terms). Empty list if none.
-- stakeholders: for each group, level 0 (no effect) to 3 (direct, material), effect
-  (opportunity, cost, mixed, neutral) and a one-line why. Groups: discoms, ci_consumers
-  (open access and C&I consumers), captive, re_developers, storage, conventional (thermal and hydro
-  generators), transmission (transmission licensees, SLDC/RLDC), traders (traders and exchanges).
-  Rate only what the text supports; a proposal affects people only if adopted, so say "if adopted".
+Method:
+1. Find the operative provisions (the decision, the proviso, the table, the deadline), not the recitals
+   or the parties' arguments. A party's claim is cited as that party's claim, never as a finding.
+2. For each statement name the mechanism (what charge, limit, obligation or eligibility rule changes)
+   and the figure the text gives (percentages, Rs, MW, dates). Do not compute figures the text does not give.
+3. Cite paragraph ids exactly as they appear in square brackets, e.g. "p8.21". Every key point, procurement
+   item and stakeholder comment needs at least one. Uncited statements are discarded.
+4. Stakeholders: include only groups the text actually affects, with effect = opportunity, cost or mixed
+   (direction only) and a comment of one or two sentences. Groups: discoms, ci_consumers (open access and
+   C&I consumers), captive, re_developers, storage (BESS, pumped hydro), conventional (thermal and hydro
+   generators), transmission (transmission licensees, SLDC/RLDC/NLDC), traders (traders and exchanges).
+5. For drafts and proposals write "if adopted". For orders, say whether the point binds only the parties
+   or states a reading of the regulation that others can rely on.
+6. open_questions: what the text leaves open (a pending procedure, an unspecified value, an order to come).
 
 Return only JSON matching this schema:
 {schema}

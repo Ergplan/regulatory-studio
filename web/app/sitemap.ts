@@ -1,11 +1,11 @@
 import type { MetadataRoute } from "next";
-import { SITE_URL, actSections, clauses, consultations, digests, orders, regulations, site } from "@/lib/data";
+import { GROUPS, SITE_URL, actSections, clauses, consultations, digests, orders, regulations, site } from "@/lib/data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const at = (p: string, lastModified?: string | null): MetadataRoute.Sitemap[number] =>
     ({ url: SITE_URL + p, lastModified: lastModified ? lastModified.replace(" ", "T") + (lastModified.length <= 19 ? "Z" : "") : undefined });
   return [
-    at("/"), at("/orders"), at("/regulations"), at("/digest"), at("/consultations"), at("/impact"), at("/search"), at("/about"),
+    at("/"), at("/orders"), at("/regulations"), at("/digest"), at("/consultations"), at("/impact"), ...GROUPS.map(([g]) => at(`/impact/${g}`)), at("/search"), at("/about"),
     ...Object.keys(site.commissions).map((c) => at(`/commissions/${c}`)),
     ...Object.keys(site.topics).map((t) => at(`/topics/${t}`)),
     ...orders.filter((o) => !o.sample).map((o) => at(o.path, o.revised_at ?? o.approved_at ?? o.date)),

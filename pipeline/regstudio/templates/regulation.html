@@ -7,6 +7,7 @@
 <div style="flex:1"><label>Short title</label><input name="short_title" value="{{ r.short_title or '' }}"></div>
 <div style="flex:1"><label>Notified</label><input type="date" name="notified_date" value="{{ r.notified_date or '' }}"></div></div>
 <p class="row"><button name="action" value="save">Save</button><button class="primary" name="action" value="approve">Approve regulation and all remaining clauses</button></p></form></div>
+{% include "_impact.html" %}
 <p class="muted">Clause ids are permanent once approved: orders link to them. Fix the text and dates here; set "in force to" when an amendment replaces a clause.</p>
 {% for c in clauses %}<div class="card" id="c-{{ c.id }}"><form method="post" action="/clause/{{ c.id }}">
 <div class="row"><b>{{ c.number }}</b><code class="muted">{{ c.id }}</code><span class="pill {{ c.status }}">{{ c.status }}</span></div>
