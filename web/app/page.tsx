@@ -10,7 +10,8 @@ export default function Home() {
   const recent = orders.slice(0, 6);
   return (
     <>
-      <h1>Power sector regulatory orders, traced to the rules behind them</h1>
+      <p className="eyebrow">Regulatory Studio · CERC · APTEL · 6 state commissions</p>
+      <h1 className="hero">Power sector regulatory orders, traced to the rules behind them</h1>
       <p className="lede muted">Every week we read new orders from CERC, APTEL and state electricity commissions,
         summarise the ones that matter for open access and tariffs, and map each to the regulations, Act sections and
         earlier decisions it rests on. Every summary is checked by our legal team before it is published.</p>
