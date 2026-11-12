@@ -133,6 +133,140 @@
     "Comments are due 27.11.2026 (from CERC's listing, not this notice)."
    ]
   },
+  "comments": {
+   "discoms": {
+    "position": "As a drawee DIC we support certainty on transmission charges for renewable power contracted before 31.03.2027. We ask the Commission to state who bears the charges that are waived, and to protect the buyer where a waiver ends through no act of the buyer.",
+    "points": [
+     {
+      "clause": "Sub-clause (h-i): waiver for the tenure of the contract",
+      "comment": "The draft grants a waiver for the contract tenure, up to 25 years from COD, but does not say how the waived charges are recovered. If they are spread over other DICs, our charges for the rest of our drawal rise. [Add your GNA and current monthly ISTS charges.]",
+      "suggestion": "State the recovery mechanism in the Regulations and publish an estimate of the waived amount and its effect on other DICs.",
+      "basis": [
+       "p2.1",
+       "p2.8"
+      ]
+     },
+     {
+      "clause": "Proviso (i) and (ii): filing of PPA and PSA with CTUIL and NLDC by 30.04.2027",
+      "comment": "Eligibility turns on documents filed by the generator or intermediary. The drawee DIC has no way to confirm that its contract has been accepted as eligible before bills are raised.",
+      "suggestion": "Require CTUIL to publish the list of contracts accepted under sub-clause (h-i), with the drawee DIC named, by [31.05.2027].",
+      "basis": [
+       "p2.10",
+       "p2.12"
+      ]
+     },
+     {
+      "clause": "Proviso (v) and (vi): waiver ceases on early termination or late COD",
+      "comment": "If the generator misses the two-month COD window, charges revert to the Table 1 trajectory. The buyer contracted on the basis of a waiver and would bear charges caused by the generator's delay.",
+      "suggestion": "Provide that charges arising because the generator fails a condition of sub-clause (h-i) are payable by the generator, unless the contract says otherwise.",
+      "basis": [
+       "p2.15",
+       "p2.17",
+       "p3.1"
+      ]
+     },
+     {
+      "clause": "Proviso (iii): extension of a filed PPA or PSA",
+      "comment": "We support the waiver continuing when a filed contract is extended, up to 25 years from COD.",
+      "suggestion": "Confirm that an extension on revised commercial terms between the same parties also qualifies.",
+      "basis": [
+       "p2.13"
+      ]
+     }
+    ],
+    "closing": "We request the Commission to consider these comments and to grant us an opportunity to be heard before the Regulations are finalised.",
+    "draft": true
+   },
+   "re_developers": {
+    "position": "We support the proposed sub-clauses (h-i) and (h-ii): a project that is ready but cannot commission because the transmission system is late should not lose the waiver it was bid on. Our comments are on the conditions, which as drafted could exclude projects that are delayed for exactly the reason the amendment addresses.",
+    "points": [
+     {
+      "clause": "Sub-clause (h-i): PPA or PSA to be signed on or before 31.03.2027",
+      "comment": "Eligibility depends on a contract of at least seven years being signed by 31.03.2027, and a contract signed later is not eligible. Where the generator has an award but the buyer-side PSA is still to be signed by the intermediary, the date is outside the generator's control. [Add your project's award date and PSA status.]",
+      "suggestion": "Treat a project as eligible if either the PPA or the PSA is signed by 31.03.2027 and the other is signed within a further [six] months.",
+      "basis": [
+       "p1.7",
+       "p2.14"
+      ]
+     },
+     {
+      "clause": "Sub-clause (h-i): COD within two months of the GNA becoming effective",
+      "comment": "Two months from GNA effectiveness is short for a project that could not complete commissioning tests until the transmission system was available, and a project that misses it falls back to the Table 1 trajectory for its whole capacity.",
+      "suggestion": "Allow [six] months, and apply the waiver to the capacity that achieves COD within the window where a project is commissioned in parts.",
+      "basis": [
+       "p1.10",
+       "p2.1",
+       "p2.17"
+      ]
+     },
+     {
+      "clause": "Proviso (v) and (vi): waiver ceases if the PPA or PSA is terminated early",
+      "comment": "The waiver ends on early termination whatever the cause. A generator would lose it even where the buyer defaults, which also weakens the generator's position in any payment dispute.",
+      "suggestion": "Keep the waiver where the contract is terminated for the buyer's default and a replacement contract of at least seven years is filed within [six] months.",
+      "basis": [
+       "p2.15",
+       "p2.17",
+       "p3.1"
+      ]
+     },
+     {
+      "clause": "Sub-clause (h-ii): binding option within thirty days of COD",
+      "comment": "The choice between sub-clause (a) and sub-clause (h-i) is permanent and must be made within thirty days of COD, when the first months of scheduling data are not yet available.",
+      "suggestion": "Allow ninety days, and confirm that the option can be exercised separately for each part of the capacity, as the words 'corresponding capacity' suggest.",
+      "basis": [
+       "p3.2",
+       "p3.3",
+       "p3.5"
+      ]
+     },
+     {
+      "clause": "Table 6: waiver period and percentages",
+      "comment": "The table that sets the waiver against the later of the two dates is difficult to read in the published draft, and the percentages cannot be matched to the date ranges with confidence.",
+      "suggestion": "Publish Table 6 in a clear row and column form with a worked example before the Regulations are notified.",
+      "basis": [
+       "p2.6",
+       "p2.8"
+      ]
+     }
+    ],
+    "closing": "We request the Commission to consider these comments and to grant us an opportunity to be heard before the Regulations are finalised.",
+    "draft": true
+   },
+   "traders": {
+    "position": "We welcome the express inclusion of contracts through a trading licensee or Renewable Energy Implementing Agency. Our comments concern the back-to-back signing condition, which is harder to meet for intermediated contracts than for direct ones.",
+    "points": [
+     {
+      "clause": "Proviso (ii): both PPA and PSA to be signed on or before 31.03.2027",
+      "comment": "For an intermediated sale both legs must be signed by the cut-off and filed. The two legs are rarely signed on the same day, and the buyer-side approval often comes later. [Add the capacity you hold awaiting PSA.]",
+      "suggestion": "Treat the contract as eligible where one leg is signed by 31.03.2027 and the other within [six] months, with filing within thirty days of the second signature.",
+      "basis": [
+       "p2.11",
+       "p2.12"
+      ]
+     },
+     {
+      "clause": "Sub-clause (h-i)(a): start date of connectivity 'as on the date of signing of PPA or PSA'",
+      "comment": "For intermediated contracts the draft refers to the date of the PSA. Where the PPA and PSA are signed on different dates, the connectivity start date communicated by CTUIL may have changed in between.",
+      "suggestion": "Clarify that the date of the earlier of the two contracts governs.",
+      "basis": [
+       "p1.8",
+       "p1.9"
+      ]
+     },
+     {
+      "clause": "Proviso (iv): a new PPA or PSA after the cut-off is not eligible",
+      "comment": "If a drawee DIC defaults and the PSA is terminated, the intermediary cannot re-tie the same capacity to another buyer without the project losing its waiver.",
+      "suggestion": "Allow substitution of the drawee DIC for the unexpired tenure where the replacement PSA is filed within [six] months of termination.",
+      "basis": [
+       "p2.14",
+       "p2.15"
+      ]
+     }
+    ],
+    "closing": "We request the Commission to consider these comments and to grant us an opportunity to be heard before the Regulations are finalised.",
+    "draft": true
+   }
+  },
   "source_url": "https://cercind.gov.in/2026/draft_reg/Supplementary-Draft-Notification2026.pdf",
   "related": [
    {
@@ -187,6 +321,7 @@
   ],
   "amends": "Replaces TNERC (Deviation Settlement Mechanism and Related Matters) Regulations, 2019",
   "impact": null,
+  "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-290520262212Eng.pdf",
   "related": [],
   "reviewed_by": null,
@@ -215,6 +350,7 @@
   ],
   "amends": null,
   "impact": null,
+  "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-150520262110Eng.pdf",
   "related": [],
   "reviewed_by": null,
@@ -242,6 +378,7 @@
   ],
   "amends": null,
   "impact": null,
+  "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-140520261750Eng.pdf",
   "related": [],
   "reviewed_by": null,
@@ -269,6 +406,7 @@
   ],
   "amends": "TNERC (Forecasting, Scheduling and Deviation Settlement and Related Matters for Wind and Solar Generation) Regulations, 2024",
   "impact": null,
+  "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-270520261445Eng.pdf",
   "related": [],
   "reviewed_by": null,
@@ -297,6 +435,7 @@
   ],
   "amends": "Replaces the TNERC multi-year tariff framework for distribution licensees",
   "impact": null,
+  "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-120520262047Eng.pdf",
   "related": [],
   "reviewed_by": null,
@@ -324,6 +463,7 @@
   ],
   "amends": null,
   "impact": null,
+  "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-030620262218Eng.pdf",
   "related": [],
   "reviewed_by": null,
@@ -352,6 +492,7 @@
   ],
   "amends": null,
   "impact": null,
+  "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-030620262110Eng.pdf",
   "related": [],
   "reviewed_by": null,
@@ -379,6 +520,7 @@
   ],
   "amends": null,
   "impact": null,
+  "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-010620262127Eng.pdf",
   "related": [],
   "reviewed_by": null,
@@ -406,6 +548,7 @@
   ],
   "amends": null,
   "impact": null,
+  "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-310520262022Eng.pdf",
   "related": [],
   "reviewed_by": null,
@@ -579,6 +722,200 @@
     "Designated consumers under the Energy Conservation Act report through BEE; how the two compliance tracks reconcile is not spelt out."
    ]
   },
+  "comments": {
+   "captive": {
+    "position": "We support the exclusions for waste heat and by-product gas generation, which recognise how industrial captive plants operate. We ask the Commission to clarify the coverage of renewable captive plants and to remove limits that keep smaller captive renewable capacity from counting.",
+    "points": [
+     {
+      "clause": "Regulation 2(1)(i)(c): captive consumer with a grid-connected captive plant of 1 MW and above",
+      "comment": "The definition covers any grid-connected captive plant of 1 MW and above. It does not say whether a consumer whose only captive plant is renewable is an obligated entity. [Add your captive capacity by fuel.]",
+      "suggestion": "Clarify that the 1 MW threshold refers to fossil-fuel captive capacity.",
+      "basis": [
+       "p3.10"
+      ]
+     },
+     {
+      "clause": "Regulation 3(2)(III) and 3(3): exclusions from consumption",
+      "comment": "We support excluding waste heat recovery and by-product gas generation, and half of fossil co-generation.",
+      "suggestion": "Add a short definition of 'co-generation plant' so the 50% exclusion is applied uniformly.",
+      "basis": [
+       "p5.2",
+       "p5.3",
+       "p5.4"
+      ]
+     },
+     {
+      "clause": "Regulation 4(1)(a), proviso: captive RE plant not less than 250 kW",
+      "comment": "A captive renewable plant below 250 kW does not count. Many industrial sites have several smaller rooftop systems that together exceed this size.",
+      "suggestion": "Apply the 250 kW limit to the consumer's total captive RE capacity in the State, consistent with the combined compliance allowed by Regulation 4(2).",
+      "basis": [
+       "p7.6",
+       "p7.11"
+      ]
+     },
+     {
+      "clause": "Regulation 8(3): certificates for self-consumption not eligible for sale",
+      "comment": "Certificates issued for self-consumption cannot be sold. The draft does not say whether they can be used against the same company's RPO at another unit.",
+      "suggestion": "Confirm that self-retained certificates can be redeemed against the RPO of any unit of the same legal entity in the State.",
+      "basis": [
+       "p10.7",
+       "p10.8",
+       "p7.11"
+      ]
+     },
+     {
+      "clause": "Regulation 5(2) and 5(4): information and Section 142",
+      "comment": "Captive users must furnish bills and other details 'in a time bound manner', with Section 142 exposure for delay.",
+      "suggestion": "Fix the documents and date in the Regulations and provide a notice period before proceedings.",
+      "basis": [
+       "p8.8",
+       "p8.9",
+       "p8.12"
+      ]
+     }
+    ],
+    "closing": "We request the Commission to consider these comments and to grant us an opportunity to be heard before the Regulations are finalised.",
+    "draft": true
+   },
+   "ci_consumers": {
+    "position": "We accept a renewable purchase obligation on large open access consumers and support the freedom to meet it from any renewable source. We ask for clarity on who is covered and how consumption is counted, and for a fair process before any penal proceedings.",
+    "points": [
+     {
+      "clause": "Regulation 2(1)(i): definition of obligated entity",
+      "comment": "An open access consumer is obligated if it has contracted demand of 1 MW and above and avails more than 1 MW through open access. It is unclear whether several connections of one company are added together to reach the threshold. [Add your contract demand and open access quantum.]",
+      "suggestion": "State that the threshold applies to each connection, and that Regulation 4(2) only combines units that are each obligated.",
+      "basis": [
+       "p3.9",
+       "p3.10",
+       "p7.11"
+      ]
+     },
+     {
+      "clause": "Regulation 3(2)(II): consumption on which RPO is computed",
+      "comment": "RPO applies to energy availed through open access from all sources, excluding supply from the licensee. A consumer buying only renewable power through open access would already exceed the target.",
+      "suggestion": "Confirm that renewable energy bought through open access counts in full, and that a surplus can be carried forward or converted to certificates.",
+      "basis": [
+       "p5.2"
+      ]
+     },
+     {
+      "clause": "Regulation 3(5), proviso: open access and captive users may meet total RPO from any RE",
+      "comment": "We support this. Component-wise targets would not be workable for a single consumer.",
+      "suggestion": "Retain as drafted.",
+      "basis": [
+       "p7.2"
+      ]
+     },
+     {
+      "clause": "Regulation 4(1)(b) and (c): certificates and buyout price",
+      "comment": "Compliance through RECs, including under virtual PPAs, and the buyout price are welcome options.",
+      "suggestion": "Confirm that RECs from a virtual PPA with a project outside Karnataka qualify, and publish the applicable buyout price before each year begins.",
+      "basis": [
+       "p7.7",
+       "p7.8",
+       "p7.9"
+      ]
+     },
+     {
+      "clause": "Regulation 5(2) and 5(4): reporting by 31 July and Section 142",
+      "comment": "Consumers must report by 31 July and a delay or shortfall can lead straight to Section 142 proceedings on the State Agency's report.",
+      "suggestion": "Provide a notice and a thirty-day period to cure before the State Agency recommends action.",
+      "basis": [
+       "p8.6",
+       "p8.9",
+       "p8.12"
+      ]
+     }
+    ],
+    "closing": "We request the Commission to consider these comments and to grant us an opportunity to be heard before the Regulations are finalised.",
+    "draft": true
+   },
+   "discoms": {
+    "position": "We support aligning the State's RPO framework with the Government of India's notification and a single compliance track. Our comments are on the pace of the trajectory, the distributed RE component that a licensee cannot control, and the data duties placed on licensees.",
+    "points": [
+     {
+      "clause": "Regulation 3(4): RPO trajectory",
+      "comment": "Total RPO rises from 35.95% in 2026-27 to 43.33% in 2029-30. The draft does not set out the cost of meeting it or how it fits approved power procurement plans. [Add your present RE share and tied-up capacity.]",
+      "suggestion": "Publish the cost and capacity assessment behind the trajectory, and allow a shortfall of up to [10%] of the target to be carried forward by one year.",
+      "basis": [
+       "p5.8"
+      ]
+     },
+     {
+      "clause": "Regulation 3(5)(c) and (e): distributed RE component",
+      "comment": "The distributed RE share rises from 2.70% to 4.50% and its shortfall cannot be met from any other source. Rooftop and small-scale additions depend on consumers' decisions, not the licensee's.",
+      "suggestion": "Allow a distributed RE shortfall to be met from other RE for the first two years, or to be carried forward.",
+      "basis": [
+       "p5.8",
+       "p6.8",
+       "p6.13"
+      ]
+     },
+     {
+      "clause": "Regulation 3(5)(a) and (b): wind and hydro only from projects commissioned after 31.03.2024",
+      "comment": "We support the flexibility in clause (e) to meet a wind or hydro shortfall from surplus in other RE, as new hydro capacity is limited.",
+      "suggestion": "Retain clause (e) as drafted.",
+      "basis": [
+       "p6.3",
+       "p6.4",
+       "p6.13"
+      ]
+     },
+     {
+      "clause": "Regulation 5(2), first proviso: licensees to furnish consumption of open access and captive users",
+      "comment": "Licensees must supply consumption and meter data of every open access and captive user 'in a time bound manner' without a format or date, and non-furnishing can lead to Section 142 proceedings.",
+      "suggestion": "Specify the format and a date in the Regulations, and provide that data is filed once on the State Agency's portal.",
+      "basis": [
+       "p8.7",
+       "p8.9"
+      ]
+     }
+    ],
+    "closing": "We request the Commission to consider these comments and to grant us an opportunity to be heard before the Regulations are finalised.",
+    "draft": true
+   },
+   "re_developers": {
+    "position": "We welcome the higher trajectory and the separate wind, hydro and distributed RE components, which give investors a clear signal. Our comments are on the terms for projects that choose the certificate route and on tariff discovery for small projects.",
+    "points": [
+     {
+      "clause": "Regulation 3(5)(a) and (b): wind and hydro components from projects commissioned after 31.03.2024",
+      "comment": "We support the vintage condition. It directs new demand to new capacity.",
+      "suggestion": "Retain as drafted.",
+      "basis": [
+       "p6.3",
+       "p6.4"
+      ]
+     },
+     {
+      "clause": "Regulation 8(2), second proviso (c): sale to ESCOMs at the lower of pooled cost or 75% of generic tariff",
+      "comment": "A generator opting for certificates must sell its electricity to ESCOMs at the lower of the pooled cost of power purchase or 75% of the generic tariff. This is below the pooled cost benchmark and removes the choice of buyer. [Add your project's expected realisation.]",
+      "suggestion": "Fix the price at the pooled cost of power purchase and allow sale to any buyer, as the certificate already separates the green attribute.",
+      "basis": [
+       "p10.6"
+      ]
+     },
+     {
+      "clause": "Regulation 8(2), second proviso (b): one-year bar after premature termination of a PPA",
+      "comment": "A project whose PPA ends early is barred from the certificate scheme for a year, whatever the reason for termination.",
+      "suggestion": "Exempt projects whose PPA is terminated for the buyer's default.",
+      "basis": [
+       "p10.5"
+      ]
+     },
+     {
+      "clause": "Regulation 9(2): tariff through bidding for mini-hydel, wind, co-generation and biomass",
+      "comment": "Tariffs for these sources are to be discovered only through Section 63 bidding. Projects below 10 MW, which the distributed RE component relies on, cannot absorb bidding costs and timelines.",
+      "suggestion": "Continue generic tariffs for projects below 10 MW.",
+      "basis": [
+       "p11.5",
+       "p6.8"
+      ]
+     }
+    ],
+    "closing": "We request the Commission to consider these comments and to grant us an opportunity to be heard before the Regulations are finalised.",
+    "draft": true
+   }
+  },
   "source_url": "https://kerc.karnataka.gov.in/uploads/media_to_upload1793079162.pdf",
   "related": [],
   "reviewed_by": null,
@@ -607,6 +944,7 @@
   ],
   "amends": "CERC (Indian Electricity Grid Code) Regulations, 2023",
   "impact": null,
+  "comments": {},
   "source_url": "https://cercind.gov.in/2026/draft_reg/DR_IEGC-2ndAmnd.pdf",
   "related": [
    {
@@ -653,6 +991,7 @@
   ],
   "amends": "GERC (Electricity Supply Code and Related Matters) Regulations, 2015",
   "impact": null,
+  "comments": {},
   "source_url": "https://gercin.org/viewdocument/cmVndWxhdGlvbl9lbmdfMTc5MjI0NzU1Nl8yMzg4",
   "related": [
    {
@@ -685,6 +1024,7 @@
   ],
   "amends": "GERC (Standards of Performance of Distribution Licensees) Regulations, 2023",
   "impact": null,
+  "comments": {},
   "source_url": "https://gercin.org/viewdocument/cmVndWxhdGlvbl9lbmdfMTc5MjI0NzgyM18yNzg4",
   "related": [
    {
