@@ -34,6 +34,7 @@ main { padding: 28px 0 56px; }
 .chip { display: inline-block; font-size: 13px; padding: 2px 10px; border: 1px solid var(--line); border-radius: 999px;
   color: var(--ink); text-decoration: none; background: var(--card); margin: 2px 4px 2px 0; cursor: pointer; font-family: inherit; }
 .chip.off { opacity: .45; text-decoration: line-through; }
+.chip.active { background: var(--ink, #1f2937); color: #fff; border-color: transparent; }
 .topics { margin-top: 8px; }
 .banner { background: #fff4e5; color: #6b4300; border-bottom: 1px solid #f0c36d; padding: 8px 0; font-size: 14px; }
 @media (prefers-color-scheme: dark) { .banner { background: #3a2a10; color: #f3d39b; border-color: #6b4f1d; } }

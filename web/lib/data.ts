@@ -58,7 +58,15 @@ export const KIND_LABEL: Record<Consultation["kind"], string> = {
 /** The site is static, so "open" means open on the day the site was built; the date is always shown. */
 export const BUILD_DAY = new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" });
 export const lastDay = (c: Consultation) => [c.comment_deadline, c.hearing_date].filter(Boolean).sort().pop() ?? null;
-export const isOpen = (c: Consultation) => { const d = lastDay(c); return d !== null && d >= BUILD_DAY; };
+/** Without a stated deadline, a draft issued in the last 60 days is treated as open (deadline in the public notice). */
+export const noDeadline = (c: Consultation) => lastDay(c) === null;
+export const isOpen = (c: Consultation) => {
+  const d = lastDay(c);
+  if (d !== null) return d >= BUILD_DAY;
+  return !!c.issued && Date.parse(BUILD_DAY) - Date.parse(c.issued) <= 60 * 86_400_000;
+};
+export const byDeadline = (a: Consultation, b: Consultation) =>
+  (lastDay(a) ?? "9999").localeCompare(lastDay(b) ?? "9999") || (b.issued ?? "").localeCompare(a.issued ?? "");
 export function daysLeft(iso: string | null): number | null {
   if (!iso) return null;
   return Math.round((Date.parse(iso + "T00:00:00Z") - Date.parse(BUILD_DAY + "T00:00:00Z")) / 86_400_000);
