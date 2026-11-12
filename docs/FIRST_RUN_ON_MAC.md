@@ -41,7 +41,9 @@ Project root directory: `web`. Environment: `NEXT_PUBLIC_SITE_URL` = the final d
 ## Weekly email (Resend)
 
 1. In Resend: verify your sending domain, create a segment for digest subscribers, create an API key.
-2. In Vercel (project settings, environment variables): `RESEND_API_KEY`, `RESEND_SEGMENT_ID`,
+2. Studio requests: set `REQUEST_TO` (the inbox that receives analysis requests; needs `RESEND_API_KEY` and
+   `RESEND_FROM` too) and, to show a "Mail us" button, `NEXT_PUBLIC_CONTACT_EMAIL`.
+3. In Vercel (project settings, environment variables): `RESEND_API_KEY`, `RESEND_SEGMENT_ID`,
    `RESEND_FROM` (e.g. `Regulatory Studio <digest@your-domain>`), `SUBSCRIBE_SECRET` (long random
    string), `NEXT_PUBLIC_SITE_URL`. See `web/.env.example`.
 3. On the Mac, put the same three Resend values plus `REGSTUDIO_SITE_URL` in your shell profile.

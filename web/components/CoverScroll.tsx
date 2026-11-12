@@ -10,7 +10,7 @@ export default function CoverScroll() {
     const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     root.classList.add("js");
     const chapters = [...root.querySelectorAll<HTMLElement>("[data-chapter]")];
-    const hero = root.querySelector<HTMLElement>(".cover-hero");
+    const hero = document.querySelector<HTMLElement>(".cover-hero");
     // On phones the map pins to the top once the chapters start. Holding the stage at its full height first
     // means nothing below it moves when that happens.
     const stage = root.querySelector<HTMLElement>(".stage");
