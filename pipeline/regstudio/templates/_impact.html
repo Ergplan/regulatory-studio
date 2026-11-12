@@ -1,5 +1,9 @@
 {# Market impact editor, shared by order, consultation and regulation pages. No scores: comments with paragraph citations. #}
 <div class="card" id="impact"><h2 style="margin-top:0">Market impact</h2>
+{% if impact_doc %}<form method="post" action="/rating/{{ impact_doc }}" class="row" style="align-items:end;margin-bottom:14px">
+<div><label>Overall impact rating (the team's call; shown as "High impact" on the website)</label>
+<select name="rating"><option value="">Not rated</option>{% for r in RATINGS %}<option value="{{ r }}" {% if rating == r %}selected{% endif %}>{{ r|capitalize }}</option>{% endfor %}</select></div>
+<button>Save rating</button></form>{% endif %}
 {% if impact %}
 <form method="post" action="/impact/{{ impact_doc }}">
 <p class="muted small">Every key point, procurement item and stakeholder comment must cite paragraph ids from this document

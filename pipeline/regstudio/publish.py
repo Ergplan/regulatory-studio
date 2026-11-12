@@ -55,7 +55,7 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
     with db.session() as conn:
         docs = conn.execute(
             """SELECT d.*, o.topics, o.significance, o.parties, o.issue, o.outcome, o.summary,
-                      o.reviewer, o.approved_at, o.revised_at, o.summary_status, o.impact
+                      o.reviewer, o.approved_at, o.revised_at, o.summary_status, o.impact, o.rating
                FROM documents d JOIN orders o ON o.doc_id = d.id
                WHERE o.summary_status IN (%s)""" % marks, ok).fetchall()
         docs = [d for d in docs if not (clean and SAMPLE_MARK in d["source_url"])]
@@ -110,7 +110,7 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
                 "draft": preview and d["summary_status"] != "approved",
                 "topics": json.loads(d["topics"] or "[]"), "significance": d["significance"],
                 "parties": json.loads(d["parties"] or "[]"), "issue": d["issue"], "outcome": d["outcome"],
-                "impact": impact_load(d["impact"]),
+                "impact": impact_load(d["impact"]), "rating": d["rating"],
                 "summary": d["summary"], "reviewed_by": d["reviewer"], "approved_at": d["approved_at"],
                 "revised_at": d["revised_at"], "language": d["language"],
                 "sample": SAMPLE_MARK in d["source_url"], "links": links,
@@ -155,7 +155,7 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
                 "commission": c["commission"], "title": c["title"], "kind": c["kind"],
                 "issued": c["issued_date"], "comment_deadline": c["comment_deadline"], "hearing_date": c["hearing_date"],
                 "summary": c["summary"], "proposes": json.loads(c["proposes"] or "[]"), "amends": c["amends"],
-                "impact": impact_load(c["impact"]),
+                "impact": impact_load(c["impact"]), "rating": c["rating"],
                 "comments": {k["persona"]: {**json.loads(k["body"]), "draft": k["status"] != "approved"} for k in conn.execute(
                     f"SELECT persona, body, status FROM comment_drafts WHERE doc_id = ? AND body IS NOT NULL AND status IN ({marks})",
                     (c["id"], *ok))},

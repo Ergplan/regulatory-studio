@@ -11,13 +11,15 @@ export interface Order {
   id: string; path: string; commission: string; doc_type: string; title: string | null; case_number: string | null;
   date: string | null; source_url: string; pdf: string; topics: string[]; significance: number;
   parties: { name: string; role: string }[]; issue: string; outcome: string; summary: string;
-  reviewed_by: string; approved_at: string; revised_at: string | null; language: string | null; sample: boolean; draft?: boolean; links: Link[]; impact?: Impact | null;
+  reviewed_by: string; approved_at: string; revised_at: string | null; language: string | null; sample: boolean; draft?: boolean; links: Link[]; impact?: Impact | null; rating?: Rating;
 }
-export interface Regulation { id: string; path: string; commission: string; title: string; short_title: string | null; notified_date: string | null; source_url: string | null; sample: boolean; impact?: Impact | null }
+export interface Regulation { id: string; path: string; commission: string; title: string; short_title: string | null; notified_date: string | null; source_url: string | null; sample: boolean; impact?: Impact | null; rating?: Rating }
 export interface ClauseVersion { text: string; in_force_from: string | null; in_force_to: string | null }
 export interface Clause { id: string; path: string; regulation_id: string; number: string; heading: string | null; text: string; in_force_from: string | null; in_force_to: string | null; versions?: ClauseVersion[] }
 export interface ActSection { id: string; act: string; number: string; title: string }
 export interface Digest { id: string; path: string; from: string; to: string; intro: string; items: string[]; approved_at: string; reviewed_by: string; draft?: boolean }
+/** Overall impact, set by the review team (never by the model). Only "high" is shown as a badge. */
+export type Rating = "high" | "medium" | "low" | null;
 export type Effect = "opportunity" | "cost" | "mixed";
 export interface Cited { text: string; basis: string[] }
 export interface ImpactCell { effect: Effect; comment: string; basis: string[] }
@@ -40,7 +42,7 @@ export interface Consultation {
   id: string; path: string; commission: string; title: string; kind: "draft_regulation" | "draft_amendment" | "consultation_paper" | "proposal";
   issued: string | null; comment_deadline: string | null; hearing_date: string | null; summary: string; proposes: string[];
   amends: string | null; source_url: string; related: { label: string; url: string }[]; reviewed_by: string | null;
-  approved_at: string | null; draft?: boolean; sample: boolean; impact?: Impact | null; comments?: Record<string, CommentDraft>;
+  approved_at: string | null; draft?: boolean; sample: boolean; impact?: Impact | null; comments?: Record<string, CommentDraft>; rating?: Rating;
 }
 export interface Site { generated_at: string; commissions: Record<string, string>; topics: Record<string, string>; link_types: Record<string, string>; contains_sample_data: boolean; preview?: boolean }
 

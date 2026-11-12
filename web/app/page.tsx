@@ -1,13 +1,11 @@
 import Link from "next/link";
-import CoverScroll from "@/components/CoverScroll";
-import GroupIcon from "@/components/GroupIcon";
-import IndiaMap, { GEO, LeaderLines, VB, geoCss } from "@/components/IndiaMap";
-import { Direction } from "@/components/Impact";
+import AnalysisBlock, { HighBadge, type Block } from "@/components/AnalysisBlock";
+import { GEO } from "@/components/IndiaMap";
+import Stage from "@/components/Stage";
 import Subscribe from "@/components/Subscribe";
-import { GROUPS, byDeadline, commentable, commissionName, consultations, isOpen, orderLabel, orders, regulations, site, type Impact } from "@/lib/data";
+import { byDeadline, commentable, commissionName, consultations, isOpen, orderLabel, orders, regulations, site } from "@/lib/data";
 import { fmtDate } from "@/lib/format";
 
-interface Block { id: string; href: string; kind: "Draft" | "Order"; tab: string; title: string; summary: string; date: string; impact?: Impact | null; draftable: boolean; unreviewed: boolean }
 const PER_CHAPTER = 4;
 
 function blocksFor(code: string): { blocks: Block[]; total: number; drafts: number; orders: number } {
@@ -18,12 +16,12 @@ function blocksFor(code: string): { blocks: Block[]; total: number; drafts: numb
   const all: Block[] = [
     ...[...open, ...closed].map((c) => ({ id: c.id, href: c.path, kind: "Draft" as const, title: c.title, summary: c.summary, date: c.issued ?? "",
       tab: !isOpen(c) ? `Draft · listed deadline ${fmtDate(c.comment_deadline ?? c.hearing_date)} passed` : c.comment_deadline ? `Draft · comments by ${fmtDate(c.comment_deadline)}` : "Draft · open for comment",
-      impact: c.impact, draftable: commentable(c), unreviewed: !!c.draft })),
+      impact: c.impact, draftable: commentable(c), unreviewed: !!c.draft, rating: c.rating })),
     ...ords.map((o) => ({ id: o.id, href: o.path, kind: "Order" as const, title: o.title ?? orderLabel(o), summary: o.summary, date: o.date ?? "",
-      tab: `Order · ${fmtDate(o.date)}`, impact: o.impact, draftable: false, unreviewed: !!o.draft })),
+      tab: `Order · ${fmtDate(o.date)}`, impact: o.impact, draftable: false, unreviewed: !!o.draft, rating: o.rating })),
   ];
-  // items with an impact assessment lead; then drafts by deadline and orders by date, as built above
-  all.sort((a, b) => Number(!!b.impact) - Number(!!a.impact));
+  // rated high by the team first, then items with an impact assessment; otherwise drafts by deadline and orders by date
+  all.sort((a, b) => Number(b.rating === "high") - Number(a.rating === "high") || Number(!!b.impact) - Number(!!a.impact));
   return { blocks: all.slice(0, PER_CHAPTER), total: all.length, drafts: drafts.length, orders: ords.length };
 }
 
@@ -32,27 +30,11 @@ export default function Home() {
   const chapters = codes.map((code) => ({ code, ...blocksFor(code) }));
   const live = chapters.filter((c) => c.blocks.length);
   const updates = live.flatMap((c) => c.blocks.map((b) => ({ ...b, code: c.code }))).sort((a, b) => b.date.localeCompare(a.date)).slice(0, 8);
-  const pct = (x: number, y: number) => ({ left: `${((x - VB.x) / VB.w) * 100}%`, top: `${((y - VB.y) / VB.h) * 100}%` });
 
   return (
     <div className="cover">
-      <style dangerouslySetInnerHTML={{ __html: geoCss() }} />
-      <CoverScroll />
-      <div className="stage" aria-label="Commissions covered">
-        <div className="orbit">
-          <LeaderLines />
-          <div className="india-box"><IndiaMap /></div>
-          <div className="ccards">
-            {chapters.map((c) => (
-              <a key={c.code} href={c.blocks.length ? `#c-${c.code}` : `/commissions/${c.code}`} className={`ccard cc-${c.code}${c.blocks.length ? "" : " idle"}`} style={pct(...GEO[c.code].card)}>
-                <b>{c.code.toUpperCase()}</b>
-                <span>{GEO[c.code].place}</span>
-                <em>{c.blocks.length ? [c.drafts ? `${c.drafts} draft${c.drafts === 1 ? "" : "s"}` : "", c.orders ? `${c.orders} order${c.orders === 1 ? "" : "s"}` : ""].filter(Boolean).join(" · ") : "coming soon"}</em>
-              </a>))}
-          </div>
-        </div>
-        <p className="now" aria-hidden="true">{codes.map((k) => <span key={k} className={`now-${k}`}><i />{commissionName(k)}</span>)}</p>
-      </div>
+      <Stage items={chapters.map((c) => ({ code: c.code, href: c.blocks.length ? `#c-${c.code}` : `/commissions/${c.code}`, idle: !c.blocks.length,
+        note: c.blocks.length ? [c.drafts ? `${c.drafts} draft${c.drafts === 1 ? "" : "s"}` : "", c.orders ? `${c.orders} order${c.orders === 1 ? "" : "s"}` : ""].filter(Boolean).join(" · ") : "coming soon" }))} />
 
       <div className="flow">
         <section className="cover-hero">
@@ -70,7 +52,7 @@ export default function Home() {
             <ol className="updates">{updates.map((u) => (
               <li key={u.id}><a href={`#u-${u.id.slice(0, 10)}`}>
                 <span className="u-code">{u.code.toUpperCase()}</span>
-                <span className="u-title">{u.title}</span>
+                <span className="u-title">{u.rating === "high" && <HighBadge />}{u.title}</span>
                 <span className="u-meta">{u.kind}{u.date ? ` · ${fmtDate(u.date)}` : ""}</span>
               </a></li>))}</ol>
           ) : <p className="muted">The first reviewed updates are being prepared. Coverage: {codes.map((k) => k.toUpperCase()).join(", ")}.</p>}
@@ -82,21 +64,7 @@ export default function Home() {
               <p className="eyebrow">{GEO[c.code].place}</p>
               <h2><Link href={`/commissions/${c.code}`}>{commissionName(c.code)}</Link></h2>
             </header>
-            {c.blocks.map((b) => {
-              const hit = b.impact ? GROUPS.filter(([g]) => b.impact!.stakeholders[g]) : [];
-              return (
-                <article key={b.id} className={`folder rise${b.kind === "Draft" ? " is-draft" : ""}`} id={`u-${b.id.slice(0, 10)}`}>
-                  <span className="tab">{b.tab}{b.unreviewed ? " · AI draft" : ""}</span>
-                  <h3><Link href={b.href}>{b.title}</Link></h3>
-                  <p className="folder-sum">{b.impact?.market_note || b.summary}</p>
-                  {hit.length > 0 && (
-                    <ul className="who-chips" aria-label="Who is affected">{hit.map(([g, short]) => (
-                      <li key={g} className={`e-${b.impact!.stakeholders[g]!.effect}`} title={b.impact!.stakeholders[g]!.comment}>
-                        <GroupIcon g={g} size={16} /> {short} <Direction effect={b.impact!.stakeholders[g]!.effect} /></li>))}</ul>)}
-                  <p className="folder-links"><Link href={b.impact ? `${b.href}#impact` : b.href}>{b.impact ? "Read the analysis" : "Read the summary"} →</Link>
-                    {b.draftable && <Link href={`/studio?draft=${b.id.slice(0, 10)}`}>Draft your comments →</Link>}</p>
-                </article>);
-            })}
+            {c.blocks.map((b) => <AnalysisBlock key={b.id} {...b} />)}
             {c.total > c.blocks.length && <p className="more rise"><Link href={`/commissions/${c.code}`}>All {c.total} items from {c.code.toUpperCase()} →</Link></p>}
           </section>))}
 
