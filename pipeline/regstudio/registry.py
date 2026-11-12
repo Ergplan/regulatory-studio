@@ -26,7 +26,7 @@ def slugify(text: str, max_len: int = 60) -> str:
 
 
 STOP = {"the", "of", "and", "for", "to", "in", "regulation", "regulations", "electricity", "regulatory",
-        "commission", "central", "state", "cerc", "aptel", "uperc", "merc", "gerc", "kerc", "rerc",
+        "commission", "central", "state", "cerc", "aptel", "uperc", "merc", "gerc", "kerc", "rerc", "tnerc",
         "uttar", "pradesh", "maharashtra", "gujarat", "karnataka", "rajasthan", "sample"}
 
 
@@ -190,7 +190,7 @@ def lookup_index(conn) -> list[dict]:
     return [dict(r) for r in rows]
 
 
-STOPWORDS = {"the", "of", "and", "for", "rerc", "cerc", "gerc", "kerc", "merc", "uperc", "terms", "conditions",
+STOPWORDS = {"the", "of", "and", "for", "rerc", "cerc", "gerc", "kerc", "merc", "uperc", "tnerc", "terms", "conditions",
              "regulations", "regulation", "to", "in", "on", "by", "a", "an", "under", "from"}
 
 

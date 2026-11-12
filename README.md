@@ -4,7 +4,7 @@ Weekly, legally reviewed summaries of Indian electricity regulatory orders, with
 interactive map tracing each order to the regulations, Act sections and earlier
 decisions it rests on. Incubated by jouleWise.
 
-First cut: CERC, APTEL, UPERC, MERC, GERC, KERC, RERC. Open access and tariff matters.
+Coverage: CERC, APTEL, UPERC, MERC, GERC, KERC, RERC, TNERC. Open access and tariff matters, plus draft regulations and consultations.
 
 Architecture: https://claude.ai/artifact/E3uwohVAYcGw4XAJUgJUb4
 

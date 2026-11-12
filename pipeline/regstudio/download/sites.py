@@ -367,3 +367,52 @@ def parse_kerc_drafts(page: str) -> list[Item]:
 
 def kerc_drafts(client) -> list[Item]:
     return parse_kerc_drafts(client.get(KERC_DRAFTS_URL).decode("utf-8", "ignore"))
+
+
+# --- TNERC ------------------------------------------------------------------------------------
+TNERC_ORDERS_URL = "https://tnerc.tn.gov.in/CaseOrders.aspx"
+TNERC_DRAFTS_URL = "https://tnerc.tn.gov.in/ViewDR.aspx"
+
+
+def parse_tnerc(page: str, base: str = TNERC_ORDERS_URL) -> list[Item]:
+    """Case orders: Sl No., Order No., Petitioner, Respondent, Description (linked), Order Date."""
+    items = []
+    for row in re.findall(r"<tr[^>]*>(.*?)</tr>", page, re.S | re.I):
+        cells = _cells(row)
+        link = re.search(r"href='([^']+\.pdf)'|href=\"([^\"]+\.pdf)\"", row, re.I)
+        if len(cells) < 6 or not link:
+            continue
+        case, petitioner, respondent, desc, date = (_text(c) for c in cells[1:6])
+        party = " v. ".join(x for x in (petitioner, respondent) if x)
+        url = urllib.parse.urljoin(base, (link.group(1) or link.group(2)).strip()).replace(" ", "%20")
+        items.append(Item("tnerc", f"{party}: {desc}" if party else desc, url, _date(date), case or None))
+    return items
+
+
+def tnerc(client) -> list[Item]:
+    return parse_tnerc(client.get(TNERC_ORDERS_URL).decode("utf-8", "ignore"))
+
+
+def parse_tnerc_drafts(page: str, base: str = TNERC_DRAFTS_URL) -> list[Item]:
+    """Draft regulations: Sl No., No., Date, Description, English (linked), Tamil, Last Date.
+    The English link is TNERC's public notice with the draft attached."""
+    items = []
+    for row in re.findall(r"<tr[^>]*>(.*?)</tr>", page, re.S | re.I):
+        cells = _cells(row)
+        link = re.search(r"href='([^']+\.pdf)'|href=\"([^\"]+\.pdf)\"", row, re.I)
+        if len(cells) < 5 or not link or not _date(_text(cells[2])):
+            continue
+        desc = _text(cells[3])
+        title = re.sub(r"\s*\((?:Comments|Last Date|Time extended)[^)]*\)\s*\)?\s*$", "", desc, flags=re.I).strip(" .")
+        title = re.sub(r"^(Draft Notification of|Draft\s*-)\s*", "Draft ", title, flags=re.I)
+        if not title.lower().startswith("draft"):
+            title = "Draft " + title
+        deadline = _any_date(_text(cells[-1])) or _any_date(desc.rsplit("before", 1)[-1])
+        url = urllib.parse.urljoin(base, (link.group(1) or link.group(2)).strip())
+        items.append(Item("tnerc", title[:300], url, _date(_text(cells[2])), None, doc_type="draft",
+                          key=f"tnerc-draft:{url}", extra={"comment_deadline": deadline}))
+    return items
+
+
+def tnerc_drafts(client) -> list[Item]:
+    return parse_tnerc_drafts(client.get(TNERC_DRAFTS_URL).decode("utf-8", "ignore"))

@@ -41,7 +41,7 @@ const DEFAULT_COMMISSIONS: Record<string, string> = {
   cerc: "Central Electricity Regulatory Commission", aptel: "Appellate Tribunal for Electricity",
   uperc: "Uttar Pradesh Electricity Regulatory Commission", merc: "Maharashtra Electricity Regulatory Commission",
   gerc: "Gujarat Electricity Regulatory Commission", kerc: "Karnataka Electricity Regulatory Commission",
-  rerc: "Rajasthan Electricity Regulatory Commission",
+  rerc: "Rajasthan Electricity Regulatory Commission", tnerc: "Tamil Nadu Electricity Regulatory Commission",
 };
 export const site = load<Site>("site.json", { generated_at: "", commissions: DEFAULT_COMMISSIONS, topics: {}, link_types: {}, contains_sample_data: false });
 export const orders = load<Order[]>("orders.json", []).sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));

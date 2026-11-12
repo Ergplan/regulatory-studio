@@ -180,3 +180,14 @@ def test_drafts_count_while_their_deadline_is_ahead(env, monkeypatch):
 def config_inbox():
     from regstudio import config
     return config.INBOX
+
+
+def test_tnerc_orders_and_drafts():
+    orders = sites.parse_tnerc(read("tnerc_orders_fixture.html"))
+    assert orders[1].case_number == "M.P.No.21 of 2026" and orders[1].doc_date == "2026-10-22"
+    assert orders[1].title.startswith("CE/PPP, TNPDCL: To procure 600 MW") and "%20" in orders[1].source_url
+    drafts = sites.parse_tnerc_drafts(read("tnerc_drafts_fixture.html"))
+    assert len(drafts) == 4 and all(d.doc_type == "draft" for d in drafts)
+    assert drafts[0].extra["comment_deadline"] == "2026-11-16" and drafts[0].doc_date == "2026-06-03"
+    assert drafts[0].title == "Draft TNERC(Recovery of Expenses and Charges by Licensees and System Operator) Regulations, 2026"
+    assert drafts[-1].title.startswith("Draft Tamil Nadu Electricity Regulatory Commission State Load Dispatch")

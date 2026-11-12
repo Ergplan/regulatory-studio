@@ -29,6 +29,8 @@ ADAPTERS = {
     "cerc-drafts": sites.cerc_drafts,     # draft regulations and consultations
     "gerc-drafts": sites.gerc_drafts,
     "kerc-drafts": sites.kerc_drafts,
+    "tnerc": sites.tnerc,
+    "tnerc-drafts": sites.tnerc_drafts,
 }
 
 
