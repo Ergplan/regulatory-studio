@@ -1,6 +1,6 @@
 // Markdown twins of site pages, for language models and other readers that prefer plain text.
 import {
-  SITE_URL, actById, citingOrders, clauses, clausesOf, commissionName, digests, linkTypeLabel, orderById, orderLabel,
+  KIND_LABEL, SITE_URL, actById, citingOrders, clauses, clausesOf, commissionName, consultations, digests, linkTypeLabel, orderById, orderLabel,
   orders, regulations, regulationById, targetInfo, topicName, type Order,
 } from "./data";
 
@@ -47,6 +47,14 @@ export function pageMd(path: string): string | null {
     if (a) return [`# Section ${a.number}, ${a.act}: ${a.title}`, "", "## Reviewed orders relying on this section", "",
       ...citingOrders("act_section", a.id).map(({ order }) => `- [${order.title ?? orderLabel(order)}](${abs(order.path + ".md")})`)].join("\n") + "\n";
   }
+  const k = consultations.find((x) => x.path === path);
+  if (k) return [`# ${k.title}`, "", `- Commission: ${commissionName(k.commission)}`, `- Kind: ${KIND_LABEL[k.kind]}`,
+    `- Issued: ${k.issued ?? "not stated"}`, `- Last date for comments: ${k.comment_deadline ?? "see the public notice"}`,
+    ...(k.hearing_date ? [`- Public hearing: ${k.hearing_date}`] : []), `- Draft: ${k.source_url}`,
+    ...k.related.map((r) => `- ${r.label}: ${r.url}`),
+    k.draft ? "- Status: DRAFT summary by AI, not yet reviewed by the legal team" : `- Summary reviewed by the Regulatory Studio legal team: ${k.approved_at}`,
+    "", "## What is proposed", "", k.summary, "", ...k.proposes.map((p) => `- ${p}`), "",
+    "This is a proposal published for comment, not a notified regulation."].join("\n") + "\n";
   const d = digests.find((x) => x.path === path);
   if (d) return [`# Weekly digest ${d.from} to ${d.to}`, "", d.intro, "",
     ...d.items.map((id) => orderById.get(id)).filter(Boolean).map((x) => `- [${x!.title ?? orderLabel(x!)}](${abs(x!.path + ".md")}): ${x!.issue}`)].join("\n") + "\n";
@@ -55,5 +63,5 @@ export function pageMd(path: string): string | null {
 
 export function allMdPaths(): string[] {
   return [...orders.map((o) => o.path), ...regulations.map((r) => r.path), ...clauses.map((c) => c.path),
-    ...[...actById.keys()].map((id) => `/act/${id}`), ...digests.map((d) => d.path)];
+    ...[...actById.keys()].map((id) => `/act/${id}`), ...digests.map((d) => d.path), ...consultations.map((c) => c.path)];
 }

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Consultation reader output",
+  "type": "object",
+  "required": ["kind", "summary", "proposes", "comment_deadline", "hearing_date", "amends"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"enum": ["draft_regulation", "draft_amendment", "consultation_paper", "proposal"]},
+    "summary": {"type": "string", "maxLength": 1500, "description": "what is proposed and who it affects, in plain words"},
+    "proposes": {"type": "array", "maxItems": 8, "items": {"type": "string", "maxLength": 300}},
+    "comment_deadline": {"type": ["string", "null"], "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+    "hearing_date": {"type": ["string", "null"], "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+    "amends": {"type": ["string", "null"], "description": "the regulation it would change, as the draft names it"}
+  }
+}

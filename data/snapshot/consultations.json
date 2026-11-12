@@ -1,0 +1,193 @@
+[
+ {
+  "id": "2efc99923a7df73c32615f5c201230f17974ef1a2b73ed1b3d20b1d917f5952e",
+  "path": "/consultations/cerc/central-electricity-regulatory-commission-sharing-of-inter-state-transmission-charges-and-2efc99",
+  "commission": "cerc",
+  "title": "Draft Central Electricity Regulatory Commission (Sharing of inter-State Transmission Charges and Losses) (Fifth Amendment) Regulations, 2026",
+  "kind": "draft_amendment",
+  "issued": null,
+  "comment_deadline": "2026-11-27",
+  "hearing_date": null,
+  "summary": "CERC proposes a further change to its draft Fifth Amendment of the Sharing Regulations (first published on 31.07.2026). The supplementary draft would add a new waiver of inter-State transmission charges for wind, solar and wind-solar hybrid projects that have a PPA or PSA of at least seven years with a drawee DIC signed on or before 31.03.2027, but whose commissioning is held up because the transmission system is not ready. If such a project achieves COD within two months of its GNA becoming effective, it would get a waiver tied to the later of its connectivity start date and SCOD, for up to the contract tenure and at most 25 years from COD. Projects qualifying under both the existing trajectory and this route would have to choose one, within 30 days of COD, and the choice would be binding. This is a proposal; comments are invited until 27 November 2026.",
+  "proposes": [
+   "New Regulation 13(2)(h-i): ISTS waiver for wind, solar and wind-solar hybrid projects delayed by non-availability of transmission",
+   "Eligibility: PPA or PSA of at least 7 years with a drawee DIC (directly, via a trader or REIA) signed on or before 31.03.2027",
+   "Project must achieve COD within two months of its GNA becoming effective",
+   "PPA and PSA copies to be filed with CTUIL and NLDC by 30.04.2027",
+   "Waiver lapses if the contract is terminated early or COD is missed; the Table 1 trajectory then applies",
+   "New Regulation 13(2)(h-ii): one-time binding choice between the existing waiver and the new route, within 30 days of COD",
+   "Projects already commissioned may opt in within one month of the amendment taking effect"
+  ],
+  "amends": "CERC (Sharing of Inter-State Transmission Charges and Losses) Regulations, 2020",
+  "source_url": "https://cercind.gov.in/2026/draft_reg/Supplementary-Draft-Notification2026.pdf",
+  "related": [
+   {
+    "label": "Public Notice inviting comments/ suggestion (Last date:- 27th November, 2026)",
+    "url": "https://cercind.gov.in/2026/draft_reg/PN-supplementary-notification-sharing-5th.pdf"
+   },
+   {
+    "label": "Explanatory memorandum to supplementary draft notification.",
+    "url": "https://cercind.gov.in/2026/draft_reg/EM-supplementry-sharing-5th.pdf"
+   },
+   {
+    "label": "Public Notice extension (Last date extended of submission of comments and suggestions:- 15.09.2026)",
+    "url": "https://cercind.gov.in/2026/draft_reg/PN-Ext.SIST-5rd-Amend.pdf"
+   },
+   {
+    "label": "Public Notice",
+    "url": "https://cercind.gov.in/2026/draft_reg/PN-SIST-5rd-Amend.pdf"
+   },
+   {
+    "label": "Draft Amendment",
+    "url": "https://cercind.gov.in/2026/draft_reg/DN-SIST-5rd_Amend.pdf"
+   },
+   {
+    "label": "Explanatory Memorandum",
+    "url": "https://cercind.gov.in/2026/draft_reg/EM_SIST-5rdAmend.pdf"
+   },
+   {
+    "label": "Public Hearing will be held on 28.09.2026 at 10:30 AM.",
+    "url": "https://cercind.gov.in/2026/hearing_schedule/PH-Notice-28.09.2026.pdf"
+   }
+  ],
+  "reviewed_by": null,
+  "approved_at": null,
+  "draft": true,
+  "sample": false
+ },
+ {
+  "id": "623ba689094bd273a9d03943336419eb3a11c7cfa81a6f6519645ee7eb8f87bf",
+  "path": "/consultations/kerc/kerc-procurement-of-energy-from-renewable-sources-regulations-2026-623ba6",
+  "commission": "kerc",
+  "title": "Draft KERC Procurement of Energy from Renewable Sources Regulations, 2026.",
+  "kind": "draft_regulation",
+  "issued": "2026-10-12",
+  "comment_deadline": "2026-11-11",
+  "hearing_date": null,
+  "summary": "KERC proposes new regulations on renewable purchase obligations to replace its 2011 regulations, aligning Karnataka with the Government of India's revised Renewable Consumption Obligation notification of 27.09.2025. Distribution licensees, open access consumers above 1 MW and captive users with plants of 1 MW and above would have to meet a total RPO rising from 35.95% in 2026-27 to 43.33% in 2029-30, split into wind, hydro, distributed RE and other RE components. Obligations could be met through renewable power, RECs or the CERC buyout price, with SLDC monitoring compliance and possible action under Section 142. Tariffs for wind, solar MW-scale, mini-hydel, co-generation and biomass would be discovered through bidding. KERC's website lists 11.11.2026 as the last date for suggestions; the gazette notice of 22.10.2026 allows 30 days from publication. This is a proposal.",
+  "proposes": [
+   "Total RPO: 35.95% (2026-27), 38.81% (2027-28), 41.36% (2028-29), 43.33% (2029-30)",
+   "Components: wind RE, hydro RE (projects after 31.03.2024), distributed RE (under 10 MW) and other RE",
+   "Obligated: discoms, open access consumers above 1 MW and captive users with plants of 1 MW and above",
+   "Compliance through RE purchase, RECs or the CERC buyout price; open access and captive users may meet the total from any RE source",
+   "SLDC to monitor and report by 31 August each year; non-compliance may lead to Section 142 proceedings",
+   "Tariffs for wind, solar MW-scale, mini-hydel, co-generation and biomass through Section 63 bidding",
+   "REC-route generators to sell to ESCOMs at the lower of pooled power purchase cost or 75% of generic tariff"
+  ],
+  "amends": "Replaces KERC (Power Procurement from Renewable Sources by Distribution Licensee) Regulations, 2011",
+  "source_url": "https://kerc.karnataka.gov.in/uploads/media_to_upload1793079162.pdf",
+  "related": [],
+  "reviewed_by": null,
+  "approved_at": null,
+  "draft": true,
+  "sample": false
+ },
+ {
+  "id": "94f2c131d8b6839167af1f4051369e439ba1e85d17e65fd88cb774d77141a9c0",
+  "path": "/consultations/cerc/central-electricity-regulatory-commission-indian-electricity-grid-code-second-amendment-re-94f2c1",
+  "commission": "cerc",
+  "title": "Draft Central Electricity Regulatory Commission (Indian Electricity Grid Code) (Second Amendment) Regulations, 2026",
+  "kind": "draft_amendment",
+  "issued": null,
+  "comment_deadline": "2026-11-02",
+  "hearing_date": "2026-11-04",
+  "summary": "CERC proposes a broad second amendment to the Indian Electricity Grid Code. It would introduce a congestion charge on regional entities whose deviations push flows on inter- or intra-regional links beyond Total Transfer Capability, payable on top of deviation charges at a rate CERC sets by order. It sets rules for scheduling infirm power after a successful trial run, offering it first to contracted buyers with seven days' notice. It brings pumped storage plants and energy storage systems more fully into scheduling, despatch and ancillary service provisions, revises the timelines and treatment for units under reserve shutdown, and shortens the gap between schedule revisions in two phases, the second from 1 April 2027. Comments closed on 2 November 2026 and the public hearing was held on 4 November 2026; the final amendment is awaited.",
+  "proposes": [
+   "New Regulation 30A: congestion charge on regional entities causing flows beyond TTC, in addition to deviation charges",
+   "New Regulation 25A: infirm power scheduled only after a successful trial run, offered first to contracted buyers with 7 days' notice",
+   "Pumped storage plants and ESS brought into scheduling, despatch and reserve provisions",
+   "Reserve shutdown: new D-1 timelines (1430/1530/1600/1800 hrs) and rules for on-bar and off-bar declared capacity",
+   "NLDC may run SCUC at any time of day to commit or decommit units for grid security",
+   "Shorter revision timelines in two phases, the second from 01.04.2027",
+   "New definitions including congestion charge, default trigger date (75 days after RPC accounts) and REIA"
+  ],
+  "amends": "CERC (Indian Electricity Grid Code) Regulations, 2023",
+  "source_url": "https://cercind.gov.in/2026/draft_reg/DR_IEGC-2ndAmnd.pdf",
+  "related": [
+   {
+    "label": "Public Notice extension",
+    "url": "https://cercind.gov.in/2026/draft_reg/PN_IEGC-2ndAmnd-Ext-letr.pdf"
+   },
+   {
+    "label": "Public Notice",
+    "url": "https://cercind.gov.in/2026/draft_reg/PN_IEGC-2ndAmnd.pdf"
+   },
+   {
+    "label": "Explanatory Memorandum",
+    "url": "https://cercind.gov.in/2026/draft_reg/EM_IEGC-2ndAmnd.pdf"
+   },
+   {
+    "label": "Public Hearing will be held on 04.11.2026 at 10:30 AM.",
+    "url": "https://cercind.gov.in/2026/draft_reg/PH-Notice231026.pdf"
+   }
+  ],
+  "reviewed_by": null,
+  "approved_at": null,
+  "draft": true,
+  "sample": false
+ },
+ {
+  "id": "beed98beb689fd356700330a2944bd076e1789fba99e76115290cede30b0d37d",
+  "path": "/consultations/gerc/gerc-electricity-supply-code-and-related-matters-fifth-amendment-regulations-2026-beed98",
+  "commission": "gerc",
+  "title": "Draft GERC (Electricity Supply Code and Related Matters) (Fifth Amendment) Regulations, 2026",
+  "kind": "draft_amendment",
+  "issued": "2026-10-17",
+  "comment_deadline": null,
+  "hearing_date": null,
+  "summary": "GERC proposes a wide update of Gujarat's Electricity Supply Code. All new connections would get smart meters with prepayment functionality or prepayment meters, unless the Commission allows an exception. LT connections up to 150 kW could be released on the applicant's declaration, with the test report filed online within 45 days, following a state government order of July 2026. Applicants doing their own extension work would pay only supervision charges, but would face demand and minimum charges if they do not finish within the standard time and a further 60 days after notice. Bills above Rs 10,000 would have to be paid electronically, with a small rebate for prompt e-payment. Temporary connections for construction could run up to three years, and safety references move to the CEA's 2023 regulations. This is a proposal; GERC's listing gives no last date for comments, so check the public notice.",
+  "proposes": [
+   "Smart prepaid or prepayment meters for all new connections, subject to exemption by the Commission",
+   "LT connections up to 150 kW released on declaration; test report online within 45 days",
+   "Self-executed extension work: supervision charges only; charges apply if not completed within standard time plus 60 days after notice",
+   "Mandatory e-payment for bills above Rs 10,000; rebate of 0.01% or Rs 50 (whichever is less) for timely e-payment",
+   "Temporary connections up to 12 months, or up to 3 years for construction",
+   "Smart meters read remotely at least monthly; consumption data via website, app or SMS",
+   "Notices may be served by registered e-mail",
+   "Safety, wiring and protection requirements aligned with CEA safety regulations, 2023"
+  ],
+  "amends": "GERC (Electricity Supply Code and Related Matters) Regulations, 2015",
+  "source_url": "https://gercin.org/viewdocument/cmVndWxhdGlvbl9lbmdfMTc5MjI0NzU1Nl8yMzg4",
+  "related": [
+   {
+    "label": "Explanatory Memorandum",
+    "url": "https://gercin.org/viewdocument/cmVndWxhdGlvbl9lbmdfMTc5MjI0NzY5NF80MjI0"
+   }
+  ],
+  "reviewed_by": null,
+  "approved_at": null,
+  "draft": true,
+  "sample": false
+ },
+ {
+  "id": "b84e59ee7b997820f89700ab29a7b17dc1f069a75c8b82844640ef59a8032cf5",
+  "path": "/consultations/gerc/gerc-standards-of-performance-of-distribution-licensees-first-amendment-regulations-2026-b84e59",
+  "commission": "gerc",
+  "title": "Draft GERC (Standards of Performance of Distribution Licensees) (First Amendment) Regulations, 2026",
+  "kind": "draft_amendment",
+  "issued": "2026-10-17",
+  "comment_deadline": null,
+  "hearing_date": null,
+  "summary": "GERC proposes tighter standards for Gujarat's distribution licensees. New connections, load enhancements, shifting and conversion of service that need no network work would have to be energised within 3 days in metropolitan areas, 7 days in other urban areas and 10 days in rural areas, with automatic compensation of Rs 50 a day for delay. Longer timelines would apply where the network has to be extended, from 15 days for an LT line up to 150 metres to 180 days for EHT lines or sub-stations. Reliability would be measured under IEEE Standard 1366-2022, adding a new index (CAIFI) reported quarterly and annually, and safety and earthing would follow the CEA's 2023 safety regulations. This is a proposal; GERC's listing gives no last date for comments, so check the public notice.",
+  "proposes": [
+   "Connection time limits without network work: 3 days (metropolitan), 7 days (other urban), 10 days (rural)",
+   "Network extensions: 15 days (LT up to 150 m) up to 180 days (EHT line or sub-station)",
+   "Automatic compensation of Rs 50 per day of delay in energisation",
+   "Licensee must tell applicants the expected energisation date",
+   "Reliability indices under IEEE 1366-2022, adding CAIFI, reported quarterly and annually",
+   "Construction, maintenance and earthing testing under CEA safety regulations, 2023"
+  ],
+  "amends": "GERC (Standards of Performance of Distribution Licensees) Regulations, 2023",
+  "source_url": "https://gercin.org/viewdocument/cmVndWxhdGlvbl9lbmdfMTc5MjI0NzgyM18yNzg4",
+  "related": [
+   {
+    "label": "Explanatory Memorandum",
+    "url": "https://gercin.org/viewdocument/cmVndWxhdGlvbl9lbmdfMTc5MjI0Nzg0OF8zMTM4"
+   }
+  ],
+  "reviewed_by": null,
+  "approved_at": null,
+  "draft": true,
+  "sample": false
+ }
+]

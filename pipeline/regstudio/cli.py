@@ -8,7 +8,7 @@ import sys
 
 from . import config, db
 
-STAGES = ["intake", "extract", "registry", "amend", "triage", "read", "draft"]
+STAGES = ["intake", "extract", "registry", "amend", "consult", "triage", "read", "draft"]
 
 
 def _run_stage(name: str, limit: int | None) -> dict:
@@ -34,6 +34,9 @@ def _run_stage(name: str, limit: int | None) -> dict:
     if name == "read":
         from . import reader
         return reader.run(limit)
+    if name == "consult":
+        from . import consult
+        return consult.run(limit)
     if name == "draft":
         from . import drafting
         return drafting.run(limit)
@@ -51,6 +54,8 @@ def status() -> dict:
                 "SELECT count(*) FROM links WHERE status = 'proposed'").fetchone()[0],
             "clauses_proposed": conn.execute(
                 "SELECT count(*) FROM clauses WHERE status = 'proposed'").fetchone()[0],
+            "consultations_proposed": conn.execute(
+                "SELECT count(*) FROM consultations WHERE summary_status = 'proposed'").fetchone()[0],
             "approved_orders": conn.execute(
                 "SELECT count(*) FROM orders WHERE summary_status = 'approved'").fetchone()[0],
         }
@@ -74,7 +79,7 @@ def main(argv: list[str] | None = None) -> None:
     sub.add_parser("status", help="documents per stage and the review queue")
     sub.add_parser("check-inbox", help="dry run: list problems in data/inbox without registering anything")
     dl = sub.add_parser("download", help="fetch new orders from commission websites into data/inbox")
-    dl.add_argument("--commission", action="append", choices=["cerc", "uperc", "rerc", "merc", "gerc", "kerc", "rerc-regs"],
+    dl.add_argument("--commission", action="append", choices=["cerc", "uperc", "rerc", "merc", "gerc", "kerc", "rerc-regs", "cerc-drafts", "gerc-drafts", "kerc-drafts"],
                     help="repeat to pick several; default all")
     dl.add_argument("--since", default=None, help="YYYY-MM-DD; default 14 days ago")
     dl.add_argument("--limit", type=int, default=None, help="max new documents per commission")
@@ -84,7 +89,7 @@ def main(argv: list[str] | None = None) -> None:
     fe.add_argument("url", help="the PDF's address, or the path of a PDF saved from the site")
     fe.add_argument("--source-url", help="for a saved PDF: the address it came from")
     fe.add_argument("commission", choices=sorted(config.COMMISSIONS))
-    fe.add_argument("doc_type", choices=["order", "judgment", "regulation", "amendment"])
+    fe.add_argument("doc_type", choices=["order", "judgment", "regulation", "amendment", "draft"])
     fe.add_argument("--date", help="YYYY-MM-DD as printed on the document")
     fe.add_argument("--title")
     fe.add_argument("--case", help="case or petition number as written")

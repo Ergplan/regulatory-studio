@@ -1,0 +1,30 @@
+{% extends "base.html" %}{% block title %}{{ d.title }}{% endblock %}
+{% block head %}<style>
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;height:calc(100vh - 140px)}
+.pdf{border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;background:#fff}
+.pdf iframe{flex:1;border:0;width:100%}.side{overflow:auto;padding-right:4px}
+</style>{% endblock %}
+{% block body %}
+<h1>{{ d.title }}</h1>
+<p class="muted">{{ COMMISSIONS[d.commission] }} · issued {{ c.issued_date or 'date not given' }} ·
+<a href="{{ d.source_url }}" target="_blank" rel="noopener">source</a>
+{% for r in related %} · <a href="{{ r.url }}" target="_blank" rel="noopener">{{ r.label }}</a>{% endfor %}</p>
+{% if not reviewer %}<div class="flash">Set your name on the <a href="/">queue page</a> before approving.</div>{% endif %}
+<div class="split">
+<div class="pdf"><iframe src="/file/{{ d.id }}#page=1" title="Draft PDF"></iframe></div>
+<div class="side"><div class="card"><form method="post" action="/consultation/{{ d.id }}">
+<label>Title on the website</label><input name="title" value="{{ d.title or '' }}" maxlength="300">
+<label>Kind</label><select name="kind">{% for k, v in KINDS.items() %}<option value="{{ k }}" {% if k == c.kind %}selected{% endif %}>{{ v }}</option>{% endfor %}</select>
+<div class="row"><div><label>Last date for comments (YYYY-MM-DD)</label><input name="comment_deadline" value="{{ c.comment_deadline or '' }}" placeholder="check the public notice"></div>
+<div><label>Public hearing (YYYY-MM-DD)</label><input name="hearing_date" value="{{ c.hearing_date or '' }}"></div></div>
+<label>Regulation it would change (as named in the draft)</label><input name="amends" value="{{ c.amends or '' }}">
+<label>Summary (published as written; say it is a proposal)</label><textarea name="summary" style="min-height:160px">{{ c.summary or '' }}</textarea>
+<label>Main proposed changes, one per line</label><textarea name="proposes" style="min-height:120px">{{ proposes|join('\n') }}</textarea>
+<div class="row"><span class="pill {{ c.summary_status }}">{{ c.summary_status }}</span>
+<button name="action" value="save">Save draft</button><button class="primary" name="action" value="approve">Approve for the website</button>
+<button class="bad" name="action" value="reject">Not for publication</button>
+{% if c.summary_status == 'approved' %}<button name="action" value="reopen">Reopen</button>{% endif %}</div>
+</form></div>
+<p class="muted small">The deadline comes from the commission's listing where it gives one. If it says "within 30 days of
+publication", work the date out from the gazette or public notice and enter it here.</p></div></div>
+{% endblock %}

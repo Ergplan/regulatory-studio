@@ -139,6 +139,24 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
             if g["published_at"] is None and not preview:
                 conn.execute("UPDATE digests SET published_at = datetime('now') WHERE id = ?", (g["id"],))
 
+        consultations = []
+        for c in conn.execute(
+                f"""SELECT d.id, d.commission, d.title, d.source_url, d.doc_type, c.*
+                    FROM consultations c JOIN documents d ON d.id = c.doc_id
+                    WHERE c.summary_status IN ({marks})
+                    ORDER BY coalesce(c.comment_deadline, c.hearing_date, c.issued_date, '') DESC""", ok):
+            if clean and SAMPLE_MARK in c["source_url"]:
+                continue
+            consultations.append({
+                "id": c["id"], "path": f"/consultations/{c['commission']}/{slug(re.sub(r'^draft\s+', '', c['title'] or c['id'][:12], flags=re.I), 90)}-{c['id'][:6]}",
+                "commission": c["commission"], "title": c["title"], "kind": c["kind"],
+                "issued": c["issued_date"], "comment_deadline": c["comment_deadline"], "hearing_date": c["hearing_date"],
+                "summary": c["summary"], "proposes": json.loads(c["proposes"] or "[]"), "amends": c["amends"],
+                "source_url": c["source_url"], "related": json.loads(c["related"] or "[]"),
+                "reviewed_by": c["reviewer"], "approved_at": c["approved_at"],
+                "draft": preview and c["summary_status"] != "approved",
+                "sample": SAMPLE_MARK in c["source_url"]})
+
     files = {
         "site.json": {"generated_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
                       "commissions": config.COMMISSIONS, "topics": config.TOPICS,
@@ -150,8 +168,10 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
         "clauses.json": clauses,
         "act_sections.json": acts,
         "digests.json": digests,
+        "consultations.json": consultations,
     }
     for name, data in files.items():
         (out / name).write_text(json.dumps(data, indent=1, ensure_ascii=False))
     return {"orders": len(orders), "regulations": len(regs), "clauses": len(clauses),
-            "digests": len(digests), "links_held_back": held_back, "snapshot": str(out)}
+            "digests": len(digests), "consultations": len(consultations), "links_held_back": held_back,
+            "snapshot": str(out)}

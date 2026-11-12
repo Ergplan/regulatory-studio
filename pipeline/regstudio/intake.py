@@ -114,6 +114,12 @@ def run(limit: int | None = None) -> IntakeResult:
                  meta.get("title"), meta.get("doc_date"), meta.get("case_number"),
                  str(dest.relative_to(config.STORE))),
             )
+            if meta["doc_type"] == "draft":
+                conn.execute(
+                    """INSERT OR IGNORE INTO consultations(doc_id, issued_date, comment_deadline, hearing_date, related)
+                       VALUES (?, ?, ?, ?, ?)""",
+                    (actual, meta.get("doc_date"), meta.get("comment_deadline"), meta.get("hearing_date"),
+                     json.dumps(meta.get("related", []), ensure_ascii=False)))
             db.audit(conn, "pipeline", "intake", actual, {"inbox_path": rel})
             result.added.append(actual)
         db.finish_run(conn, run_id, len(result.added), len(result.rejected),

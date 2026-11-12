@@ -98,6 +98,9 @@ regstudio fetch https://example/judgment.pdf aptel judgment --date 2026-11-05 --
 | GERC | judgement orders + RE orders, paged | |
 | KERC | miscellaneous, generic tariff and tariff order pages | |
 | RERC regulations (`rerc-regs`) | regulations page | new regulations and amendments; `--match` picks one by title |
+| CERC drafts (`cerc-drafts`) | Draft_reg.html | draft regulations and proposals, with the comment deadline and hearing date |
+| GERC drafts (`gerc-drafts`) | draft regulations page | GERC lists no deadline: enter it from the public notice on the review screen |
+| KERC drafts (`kerc-drafts`) | draft regulations page | issue date and last date for suggestions |
 | APTEL | no listing the script can read | add with `regstudio fetch <url> aptel judgment --date ... --case ...` |
 
 Each file lands in `data/inbox/<commission>/<today>/` with its metadata JSON. Already-fetched
@@ -106,6 +109,16 @@ certificate chain; the script fetches the missing intermediate certificate from 
 site's own certificate names (never a root) and still checks the full chain against the Mac's
 trusted roots. The script reads each site's robots.txt and skips anything it disallows.
 Anything that is not a PDF (an error page, say) is skipped and reported.
+
+## Draft regulations and consultations
+
+Drafts are fetched while their comment deadline or hearing is still ahead (or if issued in the last
+14 days). `regstudio run consult` drafts a plain-English summary, the main proposed changes and the
+deadline; they appear under "Draft regulations and consultations" on the review screen. Check the
+deadline against the public notice, then approve. Approved drafts are published on /consultations,
+with the days left to comment. MERC and UPERC drafts are added by hand:
+`regstudio fetch <pdf or url> merc draft --date YYYY-MM-DD --title "..."`, then set the deadline on
+the review screen.
 
 ## For the download team
 
