@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { KIND_LABEL, daysLeft, type Consultation } from "@/lib/data";
+import { LibraryRow, draftRow } from "@/components/Library";
+import { daysLeft, type Consultation } from "@/lib/data";
 import { fmtDate } from "@/lib/format";
 
 export function Deadline({ c }: { c: Consultation }) {
@@ -11,13 +11,5 @@ export function Deadline({ c }: { c: Consultation }) {
 }
 
 export default function ConsultationCard({ c }: { c: Consultation }) {
-  return (
-    <article className="card order-card">
-      <div className="meta"><span className="tag">{c.commission.toUpperCase()}</span> {KIND_LABEL[c.kind]}
-        {c.issued && <> · issued {fmtDate(c.issued)}</>}
-        {c.sample && <span className="tag bad">Sample</span>}{c.draft && <span className="tag bad">Analysis awaiting review</span>}</div>
-      <h3><Link href={c.path}>{c.title}</Link></h3>
-      <p className="small"><Deadline c={c} />{c.hearing_date && <> · hearing {fmtDate(c.hearing_date)}</>}</p>
-    </article>
-  );
+  return <LibraryRow r={draftRow(c)} as="article" />;
 }
