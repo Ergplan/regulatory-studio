@@ -184,3 +184,25 @@ def test_regulations_starting_mid_paragraph_are_split_in_sequence():
     assert got["5"]["text"].startswith("i. Subject to the provisions")
     assert got["7"]["heading"] == "Treatment for existing Consumers" and got["7"]["pid"] == "p2.1"
     assert "Rs. 2. Per unit" in got["4"]["text"]
+
+
+def test_ruled_tables_are_kept_as_rows_without_moving_paragraph_ids(tmp_path):
+    import pymupdf
+    def build(with_table):
+        doc = pymupdf.open(); page = doc.new_page()
+        page.insert_text((50, 60), "1. The tariffs adopted are set out below.", fontsize=11)
+        page.insert_text((50, 300), "2. The petition is disposed of.", fontsize=11)
+        if with_table:
+            rows = [["Bidder", "Capacity (MW)", "Tariff (Rs/kWh)"], ["Alpha Solar", "50", "2.56"], ["Beta Wind", "120", "3.41"]]
+            for r, row in enumerate(rows):
+                for c, cell in enumerate(row):
+                    rect = pymupdf.Rect(50 + c * 150, 100 + r * 30, 200 + c * 150, 130 + r * 30)
+                    page.draw_rect(rect); page.insert_text((rect.x0 + 5, rect.y0 + 18), cell, fontsize=10)
+        p = tmp_path / f"t{int(with_table)}.pdf"; doc.save(p); return p
+    plain, _, _ = extract.extract_pdf(build(False))
+    paras, _, _ = extract.extract_pdf(build(True))
+    tables = [p for p in paras if p["text"].startswith("Table: ")]
+    assert len(tables) == 1 and "Beta Wind | 120 | 3.41" in tables[0]["text"]
+    assert tables[0]["idx"] == max(p["idx"] for p in paras)          # added after the page's own paragraphs
+    assert paras[0]["pid"] == plain[0]["pid"] == "p1.1" and paras[0]["text"] == plain[0]["text"]
+    assert len({p["pid"] for p in paras}) == len(paras)

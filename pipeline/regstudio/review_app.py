@@ -509,6 +509,7 @@ def impact_context(row, doc_id: str | None = None) -> dict:
             "rating": row["rating"] if row is not None and "rating" in row.keys() else None, "RATINGS": RATINGS,
             "figures": json.loads(row["figures"]) if row is not None and "figures" in row.keys() and row["figures"] else [],
             "figures_json": json.dumps(json.loads(row["figures"]), indent=1, ensure_ascii=False) if row is not None and "figures" in row.keys() and row["figures"] else "[]",
+            "checks": json.loads(row["checks"]) if row is not None and "checks" in row.keys() and row["checks"] else None,
             "impact_doc": doc_id or (row["doc_id"] if row is not None and "doc_id" in row.keys() else None),
             "GROUPS": IMPACT_GROUPS, "EFFECTS": IMPACT_EFFECTS}
 
@@ -589,6 +590,19 @@ async def save_comment(request: Request, doc_id: str):
 
 # --- Charts for a summary --------------------------------------------------------------------------
 from . import figures as figures_stage  # noqa: E402
+
+
+@app.post("/checks/{doc_id}")
+async def redo_checks(request: Request, doc_id: str):
+    """Clear the pre-review checks so the next `regstudio run check` tests the edited summary."""
+    name = need_reviewer(request)
+    with db.session() as conn:
+        table = table_for(conn, doc_id)
+        if table not in ("orders", "consultations"):
+            raise HTTPException(404)
+        conn.execute(f"UPDATE {table} SET checks = NULL WHERE doc_id = ?", (doc_id,))
+        db.audit(conn, name, "check.redo", doc_id)
+    return back(f"/{'order' if table == 'orders' else 'consultation'}/{doc_id}#checks")
 
 
 @app.post("/figures/{doc_id}")

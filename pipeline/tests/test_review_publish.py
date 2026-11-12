@@ -387,3 +387,47 @@ def test_figures_keep_only_sound_cited_charts_and_publish_with_the_summary(serve
     publish.run()
     pub = json.loads((config.SNAPSHOT / "orders.json").read_text())[0]["figures"]
     assert len(pub) == 1 and pub[0]["title"] == "Banking charge" and pub[0]["unit"] == "%"
+
+
+def test_summary_is_checked_by_numbers_and_two_reviewers_before_legal_review(server):
+    from regstudio import checks
+    doc, _, _ = _ids()
+    c = _db()
+    pid = c.execute("SELECT pid FROM paragraphs WHERE doc_id = ? ORDER BY page, idx", (doc,)).fetchone()[0]
+    c.execute("UPDATE orders SET summary = summary || ' The charge is Rs 987.65 per unit.' WHERE doc_id = ?", (doc,)); c.commit()
+    assert checks.numbers_check("Tariff of Rs 16.62 on 04.11.2026 for 1,200 MW", "tariff 116.625; dated 4th November, 2026; 1200 MW") == {"checked": 3, "missing": ["16.62"]}
+    assert checks.numbers_check("ceiling of Rs 4.59", "fixed at Rs.4.59/kWh")["missing"] == []
+    config.READER_OUTPUTS.mkdir(parents=True, exist_ok=True)
+    (config.READER_OUTPUTS / f"{doc}.check.fact.json").write_text(json.dumps({"own_reading": "r", "verdict": "pass", "issues": [
+        {"claim": "Rs 987.65", "problem": "Not in the order.", "severity": "material", "basis": [pid, "p99.9"]}]}))
+    (config.READER_OUTPUTS / f"{doc}.check.legal.json").write_text(json.dumps({"own_reading": "r", "verdict": "pass", "issues": []}))
+    import os
+    os.environ["REGSTUDIO_READER"] = "file"; config.READER = "file"
+    try:
+        r = checks.run()
+        assert r["needs_attention"] >= 1
+    finally:
+        os.environ["REGSTUDIO_READER"] = "mock"; config.READER = "mock"
+    got = json.loads(_db().execute("SELECT checks FROM orders WHERE doc_id = ?", (doc,)).fetchone()[0])
+    assert "987.65" in got["numbers"]["missing"] and got["status"] == "attention"
+    assert got["fact"]["verdict"] == "concerns" and got["fact"]["issues"][0]["basis"] == [pid]  # a reviewer with findings has not passed; invented citation dropped
+    assert got["legal"]["verdict"] == "pass"
+    server("/whoami", {"name": "Test Reviewer"})
+    page = server.get(f"/order/{doc}")
+    assert "Pre-review checks" in page and "needs attention" in page and "Not in the order." in page
+    assert _db().execute("SELECT summary_status FROM orders WHERE doc_id = ?", (doc,)).fetchone()[0] == "proposed"  # checks never approve
+    server(f"/order/{doc}/summary", {"action": "approve", "summary": "Reviewed.", "issue": "i", "outcome": "o"})
+    publish.run()
+    pub = json.loads((config.SNAPSHOT / "orders.json").read_text())[0]
+    assert pub["checked"] == {"reviewers": 2, "numbers": True} and "Not in the order" not in json.dumps(pub)
+    assert server(f"/checks/{doc}", {"action": "redo"}) == 303
+    assert _db().execute("SELECT checks FROM orders WHERE doc_id = ?", (doc,)).fetchone()[0] is None
+
+
+def test_flow_schematic_keeps_only_cited_steps():
+    from regstudio import figures
+    out = figures.clean({"charts": [{"type": "flow", "title": "Who gets the waiver", "items": [
+        {"label": "Commissioned by June 2028", "detail": "100% waiver", "otherwise": "Tapered waiver", "basis": ["p1.1"]},
+        {"label": "Invented step", "basis": ["p9.9"]}, {"label": "Result", "detail": "No ISTS charges", "basis": ["p1.2"]}]}]}, {"p1.1", "p1.2"})
+    assert out[0]["type"] == "flow" and [i["label"] for i in out[0]["items"]] == ["Commissioned by June 2028", "Result"]
+    assert out[0]["items"][0]["otherwise"] == "Tapered waiver" and "unit" not in out[0]

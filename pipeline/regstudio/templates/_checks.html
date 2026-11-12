@@ -1,0 +1,26 @@
+{# Pre-review checks: automatic number check and two independent AI reviewers. Findings are for the reviewer only. #}
+<div class="card" id="checks" style="border-left:4px solid {% if not checks %}var(--line){% elif checks.status == 'attention' %}var(--warn){% elif checks.status == 'clear' %}var(--good){% else %}var(--line){% endif %}">
+<div class="row"><b>Pre-review checks</b>
+{% if not checks %}<span class="pill">not run</span>
+{% elif checks.status == 'attention' %}<span class="pill proposed">needs attention</span>
+{% elif checks.status == 'clear' %}<span class="pill approved">nothing found</span>
+{% else %}<span class="pill">number check only</span>{% endif %}</div>
+{% if not checks %}<p class="muted">Run <code>regstudio run check</code>. It checks every figure in the summary against the text and asks two AI reviewers, working separately, to test it.</p>
+{% else %}
+<p style="margin:8px 0 4px"><b>Numbers.</b>
+{% if checks.numbers.missing %}{{ checks.numbers.missing|length }} of {{ checks.numbers.checked }} figures in the summary were not found in the document:
+{% for n in checks.numbers.missing %}<code>{{ n }}</code>{% if not loop.last %}, {% endif %}{% endfor %}. A figure can be right and still be listed (a total the summary worked out, or a date written differently), so check each one.
+{% else %}All {{ checks.numbers.checked }} figures in the summary appear in the document.{% endif %}</p>
+{% for key, name, what in [('fact', 'Fact checker', 'figures, dates, parties'), ('legal', 'Legal reader', 'holding, outcome, conditions')] %}
+<p style="margin:10px 0 4px"><b>{{ name }}</b> <span class="muted">({{ what }})</span>
+{% if key not in checks %}<span class="muted">: not run yet.</span></p>
+{% else %}{% set a = checks[key] %}{% if a.issues %}: {{ a.issues|length }} point{{ 's' if a.issues|length != 1 }} raised.{% else %}: would change nothing.{% endif %}</p>
+{% if a.own_reading %}<p class="muted" style="margin:2px 0">Its own reading: {{ a.own_reading }}</p>{% endif %}
+{% for i in a.issues %}<div class="link {{ 'proposed' if i.severity == 'material' else '' }}" style="margin:6px 0">
+<div class="excerpt">“{{ i.claim }}”</div><div>{{ i.problem }}
+{% for b in i.basis %}<a href="#" onclick="return typeof show === 'function' ? show('{{ b }}') : false">{{ b }}</a> {% endfor %}
+<span class="pill">{{ i.severity }}</span></div></div>{% endfor %}
+{% endif %}{% endfor %}
+<p class="muted" style="margin-top:8px">The reviewers do not see each other's answers and cannot change the summary. Their findings are not published.</p>
+<form method="post" action="/checks/{{ impact_doc }}"><button name="action" value="redo">Check again after editing</button></form>
+{% endif %}</div>

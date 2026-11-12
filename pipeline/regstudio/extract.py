@@ -135,11 +135,36 @@ def strip_running_heads(paragraphs: list[dict]) -> list[dict]:
     return out
 
 
+def _tables(page) -> list[str]:
+    """Ruled tables on a page, each as one paragraph with rows kept together: 'Table: a | b || c | d'.
+
+    Reading a table as loose text scrambles which figure belongs to which row. The cells also stay in
+    the ordinary paragraphs; this adds a clean copy so a figure can be tied to its row and column.
+    """
+    out = []
+    try:
+        found = page.find_tables()
+    except Exception:  # table detection is a help, never a reason to fail a document
+        return out
+    for tab in found.tables[:6]:
+        # read each cell from its own box: the library's own cell text drops spaces and misplaces decimal points
+        rows = [[_norm(page.get_text("text", clip=pymupdf.Rect(c) + (1, 1, -1, -1)).replace("\n", " ")) if c else "" for c in row.cells]
+                for row in tab.rows]
+        rows = [r for r in rows if any(r)]
+        cells = [c for r in rows for c in r]
+        if len(rows) < 2 or max(len(r) for r in rows) < 2 or sum(1 for c in cells if c) < 0.5 * len(cells):
+            continue
+        text = "Table: " + " || ".join(" | ".join(c or "-" for c in r) for r in rows)
+        out.append(text[:6000])
+    return out
+
+
 def extract_pdf(path) -> tuple[list[dict], int, list[int]]:
     """Return (paragraphs, page_count, pages_without_text)."""
     doc = pymupdf.open(path)
     pages: list[list[tuple[str, list[float]]]] = []
     empty: list[int] = []
+    page_tables: list[list[str]] = []
     for pno, page in enumerate(doc, start=1):
         blocks = []
         raw = page.get_text("blocks", sort=True)
@@ -157,6 +182,7 @@ def extract_pdf(path) -> tuple[list[dict], int, list[int]]:
         if not blocks and pno not in empty:
             empty.append(pno)
         pages.append(_merge_lines(blocks))
+        page_tables.append(_tables(page) if pno not in empty else [])
     page_count = len(doc)
     doc.close()
 
@@ -179,6 +205,15 @@ def extract_pdf(path) -> tuple[list[dict], int, list[int]]:
     texts, _ = repair_ligatures([p["text"] for p in paragraphs])
     for p, t in zip(paragraphs, texts):
         p["text"] = t
+    # Tables are added after the page's own paragraphs, so the ids of ordinary paragraphs never move.
+    last = Counter()
+    for p in paragraphs:
+        last[p["page"]] = max(last[p["page"]], p["idx"])
+    for pno, tables in enumerate(page_tables, start=1):
+        for t in tables:
+            last[pno] += 1
+            paragraphs.append({"pid": f"p{pno}.{last[pno]}", "page": pno, "idx": last[pno], "text": t, "bbox": None})
+    paragraphs.sort(key=lambda p: (p["page"], p["idx"]))
     return paragraphs, page_count, empty
 
 

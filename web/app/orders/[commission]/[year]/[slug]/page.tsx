@@ -1,3 +1,4 @@
+import Trail from "@/components/Trail";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -70,7 +71,8 @@ export default async function OrderPage({ params }: { params: Promise<Params> })
 
   const about = o.title ?? orderLabel(o);
   const ask = askFor({ impact: o.impact, text: [o.title, o.issue, ...o.topics].join(" ") });
-  const analysis = o.draft ? "prepared with AI, awaiting legal review" : `reviewed ${fmtDate(o.approved_at)}${o.reviewed_by ? ` by ${o.reviewed_by}` : ""}`;
+  const aiChecked = (o.checked?.reviewers ?? 0) >= 2 ? "prepared with AI, checked by two AI reviewers, awaiting legal review" : "prepared with AI, awaiting legal review";
+  const analysis = o.draft ? aiChecked : `reviewed ${fmtDate(o.approved_at)}${o.reviewed_by ? ` by ${o.reviewed_by}` : ""}`;
 
   return (
     <article>
@@ -82,6 +84,7 @@ export default async function OrderPage({ params }: { params: Promise<Params> })
         : <><h1>{o.title ?? orderLabel(o)}</h1>{o.case_number && <p className="muted">{o.case_number} · {commissionName(o.commission)}</p>}</>}
       {o.impact && <Brief impact={o.impact} status={`Order of ${fmtDate(o.date)}: binds the parties`} analysis={analysis}
         ask={ask} about={about} path={o.path} />}
+      <Trail checked={o.checked} draft={o.draft} approvedAt={o.approved_at} reviewer={o.reviewed_by} />
 
       <div className="two">
         <section>
@@ -102,7 +105,7 @@ export default async function OrderPage({ params }: { params: Promise<Params> })
           <p>{o.pdf && <><a href={o.pdf}>Read the order (PDF)</a><br /></>}
             <a href={o.source_url} rel="nofollow noopener">{o.source_listing ? `The commission's orders listing${o.case_number ? ` (look for ${o.case_number})` : ""}` : "On the commission's website"}</a></p>
           {o.draft
-            ? <p className="note"><b>Analysis awaiting legal review.</b> This summary and its links were prepared with AI and have not been checked by the legal team yet. Read the original order.</p>
+            ? <p className="note"><b>Analysis awaiting legal review.</b> This summary and its links were prepared with AI{(o.checked?.reviewers ?? 0) >= 2 ? ", then tested by two AI reviewers," : ""} and have not been checked by the legal team yet. Read the original order.</p>
             : <p className="note">Reviewed by the Regulatory Studio legal team on {fmtDate(o.approved_at)}{o.revised_at && <>, revised {fmtDate(o.revised_at)}</>}.
             This summary is for information only and is not legal advice.</p>}
         </aside>

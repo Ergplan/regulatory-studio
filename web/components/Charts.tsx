@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Cites } from "@/components/Impact";
 import { BUILD_DAY, type Consultation, type Figure, type FigureItem } from "@/lib/data";
 import { fmtDate } from "@/lib/format";
@@ -12,7 +13,7 @@ function Bars({ f }: { f: Figure }) {
   return (
     <ul className="bars">{f.items.map((i) => (
       <li key={i.label} className={i.context ? "ctx" : ""} title={`${i.label}: ${num(i.value ?? 0)} ${f.unit ?? ""}${i.tag ? ` (${i.tag})` : ""}`}>
-        <span className="b-label">{i.label}{i.tag && <em>{i.tag}</em>}</span>
+        <span className="b-label">{i.href ? <Link href={i.href}>{i.label}</Link> : i.label}{i.tag && <em>{i.tag}</em>}</span>
         <span className="b-track"><span className="b-fill" style={{ width: `${Math.max(1.5, ((i.value ?? 0) / max) * 100)}%` }} /></span>
         <span className="b-val">{num(i.value ?? 0)}</span>
       </li>))}</ul>
@@ -54,6 +55,18 @@ function Timeline({ f }: { f: Figure }) {
   );
 }
 
+/** A schematic of a rule or a decision: steps in order, with the branch taken when a condition is not met. */
+function Flow({ f, pdf }: { f: Figure; pdf?: string | null }) {
+  return (
+    <ol className="flowchart">{f.items.map((i, n) => (
+      <li key={i.label} className={n === f.items.length - 1 ? "end" : ""}>
+        <span className="f-n" aria-hidden="true">{n + 1}</span>
+        <div className="f-step"><b>{i.label}</b>{i.detail && <p>{i.detail}</p>}<Cites basis={i.basis} pdf={pdf} /></div>
+        {i.otherwise && <p className="f-else"><span>If not</span>{i.otherwise}</p>}
+      </li>))}</ol>
+  );
+}
+
 const cell = (f: Figure, i: FigureItem) => f.type === "timeline" ? `${fmtDate(i.start)}${i.end ? ` to ${fmtDate(i.end)}` : ""}` : `${fmt(i.value ?? 0, places(f))} ${f.unit ?? ""}`;
 
 /** Dates every consultation has, drawn as a timeline when the document's own charts do not already include one. */
@@ -68,8 +81,15 @@ export function consultationTimeline(c: Consultation): Figure | null {
 /** Small charts chosen for a summary: bars for comparable figures, columns for a trajectory, a timeline for dates. */
 export default function Charts({ figures, pdf, pending = false }: { figures: Figure[]; pdf?: string | null; pending?: boolean }) {
   if (!figures.length) return null;
-  return (
-    <div className={`charts n${Math.min(figures.length, 3)}`}>{figures.slice(0, 3).map((f) => (
+  const flows = figures.filter((f) => f.type === "flow").slice(0, 1); const plots = figures.filter((f) => f.type !== "flow").slice(0, 3);
+  return (<>
+    {flows.map((f) => (
+      <figure key={f.title} className="chart glass chart-flow">
+        <figcaption><b>{f.title}</b><span>How it works{pending ? " · awaiting review" : ""}</span></figcaption>
+        <Flow f={f} pdf={pdf} />
+        {f.note && <p className="chart-note">{f.note}</p>}
+      </figure>))}
+    {plots.length > 0 && <div className={`charts n${plots.length}`}>{plots.map((f) => (
       <figure key={f.title} className={`chart glass chart-${f.type}`}>
         <figcaption><b>{f.title}</b>{f.unit && <span>{f.unit}</span>}</figcaption>
         {f.type === "bars" ? <Bars f={f} /> : f.type === "series" ? <Series f={f} /> : <Timeline f={f} />}
@@ -78,6 +98,6 @@ export default function Charts({ figures, pdf, pending = false }: { figures: Fig
           <table><tbody>{f.items.map((i) => (
             <tr key={i.label + (i.start ?? "")}><th scope="row">{i.label}{i.tag && <em> ({i.tag})</em>}</th><td>{cell(f, i)}</td><td><Cites basis={i.basis} pdf={pdf} /></td></tr>))}</tbody></table>
         </details>
-      </figure>))}</div>
-  );
+      </figure>))}</div>}
+  </>);
 }

@@ -41,6 +41,7 @@ regstudio run consult --limit 10
 regstudio run triage --limit 60
 regstudio run read --limit 15
 regstudio run impact --limit 15
+regstudio run check --limit 15      # number check + two AI reviewers, before legal review
 regstudio run figures --limit 15
 regstudio run comments --limit 10
 regstudio run draft

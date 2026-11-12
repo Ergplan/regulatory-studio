@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "A reviewer agent's check of a proposed summary",
+  "type": "object",
+  "required": ["own_reading", "verdict", "issues"],
+  "additionalProperties": false,
+  "properties": {
+    "own_reading": {"type": "string", "maxLength": 400, "description": "what the document decides or proposes, in the reviewer's own words, written BEFORE comparing with the summary"},
+    "verdict": {"enum": ["pass", "concerns"], "description": "pass only if nothing in the summary needs changing"},
+    "issues": {
+      "type": "array", "maxItems": 8,
+      "items": {"type": "object", "required": ["claim", "problem", "severity", "basis"], "additionalProperties": false,
+                "properties": {
+                  "claim": {"type": "string", "maxLength": 300, "description": "the words of the summary that are in question"},
+                  "problem": {"type": "string", "maxLength": 400, "description": "what is wrong or unsupported, and what the text says instead"},
+                  "severity": {"enum": ["material", "minor"]},
+                  "basis": {"type": "array", "maxItems": 4, "items": {"type": "string", "pattern": "^p[0-9]+\\.[0-9]+$"}}}}
+    }
+  }
+}
