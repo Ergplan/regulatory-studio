@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import GroupIcon from "@/components/GroupIcon";
+import RequestForm from "@/components/RequestForm";
 import type { CommentDraft, GroupKey } from "@/lib/data";
 
 export interface DeskDraft {
@@ -25,8 +26,6 @@ export default function StudioDesk({ drafts, groups, contact }: { drafts: DeskDr
   const [g, setG] = useState<string>("");
   const [id, setId] = useState<string>("");
   const [note, setNote] = useState("");
-  const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
-  const [msg, setMsg] = useState("");
   const d = drafts.find((x) => x.id === id);
   const long = groups.find(([k]) => k === g)?.[2] ?? "";
 
@@ -39,19 +38,9 @@ export default function StudioDesk({ drafts, groups, contact }: { drafts: DeskDr
     const pick = as || last;
     if (pick && groups.some(([k]) => k === pick)) setG(pick);
   }, [drafts, groups]);
-  useEffect(() => { setNote(""); setState("idle"); setMsg(""); }, [g, id]);
+  useEffect(() => { setNote(""); }, [g, id]);
 
   const cues = d && g ? d.comments[g] : undefined;
-  async function send(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setState("sending");
-    try {
-      const res = await fetch("/api/request", { method: "POST", body: new FormData(e.currentTarget) });
-      const data = await res.json().catch(() => ({}));
-      setState(res.ok ? "done" : "error");
-      setMsg(data.message ?? (res.ok ? "Request received." : "Something went wrong. Please try again."));
-    } catch { setState("error"); setMsg("Could not reach the site. Please try again."); }
-  }
   const mail = d && contact ? `mailto:${contact}?subject=${encodeURIComponent(`Analysis request: ${d.title}`)}&body=${encodeURIComponent(`Draft: ${d.title}\n${d.url}\nWriting as: ${long}\n\nWhat we need:\n`)}` : null;
 
   return (
@@ -81,7 +70,7 @@ export default function StudioDesk({ drafts, groups, contact }: { drafts: DeskDr
         <h2 className="label"><span>3</span> Cues for your comments</h2>
         {!d || !g ? <p className="muted">Choose who you are and a draft. The points worth commenting on appear here.</p> : (<>
           <p className="small">{cues
-            ? <>Points in the draft that matter to: {long}. Each comes with its paragraph.{cues.draft ? <> <b className="warn">AI draft, not yet reviewed by the legal team.</b></> : <> Reviewed by the Regulatory Studio legal team.</>} These are cues, not a submission: your comments should be your own.</>
+            ? <>Points in the draft that matter to: {long}. Each comes with its paragraph.{cues.draft ? <> <b className="warn">Awaiting legal review.</b></> : <> Reviewed by the Regulatory Studio legal team.</>} These are cues, not a submission: your comments should be your own.</>
             : <>No cues are prepared for this group on this draft yet. The main proposed changes are listed so you can start; <a href={d.path}>read the summary</a>.</>}</p>
           {d.effect[g] && <p className="cue-effect"><b>How it touches you.</b> {d.effect[g]}</p>}
           {cues ? (
@@ -96,28 +85,15 @@ export default function StudioDesk({ drafts, groups, contact }: { drafts: DeskDr
             <ol className="cues">{d.proposes.map((p, i) => <li key={i}><h3>{p}</h3><dl><dt>Ask yourself</dt><dd>What does this change for you, and what would you want the Commission to do differently?</dd></dl></li>)}</ol>)}
 
           <div className="next">
-            <h3>Want a full analysis?</h3>
-            <p className="small">We do not draft submissions on this page. For a full analysis of this draft for your organisation, leave a request with the team{mail ? " or mail us" : ""}. You can also take these cues to your own AI agent.</p>
+            <h3>Need support on this consultation?</h3>
+            <p className="small">We do not draft submissions on this page. For an assessment of what this draft means for your organisation, and support with your response, leave a request with the team{mail ? " or mail us" : ""}. You can also take these cues to your own AI agent.</p>
             <div className="desk-actions">
               {mail && <a className="btn" href={mail}>Mail us</a>}
               <button type="button" className="btn ghost" onClick={async () => { try { await navigator.clipboard.writeText(agentBrief(d, long, cues)); setNote("Brief copied. Paste it into your AI agent."); } catch { setNote("Copy failed on this browser."); } }}>Copy brief for your agent</button>
               <span className="muted small" role="status">{note}</span>
             </div>
-            {state === "done" ? <p className="good" role="status">{msg}</p> : (
-              <form className="request" onSubmit={send}>
-                <h4>Leave a request</h4>
-                <input type="hidden" name="draft" value={d.title} /><input type="hidden" name="group" value={long} /><input type="hidden" name="link" value={d.url} />
-                <div className="row2">
-                  <label>Your name<input name="name" required maxLength={120} autoComplete="name" /></label>
-                  <label>Work email<input name="email" type="email" required maxLength={200} autoComplete="email" placeholder="you@company.com" /></label>
-                </div>
-                <label className="full">Organisation<input name="org" maxLength={160} autoComplete="organization" /></label>
-                <label className="full">What do you need?<textarea name="message" maxLength={2000} rows={4} placeholder="For example: effect on our 40 MW open access contracts, and a draft submission before the deadline." /></label>
-                <input name="company" tabIndex={-1} autoComplete="off" aria-hidden="true" className="sr" />
-                <div className="desk-actions"><button type="submit" className="btn" disabled={state === "sending"}>{state === "sending" ? "Sending…" : "Send request"}</button>
-                  {msg && <span role="status" className={state === "error" ? "bad small" : "good small"}>{msg}</span>}</div>
-                <p className="muted small">Your details are emailed to the Regulatory Studio team to reply to you, and are not stored on this site.</p>
-              </form>)}
+            <h4 className="request-h">Leave a request</h4>
+            <RequestForm about={d.title} link={d.url} role="Regulatory or legal team" ask="Request support on this consultation" />
           </div>
         </>)}
       </section>

@@ -40,6 +40,13 @@ def _preview_title(title: str | None) -> str | None:
     return head if 4 <= len(head) <= 110 else title[:107].rstrip() + "..."
 
 
+def is_document_url(url: str | None) -> bool:
+    """True when the address opens the document itself; False for a commission's listing page (some sites
+    serve files only through a form, so the listing is the best public address)."""
+    u = (url or "").split("?")[0].split("#")[0].lower()
+    return u.endswith(".pdf") or "/viewdocument/" in u
+
+
 def run(clean: bool = False, preview: bool = False, out=None) -> dict:
     """preview=True is for a private look at the site before review: it also includes *proposed*
     summaries, links, regulations and clauses, marks every order and the whole site as an unreviewed
@@ -101,12 +108,17 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
                 l["page"] = page.get(l["pid"])
             pdf_name = f"{d['id'][:16]}.pdf"
             src = config.STORE / d["file_path"]
-            if not preview and src.exists() and not (out / "pdf" / pdf_name).exists():
+            listing = not is_document_url(d["source_url"])
+            # The website serves its own copy, so page references open the right page. A preview links to the
+            # commission's file instead, except where the commission gives only a listing page: then it needs the copy.
+            local = (not preview or listing) and src.exists()
+            if local and not (out / "pdf" / pdf_name).exists():
                 shutil.copyfile(src, out / "pdf" / pdf_name)
             orders.append({
                 "id": d["id"], "path": order_path(d), "commission": d["commission"], "doc_type": d["doc_type"],
                 "title": _preview_title(d["title"]) if preview else d["title"], "case_number": d["case_number"], "date": d["doc_date"],
-                "source_url": d["source_url"], "pdf": d["source_url"] if preview else f"/pdf/{pdf_name}",
+                "source_url": d["source_url"], "source_listing": listing,
+                "pdf": f"/pdf/{pdf_name}" if local else (None if listing else d["source_url"]),
                 "draft": preview and d["summary_status"] != "approved",
                 "topics": json.loads(d["topics"] or "[]"), "significance": d["significance"],
                 "parties": json.loads(d["parties"] or "[]"), "issue": d["issue"], "outcome": d["outcome"],
@@ -122,9 +134,19 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
             r["sample"] = False
             r["impact"] = impact_load(r.pop("impact", None))
             if r["doc_id"]:
-                src_doc = conn.execute("SELECT source_url FROM documents WHERE id = ?", (r["doc_id"],)).fetchone()
+                src_doc = conn.execute("SELECT source_url, file_path FROM documents WHERE id = ?", (r["doc_id"],)).fetchone()
                 r["source_url"] = src_doc["source_url"] if src_doc else None
                 r["sample"] = bool(src_doc and SAMPLE_MARK in src_doc["source_url"])
+                r["pdf"] = None
+                if src_doc:
+                    r["source_listing"] = not is_document_url(src_doc["source_url"])
+                    name, src = f"{r['doc_id'][:16]}.pdf", config.STORE / src_doc["file_path"]
+                    if r["source_listing"] and src.exists():
+                        if not (out / "pdf" / name).exists():
+                            shutil.copyfile(src, out / "pdf" / name)
+                        r["pdf"] = f"/pdf/{name}"
+                    elif not r["source_listing"]:
+                        r["pdf"] = r["source_url"]
         for c in clauses:
             c["path"] = f"/regulations/{c['regulation_id']}/{clause_slug(c['number'])}"
             c["versions"] = [dict(v) for v in conn.execute(

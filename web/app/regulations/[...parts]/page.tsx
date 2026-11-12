@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import Brief from "@/components/Brief";
 import Impact from "@/components/Impact";
+import ProjectCta, { askFor } from "@/components/ProjectCta";
 import SpiderMap, { type MapNode } from "@/components/SpiderMap";
 import { citingOrders, clauses, clausesOf, commissionName, linkTypeLabel, orderLabel, regName, regulationById, regulations, site } from "@/lib/data";
 import { fmtDate } from "@/lib/format";
@@ -82,9 +84,14 @@ export default async function RegulationPage({ params }: { params: Promise<Param
   return (
     <article>
       <div className="meta"><span className="tag">{reg.commission.toUpperCase()}</span>{reg.notified_date && <span>Notified {fmtDate(reg.notified_date)}</span>}</div>
-      <h1>{reg.title}</h1>
-      {reg.source_url && <p><a href={reg.source_url} rel="nofollow noopener">Official text on the commission&apos;s website</a></p>}
-      {reg.impact && <Impact impact={reg.impact} pdf={reg.source_url} draft={site.preview} />}
+      {reg.impact?.headline ? <><h1>{reg.impact.headline}</h1><p className="formal">{reg.title}</p></> : <h1>{reg.title}</h1>}
+      <p>{reg.pdf && <><a href={reg.pdf}>Read the regulations (PDF)</a> · </>}
+        {reg.source_url && <a href={reg.source_url} rel="nofollow noopener">{reg.source_listing ? "The commission's regulations listing" : "On the commission's website"}</a>}</p>
+      {reg.impact && <Brief impact={reg.impact} status={`Notified regulation${reg.notified_date ? `, ${fmtDate(reg.notified_date)}` : ""}: in force`}
+        analysis={site.preview ? "prepared with AI, awaiting legal review" : "reviewed by the legal team"}
+        ask={askFor({ impact: reg.impact, text: reg.title })} about={reg.title} path={reg.path} />}
+      {reg.impact && <Impact impact={reg.impact} pdf={reg.pdf} draft={site.preview} />}
+      {!reg.impact && <ProjectCta ask={askFor({ text: reg.title })} about={reg.title} path={reg.path} compact />}
       <h2>Clauses</h2>
       <table className="list"><thead><tr><th>Clause</th><th>Heading</th><th>Orders citing it</th></tr></thead>
         <tbody>{cl.map((c) => <tr key={c.id}><td><Link href={c.path}>{c.number}</Link></td><td>{c.heading}{c.in_force_to && <span className="tag bad"> omitted</span>}{c.versions && c.versions.length > 0 && <span className="tag"> amended</span>}</td><td>{citingOrders("clause", c.id).length}</td></tr>)}</tbody></table>

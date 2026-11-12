@@ -96,7 +96,9 @@ def clean(out: dict, pids: set[str] | None = None) -> dict:
         comment, basis = (c.get("comment") or "").strip()[:360], _basis(c.get("basis"), pids)
         if comment and c.get("effect") in EFFECTS and (basis or pids is None):
             cells[g] = {"effect": c["effect"], "comment": comment, "basis": basis}
-    return {"market_note": (out.get("market_note") or "").strip()[:500],
+    return {"headline": (out.get("headline") or "").strip()[:140],
+            "checks": [q.strip()[:220] for q in out.get("checks") or [] if q and q.strip()][:4],
+            "market_note": (out.get("market_note") or "").strip()[:500],
             "key_points": points(out.get("key_points"), 5), "procurement": points(out.get("procurement"), 6),
             "stakeholders": cells,
             "open_questions": [q.strip()[:240] for q in out.get("open_questions") or [] if q and q.strip()][:3]}

@@ -9,11 +9,11 @@ export type TargetKind = "clause" | "regulation" | "act_section" | "document";
 export interface Link { type: LinkType; kind: TargetKind; target: string; cited_as: string; pid: string; excerpt: string; page: number | null }
 export interface Order {
   id: string; path: string; commission: string; doc_type: string; title: string | null; case_number: string | null;
-  date: string | null; source_url: string; pdf: string; topics: string[]; significance: number;
+  date: string | null; source_url: string; source_listing?: boolean; pdf: string | null; topics: string[]; significance: number;
   parties: { name: string; role: string }[]; issue: string; outcome: string; summary: string;
   reviewed_by: string; approved_at: string; revised_at: string | null; language: string | null; sample: boolean; draft?: boolean; links: Link[]; impact?: Impact | null; rating?: Rating;
 }
-export interface Regulation { id: string; path: string; commission: string; title: string; short_title: string | null; notified_date: string | null; source_url: string | null; sample: boolean; impact?: Impact | null; rating?: Rating }
+export interface Regulation { id: string; path: string; commission: string; title: string; short_title: string | null; notified_date: string | null; source_url: string | null; source_listing?: boolean; pdf?: string | null; sample: boolean; impact?: Impact | null; rating?: Rating }
 export interface ClauseVersion { text: string; in_force_from: string | null; in_force_to: string | null }
 export interface Clause { id: string; path: string; regulation_id: string; number: string; heading: string | null; text: string; in_force_from: string | null; in_force_to: string | null; versions?: ClauseVersion[] }
 export interface ActSection { id: string; act: string; number: string; title: string }
@@ -24,7 +24,7 @@ export type Effect = "opportunity" | "cost" | "mixed";
 export interface Cited { text: string; basis: string[] }
 export interface ImpactCell { effect: Effect; comment: string; basis: string[] }
 /** No scores: comments per affected group, each citing paragraph ids (p<page>.<n>) of the source document. */
-export interface Impact { market_note: string; key_points: Cited[]; procurement: Cited[]; stakeholders: Partial<Record<string, ImpactCell>>; open_questions: string[] }
+export interface Impact { headline?: string; checks?: string[]; market_note: string; key_points: Cited[]; procurement: Cited[]; stakeholders: Partial<Record<string, ImpactCell>>; open_questions: string[] }
 export type GroupKey = "discoms" | "ci_consumers" | "captive" | "re_developers" | "storage" | "conventional" | "transmission" | "traders";
 export const GROUPS: [GroupKey, string, string][] = [
   ["discoms", "Discoms", "Discoms"], ["ci_consumers", "C&I / OA", "C&I and open access consumers"], ["captive", "Captive", "Captive users"],
@@ -92,6 +92,13 @@ export const commentable = (c: Consultation) => {
   const d = lastDay(c);
   return d !== null && Date.parse(BUILD_DAY) - Date.parse(d) <= 21 * 86_400_000;
 };
+/** One wording for a consultation's status, used on every page. */
+export function consultationStatus(c: Consultation): string {
+  const d = c.comment_deadline ?? c.hearing_date;
+  const f = (iso: string) => new Date(iso + "T00:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+  if (!isOpen(c)) return d ? `closed: listed deadline ${f(d)} has passed` : "closed";
+  return c.comment_deadline ? `comments by ${f(c.comment_deadline)}` : "open: deadline in the public notice";
+}
 export const byDeadline = (a: Consultation, b: Consultation) =>
   (lastDay(a) ?? "9999").localeCompare(lastDay(b) ?? "9999") || (b.issued ?? "").localeCompare(a.issued ?? "");
 export function daysLeft(iso: string | null): number | null {

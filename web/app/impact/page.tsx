@@ -64,8 +64,9 @@ export default function ImpactMap() {
                   return (
                     <details key={r.key} className="doc">
                       <summary>
-                        <span className="doc-title">{r.high && <HighBadge />}{r.title}</span>
-                        <span className="doc-sub">{r.sub}{r.draft ? " · AI draft" : ""}</span>
+                        <span className="doc-title">{r.high && <HighBadge />}{r.impact.headline || r.title}</span>
+                        {r.impact.headline && <span className="formal">{r.title}</span>}
+                        <span className="doc-sub">{r.sub}{r.draft ? " · analysis awaiting review" : ""}</span>
                         <span className="doc-icons">{hit.map(([g, short]) => (
                           <span key={g} className={`ic e-${r.impact.stakeholders[g]!.effect}`} title={`${short}: ${r.impact.stakeholders[g]!.comment}`}>
                             <GroupIcon g={g} size={17} /><span>{short}</span></span>))}</span>
@@ -87,7 +88,7 @@ export default function ImpactMap() {
             <li>Each statement names the mechanism that changes and the figure the text gives. Nothing is computed that the text does not state.</li>
             <li>Every statement cites paragraph ids from the extracted text; statements whose citations are not in the document are dropped automatically.</li>
             <li>There are no scores. Direction says who is on which side, not how much. &quot;High impact&quot; is the team&apos;s own rating, given in review.</li>
-            <li>An AI drafts the assessment; a named reviewer edits and approves it. Until then it is shown only on the preview, marked as a draft.</li>
+            <li>An AI drafts the assessment; a named reviewer edits and approves it. Until then it is shown only on the preview edition, marked as awaiting review.</li>
           </ol>
           <MethodNote />
         </section>

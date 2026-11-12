@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 
-type Doc = { t: string; title: string; sub: string; href: string; text: string };
+type Doc = { t: string; title: string; sub: string; why?: string; href: string; text: string };
 
 export default function Search() {
   const [docs, setDocs] = useState<Doc[]>([]);
@@ -27,14 +27,14 @@ export default function Search() {
   return (
     <div>
       <form role="search" onSubmit={(e) => e.preventDefault()} className="subscribe">
-        <label htmlFor="q">Search orders, regulations and clauses</label>
+        <label htmlFor="q">Search orders, draft regulations, regulations and clauses</label>
         <div className="row"><input id="q" type="search" value={q} onChange={(e) => setQ(e.target.value)}
-          placeholder="e.g. banking, Regulation 8(4), NPCL, cross-subsidy" autoFocus /></div>
+          placeholder="e.g. BESS, captive, banking, Regulation 8(4), cross-subsidy" autoFocus /></div>
       </form>
       {q && <p className="muted small">{hits.length} results</p>}
       <ul className="links-list">{hits.map(({ d }) => (
         <li key={d.href}><span className="tag">{d.t}</span> <a href={d.href}>{d.title}</a>
-          {d.sub && <div className="small muted">{d.sub}</div>}</li>
+          {d.sub && <div className="small muted">{d.sub}</div>}{d.why && <div className="small why">{d.why}</div>}</li>
       ))}</ul>
     </div>
   );
