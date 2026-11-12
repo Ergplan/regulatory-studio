@@ -29,9 +29,10 @@ export function ImpactAreas({ impact }: { impact?: Impact | null }) {
 export default function AnalysisBlock(b: Block & { showAreasEmpty?: boolean }) {
   return (
     <article className={`folder rise${b.kind === "Draft" && !b.closed ? " is-draft" : ""}${b.rating === "high" ? " is-high" : ""}`} id={`u-${b.id.slice(0, 10)}`}>
-      <span className="tab">{b.tab}{b.unreviewed ? " · AI draft" : ""}</span>
+      <span className="tab">{b.tab}{b.unreviewed ? " · analysis awaiting review" : ""}</span>
       {b.rating === "high" && <HighBadge />}
-      <h3><Link href={b.href}>{b.title}</Link></h3>
+      <h3><Link href={b.href}>{b.impact?.headline || b.title}</Link></h3>
+      {b.impact?.headline && <p className="formal">{b.title}</p>}
       <p className="folder-sum">{b.impact?.market_note || b.summary}</p>
       {(b.impact || b.showAreasEmpty) && <ImpactAreas impact={b.impact} />}
       <p className="folder-links"><Link href={b.impact ? `${b.href}#impact` : b.href}>{b.impact ? "Read the analysis" : "Read the summary"} →</Link>

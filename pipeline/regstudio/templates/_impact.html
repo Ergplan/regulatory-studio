@@ -8,6 +8,10 @@
 <form method="post" action="/impact/{{ impact_doc }}">
 <p class="muted small">Every key point, procurement item and stakeholder comment must cite paragraph ids from this document
 (e.g. <code>p8.21</code>). Lines without a valid citation are dropped when you save.</p>
+<label>Business headline (the question this raises for an affected business; not a legal conclusion)</label>
+<input name="headline" maxlength="140" value="{{ impact.headline or '' }}">
+<label>What decides whether it applies to a reader, one per line (up to four)</label>
+<textarea name="checks" style="min-height:70px">{{ (impact.checks or [])|join('\n') }}</textarea>
 <label>Market note (two or three sentences: mechanism, who is exposed, the figure that matters)</label>
 <textarea name="market_note" style="min-height:60px">{{ impact.market_note }}</textarea>
 <label>Key points, one per line, citations in brackets: <code>Text [p2.1, p3.4]</code></label>

@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { HighBadge } from "@/components/AnalysisBlock";
+import Brief from "@/components/Brief";
 import Impact from "@/components/Impact";
+import ProjectCta, { askFor } from "@/components/ProjectCta";
 import { Deadline } from "@/components/ConsultationCard";
-import { KIND_LABEL, commissionName, consultations, type Consultation } from "@/lib/data";
+import { KIND_LABEL, commissionName, consultationStatus, consultations, isOpen, type Consultation } from "@/lib/data";
 import { fmtDate } from "@/lib/format";
 
 type Params = { commission: string; slug: string };
@@ -25,18 +27,25 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 export default async function ConsultationPage({ params }: { params: Promise<Params> }) {
   const c = find(await params);
   if (!c) notFound();
-  return (
-    <div className="two">
-      <section>
+  const ask = askFor({ consultation: true, closed: !isOpen(c), impact: c.impact, text: `${c.title} ${c.summary}` });
+  return (<>
+    <div className="head-block">
         <p className="muted">{commissionName(c.commission)} · {KIND_LABEL[c.kind]}{c.issued && <> · issued {fmtDate(c.issued)}</>}</p>
         {c.rating === "high" && <p><HighBadge /></p>}
-        <h1>{c.title}</h1>
+        {c.impact?.headline ? <><h1>{c.impact.headline}</h1><p className="formal">{c.title}</p></> : <h1>{c.title}</h1>}
         <p className="lede"><Deadline c={c} />{c.hearing_date && <> · public hearing {fmtDate(c.hearing_date)}</>}</p>
+        {c.impact && <Brief impact={c.impact} status={`Proposal, not law · ${consultationStatus(c)}`}
+          analysis={c.draft ? "prepared with AI, awaiting legal review" : `reviewed ${fmtDate(c.approved_at)}${c.reviewed_by ? ` by ${c.reviewed_by}` : ""}`}
+          ask={ask} about={c.title} path={c.path} />}
+    </div>
+    <div className="two">
+      <section>
         <h2>What is proposed</h2>
         <p>{c.summary}</p>
         {c.proposes.length > 0 && <ul>{c.proposes.map((p, i) => <li key={i}>{p}</li>)}</ul>}
         {c.amends && <p className="muted">Would amend: {c.amends}</p>}
         {c.impact && <Impact impact={c.impact} pdf={c.source_url} draft={c.draft} />}
+        {!c.impact && <ProjectCta ask={ask} about={c.title} path={c.path} />}
       </section>
       <aside>
         <div className="glass studio-cta">
@@ -50,10 +59,10 @@ export default async function ConsultationPage({ params }: { params: Promise<Par
         <ul><li><a href={c.source_url} rel="nofollow noopener">The draft (PDF)</a></li>
           {c.related.map((r) => <li key={r.url}><a href={r.url} rel="nofollow noopener">{r.label}</a></li>)}</ul>
         <p className="note">{c.draft
-          ? <><b>Draft, not yet reviewed.</b> This summary was drafted by AI and is waiting for the legal team.</>
+          ? <><b>Analysis awaiting legal review.</b> This summary was prepared with AI and has not been checked by the legal team yet.</>
           : <>Reviewed by the Regulatory Studio legal team on {fmtDate(c.approved_at)}.</>} This is a proposal published for
           comment, not a notified regulation. Check the commission&apos;s public notice for how to send comments.</p>
       </aside>
     </div>
-  );
+  </>);
 }

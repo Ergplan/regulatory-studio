@@ -531,7 +531,8 @@ async def save_impact(request: Request, doc_id: str):
                 if comment and form.get(f"effect_{g}") in IMPACT_EFFECTS:
                     cells[g] = {"effect": str(form.get(f"effect_{g}")), "comment": comment,
                                 "basis": [b.strip() for b in str(form.get(f"basis_{g}", "")).replace(";", ",").split(",") if b.strip()]}
-            out = {"market_note": str(form.get("market_note", "")).strip(), "key_points": _cited_lines(form.get("key_points")),
+            out = {"headline": str(form.get("headline", "")), "checks": str(form.get("checks", "")).splitlines(),
+                   "market_note": str(form.get("market_note", "")).strip(), "key_points": _cited_lines(form.get("key_points")),
                    "procurement": _cited_lines(form.get("procurement")), "stakeholders": cells,
                    "open_questions": [q.strip(" -•\t") for q in str(form.get("open_questions", "")).splitlines() if q.strip(" -•\t")]}
             conn.execute(f"UPDATE {table} SET impact = ? WHERE doc_id = ?",

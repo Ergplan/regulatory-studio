@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import Brief from "@/components/Brief";
 import Impact from "@/components/Impact";
+import ProjectCta, { askFor } from "@/components/ProjectCta";
 import SpiderMap, { type MapNode } from "@/components/SpiderMap";
 import { SITE_URL, commissionName, linkTypeLabel, orderLabel, orders, site, targetInfo, topicName, type Order } from "@/lib/data";
 import { fmtDate } from "@/lib/format";
@@ -65,13 +67,20 @@ export default async function OrderPage({ params }: { params: Promise<Params> })
     url: SITE_URL + o.path, keywords: o.topics.map(topicName).join(", "),
   };
 
+  const about = o.title ?? orderLabel(o);
+  const ask = askFor({ impact: o.impact, text: [o.title, o.issue, ...o.topics].join(" ") });
+  const analysis = o.draft ? "prepared with AI, awaiting legal review" : `reviewed ${fmtDate(o.approved_at)}${o.reviewed_by ? ` by ${o.reviewed_by}` : ""}`;
+
   return (
     <article>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <div className="meta"><Link href={`/commissions/${o.commission}`} className="tag">{o.commission.toUpperCase()}</Link>
         {o.date && <span>Order dated {fmtDate(o.date)}</span>}{o.sample && <span className="tag bad">Sample, not a real order</span>}</div>
-      <h1>{o.title ?? orderLabel(o)}</h1>
-      {o.case_number && <p className="muted">{o.case_number} · {commissionName(o.commission)}</p>}
+      {o.impact?.headline
+        ? <><h1>{o.impact.headline}</h1><p className="formal">{o.title ?? orderLabel(o)}{o.case_number && o.title ? ` · ${o.case_number}` : ""} · {commissionName(o.commission)}</p></>
+        : <><h1>{o.title ?? orderLabel(o)}</h1>{o.case_number && <p className="muted">{o.case_number} · {commissionName(o.commission)}</p>}</>}
+      {o.impact && <Brief impact={o.impact} status={`Order of ${fmtDate(o.date)}: binds the parties`} analysis={analysis}
+        ask={ask} about={about} path={o.path} />}
 
       <div className="two">
         <section>
@@ -84,12 +93,14 @@ export default async function OrderPage({ params }: { params: Promise<Params> })
             <dt>Topics</dt><dd>{o.topics.map((t) => <Link key={t} href={`/topics/${t}`} className="chip">{topicName(t)}</Link>)}</dd>
           </dl>
           {o.impact && <Impact impact={o.impact} pdf={o.pdf} draft={o.draft} />}
+          {!o.impact && <ProjectCta ask={ask} about={about} path={o.path} />}
         </section>
         <aside>
           <h2>Original order</h2>
-          <p><a href={o.pdf}>Read the order (PDF)</a><br /><a href={o.source_url} rel="nofollow noopener">On the commission&apos;s website</a></p>
+          <p>{o.pdf && <><a href={o.pdf}>Read the order (PDF)</a><br /></>}
+            <a href={o.source_url} rel="nofollow noopener">{o.source_listing ? `The commission's orders listing${o.case_number ? ` (look for ${o.case_number})` : ""}` : "On the commission's website"}</a></p>
           {o.draft
-            ? <p className="note"><b>Draft, not yet reviewed.</b> This summary and its links were drafted by AI and are waiting for the legal team. Read the original order.</p>
+            ? <p className="note"><b>Analysis awaiting legal review.</b> This summary and its links were prepared with AI and have not been checked by the legal team yet. Read the original order.</p>
             : <p className="note">Reviewed by the Regulatory Studio legal team on {fmtDate(o.approved_at)}{o.revised_at && <>, revised {fmtDate(o.revised_at)}</>}.
             This summary is for information only and is not legal advice.</p>}
         </aside>
@@ -106,7 +117,7 @@ export default async function OrderPage({ params }: { params: Promise<Params> })
         return (
           <li key={i}><strong>{linkTypeLabel(l.type)}</strong> {info ? <Link href={info.href}>{info.label}</Link> : l.target}
             {info?.sub && <span className="muted"> · {info.sub}</span>}
-            <div className="small muted">Cited as “{l.cited_as}”, paragraph {l.pid}{l.page ? <>, <a href={`${o.pdf}#page=${l.page}`}>page {l.page}</a></> : null}</div>
+            <div className="small muted">Cited as “{l.cited_as}”, paragraph {l.pid}{l.page ? (o.pdf ? <>, <a href={`${o.pdf}#page=${l.page}`}>page {l.page}</a></> : <>, page {l.page}</>) : null}</div>
             <blockquote>{l.excerpt}</blockquote></li>
         );
       })}</ul>

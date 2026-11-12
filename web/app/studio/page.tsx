@@ -37,7 +37,7 @@ export default function Studio() {
             <p className="meta">{c.commission.toUpperCase()} · {!isOpen(c) ? `listed deadline ${fmtDate(c.comment_deadline ?? c.hearing_date)} has passed` : c.comment_deadline ? `comments by ${fmtDate(c.comment_deadline)}` : "deadline in the public notice"}</p>
             <h3><Link href={c.path}>{c.title}</Link></h3>
             {GROUPS.filter(([g]) => c.comments?.[g]).map(([g, , long]) => { const k = c.comments![g]; return (
-              <details key={g}><summary><GroupIcon g={g} size={18} /> {long}{k.draft ? " · AI draft, not reviewed" : ""}</summary>
+              <details key={g}><summary><GroupIcon g={g} size={18} /> {long}{k.draft ? " · awaiting review" : ""}</summary>
                                 <ol>{k.points.map((p, i) => <li key={i}><b>{p.clause}.</b> {p.comment}{p.suggestion && <> <i>You could ask for:</i> {p.suggestion}</>}</li>)}</ol>
               </details>); })}
           </div>))}

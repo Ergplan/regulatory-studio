@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import OrderCard from "@/components/OrderCard";
+import Subscribe from "@/components/Subscribe";
 import { digests, orderById } from "@/lib/data";
 import { fmtDate } from "@/lib/format";
 
@@ -17,6 +18,7 @@ export default async function Week({ params }: { params: Promise<Params> }) {
   if (!d) notFound();
   return (<><h1>Weekly digest: {fmtDate(d.from)} to {fmtDate(d.to)}</h1><p className="lede">{d.intro}</p>
     <div className="grid">{d.items.map((id) => orderById.get(id)).filter(Boolean).map((o) => <OrderCard key={o!.id} o={o!} />)}</div>
-    {d.draft ? <p className="note"><b>Draft, not yet reviewed.</b> This digest was drafted by AI and is waiting for the legal team.</p>
-      : <p className="note">Reviewed and approved by the Regulatory Studio legal team on {fmtDate(d.approved_at)}.</p>}</>);
+    {d.draft ? <p className="note"><b>Analysis awaiting legal review.</b> This digest was prepared with AI and has not been checked by the legal team yet.</p>
+      : <p className="note">Reviewed and approved by the Regulatory Studio legal team on {fmtDate(d.approved_at)}.</p>}
+    <div className="glass digest-signup"><Subscribe /></div></>);
 }

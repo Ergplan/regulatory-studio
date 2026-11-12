@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         {site.preview && (
-          <div className="banner"><div className="wrap"><b>Preview only.</b> These summaries are AI drafts that the legal team has not reviewed yet. They are shown to check the site, not to rely on.</div></div>
+          <div className="banner"><div className="wrap"><b>Preview edition.</b> The analysis on this site was prepared with AI and is awaiting legal review. It is shown to check the site, not to rely on.</div></div>
         )}
         {site.contains_sample_data && (
           <div className="banner"><div className="wrap">This build contains SAMPLE data for testing. Sample items are not real orders.</div></div>
@@ -31,7 +31,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Link href="/" className="brand">Regulatory Studio<small><span className="j">joule</span><span className="w">Wise</span> × <span className="w">Urja Praxis</span></small></Link>
           <nav className="nav" aria-label="Main">
             <Link href="/orders">Orders</Link><Link href="/regulations">Regulations</Link>
-            <Link href="/consultations">Consultations</Link><Link href="/impact">Impact map</Link><Link href="/studio">Studio</Link><Link href="/digest">Weekly digest</Link><Link href="/search">Search</Link><Link href="/about">About</Link>
+            <Link href="/consultations">Consultations</Link><Link href="/impact">Impact</Link><Link href="/studio">Consultation support</Link><Link href="/digest">Digest</Link><Link href="/search">Search</Link><Link href="/about">About</Link>
+            <Link href="/discuss" className="nav-cta">Discuss my project</Link>
           </nav>
         </div></header>
         <main><div className="wrap">{children}</div></main>

@@ -35,7 +35,7 @@ export default function Impact({ impact, pdf, draft = false }: { impact: ImpactT
   const hit = GROUPS.filter(([g]) => impact.stakeholders[g]);
   return (
     <section className="impact card" id="impact">
-      <p className="eyebrow">Market impact{draft ? " · AI draft, not reviewed" : ""}</p>
+      <p className="eyebrow">Market impact{draft ? " · analysis awaiting legal review" : ""}</p>
       {impact.market_note && <p className="impact-note">{impact.market_note}</p>}
       {hit.length > 0 && (<>
         <h3>Who is affected</h3>

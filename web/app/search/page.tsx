@@ -5,6 +5,6 @@ export const metadata: Metadata = { title: "Search", alternates: { canonical: "/
 
 export default function SearchPage() {
   return (<><h1>Search</h1>
-    <noscript><p>Search needs JavaScript. Browse <a href="/orders">all orders</a> or <a href="/regulations">the regulation registry</a> instead.</p></noscript>
+    <noscript><p>Search needs JavaScript. Browse <a href="/orders">all orders</a>, <a href="/consultations">draft regulations</a> or <a href="/regulations">the regulation registry</a> instead.</p></noscript>
     <Search /></>);
 }

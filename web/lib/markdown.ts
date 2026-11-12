@@ -8,7 +8,7 @@ export function impactMd(i: Impact | null | undefined, draft?: boolean): string[
   if (!i) return [];
   const cite = (b: string[]) => (b.length ? ` (${b.map((p) => `p.${p.slice(1).split(".")[0]} ¶${p.split(".")[1]}`).join(", ")})` : "");
   const hit = GROUPS.filter(([g]) => i.stakeholders[g]);
-  return ["## Market impact" + (draft ? " (AI draft, not reviewed)" : ""), "", i.market_note, "",
+  return ["## Market impact" + (draft ? " (analysis awaiting legal review)" : ""), "", i.market_note, "",
     ...(hit.length ? ["### Who is affected", "", ...hit.map(([g, , long]) => { const c = i.stakeholders[g]!; return `- **${long}** (${EFFECT_LABEL[c.effect].toLowerCase()}): ${c.comment}${cite(c.basis)}`; }), ""] : []),
     ...(i.key_points.length ? ["### Key points", "", ...i.key_points.map((k) => `- ${k.text}${cite(k.basis)}`), ""] : []),
     ...(i.procurement.length ? ["### Procurement requirements", "", ...i.procurement.map((k) => `- ${k.text}${cite(k.basis)}`), ""] : []),
@@ -24,8 +24,8 @@ export function orderMd(o: Order): string {
     `- Commission: ${commissionName(o.commission)}`,
     o.case_number ? `- Case: ${o.case_number}` : "", o.date ? `- Order date: ${o.date}` : "",
     `- Topics: ${o.topics.map(topicName).join(", ")}`,
-    `- Original order: ${abs(o.pdf)} (commission page: ${o.source_url})`,
-    o.draft ? "- Status: DRAFT drafted by AI, not yet reviewed by the legal team"
+    `- Original order: ${o.pdf ? abs(o.pdf) : "see the commission's listing"} (${o.source_listing ? "commission's listing" : "commission page"}: ${o.source_url})`,
+    o.draft ? "- Analysis status: prepared with AI, awaiting legal review"
       : `- Reviewed by the Regulatory Studio legal team: ${o.approved_at}${o.revised_at ? `, revised ${o.revised_at}` : ""}`,
     o.sample ? "- NOTE: SAMPLE DATA, NOT A REAL ORDER" : "", "",
     "## Summary", "", o.summary, "", "## Issue", "", o.issue, "", "## Outcome", "", o.outcome, "",

@@ -19,7 +19,10 @@ Method:
    generators), transmission (transmission licensees, SLDC/RLDC/NLDC), traders (traders and exchanges).
 5. For drafts and proposals write "if adopted". For orders, say whether the point binds only the parties
    or states a reading of the regulation that others can rely on.
-6. open_questions: what the text leaves open (a pending procedure, an unspecified value, an order to come).
+6. headline: the question this raises for an affected business, in plain words ("Planning X? Check Y."). It must
+   not state a legal conclusion. checks: up to four facts about the reader's own plant, contract or project that
+   decide whether this applies to them.
+7. open_questions: what the text leaves open (a pending procedure, an unspecified value, an order to come).
 
 Return only JSON matching this schema:
 {schema}

@@ -3,12 +3,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import GroupIcon from "@/components/GroupIcon";
 import { Cites, Direction, MethodNote } from "@/components/Impact";
+import ProjectCta from "@/components/ProjectCta";
 import { GROUPS, type GroupKey } from "@/lib/data";
 import { impactSections } from "@/lib/impact";
 
 type Params = { group: string };
 export const dynamicParams = false;
 export const generateStaticParams = (): Params[] => GROUPS.map(([g]) => ({ group: g }));
+const ROLE: Record<string, string> = { ci_consumers: "Industrial or commercial energy buyer", captive: "Captive power user", re_developers: "Renewable developer",
+  storage: "Storage developer", discoms: "Distribution licensee" };
 const find = (g: string) => GROUPS.find(([k]) => k === g);
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
@@ -36,11 +39,13 @@ export default async function GroupPage({ params }: { params: Promise<Params> })
         <ul className="who big">{s.rows.map((r) => {
           const c = r.impact.stakeholders[g]!;
           return <li key={r.key} className={`e-${c.effect}`}>
-            <div className="who-head"><Link href={`${r.href}#impact`}>{r.title}</Link><Direction effect={c.effect} /></div>
-            <p className="meta">{r.commission.toUpperCase()}{r.sub ? ` · ${r.sub}` : ""}{r.draft ? " · AI draft" : ""}</p>
+            <div className="who-head"><Link href={`${r.href}#impact`}>{r.impact.headline || r.title}</Link><Direction effect={c.effect} /></div>
+            {r.impact.headline && <p className="formal">{r.title}</p>}
+            <p className="meta">{r.commission.toUpperCase()}{r.sub ? ` · ${r.sub}` : ""}{r.draft ? " · analysis awaiting review" : ""}</p>
             <p>{c.comment} <Cites basis={c.basis} pdf={r.pdf} /></p></li>;
         })}</ul>
       </section>))}
+    <ProjectCta ask="Discuss my project" about={`Impact on ${long}`} path={`/impact/${g}`} as={ROLE[g]} />
     <MethodNote />
   </>);
 }

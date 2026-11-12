@@ -15,7 +15,7 @@ export default function ConsultationCard({ c }: { c: Consultation }) {
     <article className="card order-card">
       <div className="meta"><span className="tag">{c.commission.toUpperCase()}</span> {KIND_LABEL[c.kind]}
         {c.issued && <> · issued {fmtDate(c.issued)}</>}
-        {c.sample && <span className="tag bad">Sample</span>}{c.draft && <span className="tag bad">Draft, not reviewed</span>}</div>
+        {c.sample && <span className="tag bad">Sample</span>}{c.draft && <span className="tag bad">Analysis awaiting review</span>}</div>
       <h3><Link href={c.path}>{c.title}</Link></h3>
       <p className="small"><Deadline c={c} />{c.hearing_date && <> · hearing {fmtDate(c.hearing_date)}</>}</p>
     </article>
