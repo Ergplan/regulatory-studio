@@ -1,6 +1,6 @@
 # Morning review, 12 Nov 2026: first real batch
 
-Seven orders from the last six weeks (five CERC, two UPERC) are waiting in the review screen. Each has a draft
+Ten orders from the last six weeks (five CERC, two UPERC, two RERC, one GERC) are waiting in the review screen. Each has a draft
 summary and proposed links, every link tied to a paragraph of the order. Nothing is published
 until it is approved here.
 
@@ -14,6 +14,10 @@ regstudio review
 ```
 
 Then open http://127.0.0.1:8765, enter your name once, and work down the queue.
+
+The queue leads with the case number. Orders marked **needs a short title** still carry the
+commission's long listing text: type a plain-English title in "Title on the website" before
+approving.
 
 ## The batch
 
@@ -42,8 +46,16 @@ consent-based interim use of an idle 66 kV bay until 25.11.2027, merits left ope
 - **Unresolved links** (shown in red) cite regulations not yet in the registry: Sharing
   Regulations 2020, Trading Licence Regulations, Conduct of Business Regulations 2023, and
   earlier orders. Reject them for now or leave them open; they cannot be approved without a target.
-- **Registry**: the DSM Regulations, 2024 have been split into 50 clauses. Please approve them
-  (one button on the regulation page) so the four DSM links can be published.
+- **Suggested provisions**: when a cited regulation is now in the registry, the target box is
+  pre-filled and marked "suggested from the registry". The four Shree Cement links are pre-filled
+  with Regulations 5, 7 and 31 of the RERC GEOA Regulations, 2025. Check each against the clause,
+  then approve; edit the box if the suggestion is wrong.
+- **Registry**: approve these on their regulation pages (one button each), or links to them are
+  held back when publishing:
+  - CERC DSM Regulations, 2024: 50 clauses (four DSM links).
+  - RERC (Terms and Conditions for Green Energy Open Access) Regulations, 2025: 31 regulations
+    from the English version of the gazette (four Shree Cement links). Roman-numbered parts such
+    as 5(ii) sit inside regulation 5.
 
 ## After review
 
