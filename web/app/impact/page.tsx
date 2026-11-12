@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { HighBadge } from "@/components/AnalysisBlock";
 import GroupIcon from "@/components/GroupIcon";
 import { Cites, Direction, MethodNote } from "@/components/Impact";
 import { GROUPS } from "@/lib/data";
@@ -35,7 +36,7 @@ export default function ImpactMap() {
                 <tr key={r.key}>
                   <th className="doc-col" scope="row">
                     <span className="meta">{r.sub}{r.draft ? " · AI draft" : ""}</span>
-                    <Link href={`${r.href}#impact`}>{r.title}</Link>
+                    {r.high && <HighBadge />}<Link href={`${r.href}#impact`}>{r.title}</Link>
                     <span className="row-note">{r.impact.market_note}</span>
                   </th>
                   {GROUPS.map(([g, short]) => {

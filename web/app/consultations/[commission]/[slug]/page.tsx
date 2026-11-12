@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { HighBadge } from "@/components/AnalysisBlock";
 import Impact from "@/components/Impact";
 import { Deadline } from "@/components/ConsultationCard";
 import { KIND_LABEL, commissionName, consultations, type Consultation } from "@/lib/data";
@@ -28,6 +29,7 @@ export default async function ConsultationPage({ params }: { params: Promise<Par
     <div className="two">
       <section>
         <p className="muted">{commissionName(c.commission)} · {KIND_LABEL[c.kind]}{c.issued && <> · issued {fmtDate(c.issued)}</>}</p>
+        {c.rating === "high" && <p><HighBadge /></p>}
         <h1>{c.title}</h1>
         <p className="lede"><Deadline c={c} />{c.hearing_date && <> · public hearing {fmtDate(c.hearing_date)}</>}</p>
         <h2>What is proposed</h2>

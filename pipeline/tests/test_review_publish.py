@@ -311,6 +311,12 @@ def test_impact_is_opt_in_cited_edited_and_published_with_the_summary(server):
     pub = json.loads((config.SNAPSHOT / "orders.json").read_text())[0]["impact"]
     assert pub["market_note"] == "Edited." and [k["text"] for k in pub["key_points"]] == ["One", "Two"]
     assert pub["stakeholders"] == {"ci_consumers": {"effect": "opportunity", "comment": "x", "basis": [pids[1]]}}
+    # the overall rating is the reviewer's, never the model's
+    assert json.loads((config.SNAPSHOT / "orders.json").read_text())[0]["rating"] is None
+    assert server(f"/rating/{doc}", {"rating": "extreme"}) == 400
+    assert server(f"/rating/{doc}", {"rating": "high"}) == 303
+    publish.run()
+    assert json.loads((config.SNAPSHOT / "orders.json").read_text())[0]["rating"] == "high"
 
 
 def test_comment_drafts_are_requested_cited_reviewed_and_published(server):

@@ -11,6 +11,17 @@ export default function CoverScroll() {
     root.classList.add("js");
     const chapters = [...root.querySelectorAll<HTMLElement>("[data-chapter]")];
     const hero = root.querySelector<HTMLElement>(".cover-hero");
+    // On phones the map pins to the top once the chapters start. Holding the stage at its full height first
+    // means nothing below it moves when that happens.
+    const stage = root.querySelector<HTMLElement>(".stage");
+    const narrow = window.matchMedia("(max-width: 980px)");
+    const hold = () => {
+      if (!stage || root.classList.contains("in-story")) return;
+      stage.style.minHeight = "";
+      if (narrow.matches) stage.style.minHeight = `${stage.offsetHeight}px`;
+    };
+    hold();
+    window.addEventListener("resize", hold);
 
     const focus = new IntersectionObserver((entries) => {
       for (const e of entries) if (e.isIntersecting) {
@@ -46,7 +57,7 @@ export default function CoverScroll() {
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => { window.removeEventListener("scroll", onScroll); focus.disconnect(); reveal.disconnect(); };
+    return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", hold); focus.disconnect(); reveal.disconnect(); };
   }, []);
   return null;
 }

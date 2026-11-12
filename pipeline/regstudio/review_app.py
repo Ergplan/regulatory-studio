@@ -483,9 +483,30 @@ def _cited_lines(raw: str) -> list[dict]:
     return out
 
 
+RATINGS = ("high", "medium", "low")
+
+
+@app.post("/rating/{doc_id}")
+def save_rating(request: Request, doc_id: str, rating: str = Form("")):
+    """The team's overall impact rating. Only a named reviewer sets it; the model never does."""
+    name = need_reviewer(request)
+    if rating and rating not in RATINGS:
+        raise HTTPException(400, "rating must be high, medium, low or empty")
+    with db.session() as conn:
+        table = table_for(conn, doc_id)
+        if not table:
+            raise HTTPException(404)
+        conn.execute(f"UPDATE {table} SET rating = ? WHERE doc_id = ?", (rating or None, doc_id))
+        db.audit(conn, name, "rating.set", doc_id, {"rating": rating or None})
+        reg = conn.execute("SELECT id FROM regulations WHERE doc_id = ?", (doc_id,)).fetchone() if table == "regulations" else None
+    back_to = {"orders": f"/order/{doc_id}", "consultations": f"/consultation/{doc_id}"}.get(table) or f"/regulation/{reg['id']}"
+    return back(f"{back_to}#impact")
+
+
 def impact_context(row, doc_id: str | None = None) -> dict:
     raw = row["impact"] if row is not None and "impact" in row.keys() else None
     return {"impact": load_impact(raw), "impact_requested": raw == IMPACT_REQUESTED,
+            "rating": row["rating"] if row is not None and "rating" in row.keys() else None, "RATINGS": RATINGS,
             "impact_doc": doc_id or (row["doc_id"] if row is not None and "doc_id" in row.keys() else None),
             "GROUPS": IMPACT_GROUPS, "EFFECTS": IMPACT_EFFECTS}
 

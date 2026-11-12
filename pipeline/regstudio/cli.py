@@ -171,6 +171,7 @@ def main(argv: list[str] | None = None) -> None:
         uvicorn.run(app, host=args.host, port=args.port)
     elif args.cmd == "publish":
         from . import publish
+        db.init()  # apply any pending migrations before reading
         print(json.dumps(publish.run(clean=args.clean, preview=args.preview), indent=2))
     elif args.cmd == "send-digest":
         from . import send_digest
