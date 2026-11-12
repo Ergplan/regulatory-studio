@@ -25,6 +25,7 @@
 <button class="bad" name="action" value="reject">Not for publication</button>
 {% if c.summary_status == 'approved' %}<button name="action" value="reopen">Reopen</button>{% endif %}</div>
 </form></div>
+{% include "_impact.html" %}
 <p class="muted small">The deadline comes from the commission's listing where it gives one. If it says "within 30 days of
 publication", work the date out from the gazette or public notice and enter it here.</p></div></div>
 {% endblock %}

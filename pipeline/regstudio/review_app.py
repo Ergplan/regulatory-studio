@@ -168,7 +168,7 @@ def order(request: Request, doc_id: str):
     return templates.TemplateResponse(request, "order.html", {
         "reviewer": reviewer(request), "d": d, "o": o, "links": links, "paras": paras,
         "parties": json.loads(o["parties"] or "[]"), "topics": json.loads(o["topics"] or "[]"),
-        "targets": targets, "suggest": suggest})
+        "targets": targets, "suggest": suggest, **impact_context(o)})
 
 
 @app.post("/order/{doc_id}/summary")
@@ -412,7 +412,7 @@ def consultation(request: Request, doc_id: str):
             "SELECT pid, text, page FROM paragraphs WHERE doc_id = ? ORDER BY page, idx", (doc_id,))}
     return templates.TemplateResponse(request, "consultation.html", {
         "reviewer": reviewer(request), "d": d, "c": c, "paras": paras, "KINDS": KINDS,
-        "proposes": json.loads(c["proposes"] or "[]"), "related": json.loads(c["related"] or "[]")})
+        "proposes": json.loads(c["proposes"] or "[]"), "related": json.loads(c["related"] or "[]"), **impact_context(c)})
 
 
 def _iso_or_none(value: str) -> str | None:
@@ -459,3 +459,34 @@ def save_consultation(request: Request, doc_id: str, action: str = Form(...), ti
             raise HTTPException(400, "Unknown action.")
         db.audit(conn, name, f"consultation.{action}", doc_id)
     return back(f"/consultation/{doc_id}" if action != "reject" else "/")
+
+
+# --- Market impact --------------------------------------------------------------------------------
+from .impact import EFFECTS as IMPACT_EFFECTS, GROUPS as IMPACT_GROUPS, clean as clean_impact  # noqa: E402
+
+
+def impact_context(row) -> dict:
+    raw = row["impact"] if row is not None and "impact" in row.keys() else None
+    return {"impact": json.loads(raw) if raw else None, "GROUPS": IMPACT_GROUPS, "EFFECTS": IMPACT_EFFECTS}
+
+
+@app.post("/impact/{doc_id}")
+async def save_impact(request: Request, doc_id: str):
+    name = need_reviewer(request)
+    form = await request.form()
+    with db.session() as conn:
+        table = "orders" if conn.execute("SELECT 1 FROM orders WHERE doc_id = ?", (doc_id,)).fetchone() else "consultations"
+        if not conn.execute(f"SELECT 1 FROM {table} WHERE doc_id = ?", (doc_id,)).fetchone():
+            raise HTTPException(404)
+        if form.get("action") == "clear":
+            conn.execute(f"UPDATE {table} SET impact = NULL WHERE doc_id = ?", (doc_id,))
+        else:
+            lines = lambda k: [l.strip(" -•\t") for l in str(form.get(k, "")).splitlines() if l.strip(" -•\t")]
+            out = {"market_note": str(form.get("market_note", "")).strip(), "key_points": lines("key_points"),
+                   "procurement": lines("procurement"),
+                   "stakeholders": {g: {"level": int(form.get(f"level_{g}", 0) or 0), "effect": str(form.get(f"effect_{g}", "neutral")),
+                                        "why": str(form.get(f"why_{g}", "")).strip()} for g in IMPACT_GROUPS}}
+            conn.execute(f"UPDATE {table} SET impact = ? WHERE doc_id = ?", (json.dumps(clean_impact(out), ensure_ascii=False), doc_id))
+        db.audit(conn, name, f"impact.{form.get('action', 'save')}", doc_id)
+    back_to = "/order/" if table == "orders" else "/consultation/"
+    return back(f"{back_to}{doc_id}#impact")

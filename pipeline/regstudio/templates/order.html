@@ -28,6 +28,7 @@
 <button name="action" value="save">Save draft</button><button class="primary" name="action" value="approve">Approve summary</button>
 <button class="bad" name="action" value="reject" onclick="return confirm('Drop this order from the digest?')">Not for publication</button></div>
 </form></div>
+{% include "_impact.html" %}
 <h2>Links ({{ links|length }})</h2><p class="muted">Each link is published only if approved. Approving requires a target.</p>
 {% for l in links %}<div class="link {{ l.status }}" id="link-{{ l.id }}">
 <div class="row"><b>{{ LINK_TYPES[l.link_type] }}</b> → {% if l.target_id %}<code>{{ l.target_id }}</code>{% else %}<span class="unres">unresolved</span>{% endif %}

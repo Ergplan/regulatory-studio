@@ -35,7 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Link href="/" className="brand">Regulatory Studio<small>incubated by <span className="j">joule</span><span className="w">Wise</span></small></Link>
           <nav className="nav" aria-label="Main">
             <Link href="/orders">Orders</Link><Link href="/regulations">Regulations</Link>
-            <Link href="/consultations">Consultations</Link><Link href="/digest">Weekly digest</Link><Link href="/search">Search</Link><Link href="/about">About</Link>
+            <Link href="/consultations">Consultations</Link><Link href="/impact">Impact map</Link><Link href="/digest">Weekly digest</Link><Link href="/search">Search</Link><Link href="/about">About</Link>
             <ThemeToggle />
           </nav>
         </div></header>

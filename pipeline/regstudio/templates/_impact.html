@@ -1,0 +1,18 @@
+{# Market impact editor, shared by the order and consultation pages. #}
+<div class="card" id="impact"><h2 style="margin-top:0">Market impact</h2>
+{% if impact %}
+<form method="post" action="/impact/{{ d.id }}">
+<label>Market note (one or two sentences)</label><textarea name="market_note" style="min-height:60px">{{ impact.market_note }}</textarea>
+<label>Key points, one per line</label><textarea name="key_points" style="min-height:90px">{{ impact.key_points|join('\n') }}</textarea>
+<label>Procurement requirements, one per line</label><textarea name="procurement" style="min-height:70px">{{ impact.procurement|join('\n') }}</textarea>
+<table class="impact-edit"><tr><th>Who</th><th>Level</th><th>Effect</th><th>Why</th></tr>
+{% for g, label in GROUPS.items() %}{% set c = impact.stakeholders[g] %}
+<tr><td>{{ label }}</td>
+<td><select name="level_{{ g }}">{% for n in range(4) %}<option value="{{ n }}" {% if c.level == n %}selected{% endif %}>{{ n }}</option>{% endfor %}</select></td>
+<td><select name="effect_{{ g }}">{% for e in EFFECTS %}<option value="{{ e }}" {% if c.effect == e %}selected{% endif %}>{{ e }}</option>{% endfor %}</select></td>
+<td><input name="why_{{ g }}" value="{{ c.why }}" maxlength="200"></td></tr>{% endfor %}</table>
+<p class="muted small">Level 0 none, 1 indirect, 2 noticeable, 3 direct and material. Published with the summary once the summary is approved.</p>
+<div class="row"><button name="action" value="save">Save impact</button><button class="bad" name="action" value="clear">Remove impact</button></div>
+</form>
+{% else %}<p class="muted">No impact assessment yet. It is drafted by <code>regstudio run impact</code>.</p>{% endif %}
+</div>

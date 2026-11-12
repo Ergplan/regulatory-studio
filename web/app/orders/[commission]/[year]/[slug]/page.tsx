@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import Impact from "@/components/Impact";
 import SpiderMap, { type MapNode } from "@/components/SpiderMap";
 import { SITE_URL, commissionName, linkTypeLabel, orderLabel, orders, site, targetInfo, topicName, type Order } from "@/lib/data";
 import { fmtDate } from "@/lib/format";
@@ -82,6 +83,7 @@ export default async function OrderPage({ params }: { params: Promise<Params> })
             {o.parties.length > 0 && <><dt>Parties</dt><dd>{o.parties.map((p) => `${p.name} (${p.role})`).join("; ")}</dd></>}
             <dt>Topics</dt><dd>{o.topics.map((t) => <Link key={t} href={`/topics/${t}`} className="chip">{topicName(t)}</Link>)}</dd>
           </dl>
+          {o.impact && <Impact impact={o.impact} draft={o.draft} />}
         </section>
         <aside>
           <h2>Original order</h2>
