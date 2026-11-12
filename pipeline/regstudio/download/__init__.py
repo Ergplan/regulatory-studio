@@ -59,7 +59,7 @@ def run(commissions: list[str] | None = None, since: dt.date | None = None, limi
         out["newest"] = max(dated) if dated else None
         if not everything:
             out["warnings"].append("no orders recognised on the listing page; the site layout may have changed")
-        elif len(dated) < len(everything):
+        elif len(dated) < len(everything) and not name.endswith("-drafts"):  # old drafts often carry no dates
             out["warnings"].append(f"{len(everything) - len(dated)} listed orders have no date and were left out")
         items = [i for i in everything if _recent(i, since.isoformat())
                  and (not match or match.lower() in i.title.lower())]

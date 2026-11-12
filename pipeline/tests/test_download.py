@@ -152,6 +152,7 @@ def test_draft_listings():
     sharing = next(i for i in cerc if "Sharing" in i.title)
     assert sharing.source_url.endswith("Supplementary-Draft-Notification2026.pdf")
     assert sharing.extra["comment_deadline"] == "2026-11-27"  # "27th November, 2026", the latest date given
+    assert sharing.extra["hearing_date"] is None  # the 28.09.2026 hearing was for the first round
     assert any(r["label"].startswith("Public Notice") for r in sharing.extra["related"])
     gerc = sites.parse_gerc_drafts(read("gerc_drafts_fixture.html"))
     assert gerc[0].doc_date == "2026-10-17" and gerc[0].extra["related"][0]["label"].startswith("Explanatory")

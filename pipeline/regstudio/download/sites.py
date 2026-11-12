@@ -303,11 +303,14 @@ def parse_cerc_drafts(page: str, base: str = CERC_DRAFTS_URL) -> list[Item]:
             r"Last date[^:)]*?[:\-–]+\s*([^)]{6,30})", text, re.I)) if d]
         hearing = re.search(r"Public Hearing will be held on\s+([\d./-]{8,10})", text, re.I)
         kind_title = title if title.lower().startswith("draft") else f"Proposal: {title}"
+        deadline = max(deadlines) if deadlines else None
+        heard = _date(hearing.group(1)) if hearing else None
+        if heard and deadline and heard < deadline:
+            heard = None  # a hearing before the latest deadline belongs to an earlier round of comments
         items.append(Item(
             "cerc", kind_title[:300], main[0], None, None, doc_type="draft",
             key=f"cerc-draft:{main[0]}",
-            extra={"comment_deadline": max(deadlines) if deadlines else None,
-                   "hearing_date": _date(hearing.group(1)) if hearing else None,
+            extra={"comment_deadline": deadline, "hearing_date": heard,
                    "related": [{"label": t, "url": u} for u, t in pdfs if u != main[0]][:8]}))
     return items
 
