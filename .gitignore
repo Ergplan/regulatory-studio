@@ -17,3 +17,4 @@ web/next-env.d.ts
 data/reader_outputs/
 data/text_dumps/
 data/parked/
+pipeline/tests/fixtures/inbox/
