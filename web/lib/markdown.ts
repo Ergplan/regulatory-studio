@@ -4,7 +4,7 @@ import {
   orders, regulations, regulationById, targetInfo, topicName, type Order,
 } from "./data";
 
-const abs = (p: string) => SITE_URL + p;
+const abs = (p: string) => (/^https?:\/\//.test(p) ? p : SITE_URL + p);
 
 export function orderMd(o: Order): string {
   const lines = [
