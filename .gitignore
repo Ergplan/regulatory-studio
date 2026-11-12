@@ -18,3 +18,11 @@ data/reader_outputs/
 data/text_dumps/
 data/parked/
 pipeline/tests/fixtures/inbox/
+
+# Never commit documents dropped into the project folder (they may hold credentials)
+/*.doc
+/*.docx
+/*.rtf
+/*.pages
+*token*.docx
+*Token*.docx
