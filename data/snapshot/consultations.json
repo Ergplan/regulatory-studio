@@ -141,6 +141,42 @@
    ]
   },
   "rating": null,
+  "figures": [
+   {
+    "type": "timeline",
+    "title": "Dates in the proposal",
+    "items": [
+     {
+      "label": "Draft regulations published",
+      "basis": [
+       "p1.5"
+      ],
+      "start": "2026-07-31"
+     },
+     {
+      "label": "Supplementary draft",
+      "basis": [
+       "p1.3"
+      ],
+      "start": "2026-10-26"
+     },
+     {
+      "label": "PPA or PSA to be signed by",
+      "basis": [
+       "p1.7"
+      ],
+      "start": "2027-03-31"
+     },
+     {
+      "label": "Copies to CTUIL and NLDC by",
+      "basis": [
+       "p2.10"
+      ],
+      "start": "2027-04-30"
+     }
+    ]
+   }
+  ],
   "comments": {
    "discoms": {
     "position": "As a drawee DIC we support certainty on transmission charges for renewable power contracted before 31.03.2027. We ask the Commission to state who bears the charges that are waived, and to protect the buyer where a waiver ends through no act of the buyer.",
@@ -330,6 +366,7 @@
   "amends": "Replaces TNERC (Deviation Settlement Mechanism and Related Matters) Regulations, 2019",
   "impact": null,
   "rating": null,
+  "figures": [],
   "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-290520262212Eng.pdf",
   "related": [],
@@ -360,6 +397,7 @@
   "amends": null,
   "impact": null,
   "rating": null,
+  "figures": [],
   "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-150520262110Eng.pdf",
   "related": [],
@@ -389,6 +427,7 @@
   "amends": null,
   "impact": null,
   "rating": null,
+  "figures": [],
   "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-140520261750Eng.pdf",
   "related": [],
@@ -418,6 +457,7 @@
   "amends": "TNERC (Forecasting, Scheduling and Deviation Settlement and Related Matters for Wind and Solar Generation) Regulations, 2024",
   "impact": null,
   "rating": null,
+  "figures": [],
   "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-270520261445Eng.pdf",
   "related": [],
@@ -448,6 +488,7 @@
   "amends": "Replaces the TNERC multi-year tariff framework for distribution licensees",
   "impact": null,
   "rating": null,
+  "figures": [],
   "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-120520262047Eng.pdf",
   "related": [],
@@ -477,6 +518,7 @@
   "amends": null,
   "impact": null,
   "rating": null,
+  "figures": [],
   "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-030620262218Eng.pdf",
   "related": [],
@@ -507,6 +549,7 @@
   "amends": null,
   "impact": null,
   "rating": null,
+  "figures": [],
   "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-030620262110Eng.pdf",
   "related": [],
@@ -536,6 +579,7 @@
   "amends": null,
   "impact": null,
   "rating": null,
+  "figures": [],
   "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-010620262127Eng.pdf",
   "related": [],
@@ -565,6 +609,7 @@
   "amends": null,
   "impact": null,
   "rating": null,
+  "figures": [],
   "comments": {},
   "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-310520262022Eng.pdf",
   "related": [],
@@ -747,6 +792,78 @@
    ]
   },
   "rating": null,
+  "figures": [
+   {
+    "type": "series",
+    "title": "Proposed total renewable purchase obligation",
+    "items": [
+     {
+      "label": "2026-27",
+      "basis": [
+       "p5.8"
+      ],
+      "value": 35.95
+     },
+     {
+      "label": "2027-28",
+      "basis": [
+       "p5.8"
+      ],
+      "value": 38.81
+     },
+     {
+      "label": "2028-29",
+      "basis": [
+       "p5.8"
+      ],
+      "value": 41.36
+     },
+     {
+      "label": "2029-30",
+      "basis": [
+       "p5.8"
+      ],
+      "value": 43.33
+     }
+    ],
+    "unit": "% of consumption"
+   },
+   {
+    "type": "series",
+    "title": "Of which, distributed renewable energy",
+    "items": [
+     {
+      "label": "2026-27",
+      "basis": [
+       "p5.8"
+      ],
+      "value": 2.7
+     },
+     {
+      "label": "2027-28",
+      "basis": [
+       "p5.8"
+      ],
+      "value": 3.3
+     },
+     {
+      "label": "2028-29",
+      "basis": [
+       "p5.8"
+      ],
+      "value": 3.9
+     },
+     {
+      "label": "2029-30",
+      "basis": [
+       "p5.8"
+      ],
+      "value": 4.5
+     }
+    ],
+    "unit": "% of consumption"
+   }
+  ],
   "comments": {
    "captive": {
     "position": "We support the exclusions for waste heat and by-product gas generation, which recognise how industrial captive plants operate. We ask the Commission to clarify the coverage of renewable captive plants and to remove limits that keep smaller captive renewable capacity from counting.",
@@ -970,6 +1087,7 @@
   "amends": "CERC (Indian Electricity Grid Code) Regulations, 2023",
   "impact": null,
   "rating": null,
+  "figures": [],
   "comments": {},
   "source_url": "https://cercind.gov.in/2026/draft_reg/DR_IEGC-2ndAmnd.pdf",
   "related": [
@@ -1018,6 +1136,7 @@
   "amends": "GERC (Electricity Supply Code and Related Matters) Regulations, 2015",
   "impact": null,
   "rating": null,
+  "figures": [],
   "comments": {},
   "source_url": "https://gercin.org/viewdocument/cmVndWxhdGlvbl9lbmdfMTc5MjI0NzU1Nl8yMzg4",
   "related": [
@@ -1052,6 +1171,7 @@
   "amends": "GERC (Standards of Performance of Distribution Licensees) Regulations, 2023",
   "impact": null,
   "rating": null,
+  "figures": [],
   "comments": {},
   "source_url": "https://gercin.org/viewdocument/cmVndWxhdGlvbl9lbmdfMTc5MjI0NzgyM18yNzg4",
   "related": [

@@ -152,6 +152,49 @@
     "CERC has since deferred reserve-shortfall based deficit recovery (to 05.04.2027 by a later order); this reads the 2024 text as notified."
    ]
   },
+  "figures": [
+   {
+    "type": "bars",
+    "title": "Deviation allowed at contract rate, before and after 1 April 2026",
+    "items": [
+     {
+      "label": "Solar and hybrid, to 31.03.2026",
+      "basis": [
+       "p9.10",
+       "p9.11"
+      ],
+      "value": 10,
+      "context": true
+     },
+     {
+      "label": "Solar and hybrid, from 01.04.2026",
+      "basis": [
+       "p9.18",
+       "p9.19"
+      ],
+      "value": 5
+     },
+     {
+      "label": "Wind, to 31.03.2026",
+      "basis": [
+       "p9.13",
+       "p9.14"
+      ],
+      "value": 15,
+      "context": true
+     },
+     {
+      "label": "Wind, from 01.04.2026",
+      "basis": [
+       "p9.21",
+       "p9.22"
+      ],
+      "value": 10
+     }
+    ],
+    "unit": "% deviation"
+   }
+  ],
   "source_url": "https://cercind.gov.in/regulations/192-Noti.pdf",
   "pdf": "https://cercind.gov.in/regulations/192-Noti.pdf",
   "source_listing": false
@@ -320,6 +363,7 @@
     "RERC's order of 04.11.2026 (Petition 2416/2026) reads the 200% limit as available to existing behind-the-meter plants only after migrating under Regulation 7."
    ]
   },
+  "figures": [],
   "source_url": "https://rerc.rajasthan.gov.in/rerc-user-files/regulations",
   "pdf": "/pdf/9273c10489c1d805.pdf",
   "source_listing": true
