@@ -3,78 +3,96 @@ import Link from "next/link";
 import { HighBadge } from "@/components/AnalysisBlock";
 import GroupIcon from "@/components/GroupIcon";
 import { Cites, Direction, MethodNote } from "@/components/Impact";
-import { GROUPS } from "@/lib/data";
-import { impactSections } from "@/lib/impact";
+import { GEO } from "@/components/IndiaMap";
+import Stage from "@/components/Stage";
+import { GROUPS, commissionName, site } from "@/lib/data";
+import { impactByState, impactSections, tally } from "@/lib/impact";
 
 export const metadata: Metadata = {
   title: "Market impact map",
-  description: "Who recent electricity draft regulations, notified regulations and orders affect, and how: discoms, C&I and open access consumers, captive users, RE developers, storage, generators, grid operators and traders. Every statement cites the paragraph it rests on.",
+  description: "State by state: which groups in the power market each draft regulation, notified regulation and order affects, and how. Every statement cites the paragraph it rests on.",
   alternates: { canonical: "/impact" },
 };
 
 export default function ImpactMap() {
-  const sections = impactSections();
-  return (<>
-    <p className="eyebrow">Market impact</p>
-    <h1 className="hero">Who is affected, and how</h1>
-    <p className="lede">Each row is a draft regulation, a notified regulation or an order; each column a group in the power market.
-      A cell says what changes for that group and cites the paragraphs it rests on. An empty cell means the text does not affect that group directly.</p>
-    <p className="legend small"><Direction effect="opportunity" /> <Direction effect="cost" /> <Direction effect="mixed" />
-      <span className="muted">Direction only, no scores. Click a group to see everything that affects it.</span></p>
-    {sections.length === 0 ? <div className="card empty">No impact assessments published yet.</div> : (<>
-      <div className="matrix-scroll" role="region" aria-label="Impact matrix" tabIndex={0}>
-        <table className="matrix">
-          <thead><tr>
-            <th className="doc-col" scope="col">Document</th>
-            {GROUPS.map(([g, short, long]) => (
-              <th key={g} scope="col"><Link href={`/impact/${g}`} title={long}><GroupIcon g={g} /><span>{short}</span></Link></th>))}
-          </tr></thead>
-          {sections.map((s) => (
-            <tbody key={s.id}>
-              <tr className="sec"><th colSpan={GROUPS.length + 1} scope="colgroup"><span>{s.label}</span> <em>{s.note}</em></th></tr>
-              {s.rows.map((r) => (
-                <tr key={r.key}>
-                  <th className="doc-col" scope="row">
-                    <span className="meta">{r.sub}{r.draft ? " · AI draft" : ""}</span>
-                    {r.high && <HighBadge />}<Link href={`${r.href}#impact`}>{r.title}</Link>
-                    <span className="row-note">{r.impact.market_note}</span>
-                  </th>
-                  {GROUPS.map(([g, short]) => {
-                    const c = r.impact.stakeholders[g];
-                    return c
-                      ? <td key={g} className={`cell e-${c.effect}`}><Direction effect={c.effect} /><p>{c.comment}</p><Cites basis={c.basis} pdf={r.pdf} /></td>
-                      : <td key={g} className="cell none"><span aria-hidden="true">—</span><span className="sr">{short}: not directly affected</span></td>;
-                  })}
-                </tr>))}
-            </tbody>))}
-        </table>
-      </div>
-      <div className="matrix-cards">
-        {sections.map((s) => (
-          <section key={s.id}><h2>{s.label} <em className="muted small">{s.note}</em></h2>
-            {s.rows.map((r) => (
-              <article key={r.key} className="card">
-                <p className="meta">{r.sub}{r.draft ? " · AI draft" : ""}</p>
-                <h3><Link href={`${r.href}#impact`}>{r.title}</Link></h3>
-                <ul className="who">{GROUPS.filter(([g]) => r.impact.stakeholders[g]).map(([g, , long]) => {
-                  const c = r.impact.stakeholders[g]!;
-                  return <li key={g} className={`e-${c.effect}`}><div className="who-head"><GroupIcon g={g} /><span>{long}</span><Direction effect={c.effect} /></div>
-                    <p>{c.comment} <Cites basis={c.basis} pdf={r.pdf} /></p></li>;
-                })}</ul>
-              </article>))}
+  const codes = Object.keys(GEO).filter((k) => site.commissions[k]);
+  const states = impactByState(codes);
+  const all = impactSections();
+  const overall = tally(all.flatMap((s) => s.rows));
+  const count = (id: string) => all.find((s) => s.id === id)?.rows.length ?? 0;
+
+  return (
+    <div className="cover">
+      <Stage items={codes.map((code) => { const s = states.find((x) => x.code === code);
+        return { code, href: s ? `#c-${code}` : `/commissions/${code}`, idle: !s, note: s ? `${s.n} assessed` : "not assessed" }; })} />
+      <div className="flow">
+        <section className="cover-hero short">
+          <p className="eyebrow">Market impact</p>
+          <h1 className="hero">Who is affected, and how.</h1>
+          <p className="lede">One block per commission. Inside it, drafts, regulations and orders are kept apart, and each shows only
+            the groups it touches. Open any item for the reason and the paragraphs it rests on.</p>
+          <p className="legend small"><Direction effect="opportunity" /> <Direction effect="cost" /> <Direction effect="mixed" />
+            <span className="muted">Direction only, no scores.</span></p>
+        </section>
+
+        <section className="glass areas-box">
+          <h2 className="label">Across all commissions · {count("drafts")} drafts · {count("regulations")} regulations · {count("orders")} orders</h2>
+          {overall.length ? (
+            <ul className="tally">{overall.map((t) => (
+              <li key={t.g}><Link href={`/impact/${t.g}`} title={`Everything that affects ${t.long.toLowerCase()}`}>
+                <GroupIcon g={t.g} size={22} /><span>{t.short}</span>
+                <em>{t.gains > 0 && <i className="d-opportunity">▲{t.gains}</i>}{t.costs > 0 && <i className="d-cost">▼{t.costs}</i>}{t.mixed > 0 && <i className="d-mixed">◆{t.mixed}</i>}</em>
+              </Link></li>))}</ul>
+          ) : <p className="muted">No impact assessments published yet.</p>}
+          <p className="muted small">Pick a group to see only what affects it. Counts are documents, by direction.</p>
+        </section>
+
+        {states.map((s) => (
+          <section key={s.code} className="chapter state" id={`c-${s.code}`} data-chapter={s.code}>
+            <header className="chapter-head rise">
+              <p className="eyebrow">{GEO[s.code].place} · {s.n} assessed</p>
+              <h2><Link href={`/commissions/${s.code}`}>{commissionName(s.code)}</Link></h2>
+              <ul className="tally mini" aria-label="Groups affected here">{s.tally.map((t) => (
+                <li key={t.g} title={t.long}><span><GroupIcon g={t.g} size={18} /><span>{t.short}</span>
+                  <em>{t.gains > 0 && <i className="d-opportunity">▲{t.gains}</i>}{t.costs > 0 && <i className="d-cost">▼{t.costs}</i>}{t.mixed > 0 && <i className="d-mixed">◆{t.mixed}</i>}</em></span></li>))}</ul>
+              {s.lead && <p className="state-lead">{s.lead}</p>}
+            </header>
+            {s.sections.map((sec) => (
+              <div key={sec.id} className={`kind kind-${sec.id} rise`}>
+                <h3 className="kind-head"><span>{sec.label}</span><em>{sec.note}</em></h3>
+                {sec.rows.map((r) => {
+                  const hit = GROUPS.filter(([g]) => r.impact.stakeholders[g]);
+                  return (
+                    <details key={r.key} className="doc">
+                      <summary>
+                        <span className="doc-title">{r.high && <HighBadge />}{r.title}</span>
+                        <span className="doc-sub">{r.sub}{r.draft ? " · AI draft" : ""}</span>
+                        <span className="doc-icons">{hit.map(([g, short]) => (
+                          <span key={g} className={`ic e-${r.impact.stakeholders[g]!.effect}`} title={`${short}: ${r.impact.stakeholders[g]!.comment}`}>
+                            <GroupIcon g={g} size={17} /><span>{short}</span></span>))}</span>
+                      </summary>
+                      <p className="doc-note">{r.impact.market_note}</p>
+                      <ul className="who">{hit.map(([g, , long]) => { const c = r.impact.stakeholders[g]!; return (
+                        <li key={g} className={`e-${c.effect}`}><div className="who-head"><GroupIcon g={g} /><span>{long}</span><Direction effect={c.effect} /></div>
+                          <p>{c.comment} <Cites basis={c.basis} pdf={r.pdf} /></p></li>); })}</ul>
+                      <p className="folder-links"><Link href={`${r.href}#impact`}>Key points and procurement requirements →</Link></p>
+                    </details>);
+                })}
+              </div>))}
           </section>))}
+
+        <section id="method" className="glass method-box rise">
+          <h2 className="label">How these are prepared</h2>
+          <ol>
+            <li>Only documents the legal team picks are assessed, from the operative text (the decision, the proviso, the table, the deadline), not the recitals. A party&apos;s argument is labelled as a claim, never as a finding.</li>
+            <li>Each statement names the mechanism that changes and the figure the text gives. Nothing is computed that the text does not state.</li>
+            <li>Every statement cites paragraph ids from the extracted text; statements whose citations are not in the document are dropped automatically.</li>
+            <li>There are no scores. Direction says who is on which side, not how much. &quot;High impact&quot; is the team&apos;s own rating, given in review.</li>
+            <li>An AI drafts the assessment; a named reviewer edits and approves it. Until then it is shown only on the preview, marked as a draft.</li>
+          </ol>
+          <MethodNote />
+        </section>
       </div>
-    </>)}
-    <section id="method" className="card method-box">
-      <h2>How these are prepared</h2>
-      <ol>
-        <li>Only documents the legal team picks are assessed, from the operative text (the decision, the proviso, the table, the deadline), not the recitals. A party&apos;s argument is labelled as a claim, never as a finding.</li>
-        <li>Each statement names the mechanism that changes (a charge, a limit, an obligation, an eligibility rule) and the figure the text gives. Nothing is computed that the text does not state.</li>
-        <li>Every key point, procurement requirement and stakeholder comment cites paragraph ids from the extracted text. Statements whose citations are not in the document are dropped automatically.</li>
-        <li>There are no scores. Direction (gains, bears cost, mixed) says who is on which side, not how much.</li>
-        <li>An AI drafts the assessment; a named reviewer edits and approves it with the summary. Until then it is shown only on the preview, marked as a draft.</li>
-      </ol>
-      <MethodNote />
-    </section>
-  </>);
+    </div>
+  );
 }

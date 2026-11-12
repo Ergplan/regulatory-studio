@@ -37,7 +37,7 @@ export default async function GroupPage({ params }: { params: Promise<Params> })
           const c = r.impact.stakeholders[g]!;
           return <li key={r.key} className={`e-${c.effect}`}>
             <div className="who-head"><Link href={`${r.href}#impact`}>{r.title}</Link><Direction effect={c.effect} /></div>
-            <p className="meta">{r.sub}{r.draft ? " · AI draft" : ""}</p>
+            <p className="meta">{r.commission.toUpperCase()}{r.sub ? ` · ${r.sub}` : ""}{r.draft ? " · AI draft" : ""}</p>
             <p>{c.comment} <Cites basis={c.basis} pdf={r.pdf} /></p></li>;
         })}</ul>
       </section>))}

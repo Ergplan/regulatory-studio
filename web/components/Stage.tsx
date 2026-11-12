@@ -18,7 +18,7 @@ export default function Stage({ items }: { items: StageItem[] }) {
         <div className="india-box"><IndiaMap /></div>
         <div className="ccards">
           {items.filter((c) => GEO[c.code]).map((c) => (
-            <a key={c.code} href={c.href} className={`ccard cc-${c.code}${c.idle ? " idle" : ""}`} style={pct(...GEO[c.code].card)}>
+            <a key={c.code} href={c.href} className={`ccard ${GEO[c.code].side} cc-${c.code}${c.idle ? " idle" : ""}`} style={pct(...GEO[c.code].card)}>
               <b>{c.code.toUpperCase()}</b><span>{GEO[c.code].place}</span><em>{c.note}</em>
             </a>))}
         </div>
