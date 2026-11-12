@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import Impact from "@/components/Impact";
 import { Deadline } from "@/components/ConsultationCard";
@@ -36,6 +37,13 @@ export default async function ConsultationPage({ params }: { params: Promise<Par
         {c.impact && <Impact impact={c.impact} pdf={c.source_url} draft={c.draft} />}
       </section>
       <aside>
+        <div className="glass studio-cta">
+          <p className="eyebrow">Studio</p>
+          <p>{Object.keys(c.comments ?? {}).length
+            ? `Comments are prepared for ${Object.keys(c.comments!).length} stakeholder group${Object.keys(c.comments!).length === 1 ? "" : "s"}. Pick yours, edit and save.`
+            : "Start your comments from an outline of this draft."}</p>
+          <Link href={`/studio?draft=${c.id.slice(0, 10)}`} className="btn">Draft your comments</Link>
+        </div>
         <h2>Documents</h2>
         <ul><li><a href={c.source_url} rel="nofollow noopener">The draft (PDF)</a></li>
           {c.related.map((r) => <li key={r.url}><a href={r.url} rel="nofollow noopener">{r.label}</a></li>)}</ul>

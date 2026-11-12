@@ -8,10 +8,10 @@ import sys
 
 from . import config, db
 
-STAGES = ["intake", "extract", "registry", "amend", "consult", "triage", "read", "impact", "draft"]
+STAGES = ["intake", "extract", "registry", "amend", "consult", "triage", "read", "impact", "comments", "draft"]
 
 
-def _run_stage(name: str, limit: int | None, docs: list[str] | None = None) -> dict:
+def _run_stage(name: str, limit: int | None, docs: list[str] | None = None, personas: list[str] | None = None) -> dict:
     if name == "intake":
         from . import intake
         r = intake.run(limit)
@@ -34,6 +34,9 @@ def _run_stage(name: str, limit: int | None, docs: list[str] | None = None) -> d
     if name == "read":
         from . import reader
         return reader.run(limit)
+    if name == "comments":
+        from . import comments
+        return comments.run(limit, docs, personas)
     if name == "impact":
         from . import impact
         return impact.run(limit, docs)
@@ -100,7 +103,10 @@ def main(argv: list[str] | None = None) -> None:
     r.add_argument("stages", nargs="+", choices=STAGES)
     r.add_argument("--limit", type=int, default=None, help="max documents per stage this run")
     r.add_argument("--doc", action="append", default=None,
-                   help="impact stage: queue this document (id or id prefix) for assessment; repeatable")
+                   help="impact and comments stages: queue this document (id or id prefix); repeatable")
+    r.add_argument("--as", dest="personas", action="append", default=None,
+                   choices=["discoms", "ci_consumers", "captive", "re_developers", "storage", "conventional", "transmission", "traders"],
+                   help="comments stage: whose comments to draft; repeatable")
     rv = sub.add_parser("review", help="start the legal review screen")
     rv.add_argument("--host", default="127.0.0.1")
     rv.add_argument("--port", type=int, default=8765)
@@ -146,7 +152,7 @@ def main(argv: list[str] | None = None) -> None:
     elif args.cmd == "run":
         db.init()
         for s in args.stages:
-            print(s, json.dumps(_run_stage(s, args.limit, args.doc)))
+            print(s, json.dumps(_run_stage(s, args.limit, args.doc, args.personas)))
     elif args.cmd == "add-reviewer":
         import getpass
         from . import auth

@@ -19,6 +19,7 @@ def env(tmp_path, monkeypatch):
     monkeypatch.setenv("REGSTUDIO_SNAPSHOT", str(tmp_path / "snapshot"))
     monkeypatch.setenv("REGSTUDIO_PREVIEW", str(tmp_path / "preview"))
     monkeypatch.setenv("REGSTUDIO_READER_OUTPUTS", str(tmp_path / "reader_outputs"))
+    monkeypatch.setenv("REGSTUDIO_COMMENTS", str(tmp_path / "comments"))
     monkeypatch.setenv("REGSTUDIO_READER", "mock")
     import regstudio.config as config
     importlib.reload(config)

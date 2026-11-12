@@ -1,0 +1,26 @@
+{# Studio: draft comments per stakeholder group. Shown on the website only after approval. #}
+<div class="card" id="comments"><h2 style="margin-top:0">Studio: draft comments</h2>
+<p class="muted small">Comments a reader can edit and file under their own name, written from one stakeholder group's position.
+Each point must cite paragraph ids of this draft. Files are kept in <code>data/comments/</code>.</p>
+<form method="post" action="/comments/{{ d.id }}" class="row">
+<select name="persona">{% for g, label in GROUPS.items() %}<option value="{{ g }}">{{ label }}</option>{% endfor %}</select>
+<button name="action" value="request">Request a comment draft</button></form>
+{% for k in comment_drafts %}
+<div id="comments-{{ k.persona }}" style="border-top:1px solid var(--line);margin-top:14px;padding-top:12px">
+<h3 style="margin:0 0 6px">{{ k.label }} <span class="pill {{ k.status }}">{{ k.status }}</span></h3>
+{% if k.body %}
+<form method="post" action="/comments/{{ d.id }}"><input type="hidden" name="persona" value="{{ k.persona }}">
+<label>Position</label><textarea name="position" style="min-height:70px">{{ k.body.position }}</textarea>
+{% for i in range(6) %}{% set p = k.body.points[i] if i < k.body.points|length else None %}
+<details {% if p %}open{% endif %}><summary>Point {{ i + 1 }}{% if p %}: {{ p.clause }}{% endif %}</summary>
+<label>Provision</label><input name="clause_{{ i }}" value="{{ p.clause if p else '' }}" maxlength="120">
+<label>Comment</label><textarea name="comment_{{ i }}" style="min-height:70px">{{ p.comment if p else '' }}</textarea>
+<label>Requested change</label><textarea name="suggestion_{{ i }}" style="min-height:50px">{{ p.suggestion if p else '' }}</textarea>
+<label>Paragraph ids (e.g. p2.10, p2.14)</label><input name="basis_{{ i }}" value="{{ p.basis|join(', ') if p else '' }}"></details>{% endfor %}
+<label>Closing</label><textarea name="closing" style="min-height:44px">{{ k.body.closing }}</textarea>
+<div class="row"><button name="action" value="save">Save draft</button><button class="primary" name="action" value="approve">Approve for the website</button>
+<button class="bad" name="action" value="reject">Not for publication</button><button class="bad" name="action" value="remove">Remove</button></div></form>
+{% else %}<p class="muted">Queued. The next <code>regstudio run comments</code> drafts it.</p>
+<form method="post" action="/comments/{{ d.id }}"><input type="hidden" name="persona" value="{{ k.persona }}"><button class="bad" name="action" value="remove">Cancel request</button></form>{% endif %}
+</div>{% endfor %}
+</div>

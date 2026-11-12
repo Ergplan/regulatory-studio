@@ -7,7 +7,7 @@ export default function About() {
   return (<article style={{ maxWidth: 760 }}>
     <h1>About Regulatory Studio</h1>
     <p>Regulatory Studio tracks orders of the Central Electricity Regulatory Commission, the Appellate Tribunal for Electricity
-      and state electricity regulatory commissions, starting with open access and tariff matters. It is incubated by jouleWise.</p>
+      and state electricity regulatory commissions, starting with open access and tariff matters. It is a joint venture of jouleWise and Urja Praxis.</p>
     <h2>How a summary is made</h2>
     <ol><li>New orders are collected from commission websites every week.</li>
       <li>Software reads each order, drafts a summary and proposes links to the regulations, Act sections and earlier decisions it relies on, each tied to the paragraph that supports it.</li>

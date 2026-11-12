@@ -311,3 +311,40 @@ def test_impact_is_opt_in_cited_edited_and_published_with_the_summary(server):
     pub = json.loads((config.SNAPSHOT / "orders.json").read_text())[0]["impact"]
     assert pub["market_note"] == "Edited." and [k["text"] for k in pub["key_points"]] == ["One", "Two"]
     assert pub["stakeholders"] == {"ci_consumers": {"effect": "opportunity", "comment": "x", "basis": [pids[1]]}}
+
+
+def test_comment_drafts_are_requested_cited_reviewed_and_published(server):
+    from regstudio import comments, consult
+    _sample_draft()
+    intake.run(); extract.run(); consult.run()
+    draft = _db().execute("SELECT doc_id FROM consultations").fetchone()[0]
+    pids = [r[0] for r in _db().execute("SELECT pid FROM paragraphs WHERE doc_id = ? ORDER BY page, idx", (draft,))][:2]
+    server("/whoami", {"name": "Test Reviewer"})
+    assert "Studio: draft comments" in server.get(f"/consultation/{draft}")
+    assert server(f"/comments/{draft}", {"action": "request", "persona": "captive"}) == 303
+    (config.READER_OUTPUTS).mkdir(parents=True, exist_ok=True)
+    (config.READER_OUTPUTS / f"{draft}.comment.captive.json").write_text(json.dumps({
+        "position": "We support the draft with two changes.", "closing": "We request a hearing.",
+        "points": [{"clause": "Regulation 4", "comment": "Monthly banking hurts seasonal users.", "suggestion": "Keep annual banking.", "basis": [pids[0]]},
+                   {"clause": "Regulation 9", "comment": "Not in the text.", "suggestion": "x", "basis": ["p99.9"]}]}))
+    import os
+    os.environ["REGSTUDIO_READER"] = "file"; config.READER = "file"
+    try:
+        assert comments.run()["comments"] == 1
+    finally:
+        os.environ["REGSTUDIO_READER"] = "mock"; config.READER = "mock"
+    row = _db().execute("SELECT body, status FROM comment_drafts WHERE doc_id = ? AND persona = 'captive'", (draft,)).fetchone()
+    body = json.loads(row[0])
+    assert row[1] == "proposed" and [p["clause"] for p in body["points"]] == ["Regulation 4"]  # the uncited point is dropped
+    files = list(config.COMMENTS.rglob("captive.md"))
+    assert files and "Keep annual banking." in files[0].read_text()
+    server(f"/consultation/{draft}", {"action": "approve", "title": "Draft GEOA", "kind": "draft_regulation", "summary": "Proposal.",
+                                      "proposes": "One", "comment_deadline": "", "hearing_date": "", "amends": ""})
+    publish.run()
+    pub = [c for c in json.loads((config.SNAPSHOT / "consultations.json").read_text()) if c["id"] == draft][0]
+    assert pub["comments"] == {}  # a proposed comment draft is not published
+    assert server(f"/comments/{draft}", {"action": "approve", "persona": "captive", "position": "Edited position.", "closing": "c",
+                                         "clause_0": "Regulation 4", "comment_0": "Edited.", "suggestion_0": "s", "basis_0": pids[0]}) == 303
+    publish.run()
+    pub = [c for c in json.loads((config.SNAPSHOT / "consultations.json").read_text()) if c["id"] == draft][0]
+    assert pub["comments"]["captive"]["position"] == "Edited position." and pub["comments"]["captive"]["draft"] is False
