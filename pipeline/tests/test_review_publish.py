@@ -272,31 +272,42 @@ def test_draft_regulation_is_summarised_reviewed_and_published(server):
     assert publish.run(clean=True)["consultations"] == 0
 
 
-def test_impact_is_proposed_edited_and_published_with_the_summary(server):
+def test_impact_is_opt_in_cited_edited_and_published_with_the_summary(server):
     from regstudio import impact
     doc, _, _ = _ids()
+    pids = [r[0] for r in _db().execute("SELECT pid FROM paragraphs WHERE doc_id = ? ORDER BY page, idx", (doc,))][:2]
+    server("/whoami", {"name": "Test Reviewer"})
+    page = server.get(f"/order/{doc}")
+    assert "Request market impact assessment" in page
+    assert impact.run()["impact"] == 0  # nothing requested, nothing assessed
+    assert server(f"/impact/{doc}", {"action": "request"}) == 303
+    assert _db().execute("SELECT impact FROM orders WHERE doc_id = ?", (doc,)).fetchone()[0] == "requested"
     prepared = config.READER_OUTPUTS
     prepared.mkdir(parents=True, exist_ok=True)
     (prepared / f"{doc}.impact.json").write_text(json.dumps({
-        "market_note": "Banking gets cheaper for C&I buyers.", "key_points": ["Banking charge falls"], "procurement": [],
-        "stakeholders": {"ci_consumers": {"level": 3, "effect": "opportunity", "why": "lower banking cost"},
-                         "discoms": {"level": 2, "effect": "cost", "why": "less banking income"}}}))
+        "market_note": "Banking gets cheaper for C&I buyers.",
+        "key_points": [{"text": "Banking charge falls", "basis": [pids[0]]}, {"text": "Invented point", "basis": ["p99.9"]}],
+        "procurement": [], "open_questions": ["Procedure to follow"],
+        "stakeholders": {"ci_consumers": {"effect": "opportunity", "comment": "lower banking cost", "basis": [pids[0]]},
+                         "discoms": {"effect": "cost", "comment": "less banking income", "basis": ["p99.9"]}}}))
     import os
     os.environ["REGSTUDIO_READER"] = "file"; config.READER = "file"
     try:
-        assert impact.run()["impact"] == 1
+        r = impact.run()
+        assert r["impact"] == 1 and r["dropped_uncited"] == 2  # the uncited point and cell are dropped
     finally:
         os.environ["REGSTUDIO_READER"] = "mock"; config.READER = "mock"
     row = json.loads(_db().execute("SELECT impact FROM orders WHERE doc_id = ?", (doc,)).fetchone()[0])
-    assert list(row["stakeholders"]) == list(impact.GROUPS)  # every group, fixed order
-    assert row["stakeholders"]["storage"] == {"level": 0, "effect": "neutral", "why": ""}
-    server("/whoami", {"name": "Test Reviewer"})
+    assert list(row["stakeholders"]) == ["ci_consumers"] and row["key_points"] == [{"text": "Banking charge falls", "basis": [pids[0]]}]
+    assert "level" not in row["stakeholders"]["ci_consumers"]
     assert "Market impact" in server.get(f"/order/{doc}")
-    assert server(f"/impact/{doc}", {"action": "save", "market_note": "Edited.", "key_points": "One\nTwo",
-                                     "level_ci_consumers": "2", "effect_ci_consumers": "opportunity", "why_ci_consumers": "x"}) == 303
+    assert server(f"/impact/{doc}", {"action": "save", "market_note": "Edited.",
+                                     "key_points": f"One [{pids[0]}]\nTwo [{pids[1]}]\nThree without citation",
+                                     "effect_ci_consumers": "opportunity", "comment_ci_consumers": "x", "basis_ci_consumers": pids[1],
+                                     "effect_storage": "cost", "comment_storage": "uncited"}) == 303
     assert publish.run()["orders"] == 0
     server(f"/order/{doc}/summary", {"action": "approve", "summary": "Reviewed.", "issue": "i", "outcome": "o"})
     publish.run()
     pub = json.loads((config.SNAPSHOT / "orders.json").read_text())[0]["impact"]
-    assert pub["market_note"] == "Edited." and pub["key_points"] == ["One", "Two"]
-    assert pub["stakeholders"]["ci_consumers"]["level"] == 2 and pub["stakeholders"]["discoms"]["level"] == 0
+    assert pub["market_note"] == "Edited." and [k["text"] for k in pub["key_points"]] == ["One", "Two"]
+    assert pub["stakeholders"] == {"ci_consumers": {"effect": "opportunity", "comment": "x", "basis": [pids[1]]}}

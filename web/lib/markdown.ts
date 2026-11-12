@@ -1,17 +1,19 @@
 // Markdown twins of site pages, for language models and other readers that prefer plain text.
 import {
   EFFECT_LABEL, GROUPS, KIND_LABEL, SITE_URL, actById, citingOrders, clauses, clausesOf, commissionName, consultations, digests, linkTypeLabel, orderById, orderLabel,
-  orders, regulations, regulationById, targetInfo, topicName, type Impact, type Order,
+  orders, regulations, regulationById, site, targetInfo, topicName, type Impact, type Order,
 } from "./data";
 
 export function impactMd(i: Impact | null | undefined, draft?: boolean): string[] {
   if (!i) return [];
-  const hit = GROUPS.filter(([g]) => (i.stakeholders[g]?.level ?? 0) > 0);
+  const cite = (b: string[]) => (b.length ? ` (${b.map((p) => `p.${p.slice(1).split(".")[0]} ¶${p.split(".")[1]}`).join(", ")})` : "");
+  const hit = GROUPS.filter(([g]) => i.stakeholders[g]);
   return ["## Market impact" + (draft ? " (AI draft, not reviewed)" : ""), "", i.market_note, "",
-    ...(i.key_points.length ? ["### Key points", "", ...i.key_points.map((k) => `- ${k}`), ""] : []),
-    ...(i.procurement.length ? ["### Procurement requirements", "", ...i.procurement.map((k) => `- ${k}`), ""] : []),
-    ...(hit.length ? ["### Who it affects (level 1 to 3)", "", "| Group | Effect | Level | Why |", "|---|---|---|---|",
-      ...hit.map(([g, , long]) => { const c = i.stakeholders[g]; return `| ${long} | ${EFFECT_LABEL[c.effect]} | ${c.level} | ${c.why.replace(/\|/g, "/")} |`; }), ""] : [])];
+    ...(hit.length ? ["### Who is affected", "", ...hit.map(([g, , long]) => { const c = i.stakeholders[g]!; return `- **${long}** (${EFFECT_LABEL[c.effect].toLowerCase()}): ${c.comment}${cite(c.basis)}`; }), ""] : []),
+    ...(i.key_points.length ? ["### Key points", "", ...i.key_points.map((k) => `- ${k.text}${cite(k.basis)}`), ""] : []),
+    ...(i.procurement.length ? ["### Procurement requirements", "", ...i.procurement.map((k) => `- ${k.text}${cite(k.basis)}`), ""] : []),
+    ...(i.open_questions.length ? ["### Open questions", "", ...i.open_questions.map((q) => `- ${q}`), ""] : []),
+    "Citations are page and paragraph of the source PDF. No scores: direction only.", ""];
 }
 
 const abs = (p: string) => (/^https?:\/\//.test(p) ? p : SITE_URL + p);
@@ -42,7 +44,7 @@ export function pageMd(path: string): string | null {
   const o = orders.find((x) => x.path === path);
   if (o) return orderMd(o);
   const reg = regulations.find((r) => r.path === path);
-  if (reg) return [`# ${reg.title}`, "", `Commission: ${commissionName(reg.commission)}`, "", "## Clauses", "",
+  if (reg) return [`# ${reg.title}`, "", `Commission: ${commissionName(reg.commission)}`, "", ...impactMd(reg.impact, site.preview), "## Clauses", "",
     ...clausesOf(reg.id).map((c) => `- [Regulation ${c.number}${c.heading ? ": " + c.heading : ""}](${abs(c.path + ".md")}) — cited by ${citingOrders("clause", c.id).length} reviewed orders`)].join("\n") + "\n";
   const c = clauses.find((x) => x.path === path);
   if (c) {

@@ -11,7 +11,7 @@ from . import config, db
 STAGES = ["intake", "extract", "registry", "amend", "consult", "triage", "read", "impact", "draft"]
 
 
-def _run_stage(name: str, limit: int | None) -> dict:
+def _run_stage(name: str, limit: int | None, docs: list[str] | None = None) -> dict:
     if name == "intake":
         from . import intake
         r = intake.run(limit)
@@ -36,7 +36,7 @@ def _run_stage(name: str, limit: int | None) -> dict:
         return reader.run(limit)
     if name == "impact":
         from . import impact
-        return impact.run(limit)
+        return impact.run(limit, docs)
     if name == "consult":
         from . import consult
         return consult.run(limit)
@@ -99,6 +99,8 @@ def main(argv: list[str] | None = None) -> None:
     r = sub.add_parser("run", help="run one or more stages in order")
     r.add_argument("stages", nargs="+", choices=STAGES)
     r.add_argument("--limit", type=int, default=None, help="max documents per stage this run")
+    r.add_argument("--doc", action="append", default=None,
+                   help="impact stage: queue this document (id or id prefix) for assessment; repeatable")
     rv = sub.add_parser("review", help="start the legal review screen")
     rv.add_argument("--host", default="127.0.0.1")
     rv.add_argument("--port", type=int, default=8765)
@@ -144,7 +146,7 @@ def main(argv: list[str] | None = None) -> None:
     elif args.cmd == "run":
         db.init()
         for s in args.stages:
-            print(s, json.dumps(_run_stage(s, args.limit)))
+            print(s, json.dumps(_run_stage(s, args.limit, args.doc)))
     elif args.cmd == "add-reviewer":
         import getpass
         from . import auth

@@ -13,21 +13,26 @@ export interface Order {
   parties: { name: string; role: string }[]; issue: string; outcome: string; summary: string;
   reviewed_by: string; approved_at: string; revised_at: string | null; language: string | null; sample: boolean; draft?: boolean; links: Link[]; impact?: Impact | null;
 }
-export interface Regulation { id: string; path: string; commission: string; title: string; short_title: string | null; notified_date: string | null; source_url: string | null; sample: boolean }
+export interface Regulation { id: string; path: string; commission: string; title: string; short_title: string | null; notified_date: string | null; source_url: string | null; sample: boolean; impact?: Impact | null }
 export interface ClauseVersion { text: string; in_force_from: string | null; in_force_to: string | null }
 export interface Clause { id: string; path: string; regulation_id: string; number: string; heading: string | null; text: string; in_force_from: string | null; in_force_to: string | null; versions?: ClauseVersion[] }
 export interface ActSection { id: string; act: string; number: string; title: string }
 export interface Digest { id: string; path: string; from: string; to: string; intro: string; items: string[]; approved_at: string; reviewed_by: string; draft?: boolean }
-export type Effect = "opportunity" | "cost" | "mixed" | "neutral";
-export interface ImpactCell { level: 0 | 1 | 2 | 3; effect: Effect; why: string }
-export interface Impact { market_note: string; key_points: string[]; procurement: string[]; stakeholders: Record<string, ImpactCell> }
-export const GROUPS: [string, string, string][] = [
+export type Effect = "opportunity" | "cost" | "mixed";
+export interface Cited { text: string; basis: string[] }
+export interface ImpactCell { effect: Effect; comment: string; basis: string[] }
+/** No scores: comments per affected group, each citing paragraph ids (p<page>.<n>) of the source document. */
+export interface Impact { market_note: string; key_points: Cited[]; procurement: Cited[]; stakeholders: Partial<Record<string, ImpactCell>>; open_questions: string[] }
+export type GroupKey = "discoms" | "ci_consumers" | "captive" | "re_developers" | "storage" | "conventional" | "transmission" | "traders";
+export const GROUPS: [GroupKey, string, string][] = [
   ["discoms", "Discoms", "Discoms"], ["ci_consumers", "C&I / OA", "C&I and open access consumers"], ["captive", "Captive", "Captive users"],
-  ["re_developers", "RE dev.", "RE developers"], ["storage", "Storage", "Storage (BESS, pumped hydro)"],
-  ["conventional", "Thermal / hydro", "Thermal and hydro generators"], ["transmission", "Grid", "Transmission and system operators"],
+  ["re_developers", "RE developers", "RE developers"], ["storage", "Storage", "Storage (BESS, pumped hydro)"],
+  ["conventional", "Thermal / hydro", "Thermal and hydro generators"], ["transmission", "Grid operators", "Transmission and system operators"],
   ["traders", "Traders", "Traders and exchanges"],
 ];
-export const EFFECT_LABEL: Record<Effect, string> = { opportunity: "Opportunity", cost: "Cost or obligation", mixed: "Mixed", neutral: "No effect" };
+export const EFFECT_LABEL: Record<Effect, string> = { opportunity: "Gains", cost: "Bears cost", mixed: "Mixed" };
+/** "p8.21" -> page 8, paragraph 21 */
+export const pidPage = (pid: string) => Number(pid.slice(1).split(".")[0]) || null;
 export interface Consultation {
   id: string; path: string; commission: string; title: string; kind: "draft_regulation" | "draft_amendment" | "consultation_paper" | "proposal";
   issued: string | null; comment_deadline: string | null; hearing_date: string | null; summary: string; proposes: string[];

@@ -1,18 +1,34 @@
-{# Market impact editor, shared by the order and consultation pages. #}
+{# Market impact editor, shared by order, consultation and regulation pages. No scores: comments with paragraph citations. #}
 <div class="card" id="impact"><h2 style="margin-top:0">Market impact</h2>
 {% if impact %}
-<form method="post" action="/impact/{{ d.id }}">
-<label>Market note (one or two sentences)</label><textarea name="market_note" style="min-height:60px">{{ impact.market_note }}</textarea>
-<label>Key points, one per line</label><textarea name="key_points" style="min-height:90px">{{ impact.key_points|join('\n') }}</textarea>
-<label>Procurement requirements, one per line</label><textarea name="procurement" style="min-height:70px">{{ impact.procurement|join('\n') }}</textarea>
-<table class="impact-edit"><tr><th>Who</th><th>Level</th><th>Effect</th><th>Why</th></tr>
-{% for g, label in GROUPS.items() %}{% set c = impact.stakeholders[g] %}
+<form method="post" action="/impact/{{ impact_doc }}">
+<p class="muted small">Every key point, procurement item and stakeholder comment must cite paragraph ids from this document
+(e.g. <code>p8.21</code>). Lines without a valid citation are dropped when you save.</p>
+<label>Market note (two or three sentences: mechanism, who is exposed, the figure that matters)</label>
+<textarea name="market_note" style="min-height:60px">{{ impact.market_note }}</textarea>
+<label>Key points, one per line, citations in brackets: <code>Text [p2.1, p3.4]</code></label>
+<textarea name="key_points" style="min-height:110px">{% for k in impact.key_points %}{{ k.text }} [{{ k.basis|join(', ') }}]
+{% endfor %}</textarea>
+<label>Procurement requirements, same format</label>
+<textarea name="procurement" style="min-height:80px">{% for k in impact.procurement %}{{ k.text }} [{{ k.basis|join(', ') }}]
+{% endfor %}</textarea>
+<label>Who is affected (leave the comment empty for groups the text does not affect)</label>
+<table class="impact-edit"><tr><th>Group</th><th>Direction</th><th>Comment</th><th>Paragraphs</th></tr>
+{% for g, label in GROUPS.items() %}{% set c = impact.stakeholders.get(g) %}
 <tr><td>{{ label }}</td>
-<td><select name="level_{{ g }}">{% for n in range(4) %}<option value="{{ n }}" {% if c.level == n %}selected{% endif %}>{{ n }}</option>{% endfor %}</select></td>
-<td><select name="effect_{{ g }}">{% for e in EFFECTS %}<option value="{{ e }}" {% if c.effect == e %}selected{% endif %}>{{ e }}</option>{% endfor %}</select></td>
-<td><input name="why_{{ g }}" value="{{ c.why }}" maxlength="200"></td></tr>{% endfor %}</table>
-<p class="muted small">Level 0 none, 1 indirect, 2 noticeable, 3 direct and material. Published with the summary once the summary is approved.</p>
+<td><select name="effect_{{ g }}"><option value="">—</option>{% for e in EFFECTS %}<option value="{{ e }}" {% if c and c.effect == e %}selected{% endif %}>{{ e }}</option>{% endfor %}</select></td>
+<td><textarea name="comment_{{ g }}" maxlength="360" style="min-height:52px">{{ c.comment if c else '' }}</textarea></td>
+<td><input name="basis_{{ g }}" value="{{ c.basis|join(', ') if c else '' }}" style="width:9em"></td></tr>{% endfor %}</table>
+<label>Open questions, one per line (what the text leaves open)</label>
+<textarea name="open_questions" style="min-height:60px">{{ impact.open_questions|join('\n') }}</textarea>
+<p class="muted small">Published with the summary (or the regulation) once that is approved.</p>
 <div class="row"><button name="action" value="save">Save impact</button><button class="bad" name="action" value="clear">Remove impact</button></div>
 </form>
-{% else %}<p class="muted">No impact assessment yet. It is drafted by <code>regstudio run impact</code>.</p>{% endif %}
+{% elif impact_requested %}
+<p class="muted">Queued. The next <code>regstudio run impact</code> drafts it.</p>
+<form method="post" action="/impact/{{ impact_doc }}"><button class="bad" name="action" value="clear">Cancel request</button></form>
+{% elif impact_doc %}
+<p class="muted">Not assessed. Assessments are made only for documents you choose.</p>
+<form method="post" action="/impact/{{ impact_doc }}"><button name="action" value="request">Request market impact assessment</button></form>
+{% endif %}
 </div>

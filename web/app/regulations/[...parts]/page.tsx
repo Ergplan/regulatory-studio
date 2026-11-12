@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import Impact from "@/components/Impact";
 import SpiderMap, { type MapNode } from "@/components/SpiderMap";
 import { citingOrders, clauses, clausesOf, commissionName, linkTypeLabel, orderLabel, regName, regulationById, regulations, site } from "@/lib/data";
 import { fmtDate } from "@/lib/format";
@@ -83,6 +84,8 @@ export default async function RegulationPage({ params }: { params: Promise<Param
       <div className="meta"><span className="tag">{reg.commission.toUpperCase()}</span>{reg.notified_date && <span>Notified {fmtDate(reg.notified_date)}</span>}</div>
       <h1>{reg.title}</h1>
       {reg.source_url && <p><a href={reg.source_url} rel="nofollow noopener">Official text on the commission&apos;s website</a></p>}
+      {reg.impact && <Impact impact={reg.impact} pdf={reg.source_url} draft={site.preview} />}
+      <h2>Clauses</h2>
       <table className="list"><thead><tr><th>Clause</th><th>Heading</th><th>Orders citing it</th></tr></thead>
         <tbody>{cl.map((c) => <tr key={c.id}><td><Link href={c.path}>{c.number}</Link></td><td>{c.heading}{c.in_force_to && <span className="tag bad"> omitted</span>}{c.versions && c.versions.length > 0 && <span className="tag"> amended</span>}</td><td>{citingOrders("clause", c.id).length}</td></tr>)}</tbody></table>
     </article>

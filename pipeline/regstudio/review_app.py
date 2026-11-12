@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import datetime as dt
 import json
+import re
 import urllib.parse
 from pathlib import Path
 
@@ -269,7 +270,7 @@ def regulation(request: Request, reg_id: str):
             (reg_id,)).fetchall()
         regs = conn.execute("SELECT id, title FROM regulations WHERE id != ? ORDER BY id", (reg_id,)).fetchall()
     return templates.TemplateResponse(request, "regulation.html", {
-        "reviewer": reviewer(request), "r": r, "clauses": clauses, "regs": regs})
+        "reviewer": reviewer(request), "r": r, "clauses": clauses, "regs": regs, **impact_context(r)})
 
 
 @app.post("/regulation/{reg_id:path}/meta")
@@ -462,31 +463,58 @@ def save_consultation(request: Request, doc_id: str, action: str = Form(...), ti
 
 
 # --- Market impact --------------------------------------------------------------------------------
-from .impact import EFFECTS as IMPACT_EFFECTS, GROUPS as IMPACT_GROUPS, clean as clean_impact  # noqa: E402
+from .impact import EFFECTS as IMPACT_EFFECTS, GROUPS as IMPACT_GROUPS, REQUESTED as IMPACT_REQUESTED  # noqa: E402
+from .impact import clean as clean_impact, load as load_impact, paragraph_ids, table_for  # noqa: E402
+
+CITED = re.compile(r"^(.*?)\s*\[([p0-9.,\s]+)\]\s*$")
 
 
-def impact_context(row) -> dict:
+def _cited_lines(raw: str) -> list[dict]:
+    """'Text [p2.1, p3.4]' per line -> {text, basis}."""
+    out = []
+    for line in str(raw or "").splitlines():
+        line = line.strip(" -•\t")
+        if not line:
+            continue
+        m = CITED.match(line)
+        text, basis = (m.group(1), [b.strip() for b in m.group(2).split(",") if b.strip()]) if m else (line, [])
+        out.append({"text": text, "basis": basis})
+    return out
+
+
+def impact_context(row, doc_id: str | None = None) -> dict:
     raw = row["impact"] if row is not None and "impact" in row.keys() else None
-    return {"impact": json.loads(raw) if raw else None, "GROUPS": IMPACT_GROUPS, "EFFECTS": IMPACT_EFFECTS}
+    return {"impact": load_impact(raw), "impact_requested": raw == IMPACT_REQUESTED,
+            "impact_doc": doc_id or (row["doc_id"] if row is not None and "doc_id" in row.keys() else None),
+            "GROUPS": IMPACT_GROUPS, "EFFECTS": IMPACT_EFFECTS}
 
 
 @app.post("/impact/{doc_id}")
 async def save_impact(request: Request, doc_id: str):
     name = need_reviewer(request)
     form = await request.form()
+    action = str(form.get("action", "save"))
     with db.session() as conn:
-        table = "orders" if conn.execute("SELECT 1 FROM orders WHERE doc_id = ?", (doc_id,)).fetchone() else "consultations"
-        if not conn.execute(f"SELECT 1 FROM {table} WHERE doc_id = ?", (doc_id,)).fetchone():
+        table = table_for(conn, doc_id)
+        if not table:
             raise HTTPException(404)
-        if form.get("action") == "clear":
+        if action == "clear":
             conn.execute(f"UPDATE {table} SET impact = NULL WHERE doc_id = ?", (doc_id,))
+        elif action == "request":
+            conn.execute(f"UPDATE {table} SET impact = ? WHERE doc_id = ?", (IMPACT_REQUESTED, doc_id))
         else:
-            lines = lambda k: [l.strip(" -•\t") for l in str(form.get(k, "")).splitlines() if l.strip(" -•\t")]
-            out = {"market_note": str(form.get("market_note", "")).strip(), "key_points": lines("key_points"),
-                   "procurement": lines("procurement"),
-                   "stakeholders": {g: {"level": int(form.get(f"level_{g}", 0) or 0), "effect": str(form.get(f"effect_{g}", "neutral")),
-                                        "why": str(form.get(f"why_{g}", "")).strip()} for g in IMPACT_GROUPS}}
-            conn.execute(f"UPDATE {table} SET impact = ? WHERE doc_id = ?", (json.dumps(clean_impact(out), ensure_ascii=False), doc_id))
-        db.audit(conn, name, f"impact.{form.get('action', 'save')}", doc_id)
-    back_to = "/order/" if table == "orders" else "/consultation/"
-    return back(f"{back_to}{doc_id}#impact")
+            cells = {}
+            for g in IMPACT_GROUPS:
+                comment = str(form.get(f"comment_{g}", "")).strip()
+                if comment and form.get(f"effect_{g}") in IMPACT_EFFECTS:
+                    cells[g] = {"effect": str(form.get(f"effect_{g}")), "comment": comment,
+                                "basis": [b.strip() for b in str(form.get(f"basis_{g}", "")).replace(";", ",").split(",") if b.strip()]}
+            out = {"market_note": str(form.get("market_note", "")).strip(), "key_points": _cited_lines(form.get("key_points")),
+                   "procurement": _cited_lines(form.get("procurement")), "stakeholders": cells,
+                   "open_questions": [q.strip(" -•\t") for q in str(form.get("open_questions", "")).splitlines() if q.strip(" -•\t")]}
+            conn.execute(f"UPDATE {table} SET impact = ? WHERE doc_id = ?",
+                         (json.dumps(clean_impact(out, paragraph_ids(conn, doc_id)), ensure_ascii=False), doc_id))
+        db.audit(conn, name, f"impact.{action}", doc_id)
+        reg = conn.execute("SELECT id FROM regulations WHERE doc_id = ?", (doc_id,)).fetchone() if table == "regulations" else None
+    back_to = {"orders": f"/order/{doc_id}", "consultations": f"/consultation/{doc_id}"}.get(table) or f"/regulation/{reg['id']}"
+    return back(f"{back_to}#impact")
