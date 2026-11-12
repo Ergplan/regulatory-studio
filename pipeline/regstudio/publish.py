@@ -156,6 +156,9 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
                 "issued": c["issued_date"], "comment_deadline": c["comment_deadline"], "hearing_date": c["hearing_date"],
                 "summary": c["summary"], "proposes": json.loads(c["proposes"] or "[]"), "amends": c["amends"],
                 "impact": impact_load(c["impact"]),
+                "comments": {k["persona"]: {**json.loads(k["body"]), "draft": k["status"] != "approved"} for k in conn.execute(
+                    f"SELECT persona, body, status FROM comment_drafts WHERE doc_id = ? AND body IS NOT NULL AND status IN ({marks})",
+                    (c["id"], *ok))},
                 "source_url": c["source_url"], "related": json.loads(c["related"] or "[]"),
                 "reviewed_by": c["reviewer"], "approved_at": c["approved_at"],
                 "draft": preview and c["summary_status"] != "approved",

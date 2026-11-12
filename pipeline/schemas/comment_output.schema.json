@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Draft comments on a draft regulation",
+  "type": "object",
+  "required": ["position", "points", "closing"],
+  "additionalProperties": false,
+  "properties": {
+    "position": {"type": "string", "maxLength": 700, "description": "the commenter's overall position in two or three sentences"},
+    "points": {
+      "type": "array", "minItems": 1, "maxItems": 6,
+      "items": {"type": "object", "required": ["clause", "comment", "suggestion", "basis"], "additionalProperties": false,
+                "properties": {
+                  "clause": {"type": "string", "maxLength": 120, "description": "the provision commented on, as numbered in the draft"},
+                  "comment": {"type": "string", "maxLength": 600, "description": "the concern or support, and why, from this stakeholder's position"},
+                  "suggestion": {"type": "string", "maxLength": 500, "description": "the change or clarification requested"},
+                  "basis": {"type": "array", "minItems": 1, "maxItems": 4, "items": {"type": "string", "pattern": "^p[0-9]+\\.[0-9]+$"}}}}
+    },
+    "closing": {"type": "string", "maxLength": 300}
+  }
+}

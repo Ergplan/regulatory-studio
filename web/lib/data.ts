@@ -33,11 +33,14 @@ export const GROUPS: [GroupKey, string, string][] = [
 export const EFFECT_LABEL: Record<Effect, string> = { opportunity: "Gains", cost: "Bears cost", mixed: "Mixed" };
 /** "p8.21" -> page 8, paragraph 21 */
 export const pidPage = (pid: string) => Number(pid.slice(1).split(".")[0]) || null;
+/** Studio: comments a reader can edit and file, written from one stakeholder group's position. */
+export interface CommentPoint { clause: string; comment: string; suggestion: string; basis: string[] }
+export interface CommentDraft { position: string; points: CommentPoint[]; closing: string; draft?: boolean }
 export interface Consultation {
   id: string; path: string; commission: string; title: string; kind: "draft_regulation" | "draft_amendment" | "consultation_paper" | "proposal";
   issued: string | null; comment_deadline: string | null; hearing_date: string | null; summary: string; proposes: string[];
   amends: string | null; source_url: string; related: { label: string; url: string }[]; reviewed_by: string | null;
-  approved_at: string | null; draft?: boolean; sample: boolean; impact?: Impact | null;
+  approved_at: string | null; draft?: boolean; sample: boolean; impact?: Impact | null; comments?: Record<string, CommentDraft>;
 }
 export interface Site { generated_at: string; commissions: Record<string, string>; topics: Record<string, string>; link_types: Record<string, string>; contains_sample_data: boolean; preview?: boolean }
 
@@ -79,6 +82,13 @@ export const isOpen = (c: Consultation) => {
   const d = lastDay(c);
   if (d !== null) return d >= BUILD_DAY;
   return !!c.issued && Date.parse(BUILD_DAY) - Date.parse(c.issued) <= 60 * 86_400_000;
+};
+/** The Studio also offers drafts whose listed deadline passed in the last three weeks: listings and gazette notices
+ *  sometimes differ, and commissions often extend. The page says the listed date has passed. */
+export const commentable = (c: Consultation) => {
+  if (isOpen(c)) return true;
+  const d = lastDay(c);
+  return d !== null && Date.parse(BUILD_DAY) - Date.parse(d) <= 21 * 86_400_000;
 };
 export const byDeadline = (a: Consultation, b: Consultation) =>
   (lastDay(a) ?? "9999").localeCompare(lastDay(b) ?? "9999") || (b.issued ?? "").localeCompare(a.issued ?? "");

@@ -413,7 +413,8 @@ def consultation(request: Request, doc_id: str):
             "SELECT pid, text, page FROM paragraphs WHERE doc_id = ? ORDER BY page, idx", (doc_id,))}
     return templates.TemplateResponse(request, "consultation.html", {
         "reviewer": reviewer(request), "d": d, "c": c, "paras": paras, "KINDS": KINDS,
-        "proposes": json.loads(c["proposes"] or "[]"), "related": json.loads(c["related"] or "[]"), **impact_context(c)})
+        "proposes": json.loads(c["proposes"] or "[]"), "related": json.loads(c["related"] or "[]"), **impact_context(c),
+        "comment_drafts": comment_context(doc_id)})
 
 
 def _iso_or_none(value: str) -> str | None:
@@ -518,3 +519,45 @@ async def save_impact(request: Request, doc_id: str):
         reg = conn.execute("SELECT id FROM regulations WHERE doc_id = ?", (doc_id,)).fetchone() if table == "regulations" else None
     back_to = {"orders": f"/order/{doc_id}", "consultations": f"/consultation/{doc_id}"}.get(table) or f"/regulation/{reg['id']}"
     return back(f"{back_to}#impact")
+
+
+# --- Studio: draft comments ------------------------------------------------------------------------
+from . import comments as comment_stage  # noqa: E402
+
+
+def comment_context(doc_id: str) -> list[dict]:
+    with db.session() as conn:
+        rows = conn.execute("SELECT * FROM comment_drafts WHERE doc_id = ? ORDER BY persona", (doc_id,)).fetchall()
+    return [{"persona": r["persona"], "label": IMPACT_GROUPS[r["persona"]], "status": r["status"], "reviewer": r["reviewer"],
+             "body": json.loads(r["body"]) if r["body"] else None} for r in rows if r["persona"] in IMPACT_GROUPS]
+
+
+@app.post("/comments/{doc_id}")
+async def save_comment(request: Request, doc_id: str):
+    name = need_reviewer(request)
+    form = await request.form()
+    action, persona = str(form.get("action", "save")), str(form.get("persona", ""))
+    if persona not in IMPACT_GROUPS:
+        raise HTTPException(400, "unknown stakeholder group")
+    with db.session() as conn:
+        if not conn.execute("SELECT 1 FROM consultations WHERE doc_id = ?", (doc_id,)).fetchone():
+            raise HTTPException(404)
+        if action == "request":
+            comment_stage.request(conn, [doc_id], [persona])
+        elif action == "remove":
+            conn.execute("DELETE FROM comment_drafts WHERE doc_id = ? AND persona = ?", (doc_id, persona))
+        else:
+            points = [{"clause": str(form.get(f"clause_{i}", "")), "comment": str(form.get(f"comment_{i}", "")),
+                       "suggestion": str(form.get(f"suggestion_{i}", "")),
+                       "basis": [b.strip() for b in str(form.get(f"basis_{i}", "")).replace(";", ",").split(",") if b.strip()]} for i in range(6)]
+            body = comment_stage.clean({"position": str(form.get("position", "")), "points": points, "closing": str(form.get("closing", ""))},
+                                       paragraph_ids(conn, doc_id))
+            status = {"approve": "approved", "reject": "rejected"}.get(action, "proposed")
+            if status == "approved" and not body["points"]:
+                raise HTTPException(400, "a comment draft needs at least one point with a valid paragraph citation")
+            conn.execute("""UPDATE comment_drafts SET body = ?, status = ?, reviewer = ?, approved_at = CASE WHEN ? = 'approved' THEN datetime('now') END
+                            WHERE doc_id = ? AND persona = ?""",
+                         (json.dumps(body, ensure_ascii=False), status, name if status != "proposed" else None, status, doc_id, persona))
+            comment_stage.write_file(conn, doc_id, persona, body, f"reviewed by {name}" if status == "approved" else "draft, not reviewed")
+        db.audit(conn, name, f"comments.{action}", f"{doc_id}:{persona}")
+    return back(f"/consultation/{doc_id}#comments-{persona}")

@@ -41,7 +41,15 @@ regstudio run consult --limit 10
 regstudio run triage --limit 60
 regstudio run read --limit 15
 regstudio run impact --limit 15
+regstudio run comments --limit 10
 regstudio run draft
 ```
 
 A run that hits a usage limit stops cleanly; the next run resumes from DB state.
+
+## Market impact and Studio comments
+
+Both are opt-in per document (review screen button, or `regstudio run impact --doc <id>` /
+`regstudio run comments --doc <id> --as <group>`), both are proposals until a reviewer approves, and
+every statement cites paragraph ids of the document; uncited statements are dropped. Comment drafts
+are also written as Markdown under `data/comments/<commission>/<doc>/<group>.md`.
