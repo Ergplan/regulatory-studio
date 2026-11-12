@@ -9,7 +9,7 @@ export function GET() {
       <title>${escapeXml(`${o.commission.toUpperCase()}: ${o.title ?? orderLabel(o)}`)}</title>
       <link>${SITE_URL}${o.path}</link>
       <guid isPermaLink="true">${SITE_URL}${o.path}</guid>
-      <pubDate>${new Date(o.approved_at.replace(" ", "T") + "Z").toUTCString()}</pubDate>
+      <pubDate>${new Date((o.approved_at ?? `${o.date} 00:00:00`).replace(" ", "T") + "Z").toUTCString()}</pubDate>
       <category>${escapeXml(commissionName(o.commission))}</category>
       ${o.topics.map((t) => `<category>${escapeXml(t)}</category>`).join("")}
       <description>${escapeXml(o.summary)}</description>

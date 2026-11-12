@@ -8,10 +8,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     at("/"), at("/orders"), at("/regulations"), at("/digest"), at("/search"), at("/about"),
     ...Object.keys(site.commissions).map((c) => at(`/commissions/${c}`)),
     ...Object.keys(site.topics).map((t) => at(`/topics/${t}`)),
-    ...orders.filter((o) => !o.sample).map((o) => at(o.path, o.revised_at ?? o.approved_at)),
+    ...orders.filter((o) => !o.sample).map((o) => at(o.path, o.revised_at ?? o.approved_at ?? o.date)),
     ...regulations.filter((r) => !r.sample).map((r) => at(r.path)),
     ...clauses.filter((c) => !regulations.find((r) => r.id === c.regulation_id)?.sample).map((c) => at(c.path)),
     ...actSections.map((a) => at(`/act/${a.id}`)),
-    ...digests.map((d) => at(d.path, d.approved_at)),
+    ...digests.map((d) => at(d.path, d.approved_at ?? d.to)),
   ];
 }

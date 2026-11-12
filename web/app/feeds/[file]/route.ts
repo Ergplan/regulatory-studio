@@ -16,7 +16,7 @@ function rss(title: string, self: string, list: Order[]): string {
       <title>${escapeXml(`${o.commission.toUpperCase()}: ${o.title ?? orderLabel(o)}`)}</title>
       <link>${SITE_URL}${o.path}</link>
       <guid isPermaLink="true">${SITE_URL}${o.path}</guid>
-      <pubDate>${new Date(o.approved_at.replace(" ", "T") + "Z").toUTCString()}</pubDate>
+      <pubDate>${new Date((o.approved_at ?? `${o.date} 00:00:00`).replace(" ", "T") + "Z").toUTCString()}</pubDate>
       <description>${escapeXml(o.summary)}</description>
     </item>`).join("");
   return `<?xml version="1.0" encoding="UTF-8"?>

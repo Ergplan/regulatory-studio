@@ -56,7 +56,7 @@ export default async function OrderPage({ params }: { params: Promise<Params> })
 
   const jsonLd = {
     "@context": "https://schema.org", "@type": "Article", headline: o.title ?? orderLabel(o),
-    about: o.issue, abstract: o.summary, datePublished: o.approved_at, dateModified: o.revised_at ?? o.approved_at,
+    about: o.issue, abstract: o.summary, datePublished: o.approved_at ?? o.date, dateModified: o.revised_at ?? o.approved_at ?? o.date,
     author: { "@type": "Organization", name: "Regulatory Studio" },
     publisher: { "@type": "Organization", name: "Regulatory Studio", parentOrganization: { "@type": "Organization", name: "jouleWise" } },
     isBasedOn: { "@type": "Legislation", name: o.case_number ?? o.title, legislationDate: o.date,

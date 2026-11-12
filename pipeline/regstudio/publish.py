@@ -134,6 +134,7 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
             if items:
                 digests.append({"id": g["id"], "from": g["from_date"], "to": g["to_date"], "intro": g["intro"],
                                 "items": items, "approved_at": g["approved_at"], "reviewed_by": g["reviewer"],
+                                "draft": preview and g["status"] != "approved",
                                 "path": f"/digest/{g['id'].lower()}"})
             if g["published_at"] is None and not preview:
                 conn.execute("UPDATE digests SET published_at = datetime('now') WHERE id = ?", (g["id"],))
