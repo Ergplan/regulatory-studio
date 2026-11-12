@@ -2,7 +2,7 @@ import Link from "next/link";
 import OrderCard from "@/components/OrderCard";
 import Subscribe from "@/components/Subscribe";
 import ConsultationCard from "@/components/ConsultationCard";
-import { consultations, digests, isOpen, orderById, orders, site, regulations } from "@/lib/data";
+import { byDeadline, consultations, digests, isOpen, orderById, orders, site, regulations } from "@/lib/data";
 import { fmtDate } from "@/lib/format";
 
 export default function Home() {
@@ -35,9 +35,10 @@ export default function Home() {
           <div className="card"><Subscribe /></div>
           {consultations.some(isOpen) && (<>
             <h2>Open for comment</h2>
-            {consultations.filter(isOpen).sort((a, b) => (a.comment_deadline ?? "9").localeCompare(b.comment_deadline ?? "9"))
-              .slice(0, 4).map((c) => <ConsultationCard key={c.id} c={c} />)}
-            <p className="small"><Link href="/consultations">All draft regulations and consultations</Link></p>
+            {consultations.filter(isOpen).sort(byDeadline).slice(0, 4).map((c) => <ConsultationCard key={c.id} c={c} />)}
+            <p className="small"><Link href="/consultations">All {consultations.filter(isOpen).length} open drafts</Link> ·{" "}
+              {[...new Set(consultations.filter(isOpen).map((c) => c.commission))].map((k, i) => (
+                <span key={k}>{i ? ", " : ""}<Link href={`/consultations/${k}`}>{k.toUpperCase()}</Link></span>))}</p>
           </>)}
           <h2>Coverage</h2>
           <ul>{Object.entries(site.commissions).map(([k, v]) => <li key={k}><Link href={`/commissions/${k}`}>{v}</Link></li>)}</ul>
