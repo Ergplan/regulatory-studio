@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Brief from "@/components/Brief";
+import Charts from "@/components/Charts";
 import Impact from "@/components/Impact";
 import ProjectCta, { askFor } from "@/components/ProjectCta";
 import SpiderMap, { type MapNode } from "@/components/SpiderMap";
@@ -90,6 +91,7 @@ export default async function RegulationPage({ params }: { params: Promise<Param
       {reg.impact && <Brief impact={reg.impact} status={`Notified regulation${reg.notified_date ? `, ${fmtDate(reg.notified_date)}` : ""}: in force`}
         analysis={site.preview ? "prepared with AI, awaiting legal review" : "reviewed by the legal team"}
         ask={askFor({ impact: reg.impact, text: reg.title })} about={reg.title} path={reg.path} />}
+      <Charts figures={reg.figures ?? []} pdf={reg.pdf} pending={site.preview} />
       {reg.impact && <Impact impact={reg.impact} pdf={reg.pdf} draft={site.preview} />}
       {!reg.impact && <ProjectCta ask={askFor({ text: reg.title })} about={reg.title} path={reg.path} compact />}
       <h2>Clauses</h2>

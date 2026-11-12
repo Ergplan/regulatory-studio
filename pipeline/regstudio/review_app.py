@@ -507,6 +507,8 @@ def impact_context(row, doc_id: str | None = None) -> dict:
     raw = row["impact"] if row is not None and "impact" in row.keys() else None
     return {"impact": load_impact(raw), "impact_requested": raw == IMPACT_REQUESTED,
             "rating": row["rating"] if row is not None and "rating" in row.keys() else None, "RATINGS": RATINGS,
+            "figures": json.loads(row["figures"]) if row is not None and "figures" in row.keys() and row["figures"] else [],
+            "figures_json": json.dumps(json.loads(row["figures"]), indent=1, ensure_ascii=False) if row is not None and "figures" in row.keys() and row["figures"] else "[]",
             "impact_doc": doc_id or (row["doc_id"] if row is not None and "doc_id" in row.keys() else None),
             "GROUPS": IMPACT_GROUPS, "EFFECTS": IMPACT_EFFECTS}
 
@@ -583,3 +585,33 @@ async def save_comment(request: Request, doc_id: str):
             comment_stage.write_file(conn, doc_id, persona, body, f"reviewed by {name}" if status == "approved" else "draft, not reviewed")
         db.audit(conn, name, f"comments.{action}", f"{doc_id}:{persona}")
     return back(f"/consultation/{doc_id}#comments-{persona}")
+
+
+# --- Charts for a summary --------------------------------------------------------------------------
+from . import figures as figures_stage  # noqa: E402
+
+
+@app.post("/figures/{doc_id}")
+async def save_figures(request: Request, doc_id: str):
+    """Reviewer edits the chart list as JSON, or removes charts. The same soundness rules apply as for the model."""
+    name = need_reviewer(request)
+    form = await request.form()
+    with db.session() as conn:
+        table = table_for(conn, doc_id)
+        if not table:
+            raise HTTPException(404)
+        if form.get("action") == "redo":
+            conn.execute(f"UPDATE {table} SET figures = NULL WHERE doc_id = ?", (doc_id,))
+        else:
+            try:
+                charts = json.loads(str(form.get("figures_json", "[]")) or "[]")
+            except json.JSONDecodeError as e:
+                raise HTTPException(400, f"the chart list is not valid JSON: {e}")
+            drop = {int(k[5:]) for k in form.keys() if k.startswith("drop_")}
+            charts = [c for i, c in enumerate(charts if isinstance(charts, list) else []) if i not in drop]
+            conn.execute(f"UPDATE {table} SET figures = ? WHERE doc_id = ?",
+                         (json.dumps(figures_stage.clean({"charts": charts}, paragraph_ids(conn, doc_id)), ensure_ascii=False), doc_id))
+        db.audit(conn, name, f"figures.{form.get('action', 'save')}", doc_id)
+        reg = conn.execute("SELECT id FROM regulations WHERE doc_id = ?", (doc_id,)).fetchone() if table == "regulations" else None
+    back_to = {"orders": f"/order/{doc_id}", "consultations": f"/consultation/{doc_id}"}.get(table) or f"/regulation/{reg['id']}"
+    return back(f"{back_to}#figures")

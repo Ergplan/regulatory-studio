@@ -8,7 +8,7 @@ import sys
 
 from . import config, db
 
-STAGES = ["intake", "extract", "registry", "amend", "consult", "triage", "read", "impact", "comments", "draft"]
+STAGES = ["intake", "extract", "registry", "amend", "consult", "triage", "read", "impact", "figures", "comments", "draft"]
 
 
 def _run_stage(name: str, limit: int | None, docs: list[str] | None = None, personas: list[str] | None = None) -> dict:
@@ -34,6 +34,9 @@ def _run_stage(name: str, limit: int | None, docs: list[str] | None = None, pers
     if name == "read":
         from . import reader
         return reader.run(limit)
+    if name == "figures":
+        from . import figures
+        return figures.run(limit)
     if name == "comments":
         from . import comments
         return comments.run(limit, docs, personas)

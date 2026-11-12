@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Brief from "@/components/Brief";
+import Charts from "@/components/Charts";
 import Impact from "@/components/Impact";
 import ProjectCta, { askFor } from "@/components/ProjectCta";
 import SpiderMap, { type MapNode } from "@/components/SpiderMap";
@@ -92,6 +93,7 @@ export default async function OrderPage({ params }: { params: Promise<Params> })
             {o.parties.length > 0 && <><dt>Parties</dt><dd>{o.parties.map((p) => `${p.name} (${p.role})`).join("; ")}</dd></>}
             <dt>Topics</dt><dd>{o.topics.map((t) => <Link key={t} href={`/topics/${t}`} className="chip">{topicName(t)}</Link>)}</dd>
           </dl>
+          <Charts figures={o.figures ?? []} pdf={o.pdf} pending={o.draft} />
           {o.impact && <Impact impact={o.impact} pdf={o.pdf} draft={o.draft} />}
           {!o.impact && <ProjectCta ask={ask} about={about} path={o.path} />}
         </section>
