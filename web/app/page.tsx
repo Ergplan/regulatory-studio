@@ -31,21 +31,22 @@ export default function Home() {
   const live = chapters.filter((c) => c.blocks.length);
   const updates = live.flatMap((c) => c.blocks.map((b) => ({ ...b, code: c.code }))).sort((a, b) => b.date.localeCompare(a.date)).slice(0, 8);
 
-  return (
+  return (<>
+    <section className="cover-hero wide">
+      <p className="eyebrow">Regulatory Studio · a <span className="j">joule</span>Wise × Urja Praxis joint venture</p>
+      <h1 className="hero">India&apos;s power regulation, read and mapped.</h1>
+      <div className="hero-foot">
+        <p className="lede">Orders and draft regulations from CERC, APTEL and six state commissions: what each one changes, who it
+          affects, and the paragraph it rests on.{" "}
+          {site.preview ? "This preview shows AI drafts awaiting legal review." : "Every summary is checked by our legal team before it is published."}</p>
+        <p className="cta"><Link href="/studio" className="btn">Open the Studio</Link><Link href="/impact" className="btn ghost">Impact map</Link><Link href="/digest" className="btn ghost">Weekly digest</Link></p>
+      </div>
+    </section>
     <div className="cover">
       <Stage items={chapters.map((c) => ({ code: c.code, href: c.blocks.length ? `#c-${c.code}` : `/commissions/${c.code}`, idle: !c.blocks.length,
         note: c.blocks.length ? [c.drafts ? `${c.drafts} draft${c.drafts === 1 ? "" : "s"}` : "", c.orders ? `${c.orders} order${c.orders === 1 ? "" : "s"}` : ""].filter(Boolean).join(" · ") : "coming soon" }))} />
 
       <div className="flow">
-        <section className="cover-hero">
-          <p className="eyebrow">Regulatory Studio · a <span className="j">joule</span>Wise × Urja Praxis joint venture</p>
-          <h1 className="hero">India&apos;s power regulation, read and mapped.</h1>
-          <p className="lede">Orders and draft regulations from CERC, APTEL and six state commissions: what each one changes, who it
-            affects, and the paragraph it rests on. Then draft your comments in the Studio.{" "}
-            {site.preview ? "This preview shows AI drafts awaiting legal review." : "Every summary is checked by our legal team before it is published."}</p>
-          <p className="cta"><Link href="/studio" className="btn">Open the Studio</Link><Link href="/impact" className="btn ghost">Impact map</Link><Link href="/digest" className="btn ghost">Weekly digest</Link></p>
-        </section>
-
         <section className="updates-box glass">
           <h2 className="label">Key updates</h2>
           {updates.length ? (
@@ -76,5 +77,5 @@ export default function Home() {
         </section>
       </div>
     </div>
-  );
+  </>);
 }

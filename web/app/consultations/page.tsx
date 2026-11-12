@@ -43,7 +43,7 @@ export default function Consultations() {
           <h1 className="hero">Open for comment.</h1>
           <p className="lede">{nOpen} draft regulation{nOpen === 1 ? "" : "s"} open across {live.filter((c) => c.open.length).length} commission{live.filter((c) => c.open.length).length === 1 ? "" : "s"}:
             what each would change, the last date for comments, and whom it touches. These are proposals, not law.</p>
-          <p className="cta"><Link href="/studio" className="btn">Draft your comments</Link><Link href="/impact" className="btn ghost">Impact map</Link></p>
+          <p className="cta"><Link href="/studio" className="btn">Cues for your comments</Link><Link href="/impact" className="btn ghost">Impact map</Link></p>
         </section>
 
         <section className="glass areas-box">

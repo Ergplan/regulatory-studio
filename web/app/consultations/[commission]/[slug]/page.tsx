@@ -42,9 +42,9 @@ export default async function ConsultationPage({ params }: { params: Promise<Par
         <div className="glass studio-cta">
           <p className="eyebrow">Studio</p>
           <p>{Object.keys(c.comments ?? {}).length
-            ? `Comments are prepared for ${Object.keys(c.comments!).length} stakeholder group${Object.keys(c.comments!).length === 1 ? "" : "s"}. Pick yours, edit and save.`
-            : "Start your comments from an outline of this draft."}</p>
-          <Link href={`/studio?draft=${c.id.slice(0, 10)}`} className="btn">Draft your comments</Link>
+            ? `Cues for comments are ready for ${Object.keys(c.comments!).length} stakeholder group${Object.keys(c.comments!).length === 1 ? "" : "s"}. For a full analysis, leave a request.`
+            : "See the points worth commenting on, or leave a request for a full analysis."}</p>
+          <Link href={`/studio?draft=${c.id.slice(0, 10)}`} className="btn">Cues for your comments</Link>
         </div>
         <h2>Documents</h2>
         <ul><li><a href={c.source_url} rel="nofollow noopener">The draft (PDF)</a></li>

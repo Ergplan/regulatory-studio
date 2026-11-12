@@ -35,7 +35,7 @@ export default function AnalysisBlock(b: Block & { showAreasEmpty?: boolean }) {
       <p className="folder-sum">{b.impact?.market_note || b.summary}</p>
       {(b.impact || b.showAreasEmpty) && <ImpactAreas impact={b.impact} />}
       <p className="folder-links"><Link href={b.impact ? `${b.href}#impact` : b.href}>{b.impact ? "Read the analysis" : "Read the summary"} →</Link>
-        {b.draftable && <Link href={`/studio?draft=${b.id.slice(0, 10)}`}>Draft your comments →</Link>}</p>
+        {b.draftable && <Link href={`/studio?draft=${b.id.slice(0, 10)}`}>Cues for your comments →</Link>}</p>
     </article>
   );
 }
