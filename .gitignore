@@ -29,3 +29,4 @@ pipeline/tests/fixtures/inbox/
 data/preview_snapshot/
 web/tsconfig.tsbuildinfo
 data/comments/
+ops/studio.env

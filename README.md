@@ -24,6 +24,10 @@ Vercel:  web/   static pages, spider map, Markdown twins, llms.txt, feeds, API
 
 Nothing unapproved ever reaches `data/snapshot/`. The site builds only from the snapshot.
 
+The Mac mini is the server: it scans on Tuesday and Friday, serves the review screen to the legal team through a
+Cloudflare Tunnel, and pushes approved items to the public site. See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
+and [docs/MAC_MINI_SERVER.md](docs/MAC_MINI_SERVER.md).
+
 ## Layout
 
 | Path | What |

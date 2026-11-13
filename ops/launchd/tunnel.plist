@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- The Cloudflare Tunnel: an outbound connection from this Mac, so no fixed address or open port is needed.
+     Installed by ops/install_mac.sh, which replaces REPO_PATH. Do not load this file as it is. -->
+<plist version="1.0"><dict>
+  <key>Label</key><string>in.joulewise.regstudio.tunnel</string>
+  <key>ProgramArguments</key><array><string>/bin/zsh</string><string>-lc</string><string>exec cloudflared tunnel --config $HOME/.cloudflared/regstudio.yml run</string></array>
+  <key>RunAtLoad</key><true/>
+  <key>KeepAlive</key><true/>
+  <key>ThrottleInterval</key><integer>20</integer>
+  <key>StandardOutPath</key><string>REPO_PATH/data/store/logs/tunnel.out</string>
+  <key>StandardErrorPath</key><string>REPO_PATH/data/store/logs/tunnel.err</string>
+</dict></plist>

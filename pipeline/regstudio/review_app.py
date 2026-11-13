@@ -12,11 +12,11 @@ import re
 import urllib.parse
 from pathlib import Path
 
-from fastapi import FastAPI, Form, HTTPException, Request
+from fastapi import BackgroundTasks, FastAPI, Form, HTTPException, Request
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
-from . import amend, auth, config, db, registry
+from . import access, amend, auth, config, db, deploy, registry
 
 app = FastAPI(title="Regulatory Studio review")
 templates = Jinja2Templates(directory=str(Path(__file__).parent / "templates"))
@@ -26,12 +26,33 @@ templates.env.globals.update(COMMISSIONS=config.COMMISSIONS, LINK_TYPES=config.L
 
 @app.middleware("http")
 async def require_sign_in(request: Request, call_next):
+    # A request that came through the Cloudflare Tunnel must carry a valid Access token for a registered
+    # reviewer. Nothing arriving from the internet is ever let in on a typed name or a missing check.
+    if access.through_cloudflare(request.headers):
+        try:
+            email = access.verify(request.headers.get(access.HEADER))
+        except access.AccessError as e:
+            return HTMLResponse(REFUSED.format(why=f"Cloudflare Access check failed: {e}."), status_code=403)
+        name = auth.by_email(email)
+        if not name:
+            return HTMLResponse(REFUSED.format(why=f"{email} is signed in but is not registered as a reviewer. "
+                                                  "Ask the administrator to run: regstudio add-reviewer \"Your Name\" --email " + email), status_code=403)
+        request.state.reviewer = name
+        return await call_next(request)
     if auth.enabled() and request.url.path not in ("/login",) and not reviewer(request):
         return RedirectResponse("/login", status_code=303)
     return await call_next(request)
 
 
+REFUSED = """<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Not allowed · Regulatory Studio review</title>
+<style>body{{font:15px -apple-system,sans-serif;background:#f7f8fa;display:grid;place-items:center;height:100vh;margin:0}}
+div{{background:#fff;border:1px solid #d9dde5;border-radius:10px;padding:24px;max-width:460px}}</style></head>
+<body><div><b>Regulatory Studio review</b><p>{why}</p></div></body></html>"""
+
+
 def reviewer(request: Request) -> str | None:
+    if getattr(request.state, "reviewer", None):
+        return request.state.reviewer
     if auth.enabled():
         return auth.read_session(request.cookies.get("rs_session"))
     return request.cookies.get("reviewer")
@@ -54,14 +75,16 @@ def login_form():
 
 
 @app.post("/login")
-def login(name: str = Form(...), password: str = Form(...)):
+def login(request: Request, name: str = Form(...), password: str = Form(...)):
     if not auth.enabled():
         return back("/")
+    if not auth.allow_attempt(name):
+        return HTMLResponse(LOGIN_PAGE.replace("{error}", "<p>Too many attempts. Try again in 15 minutes.</p>"), status_code=429)
     if not auth.check_password(name, password):
         return HTMLResponse(LOGIN_PAGE.replace("{error}", "<p>Name or password not recognised.</p>"), status_code=401)
     resp = back("/")
     resp.set_cookie("rs_session", auth.make_session(name.strip()), max_age=auth.SESSION_HOURS * 3600,
-                    httponly=True, samesite="strict")
+                    httponly=True, samesite="strict", secure=request.url.scheme == "https")
     return resp
 
 
@@ -113,8 +136,26 @@ def queue(request: Request):
         errors = conn.execute("SELECT id, commission, title, error FROM documents WHERE stage = 'error'").fetchall()
     return templates.TemplateResponse(request, "queue.html", {
         "reviewer": reviewer(request), "orders": orders, "regs": regs, "digests": digests, "amendments": amendments,
-        "listed": listed, "errors": errors, "sources": _download_health(),
+        "listed": listed, "errors": errors, "sources": _download_health(), "deploy": deploy.last(), "scan": _last_scan(),
         "consultations": consultations})
+
+
+def _last_scan() -> dict | None:
+    f = config.STORE / "scan_last.json"
+    try:
+        return json.loads(f.read_text()) if f.exists() else None
+    except ValueError:
+        return None
+
+
+@app.post("/deploy")
+def deploy_now(request: Request, background: BackgroundTasks):
+    """Push approved items to the public site now, instead of waiting for the next automatic push."""
+    name = need_reviewer(request)
+    with db.session() as conn:
+        db.audit(conn, name, "deploy.request", "production")
+    background.add_task(deploy.run)
+    return back("/#site")
 
 
 def _download_health() -> dict | None:

@@ -12,6 +12,10 @@ STORE = Path(os.environ.get("REGSTUDIO_STORE", DATA / "store"))
 SNAPSHOT = Path(os.environ.get("REGSTUDIO_SNAPSHOT", DATA / "snapshot"))
 PREVIEW = Path(os.environ.get("REGSTUDIO_PREVIEW", DATA / "preview_snapshot"))
 DB_PATH = STORE / "working.db"
+GIT_ROOT = Path(os.environ.get("REGSTUDIO_GIT_ROOT", REPO_ROOT))      # the clone whose remote Vercel builds from
+GIT_REMOTE = os.environ.get("REGSTUDIO_GIT_REMOTE", "origin")
+BRANCH_PRODUCTION = os.environ.get("REGSTUDIO_BRANCH_PRODUCTION", "main")   # approved items only: the public site
+BRANCH_PREVIEW = os.environ.get("REGSTUDIO_BRANCH_PREVIEW", "preview")      # everything, marked unreviewed: the preview site
 FILES = STORE / "files"   # PDFs copied out of the inbox, named by hash
 TEXT = STORE / "text"     # extracted paragraphs, one JSON per document
 
