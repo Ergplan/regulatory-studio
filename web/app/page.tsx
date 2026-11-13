@@ -49,14 +49,8 @@ export default function Home() {
         <p className="lede">Explore updates on open access, captive power, tariffs and storage. Understand what may affect your plant
           or project, then ask for an assessment of what it means commercially.{" "}
           {site.preview ? "This is a preview edition: the analysis is awaiting legal review." : "Every analysis is checked by our legal team before it is published."}</p>
-        <p className="cta"><a href="#who" className="btn">See what affects my business</a><Link href="/consultations" className="btn ghost">Browse regulatory updates</Link></p>
+        <p className="cta"><a href="#updates" className="btn">See key regulatory updates</a><a href="#who" className="btn ghost">See what affects my business</a></p>
       </div>
-      <nav className="chooser" id="who" aria-label="Choose your business">
-        <h2 className="label">I am a</h2>
-        <ul>{CHOICES.map(([g, label, hint, href]) => (
-          <li key={label}><Link href={href}>{g ? <GroupIcon g={g} size={24} />
-            : <svg className="gicon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 3h8l4 4v14H7zM15 3v4h4M10 12h6M10 16h6" /></svg>}<b>{label}</b><span>{hint}</span></Link></li>))}</ul>
-      </nav>
     </section>
     <div className="cover">
       <Stage items={chapters.map((c) => ({ code: c.code, href: c.blocks.length ? `#c-${c.code}` : `/commissions/${c.code}`, idle: !c.blocks.length,
@@ -64,7 +58,7 @@ export default function Home() {
 
       <div className="flow">
         <section className="updates-box glass" id="updates">
-          <h2 className="label">Key updates</h2>
+          <h2 className="label">Key regulatory updates</h2>
           {updates.length ? (
             <ol className="updates">{updates.map((u) => (
               <li key={u.id}><a href={`#u-${u.id.slice(0, 10)}`}>
@@ -74,6 +68,14 @@ export default function Home() {
               </a></li>))}</ol>
           ) : <p className="muted">The first reviewed updates are being prepared. Coverage: {codes.map((k) => k.toUpperCase()).join(", ")}.</p>}
         </section>
+
+        <nav className="chooser in-flow glass" id="who" aria-label="Choose your business">
+          <h2 className="label">I am a</h2>
+          <p className="chooser-note">Pick your business to open a page of the updates that affect it.</p>
+          <ul>{CHOICES.map(([g, label, hint, href]) => (
+            <li key={label}><Link href={href}>{g ? <GroupIcon g={g} size={24} />
+              : <svg className="gicon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 3h8l4 4v14H7zM15 3v4h4M10 12h6M10 16h6" /></svg>}<b>{label}</b><span>{hint}</span></Link></li>))}</ul>
+        </nav>
 
         {live.map((c) => (
           <section key={c.code} className="chapter" id={`c-${c.code}`} data-chapter={c.code}>

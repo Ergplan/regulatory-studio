@@ -538,3 +538,11 @@ ol.pipeline li { padding: 16px 18px; border-radius: 14px; background: var(--pane
 ol.pipeline li span { font-family: var(--mono); font-size: 11px; color: var(--power); letter-spacing: .14em; display: block; margin-bottom: 6px; } ol.pipeline li b { color: var(--ink); font-size: 16px; }
 ul.bars.ranges .b-label em, .overview .b-label em { display: block; margin: 3px 0 0; white-space: normal; }
 .across .charts.overview { grid-template-columns: 1fr; margin-top: 12px; } .across { margin-top: 28px; }
+
+/* ---- Home: the "I am a" chooser sits below the key updates, inside the reading column ---- */
+.chooser.in-flow { margin-top: 18px; padding: 20px 22px 22px; border-radius: var(--r); }
+.chooser.in-flow ul { grid-template-columns: repeat(3, minmax(0, 1fr)); } .chooser-note { margin: 2px 0 14px; font-size: 14px; color: var(--mute); }
+.chooser.in-flow a { padding: 13px 14px; } .chooser.in-flow span { font-size: 13px; }
+@media (max-width: 620px) { .chooser.in-flow ul { grid-template-columns: repeat(2, minmax(0, 1fr)); } .chooser.in-flow { padding: 16px; } }
+#updates { scroll-margin-top: calc(var(--header-h) + 20px); }
+.flow .updates-box { margin-bottom: 0; } .chooser.in-flow { margin-bottom: 22vh; } @media (max-width: 900px) { .chooser.in-flow { margin-bottom: 14vh; } }

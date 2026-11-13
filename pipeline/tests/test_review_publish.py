@@ -54,6 +54,7 @@ def server(env):
             return r.read().decode("utf-8")
 
     post.get = get  # page text, using the same signed-in cookie jar
+    post.url = f"http://127.0.0.1:{port}"
     yield post
     srv.should_exit = True
     t.join(timeout=5)

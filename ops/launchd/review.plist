@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- The review screen: always running, on this machine only (127.0.0.1:8765). The tunnel is the only way in from outside.
+     Installed by ops/install_mac.sh, which replaces REPO_PATH. Do not load this file as it is. -->
+<plist version="1.0"><dict>
+  <key>Label</key><string>in.joulewise.regstudio.review</string>
+  <key>ProgramArguments</key><array><string>/bin/zsh</string><string>-lc</string><string>cd REPO_PATH &amp;&amp; source .venv/bin/activate &amp;&amp; { [ -f ops/studio.env ] &amp;&amp; set -a &amp;&amp; source ops/studio.env; set +a; }; exec regstudio review --host 127.0.0.1 --port 8765</string></array>
+  <key>RunAtLoad</key><true/>
+  <key>KeepAlive</key><true/>
+  <key>ThrottleInterval</key><integer>20</integer>
+  <key>StandardOutPath</key><string>REPO_PATH/data/store/logs/review.out</string>
+  <key>StandardErrorPath</key><string>REPO_PATH/data/store/logs/review.err</string>
+</dict></plist>

@@ -30,24 +30,22 @@ Regulatory Studio publishes legal summaries under jouleWise's name. Accuracy bea
 - The site in `web/` builds only from `data/snapshot/*.json`. Pages must be fully readable
   without JavaScript; the spider map sits on top of a plain list of links.
 
-## Scheduled runs (week 4)
+## The Mac mini is the server
 
-Weeknights, one stage per run, with `--limit` so each run stays modest:
+See `docs/ARCHITECTURE.md` and `docs/MAC_MINI_SERVER.md`. Four launchd jobs (`ops/launchd/`, installed by
+`ops/install_mac.sh`):
 
-```
-regstudio download --limit 40
-regstudio run intake extract registry amend
-regstudio run consult --limit 10
-regstudio run triage --limit 60
-regstudio run read --limit 15
-regstudio run impact --limit 15
-regstudio run check --limit 15      # number check + two AI reviewers, before legal review
-regstudio run figures --limit 15
-regstudio run comments --limit 10
-regstudio run draft
-```
+- **scan** (`ops/scan.sh`, Tuesday and Friday 06:00): download, intake, extract, registry, amend, consult,
+  triage, read, check, impact, figures, comments, the Friday digest draft, then `regstudio deploy --refresh`.
+  Every stage has a `--limit`; a run that hits a usage limit stops cleanly and the next scan resumes.
+- **review**: `regstudio review` on 127.0.0.1:8765, reached from outside only through the Cloudflare Tunnel.
+  Tunnelled requests must carry a valid Cloudflare Access token for a registered reviewer (`access.py`).
+- **deploy** (every 10 minutes): `regstudio deploy` pushes approved items to `main` (public site) and the
+  unreviewed preview to `preview` (preview site), each from its own git worktree in `data/store/deploy/`.
+- **tunnel**: `cloudflared`.
 
-A run that hits a usage limit stops cleanly; the next run resumes from DB state.
+Never weaken these: production data comes only from `approved` rows; a request through Cloudflare without a
+valid token is refused; the review screen binds to 127.0.0.1; no credentials or tokens in the repo.
 
 ## Market impact and Studio comments
 

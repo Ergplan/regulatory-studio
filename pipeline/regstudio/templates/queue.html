@@ -4,6 +4,15 @@
 <label style="margin:0">Your name, recorded against every approval</label><input name="name" required style="max-width:280px">
 <button class="primary">Start reviewing</button></form></div>{% endif %}
 <h1>Review queue</h1>
+<div class="card" id="site"><div class="row"><b>Public site</b>
+{% set p = deploy.get('production') %}{% if not p %}<span class="pill">never pushed from this machine</span>
+{% elif p.error %}<span class="pill proposed">last push failed</span>{% else %}<span class="pill approved">up to date as of {{ p.checked_at[:16]|replace('T', ' ') }}</span>{% endif %}</div>
+<p class="muted" style="margin:6px 0">What you approve is pushed to the public site automatically within about 10 minutes, and the site rebuilds in a few minutes more.
+{% if p and p.pushed_at %}Last change went out {{ p.pushed_at[:16]|replace('T', ' ') }} ({{ p.orders }} orders, {{ p.consultations }} drafts{% if p.commit %}, commit {{ p.commit }}{% endif %}).{% endif %}
+{% if p and p.error %}<br><b>Problem:</b> {{ p.error }}{% endif %}
+{% set v = deploy.get('preview') %}{% if v %}<br>Preview site (unreviewed items, marked as such): {% if v.error %}<b>failed:</b> {{ v.error }}{% else %}checked {{ v.checked_at[:16]|replace('T', ' ') }}{% endif %}.{% endif %}
+{% if scan %}<br>Last scan of the commission websites: {{ scan.finished[:16]|replace('T', ' ') }}{% if scan.status != 'ok' %} <b>({{ scan.status }})</b>{% endif %}. Scans run on Tuesday and Friday mornings.{% endif %}</p>
+{% if reviewer %}<form method="post" action="/deploy"><button>Push approved items now</button></form>{% endif %}</div>
 <p class="muted">{{ orders|length }} orders with summaries · {{ listed }} routine orders listed without summary</p>
 <h2>Orders</h2>
 <table><tr><th>Commission</th><th>Order</th><th>Date</th><th>Significance</th><th>Open links</th><th>Summary</th></tr>

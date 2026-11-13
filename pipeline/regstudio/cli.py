@@ -118,6 +118,11 @@ def main(argv: list[str] | None = None) -> None:
     rv.add_argument("--port", type=int, default=8765)
     ar = sub.add_parser("add-reviewer", help="add or reset a reviewer's password (turns on sign-in)")
     ar.add_argument("name")
+    ar.add_argument("--email", help="the email this reviewer proves to Cloudflare Access; with it no password is needed")
+    ar.add_argument("--password", action="store_true", help="with --email: also set a password, for signing in on the office network")
+    dp = sub.add_parser("deploy", help="push approved items to the public site, and the unreviewed preview to the preview site")
+    dp.add_argument("--only", choices=["production", "preview"], help="default: both")
+    dp.add_argument("--refresh", action="store_true", help="push even if nothing changed, so dates on the site are counted from today")
     pb = sub.add_parser("publish", help="write approved items to data/snapshot")
     pb.add_argument("--clean", action="store_true", help="drop sample documents from the snapshot")
     pb.add_argument("--preview", action="store_true",
@@ -162,11 +167,23 @@ def main(argv: list[str] | None = None) -> None:
     elif args.cmd == "add-reviewer":
         import getpass
         from . import auth
-        pw = getpass.getpass(f"Password for {args.name} (10+ characters): ")
-        if pw != getpass.getpass("Again: "):
-            raise SystemExit("passwords differ")
-        auth.add_reviewer(args.name, pw)
+        pw = None
+        if args.password or not args.email:
+            pw = getpass.getpass(f"Password for {args.name} (10+ characters): ")
+            if pw != getpass.getpass("Again: "):
+                raise SystemExit("passwords differ")
+        try:
+            auth.add_reviewer(args.name, pw, args.email)
+        except ValueError as e:
+            raise SystemExit(str(e))
         print(f"{args.name} added; the review screen now requires sign-in")
+    elif args.cmd == "deploy":
+        from . import deploy
+        db.init()
+        out = deploy.run([args.only] if args.only else None, refresh=args.refresh)
+        print(json.dumps(out, indent=2))
+        if any(r.get("error") for r in out.values()):
+            raise SystemExit(1)
     elif args.cmd == "review":
         from . import auth
         db.init()  # apply any pending migrations before serving

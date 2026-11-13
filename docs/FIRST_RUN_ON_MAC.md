@@ -60,7 +60,7 @@ regstudio send-digest --send     # sends it to all confirmed subscribers
 
 ## Weeknight schedule
 
-`ops/weeknight.sh` runs intake to reading each weeknight at 23:30 and drafts the digest on Fridays.
+`ops/scan.sh` runs the whole pipeline on Tuesday and Friday at 06:00 and drafts the digest on Fridays. See `docs/MAC_MINI_SERVER.md` for the server setup.
 To install it, edit `REPO_PATH` in `ops/in.jouleWise.regulatorystudio.plist`, then:
 
 ```bash
@@ -77,7 +77,7 @@ OCR'd orders are flagged in the review queue for a closer check.
 
 | When | What | Who |
 | --- | --- | --- |
-| Mon–Fri nights | `ops/weeknight.sh` (downloads, then the pipeline) | Automatic |
+| Tue and Fri 06:00 | `ops/scan.sh` (downloads, then the pipeline, then the preview site) | Automatic |
 | Saturday | Review queue: summaries, links, registry, digest | Legal team |
 | Sunday | `regstudio publish`, commit `data/snapshot`, push (Vercel deploys), `send-digest` | You |
 

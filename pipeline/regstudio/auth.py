@@ -37,13 +37,27 @@ def _hash(password: str, salt: str) -> str:
     return hashlib.pbkdf2_hmac("sha256", password.encode(), bytes.fromhex(salt), ROUNDS).hex()
 
 
-def add_reviewer(name: str, password: str) -> None:
+def add_reviewer(name: str, password: str | None = None, email: str | None = None) -> None:
+    """A reviewer signs in with a password, or is recognised by the email Cloudflare Access verified, or both."""
     name = name.strip()
-    if not name or len(password) < 10:
-        raise ValueError("a name and a password of at least 10 characters are required")
+    email = (email or "").strip().lower()
+    if not name or not (password or email):
+        raise ValueError("a name and either a password or an email are required")
+    if password is not None and len(password) < 10:
+        raise ValueError("a password needs at least 10 characters")
+    if email and "@" not in email:
+        raise ValueError("that does not look like an email address")
     data = _load()
-    salt = secrets.token_hex(16)
-    data[name] = {"salt": salt, "hash": _hash(password, salt)}
+    rec = dict(data.get(name) or {})
+    if password:
+        salt = secrets.token_hex(16)
+        rec.update(salt=salt, hash=_hash(password, salt))
+    if email:
+        for other, r in data.items():
+            if other != name and r.get("email") == email:
+                raise ValueError(f"{email} already belongs to {other}")
+        rec["email"] = email
+    data[name] = rec
     config.STORE.mkdir(parents=True, exist_ok=True)
     _file().write_text(json.dumps(data, indent=1))
     _file().chmod(0o600)
@@ -51,10 +65,28 @@ def add_reviewer(name: str, password: str) -> None:
 
 def check_password(name: str, password: str) -> bool:
     rec = _load().get(name.strip())
-    if not rec:
+    if not rec or "hash" not in rec:
         _hash(password, "00" * 16)  # same work either way
         return False
     return hmac.compare_digest(rec["hash"], _hash(password, rec["salt"]))
+
+
+_attempts: dict[str, list[float]] = {}
+
+
+def allow_attempt(name: str, limit: int = 8, window: int = 900) -> bool:
+    """At most `limit` password attempts per name in `window` seconds."""
+    now = time.time()
+    recent = [t for t in _attempts.get(name.strip().lower(), []) if now - t < window]
+    recent.append(now)
+    _attempts[name.strip().lower()] = recent
+    return len(recent) <= limit
+
+
+def by_email(email: str) -> str | None:
+    """Reviewer name registered for an email that Cloudflare Access has verified."""
+    email = (email or "").strip().lower()
+    return next((n for n, r in _load().items() if email and r.get("email") == email), None)
 
 
 def _secret() -> bytes:
