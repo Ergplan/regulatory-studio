@@ -16,6 +16,7 @@
 <div class="pdf"><iframe id="pdf" src="/file/{{ d.id }}#page=1" title="Order PDF"></iframe>
 <div class="para" id="para"><span class="muted">Click a link's paragraph id to see the passage it rests on.</span></div></div>
 <div class="side">
+{% include "_priority.html" %}
 {% include "_checks.html" %}
 {% include "_review_notes.html" %}
 <div class="card"><form method="post" action="/order/{{ d.id }}/summary">

@@ -624,3 +624,30 @@ def test_memory_page_and_manual_notes(server):
     assert server("/memory", {"kind": "style", "text": "Use Rs, not INR.", "scope": "all"}) == 303
     assert "Use Rs, not INR." in server.get("/memory")
     assert "Use Rs, not INR." in learning.with_notes("Summarise this order.")
+
+
+def test_review_priority_puts_open_drafts_and_multi_party_orders_first(server):
+    import datetime as dt
+    from regstudio import priority
+    today = dt.date(2026, 11, 14)
+    draft = priority.score({"kind": "draft", "commission": "kerc", "title": "Draft Procurement of Energy from Renewable Sources Regulations",
+                            "summary": "Proposes open access and banking changes.", "comment_deadline": "2026-11-20"}, today)
+    closed = priority.score({"kind": "draft", "commission": "kerc", "title": "Draft Supply Code amendment", "comment_deadline": "2026-10-01"}, today)
+    parties = json.dumps([{"name": n, "role": "respondent"} for n in ("Acme Solar Ltd", "Beta Wind Ltd", "State Discom Ltd", "State Load Despatch Centre")])
+    multi = priority.score({"kind": "order", "commission": "cerc", "title": "Bank guarantee encashment under a storage tender",
+                            "significance": 4, "parties": parties, "doc_date": "2026-11-10"}, today)
+    routine = priority.score({"kind": "order", "commission": "cerc", "title": "Extension of time", "significance": 1,
+                              "parties": json.dumps([{"name": "One Petitioner Ltd"}]), "doc_date": "2026-09-01"}, today)
+    assert draft["score"] > multi["score"] > routine["score"] and draft["score"] > closed["score"]
+    assert draft["band"] == "Review first" and routine["band"] == "When time allows"
+    assert multi["leads"] == ["Acme Solar Ltd", "Beta Wind Ltd", "State Discom Ltd"]          # the load despatch centre is not a lead
+    assert all(0 <= v <= priority.MAX[k] for k, v in draft["parts"].items()) and draft["score"] <= 100
+    page = server.get("/")
+    assert "Review these first" in page and "Priority" in page
+    doc, _, _ = _ids()
+    assert "Review priority" in server.get(f"/order/{doc}")
+    from regstudio import config, publish
+    server("/whoami", {"name": "Test Reviewer"})
+    server(f"/order/{doc}/summary", {"action": "approve", "summary": "Reviewed.", "issue": "i", "outcome": "o"})
+    publish.run()
+    assert "priority" not in json.loads((config.SNAPSHOT / "orders.json").read_text())[0]      # internal only

@@ -1,0 +1,8 @@
+{# Review priority: internal, never published. #}
+<div class="card" id="priority"><div class="row"><b>Review priority</b>
+<span class="pill {{ 'approved' if priority.score >= 70 else 'proposed' if priority.score >= 45 else '' }}">{{ priority.score }} / 100 · {{ priority.band }}</span></div>
+<div class="row" style="margin:8px 0;gap:18px">{% for k, label in [('reach', 'Stakeholder reach'), ('opportunity', 'Business opportunity'), ('leads', 'Leads'), ('urgency', 'Urgency')] %}
+<div style="flex:1;min-width:120px"><div class="muted small">{{ label }} {{ priority.parts[k] }}/{{ priority.max[k] }}</div>
+<div style="height:6px;background:var(--line);border-radius:3px"><div style="height:6px;border-radius:3px;background:var(--accent);width:{{ (100 * priority.parts[k] / priority.max[k])|round|int }}%"></div></div></div>{% endfor %}</div>
+{% for w in priority.why %}<div class="muted">· {{ w }}</div>{% endfor %}
+<p class="muted small" style="margin:8px 0 0">Worked out by the software from the document's kind, parties, subjects and dates, to order the queue. For the team only: it is not published and is not the impact rating.</p></div>
