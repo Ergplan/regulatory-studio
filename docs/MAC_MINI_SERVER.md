@@ -7,7 +7,7 @@ should do them for you.
 
 ```bash
 cd ~/Downloads/regulatory-studio
-git stash && git pull
+git stash -u && git pull          # -u also sets aside the older untracked copies of files that are now in git
 source .venv/bin/activate
 pip install -e "pipeline[access]"
 ```
@@ -25,35 +25,19 @@ git config user.name; git config user.email      # must be set; use the GitHub a
 Vercel may refuse to build commits from an author it does not know. Use the same GitHub account that
 owns the Vercel project.
 
-## 3. Cloudflare Tunnel (**you**)
+## 3 and 4. Cloudflare (**you**)
 
-Needs a domain whose DNS is managed by Cloudflare.
-
-```bash
-brew install cloudflared
-cloudflared tunnel login                       # opens the browser; pick the domain
-cloudflared tunnel create regstudio            # prints the tunnel id, writes a credentials file
-cloudflared tunnel route dns regstudio review.YOUR-DOMAIN
-cp ops/cloudflared.example.yml ~/.cloudflared/regstudio.yml    # then fill in the three marked values
-```
-
-The credentials file in `~/.cloudflared/` is a secret. It stays on the Mac and is never committed.
-
-## 4. Cloudflare Access (**you**)
-
-In the Cloudflare Zero Trust dashboard (menu names may differ slightly):
-
-1. Access > Applications > Add an application > Self-hosted.
-2. Application domain: `review.YOUR-DOMAIN`. Session: 24 hours.
-3. Policy: Allow, Include > Emails > each reviewer's email. One-time PIN sign-in is enough.
-4. Save, open the application and copy the **Application Audience (AUD) tag**.
-5. Note your team name: it is the first part of `<team>.cloudflareaccess.com`.
-
-Do step 4 **before** starting the tunnel, so the screen is never reachable without Access.
+Needs a domain whose DNS is managed by your Cloudflare account. One script does the tunnel and asks for the
+two Access values:
 
 ```bash
-cp ops/studio.env.example ops/studio.env       # fill in REGSTUDIO_ACCESS_TEAM and REGSTUDIO_ACCESS_AUD
+ops/cloudflare_setup.sh review.YOUR-DOMAIN
 ```
+
+It opens the browser for you to sign in, creates the tunnel, points `review.YOUR-DOMAIN` at it, writes
+`~/.cloudflared/regstudio.yml`, then prints the five clicks for the Access application and saves the team name
+and AUD tag into `ops/studio.env`. The tunnel's credentials file in `~/.cloudflared/` is a secret; it stays on
+the Mac and is never committed. `ops/cloudflared.example.yml` shows what the script writes.
 
 ## 5. Reviewers
 
