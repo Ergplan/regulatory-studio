@@ -39,7 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <span><b className="brand-foot">Regulatory Studio</b> · a joint venture of <a href="https://www.joulewise.tech" className="jw"><span className="j">joule</span><span className="w">Wise</span></a> and <span className="jw"><span className="w">Urja Praxis</span></span><br />
             Summaries are for information and are not legal advice; read the original order.</span>
           <span className="small">Map: state outlines from @svg-maps/india, CC BY 4.0.</span>
-          <span><Link href="/studio">Consultation support</Link> · <Link href="/about">About</Link> · <Link href="/feed.xml">RSS</Link> · <Link href="/llms.txt">llms.txt</Link> · <Link href="/api/v1/orders.json">API</Link></span>
+          <span><Link href="/studio">Consultation support</Link> · {process.env.REVIEW_URL && <><a href="/review" rel="nofollow">Team sign in</a> · </>}<Link href="/about">About</Link> · <Link href="/feed.xml">RSS</Link> · <Link href="/llms.txt">llms.txt</Link> · <Link href="/api/v1/orders.json">API</Link></span>
         </div></footer>
       </body>
     </html>
