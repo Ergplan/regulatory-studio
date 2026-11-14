@@ -30,3 +30,4 @@ data/preview_snapshot/
 web/tsconfig.tsbuildinfo
 data/comments/
 ops/studio.env
+data/_to_delete/

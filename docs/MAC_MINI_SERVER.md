@@ -1,5 +1,13 @@
 # Setting up the Mac mini as the server
 
+**Short way:** one line in the Mac's Terminal does everything below and asks for what it needs as it goes:
+
+```bash
+cd ~/Downloads/regulatory-studio && git stash -u && git pull && ops/setup_server.sh
+```
+
+The rest of this page is the same thing step by step.
+
 Do these once, in the Mac's own Terminal. Steps marked **you** need your accounts; nobody else
 should do them for you.
 
