@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block title %}jouleWise · commercial review{% endblock %}
+{% block body %}
+<h1>jouleWise: commercial illustrations</h1>
+<p class="muted">Beta. Simple worked examples of what an order or tender means in money. Check each input's source or assumption on the item's page, then approve or reject there. Only approved illustrations reach the public site.</p>
+<table><tr><th>Commission</th><th>Item</th><th>Illustration</th><th>Status</th></tr>
+{% for r in rows %}<tr><td>{{ r.commission|upper }}</td>
+<td><a href="{{ r.base }}{{ r.id }}#commercial">{{ (r.headline or r.title or r.id[:12])|truncate(110) }}</a></td>
+<td>{% if r.c %}<b>{{ r.c.title }}</b><div class="muted small">{{ r.c.takeaway }}</div>{% else %}<span class="muted">asked for; prepared on the next scan</span>{% endif %}</td>
+<td><span class="pill {{ r.commercial_status }}">{{ r.commercial_status }}{% if r.commercial_by %} · {{ r.commercial_by }}{% endif %}</span></td></tr>
+{% else %}<tr><td colspan="4" class="muted">No illustrations yet. Ask for one from any order's page.</td></tr>{% endfor %}</table>
+{% endblock %}

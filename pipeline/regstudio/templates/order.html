@@ -11,7 +11,7 @@
 <h1>{{ d.title or d.case_number }}</h1>
 <p class="muted">{{ COMMISSIONS[d.commission] }} · {{ d.case_number or '' }} · {{ d.doc_date or 'date not given' }} ·
 <a href="{{ d.source_url }}" target="_blank" rel="noopener">source</a> · significance {{ o.significance }} — {{ o.triage_reason }}</p>
-{% if not reviewer %}<div class="flash">Set your name on the <a href="/">queue page</a> before approving.</div>{% endif %}
+{% if not reviewer %}<div class="flash">Set your name on the <a href="/urja-praxis">queue page</a> before approving.</div>{% endif %}
 <div class="split">
 <div class="pdf"><iframe id="pdf" src="/file/{{ d.id }}#page=1" title="Order PDF"></iframe>
 <div class="para" id="para"><span class="muted">Click a link's paragraph id to see the passage it rests on.</span></div></div>

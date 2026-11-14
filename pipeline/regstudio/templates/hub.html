@@ -1,0 +1,27 @@
+{% extends "base.html" %}{% block title %}Review hub{% endblock %}
+{% block head %}<style>
+.tabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin:18px 0}
+.tab{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;text-decoration:none;color:inherit}
+.tab:hover,.tab:focus-visible{border-color:var(--accent);outline:none}
+.tab h2{margin:0 0 4px}.tab .go{display:inline-block;margin-top:12px;color:var(--accent);font-weight:600}
+.tab ul{margin:10px 0 0;padding-left:18px}.big{font-size:22px;font-weight:700}
+</style>{% endblock %}
+{% block body %}
+<h1>Review hub</h1>
+<p class="muted">Everything the studio drafts waits here for a person. What you approve appears on <a href="{{ public_site }}" target="_blank" rel="noopener">{{ public_site|replace('https://', '') }}</a> within about 10 minutes.</p>
+<div class="tabs">
+<a class="tab" href="/urja-praxis"><h2>Urja Praxis</h2><div class="muted">Legal review</div>
+<ul><li><span class="big">{{ n.orders }}</span> order{{ 's' if n.orders != 1 }} to review</li>
+<li><span class="big">{{ n.drafts }}</span> draft regulation{{ 's' if n.drafts != 1 }} and notice{{ 's' if n.drafts != 1 }}</li>
+<li>{{ n.editions }} edition{{ 's' if n.editions != 1 }} waiting · {{ n.comments }} repl{{ 'ies' if n.comments != 1 else 'y' }} from Claude to look at</li></ul>
+<span class="go">Open the review screen →</span></a>
+<a class="tab" href="/jouleWise"><h2>jouleWise</h2><div class="muted">Commercial review (beta)</div>
+<ul><li><span class="big">{{ n.illustrations }}</span> commercial illustration{{ 's' if n.illustrations != 1 }} to approve</li></ul>
+<span class="go">Open the illustrations →</span></a>
+<a class="tab" href="/memory"><h2>Memory</h2><div class="muted">What the studio has learnt</div>
+<ul><li><span class="big">{{ n.lessons }}</span> note{{ 's' if n.lessons != 1 }} waiting for a decision</li></ul>
+<span class="go">Open the memory →</span></a>
+</div>
+<p class="muted">{% set p = deploy.get('production') %}{% if p and p.pushed_at %}Last change went to the public site {{ p.pushed_at[:16]|replace('T', ' ') }}.{% endif %}
+{% if scan %} Last scan of the commission websites: {{ scan.finished[:16]|replace('T', ' ') }}.{% endif %}</p>
+{% endblock %}

@@ -9,7 +9,7 @@
 <p class="muted">{{ COMMISSIONS[d.commission] }} · issued {{ c.issued_date or 'date not given' }} ·
 <a href="{{ d.source_url }}" target="_blank" rel="noopener">source</a>
 {% for r in related %} · <a href="{{ r.url }}" target="_blank" rel="noopener">{{ r.label }}</a>{% endfor %}</p>
-{% if not reviewer %}<div class="flash">Set your name on the <a href="/">queue page</a> before approving.</div>{% endif %}
+{% if not reviewer %}<div class="flash">Set your name on the <a href="/urja-praxis">queue page</a> before approving.</div>{% endif %}
 <div class="split">
 <div class="pdf"><iframe src="/file/{{ d.id }}#page=1" title="Draft PDF"></iframe></div>
 <div class="side"><div class="card"><form method="post" action="/consultation/{{ d.id }}">

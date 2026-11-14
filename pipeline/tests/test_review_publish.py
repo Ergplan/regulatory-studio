@@ -170,7 +170,7 @@ def test_queue_shows_commission_website_health(server):
     (config.STORE / "download_last.json").write_text(json.dumps({"at": "2026-11-11T22:00", "sites": {
         "kerc": {"newest": "2026-08-31", "downloaded": 0, "errors": [],
                  "warnings": ["no orders recognised on the listing page; the site layout may have changed"]}}}))
-    page = server.get("/")
+    page = server.get("/urja-praxis")
     assert "Commission websites" in page and "2026-08-31" in page and "layout may have changed" in page
 
 
@@ -204,7 +204,7 @@ def test_queue_flags_long_listing_titles(server):
         conn.execute("UPDATE documents SET title = ?, case_number = 'Petition No. 2416/2026' WHERE doc_type = 'order'",
                      ("M/s Sample Ltd: Petition filed under Section 142 of the Electricity Act 2003 for contravention of "
                       "directions in the Green Energy Open Access Regulations with respect to contract demand",))
-    page = server.get("/")
+    page = server.get("/urja-praxis")
     assert "Petition No. 2416/2026" in page and "needs a short title" in page
 
 
@@ -261,7 +261,7 @@ def test_draft_regulation_is_summarised_reviewed_and_published(server):
     server("/whoami", {"name": "Test Reviewer"})
     page = server.get(f"/consultation/{c['doc_id']}")
     assert "Approve for the website" in page and "Public Notice" in page
-    assert "Draft regulations and consultations" in server.get("/")
+    assert "Draft regulations and consultations" in server.get("/urja-praxis")
     assert server(f"/consultation/{c['doc_id']}", {"action": "approve", "summary": "Proposal: monthly banking.",
                                                    "kind": "draft_amendment", "comment_deadline": "2026-11-28",
                                                    "proposes": "Banking monthly\nCharges 5%"}) == 303
@@ -642,7 +642,7 @@ def test_review_priority_puts_open_drafts_and_multi_party_orders_first(server):
     assert draft["band"] == "Review first" and routine["band"] == "When time allows"
     assert multi["leads"] == ["Acme Solar Ltd", "Beta Wind Ltd", "State Discom Ltd"]          # the load despatch centre is not a lead
     assert all(0 <= v <= priority.MAX[k] for k, v in draft["parts"].items()) and draft["score"] <= 100
-    page = server.get("/")
+    page = server.get("/urja-praxis")
     assert "Review these first" in page and "Priority" in page
     doc, _, _ = _ids()
     assert "Review priority" in server.get(f"/order/{doc}")
@@ -651,3 +651,10 @@ def test_review_priority_puts_open_drafts_and_multi_party_orders_first(server):
     server(f"/order/{doc}/summary", {"action": "approve", "summary": "Reviewed.", "issue": "i", "outcome": "o"})
     publish.run()
     assert "priority" not in json.loads((config.SNAPSHOT / "orders.json").read_text())[0]      # internal only
+
+
+def test_hub_has_a_tab_for_each_team(server):
+    page = server.get("/")
+    assert "Review hub" in page and 'href="/urja-praxis"' in page and 'href="/jouleWise"' in page and "rgstudio.joulewise.tech" in page
+    assert "Review queue" in server.get("/urja-praxis")
+    assert "commercial illustrations" in server.get("/jouleWise")

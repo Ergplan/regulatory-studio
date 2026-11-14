@@ -108,7 +108,7 @@ def test_only_approved_items_reach_the_public_branch_and_the_preview_branch_show
     assert again["preview"]["pushed"] is False
     assert deploy.run(refresh=True)["production"]["pushed"] is True  # scan days push anyway so day counts stay right
     assert deploy.last()["production"]["commit"]
-    assert "Public site" in server.get("/") and "Push approved items now" in server.get("/")
+    assert "Public site" in server.get("/urja-praxis") and "Push approved items now" in server.get("/urja-praxis")
 
 
 def test_a_failed_push_is_reported_and_retried_later(site_repo):
@@ -116,6 +116,6 @@ def test_a_failed_push_is_reported_and_retried_later(site_repo):
     _git(clone, "remote", "set-url", "origin", str(remote) + "-gone")
     out = deploy.run()
     assert out["production"]["pushed"] is False and out["production"]["error"]
-    assert "last push failed" in server.get("/")
+    assert "last push failed" in server.get("/urja-praxis")
     _git(clone, "remote", "set-url", "origin", str(remote))
     assert deploy.run()["preview"]["pushed"] is True

@@ -108,6 +108,38 @@ def back(url: str) -> RedirectResponse:
 
 
 @app.get("/", response_class=HTMLResponse)
+def hub(request: Request):
+    """The review hub: one tab per team. Urja Praxis reviews the law; jouleWise reviews the commercial illustrations."""
+    with db.session() as conn:
+        n = lambda sql: conn.execute(sql).fetchone()[0]                         # noqa: E731
+        counts = {
+            "orders": n("SELECT count(*) FROM orders o JOIN documents d ON d.id = o.doc_id WHERE o.summary_status = 'proposed' AND d.stage IN ('read', 'drafted')"),
+            "drafts": n("SELECT count(*) FROM consultations WHERE summary_status = 'proposed'"),
+            "editions": n("SELECT count(*) FROM digests WHERE status = 'proposed'"),
+            "comments": n("SELECT count(*) FROM review_comments WHERE status = 'answered'"),
+            "lessons": n("SELECT count(*) FROM lessons WHERE status = 'proposed'"),
+            "illustrations": n("SELECT (SELECT count(*) FROM orders WHERE commercial_status = 'proposed') + (SELECT count(*) FROM consultations WHERE commercial_status = 'proposed')"),
+        }
+    return templates.TemplateResponse(request, "hub.html", {"reviewer": reviewer(request), "n": counts, "deploy": deploy.last(),
+                                                            "scan": _last_scan(), "public_site": config.PUBLIC_SITE})
+
+
+@app.get("/jouleWise", response_class=HTMLResponse)
+@app.get("/joulewise", response_class=HTMLResponse)
+def commercial_queue(request: Request):
+    with db.session() as conn:
+        rows = [dict(r) | {"c": commercial.load(r["commercial"])} for r in conn.execute(
+            """SELECT d.id, d.commission, d.title, o.headline, o.commercial, o.commercial_status, o.commercial_by, '/order/' AS base
+               FROM orders o JOIN documents d ON d.id = o.doc_id WHERE o.commercial_status IS NOT NULL
+               UNION ALL
+               SELECT d.id, d.commission, d.title, NULL, c.commercial, c.commercial_status, c.commercial_by, '/consultation/'
+               FROM consultations c JOIN documents d ON d.id = c.doc_id WHERE c.commercial_status IS NOT NULL""")]
+    order = {"proposed": 0, "requested": 1, "approved": 2, "rejected": 3}
+    rows.sort(key=lambda r: order.get(r["commercial_status"], 9))
+    return templates.TemplateResponse(request, "commercial_queue.html", {"reviewer": reviewer(request), "rows": rows})
+
+
+@app.get("/urja-praxis", response_class=HTMLResponse)
 def queue(request: Request):
     with db.session() as conn:
         orders = conn.execute(
@@ -164,7 +196,7 @@ def deploy_now(request: Request, background: BackgroundTasks):
     with db.session() as conn:
         db.audit(conn, name, "deploy.request", "production")
     background.add_task(deploy.run)
-    return back("/#site")
+    return back("/urja-praxis#site")
 
 
 def _download_health() -> dict | None:
@@ -182,7 +214,7 @@ def _download_health() -> dict | None:
 def set_reviewer(name: str = Form(...)):
     if auth.enabled():
         raise HTTPException(403, "Reviewers sign in with a password.")
-    resp = back("/")
+    resp = back("/urja-praxis")
     resp.set_cookie("reviewer", name.strip()[:80], max_age=60 * 60 * 24 * 180, samesite="lax")
     return resp
 
