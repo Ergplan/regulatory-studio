@@ -2,36 +2,105 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Reader output",
   "type": "object",
-  "required": ["parties", "issue", "outcome", "summary", "references"],
+  "required": [
+    "parties",
+    "issue",
+    "outcome",
+    "summary",
+    "references"
+  ],
   "additionalProperties": false,
   "properties": {
     "parties": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["name", "role"],
+        "required": [
+          "name",
+          "role"
+        ],
         "additionalProperties": false,
-        "properties": {"name": {"type": "string"}, "role": {"type": "string"}}
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
       }
     },
-    "issue": {"type": "string", "maxLength": 600},
-    "outcome": {"type": "string", "maxLength": 600},
-    "summary": {"type": "string", "maxLength": 2000},
+    "issue": {
+      "type": "string",
+      "maxLength": 600
+    },
+    "outcome": {
+      "type": "string",
+      "maxLength": 600
+    },
+    "summary": {
+      "type": "string",
+      "maxLength": 2000
+    },
     "references": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["citation_text", "link_type", "target_kind", "target_id", "pid", "excerpt"],
+        "required": [
+          "citation_text",
+          "link_type",
+          "target_kind",
+          "target_id",
+          "pid",
+          "excerpt"
+        ],
         "additionalProperties": false,
         "properties": {
-          "citation_text": {"type": "string"},
-          "link_type": {"enum": ["applies", "interprets", "relaxes", "follows", "distinguishes", "appealed_in", "upholds", "sets_aside", "remands"]},
-          "target_kind": {"enum": ["clause", "regulation", "act_section", "document"]},
-          "target_id": {"type": ["string", "null"]},
-          "pid": {"type": "string", "pattern": "^p\\d+\\.\\d+$"},
-          "excerpt": {"type": "string", "maxLength": 400}
+          "citation_text": {
+            "type": "string"
+          },
+          "link_type": {
+            "enum": [
+              "applies",
+              "interprets",
+              "relaxes",
+              "follows",
+              "distinguishes",
+              "appealed_in",
+              "upholds",
+              "sets_aside",
+              "remands"
+            ]
+          },
+          "target_kind": {
+            "enum": [
+              "clause",
+              "regulation",
+              "act_section",
+              "document"
+            ]
+          },
+          "target_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "pid": {
+            "type": "string",
+            "pattern": "^p\\d+\\.\\d+$"
+          },
+          "excerpt": {
+            "type": "string",
+            "maxLength": 400
+          }
         }
       }
+    },
+    "headline": {
+      "type": "string",
+      "maxLength": 120,
+      "description": "what the order decides, for a business reader, in at most 15 words; only facts in the summary"
     }
   }
 }

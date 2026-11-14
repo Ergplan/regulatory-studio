@@ -3,7 +3,7 @@ import { HighBadge } from "@/components/AnalysisBlock";
 import GroupIcon from "@/components/GroupIcon";
 import { GEO } from "@/components/IndiaMap";
 import Overview from "@/components/Overview";
-import {
+import { orderHeadline,
   GROUPS, byDeadline, citingOrders, clausesOf, commentable, commissionName, consultationStatus, consultations, isOpen, orderLabel, orders, regulations, site,
   type Consultation, type Impact, type Order,
 } from "@/lib/data";
@@ -22,9 +22,9 @@ export const draftRow = (c: Consultation): Row => ({
   key: c.id, href: c.path, code: c.commission, title: c.impact?.headline || c.title, formal: c.impact?.headline ? c.title : undefined, meta: consultationStatus(c), live: isOpen(c),
   impact: c.impact, high: c.rating === "high", pending: !!c.draft, cues: commentable(c) ? `/studio?draft=${c.id.slice(0, 10)}` : undefined,
   note: c.impact?.headline ? undefined : c.summary });
-export const orderRow = (o: Order): Row => ({ key: o.id, href: o.path, code: o.commission, title: o.impact?.headline || o.title || orderLabel(o),
-  formal: o.impact?.headline ? (o.title ?? orderLabel(o)) : undefined, meta: [fmtDate(o.date), o.title ? o.case_number : ""].filter(Boolean).join(" · "),
-  impact: o.impact, high: o.rating === "high", pending: !!o.draft, note: o.impact?.headline ? undefined : o.issue });
+export const orderRow = (o: Order): Row => ({ key: o.id, href: o.path, code: o.commission, title: orderHeadline(o) || o.title || orderLabel(o),
+  formal: orderHeadline(o) ? (o.title ?? orderLabel(o)) : undefined, meta: [fmtDate(o.date), o.title ? o.case_number : ""].filter(Boolean).join(" · "),
+  impact: o.impact, high: o.rating === "high", pending: !!o.draft, note: o.impact?.headline ? undefined : o.headline ? o.summary : o.issue });
 
 function rows(kind: LibraryKind): Row[] {
   if (kind === "drafts") return [...consultations].sort((a, b) => Number(isOpen(b)) - Number(isOpen(a)) || Number(b.rating === "high") - Number(a.rating === "high") || byDeadline(a, b)).map(draftRow);

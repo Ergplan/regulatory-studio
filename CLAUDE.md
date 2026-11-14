@@ -47,6 +47,18 @@ See `docs/ARCHITECTURE.md` and `docs/MAC_MINI_SERVER.md`. Four launchd jobs (`op
 Never weaken these: production data comes only from `approved` rows; a request through Cloudflare without a
 valid token is refused; the review screen binds to 127.0.0.1; no credentials or tokens in the repo.
 
+## Prepared files and the weekly digest
+
+A file in `data/reader_outputs/` named `<doc id>.<step>.json` (triage, read, headline, impact, figures,
+check.fact, check.legal) or `<week>.digest.json` is used instead of asking Claude, in file mode and in
+Claude mode, so work prepared in advance is not redone by a scheduled run. It is still a proposal.
+
+The Friday `draft` stage builds the edition: items read since the last approved edition (six-week look-back),
+a lead, key points, numbers, up to three charts across documents and dates to watch. Each cites
+`{doc, pid}`; anything uncited, or a number not found in its document, is dropped. To prepare an edition
+early: `REGSTUDIO_EDITION_DAY=2026-11-20 regstudio run draft`. `regstudio promote <id>` sends a document
+that triage left out to be read.
+
 ## Market impact and Studio comments
 
 Both are opt-in per document (review screen button, or `regstudio run impact --doc <id>` /

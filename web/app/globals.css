@@ -546,3 +546,25 @@ ul.bars.ranges .b-label em, .overview .b-label em { display: block; margin: 3px 
 @media (max-width: 620px) { .chooser.in-flow ul { grid-template-columns: repeat(2, minmax(0, 1fr)); } .chooser.in-flow { padding: 16px; } }
 #updates { scroll-margin-top: calc(var(--header-h) + 20px); }
 .flow .updates-box { margin-bottom: 0; } .chooser.in-flow { margin-bottom: 22vh; } @media (max-width: 900px) { .chooser.in-flow { margin-bottom: 14vh; } }
+
+/* ---- Digest edition: lead, key points, numbers to know, charts across documents, dates to watch ---- */
+.digest h1 { margin-bottom: 10px; } .d-lead { font-size: 19px; line-height: 1.6; max-width: 72ch; color: var(--ink); }
+.d-count { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--mute); margin: 6px 0 0; }
+.digest .eyebrow .pend { margin-left: 10px; }
+.d-block { margin-top: 30px; } .d-block > .label, .d-points > .label, .d-watch > .label { margin: 0 0 12px; }
+.d-points { margin-top: 26px; padding: 20px 22px; border-radius: var(--r); }
+.d-points ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.d-points li { padding-left: 18px; position: relative; } .d-points li::before { content: ""; position: absolute; left: 0; top: .62em; width: 7px; height: 7px; border-radius: 50%; background: var(--power); }
+.d-points li p { margin: 0; color: var(--body); font-size: 16.5px; line-height: 1.55; max-width: 78ch; } .d-points li p.d-srcs { margin-top: 4px; }
+.d-srcs, .d-src { display: inline-flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; font-size: 12px; }
+.d-src > a:first-child, .src-code { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; color: var(--power); text-decoration: none; margin-right: 4px; }
+.d-src .cites { font-size: 12px; }
+ul.d-nums { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+ul.d-nums li { display: grid; gap: 4px; align-content: start; padding: 16px 16px 14px; border-radius: 14px; min-width: 0; }
+ul.d-nums b { font-family: var(--mono); font-weight: 500; font-size: 24px; line-height: 1.15; color: var(--ink); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+ul.d-nums span { font-size: 14px; line-height: 1.4; color: var(--body); }
+.d-watch { margin-top: 30px; padding: 20px 22px; border-radius: var(--r); }
+.d-watch ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.d-watch li { display: grid; grid-template-columns: 8.5em minmax(0, 1fr) auto; gap: 4px 14px; align-items: baseline; font-size: 15px; color: var(--body); }
+.d-watch time { font-family: var(--mono); font-size: 13px; color: var(--gold); }
+@media (max-width: 620px) { .d-watch li { grid-template-columns: 1fr; } .d-lead { font-size: 17px; } ul.d-nums b { font-size: 21px; } }

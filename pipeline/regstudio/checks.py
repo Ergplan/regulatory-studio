@@ -17,7 +17,7 @@ import re
 
 from . import config, db
 from .claude_runner import ClaudeError, UsageLimitReached, ask_json
-from .common import NotPrepared, fill, load_prompt, load_schema, order_text, prepared_output
+from .common import NotPrepared, fill, load_prompt, load_schema, order_text, prepared_output, use_prepared
 from .impact import PID, paragraph_ids
 
 AGENTS = {"fact": "check_fact.md", "legal": "check_legal.md"}
@@ -87,7 +87,7 @@ def status_of(checks: dict) -> str:
 def _targets(conn, limit):
     rows = []
     for t, kind in (("orders", "order"), ("consultations", "draft regulation")):
-        extra = "o.issue, o.outcome" if t == "orders" else "'' AS issue, o.proposes AS outcome"
+        extra = "o.issue, o.outcome, o.headline" if t == "orders" else "'' AS issue, o.proposes AS outcome, '' AS headline"
         rows += conn.execute(
             f"""SELECT d.id, d.commission, d.title, '{kind}' AS kind, o.summary, {extra}, o.checks, '{t}' AS tbl
                 FROM {t} o JOIN documents d ON d.id = o.doc_id
@@ -104,7 +104,7 @@ def run(limit: int | None = None) -> dict:
         run_id = db.start_run(conn, "check")
         for d in _targets(conn, limit):
             text, paras = order_text(conn, d["id"], budget=10_000_000)
-            written = " ".join(str(d[k] or "") for k in ("summary", "issue", "outcome"))
+            written = " ".join(str(d[k] or "") for k in ("summary", "issue", "outcome", "headline"))
             checks = json.loads(d["checks"]) if d["checks"] else {}
             checks["numbers"] = numbers_check(written, " ".join(paras.values()))
             pids = paragraph_ids(conn, d["id"])
@@ -114,7 +114,7 @@ def run(limit: int | None = None) -> dict:
                         continue
                     if config.READER == "mock":
                         continue
-                    if config.READER == "file":
+                    if use_prepared(f"{d['id']}.check.{agent}.json"):
                         try:
                             out = prepared_output(f"{d['id']}.check.{agent}.json", schema)
                         except NotPrepared:

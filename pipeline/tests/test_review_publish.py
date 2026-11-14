@@ -432,3 +432,72 @@ def test_flow_schematic_keeps_only_cited_steps():
         {"label": "Invented step", "basis": ["p9.9"]}, {"label": "Result", "detail": "No ISTS charges", "basis": ["p1.2"]}]}]}, {"p1.1", "p1.2"})
     assert out[0]["type"] == "flow" and [i["label"] for i in out[0]["items"]] == ["Commissioned by June 2028", "Result"]
     assert out[0]["items"][0]["otherwise"] == "Tapered waiver" and "unit" not in out[0]
+
+
+def test_digest_edition_keeps_only_cited_points_and_publishes_with_approved_items(server):
+    import datetime as dt
+    import os
+    from regstudio import drafting
+    doc, _, _ = _ids()
+    c = _db()
+    pids = [r[0] for r in c.execute("SELECT pid FROM paragraphs WHERE doc_id = ? ORDER BY page, idx", (doc,))]
+    text = " ".join(r[0] for r in c.execute("SELECT text FROM paragraphs WHERE doc_id = ?", (doc,)))
+    import re
+    figure = re.search(r"\d[\d,]*\.?\d*", text).group(0)
+    config.READER_OUTPUTS.mkdir(parents=True, exist_ok=True)
+    (config.READER_OUTPUTS / "2026-W47.digest.json").write_text(json.dumps({
+        "intro": "Lead for the edition.", "order": [doc[:10], "deadbeef00"],
+        "key_points": [{"text": "Cited point.", "basis": [{"doc": doc[:10], "pid": pids[0]}]},
+                       {"text": "Invented paragraph.", "basis": [{"doc": doc[:10], "pid": "p99.9"}]},
+                       {"text": "Unknown document.", "basis": [{"doc": "deadbeef00", "pid": "p1.1"}]}],
+        "numbers": [{"value": figure, "label": "A figure in the order", "doc": doc, "pid": pids[0]},
+                    {"value": "987.65 MW", "label": "Not in the order", "doc": doc, "pid": pids[0]}],
+        "charts": [{"type": "bars", "title": "Across orders", "unit": "MW", "items": [
+            {"label": "A", "value": 1, "doc": doc, "basis": [pids[0]]}, {"label": "B", "value": 2, "doc": doc, "basis": [pids[1]]},
+            {"label": "C", "value": 3, "doc": doc, "basis": ["p77.1"]}]}],
+        "watch": [{"date": "2026-11-17", "text": "Hearing", "doc": doc, "pid": pids[0]}]}))
+    os.environ["REGSTUDIO_READER"] = "file"; config.READER = "file"
+    try:
+        out = drafting.run(day=dt.date(2026, 11, 20))
+    finally:
+        os.environ["REGSTUDIO_READER"] = "mock"; config.READER = "mock"
+    assert out["digest"] == "2026-W47" and out["edition"] == "2026-11-20"
+    assert out["key_points"] == 1 and out["numbers"] == 1 and out["charts"] == 1 and out["watch"] == 1
+    g = _db().execute("SELECT * FROM digests WHERE id = '2026-W47'").fetchone()
+    assert json.loads(g["items"]) == [doc] and g["status"] == "proposed"
+    assert [i["label"] for i in json.loads(g["charts"])[0]["items"]] == ["A", "B"]
+    server("/whoami", {"name": "Test Reviewer"})
+    page = server.get("/digest/2026-W47")
+    assert "Cited point." in page and "Invented paragraph." not in page and "Numbers to know" in page
+    publish.run(preview=True)
+    pre = json.loads((config.PREVIEW / "digests.json").read_text())
+    assert pre[0]["draft"] and pre[0]["key_points"][0]["basis"][0]["href"].startswith("/orders/")
+    assert server("/digest/2026-W47", {"intro": "Reviewed lead.", "action": "approve"}) == 303
+    publish.run()
+    assert json.loads((config.SNAPSHOT / "digests.json").read_text()) == []   # the item's own summary is not approved yet
+    server(f"/order/{doc}/summary", {"action": "approve", "summary": "Reviewed.", "issue": "i", "outcome": "o"})
+    publish.run()
+    d = json.loads((config.SNAPSHOT / "digests.json").read_text())[0]
+    assert d["intro"] == "Reviewed lead." and d["numbers"][0]["value"] == figure and d["watch"][0]["date"] == "2026-11-17"
+    assert not d["draft"]
+
+
+def test_prepared_files_are_used_in_claude_mode_and_headlines_fill_older_summaries(server, monkeypatch):
+    from regstudio import claude_runner, headlines
+    doc, _, _ = _ids()
+    called = []
+    monkeypatch.setattr(claude_runner, "ask_json", lambda *a, **k: called.append(1) or {"headline": "From Claude"})
+    monkeypatch.setattr(headlines, "ask_json", lambda *a, **k: called.append(1) or {"headline": "From Claude"})
+    config.READER_OUTPUTS.mkdir(parents=True, exist_ok=True)
+    (config.READER_OUTPUTS / f"{doc}.headline.json").write_text(json.dumps({"headline": "Prepared headline for this order"}))
+    monkeypatch.setattr(config, "READER", "claude")
+    assert headlines.run() == {"headlines": 1, "failed": 0}
+    assert not called                                      # the prepared file was used, Claude was not asked
+    assert _db().execute("SELECT headline FROM orders WHERE doc_id = ?", (doc,)).fetchone()[0] == "Prepared headline for this order"
+    (config.READER_OUTPUTS / f"{doc}.headline.json").write_text(json.dumps({"headline": "x"}))   # too short: fails that document only
+    c = _db(); c.execute("UPDATE orders SET headline = NULL"); c.commit()
+    assert headlines.run()["failed"] == 1
+    server("/whoami", {"name": "Test Reviewer"})
+    server(f"/order/{doc}/summary", {"action": "save", "summary": "S", "issue": "i", "outcome": "o", "headline": "Reviewer's headline"})
+    publish.run(preview=True)
+    assert json.loads((config.PREVIEW / "orders.json").read_text())[0]["headline"] == "Reviewer's headline"

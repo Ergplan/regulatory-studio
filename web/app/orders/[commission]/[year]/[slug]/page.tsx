@@ -7,7 +7,7 @@ import Charts from "@/components/Charts";
 import Impact from "@/components/Impact";
 import ProjectCta, { askFor } from "@/components/ProjectCta";
 import SpiderMap, { type MapNode } from "@/components/SpiderMap";
-import { SITE_URL, commissionName, linkTypeLabel, orderLabel, orders, site, targetInfo, topicName, type Order } from "@/lib/data";
+import { orderHeadline, SITE_URL, commissionName, linkTypeLabel, orderLabel, orders, site, targetInfo, topicName, type Order } from "@/lib/data";
 import { fmtDate } from "@/lib/format";
 
 type Params = { commission: string; year: string; slug: string };
@@ -79,8 +79,8 @@ export default async function OrderPage({ params }: { params: Promise<Params> })
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <div className="meta"><Link href={`/commissions/${o.commission}`} className="tag">{o.commission.toUpperCase()}</Link>
         {o.date && <span>Order dated {fmtDate(o.date)}</span>}{o.sample && <span className="tag bad">Sample, not a real order</span>}</div>
-      {o.impact?.headline
-        ? <><h1>{o.impact.headline}</h1><p className="formal">{o.title ?? orderLabel(o)}{o.case_number && o.title ? ` · ${o.case_number}` : ""} · {commissionName(o.commission)}</p></>
+      {orderHeadline(o)
+        ? <><h1>{orderHeadline(o)}</h1><p className="formal">{o.title ?? orderLabel(o)}{o.case_number && o.title ? ` · ${o.case_number}` : ""} · {commissionName(o.commission)}</p></>
         : <><h1>{o.title ?? orderLabel(o)}</h1>{o.case_number && <p className="muted">{o.case_number} · {commissionName(o.commission)}</p>}</>}
       {o.impact && <Brief impact={o.impact} status={`Order of ${fmtDate(o.date)}: binds the parties`} analysis={analysis}
         ask={ask} about={about} path={o.path} />}

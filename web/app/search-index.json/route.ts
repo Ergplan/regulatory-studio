@@ -19,7 +19,7 @@ export function GET() {
   const docs = [
     ...consultations.map((c) => ({ t: "Draft", title: c.impact?.headline || c.title, sub: [c.commission.toUpperCase(), consultationStatus(c), c.impact?.headline ? c.title : null].filter(Boolean).join(" · "),
       why: brief(c.impact?.market_note || c.summary), href: c.path, text: widen([c.title, c.summary, ...c.proposes, c.amends, c.impact?.headline, c.impact?.market_note].join(" ")) })),
-    ...orders.map((o) => ({ t: "Order", title: o.impact?.headline || o.title || orderLabel(o), sub: [o.commission.toUpperCase(), o.impact?.headline ? o.title : null, o.case_number, o.date].filter(Boolean).join(" · "),
+    ...orders.map((o) => ({ t: "Order", title: o.impact?.headline || o.headline || o.title || orderLabel(o), sub: [o.commission.toUpperCase(), o.impact?.headline || o.headline ? o.title : null, o.case_number, o.date].filter(Boolean).join(" · "),
       why: brief(o.impact?.market_note || o.issue), href: o.path,
       text: widen([o.title, o.case_number, o.issue, o.outcome, o.summary, o.impact?.headline, ...o.parties.map((p) => p.name), ...o.topics].join(" ")) })),
     ...regulations.map((r) => ({ t: "Regulation", title: r.impact?.headline || regName(r), sub: [r.commission.toUpperCase(), r.impact?.headline ? r.title : null].filter(Boolean).join(" · "),

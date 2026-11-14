@@ -10,18 +10,22 @@ export interface Link { type: LinkType; kind: TargetKind; target: string; cited_
 export interface Order {
   id: string; path: string; commission: string; doc_type: string; title: string | null; case_number: string | null;
   date: string | null; source_url: string; source_listing?: boolean; pdf: string | null; topics: string[]; significance: number;
-  parties: { name: string; role: string }[]; issue: string; outcome: string; summary: string;
+  parties: { name: string; role: string }[]; issue: string; outcome: string; summary: string; headline?: string | null;
   reviewed_by: string; approved_at: string; revised_at: string | null; language: string | null; sample: boolean; draft?: boolean; links: Link[]; impact?: Impact | null; rating?: Rating; figures?: Figure[]; checked?: Checked | null;
 }
 export interface Regulation { id: string; path: string; commission: string; title: string; short_title: string | null; notified_date: string | null; source_url: string | null; source_listing?: boolean; pdf?: string | null; sample: boolean; impact?: Impact | null; rating?: Rating; figures?: Figure[] }
 export interface ClauseVersion { text: string; in_force_from: string | null; in_force_to: string | null }
 export interface Clause { id: string; path: string; regulation_id: string; number: string; heading: string | null; text: string; in_force_from: string | null; in_force_to: string | null; versions?: ClauseVersion[] }
 export interface ActSection { id: string; act: string; number: string; title: string }
-export interface Digest { id: string; path: string; from: string; to: string; intro: string; items: string[]; approved_at: string; reviewed_by: string; draft?: boolean }
+/** A citation into a document of a digest edition: its page on this site, its source file, and the paragraph. */
+export interface DigestRef { doc: string; pid: string; href: string; src?: string | null; code: string }
+export interface Digest { id: string; path: string; from: string; to: string; edition?: string; intro: string; items: string[]; approved_at: string; reviewed_by: string; draft?: boolean;
+  key_points?: { text: string; basis: DigestRef[] }[]; numbers?: ({ value: string; label: string } & DigestRef)[];
+  charts?: Figure[]; watch?: ({ date: string; text: string } & Partial<DigestRef>)[] }
 /** Overall impact, set by the review team (never by the model). Only "high" is shown as a badge. */
 export type Rating = "high" | "medium" | "low" | null;
 /** A small chart in a summary. Every item cites paragraphs of the source, except dates taken from a commission's listing. */
-export interface FigureItem { label: string; value?: number; start?: string; end?: string; tag?: string; context?: boolean; detail?: string; otherwise?: string; href?: string; basis: string[] }
+export interface FigureItem { label: string; value?: number; start?: string; end?: string; tag?: string; context?: boolean; detail?: string; otherwise?: string; href?: string; src?: string | null; code?: string; basis: string[] }
 /** Pre-review checks that ran on a summary: an automatic number check and up to two independent AI reviewers. Findings are not published. */
 export interface Checked { reviewers: number; numbers: boolean }
 export interface Figure { type: "bars" | "series" | "timeline" | "flow"; title: string; unit?: string; note?: string; items: FigureItem[] }
@@ -112,6 +116,9 @@ export function daysLeft(iso: string | null): number | null {
 }
 
 export const orderById = new Map(orders.map((o) => [o.id, o]));
+/** The plain-English headline of an order: from its impact analysis, else the one proposed with its summary. */
+export const orderHeadline = (o: Order) => o.impact?.headline || o.headline || null;
+export const consultationById = new Map(consultations.map((c) => [c.id, c]));
 export const clauseById = new Map(clauses.map((c) => [c.id, c]));
 export const regulationById = new Map(regulations.map((r) => [r.id, r]));
 export const actById = new Map(actSections.map((a) => [a.id, a]));
