@@ -4,11 +4,12 @@
   "from": "2026-11-16",
   "to": "2026-11-22",
   "edition": "2026-11-20",
-  "intro": "Peak power leads this edition. Rajasthan told RERC that only about 10% of its evening exchange bids cleared in September; RERC let it buy Himachal hydro at Rs 15.50/kWh and take a single bidder's peak power at up to Rs 9.99/kWh. Tamil Nadu, which says it secured 15% to 25% of its peak bids even at the Rs 10 ceiling, has TNERC's approval to tender up to 3,200 MW a month for summer 2027. The longer-term answer is storage: CERC adopted Rs 6.27 to 6.28/kWh for 1,200 MW of four-hour evening supply from batteries in SECI's FDRE-VII, and TNERC approved 600 MW of solar with 1,800 MWh of storage at Rs 3.12/kWh. Developers should also note two hard lines: CERC will not extend the full ISTS waiver past 30 June 2026 even where transmission was late, and GERC would not stop a battery developer's bank guarantee over a West Asia force majeure claim.",
+  "intro": "Peak power leads this edition. Rajasthan told RERC that only about 10% of its evening exchange bids cleared in September; RERC let it buy Himachal hydro at Rs 15.50/kWh and take a single bidder's peak power at up to Rs 9.99/kWh. Tamil Nadu, which says it secured 15% to 25% of its peak bids even at the Rs 10 ceiling, has TNERC's approval to tender up to 3,200 MW a month for summer 2027, and UPERC cleared UPPCL to tender 2,000 MW of night and evening peak power for five summers from April 2027. The longer-term answer is storage: CERC adopted Rs 6.27 to 6.28/kWh for 1,200 MW of four-hour evening supply from batteries in SECI's FDRE-VII, and TNERC approved 600 MW of solar with 1,800 MWh of storage at Rs 3.12/kWh. Developers should also note two hard lines: CERC will not extend the full ISTS waiver past 30 June 2026 even where transmission was late, and GERC would not stop a battery developer's bank guarantee over a West Asia force majeure claim.",
   "items": [
    "2b3baf2760e69dc50e1457e7df5c0af71f76a38d8b5060333ae03609af2f3540",
    "99882e10af2925e826ae6068acbc493f6379c2f9a9e1ca82c960f1baabb0cda3",
    "e226201a92cfd8f4b0a2fc13d4279e0c683b5a880df20396fb8e109df7e349e4",
+   "c681bb3c8a04b2acf2b94814671ddd3d0f9bc17709e888ac9522a479df80c211",
    "c44cc147a584e43bcb31f6c28579eb9af1d61948be54f5ac20569dec2b7fa586",
    "58bbccf942f90361c26041dc4bb9b667e03a8c1c9074177bb067a7c0ccafe343",
    "cba276a48f21810757e9b1c7f6ddd91e4a35a5df17180838ed4abe3f4301333d",
@@ -117,8 +118,22 @@
     ]
    },
    {
-    "text": "Commissions are pushing discoms to plan ahead: RERC directed RUVITL to move on battery storage, FDRE and demand flexibility, and TNERC said short-term tenders are no substitute for long- and medium-term contracts.",
+    "text": "Commissions want discoms to plan ahead: UPERC approved UPPCL's five-year tender for 2,000 MW of night and evening peak power; RERC told RUVITL to move on storage, FDRE and demand flexibility; TNERC said short-term tenders are no substitute for long- and medium-term contracts.",
     "basis": [
+     {
+      "doc": "c681bb3c8a04b2acf2b94814671ddd3d0f9bc17709e888ac9522a479df80c211",
+      "pid": "p19.2",
+      "href": "/orders/uperc/2026/2213-of-2025-c681bb",
+      "src": "https://www.uperc.org/App_File/P-No-2213of2025-pdf1029202643546PM.pdf",
+      "code": "uperc"
+     },
+     {
+      "doc": "c681bb3c8a04b2acf2b94814671ddd3d0f9bc17709e888ac9522a479df80c211",
+      "pid": "p17.1",
+      "href": "/orders/uperc/2026/2213-of-2025-c681bb",
+      "src": "https://www.uperc.org/App_File/P-No-2213of2025-pdf1029202643546PM.pdf",
+      "code": "uperc"
+     },
      {
       "doc": "2b3baf2760e69dc50e1457e7df5c0af71f76a38d8b5060333ae03609af2f3540",
       "pid": "p13.2",
@@ -239,13 +254,13 @@
     "code": "tnerc"
    },
    {
-    "value": "Rs 1,000",
-    "label": "Per MW per day, paid in advance, to extend financial closure under GUVNL's BESS agreement",
-    "doc": "be28873788b9e610b7a3fcdfb54da0ea9bc5fb35d4b90ec86acd0f01e4939129",
-    "pid": "p63.2",
-    "href": "/orders/gerc/2026/ia-no-85-2026-in-petition-no-2749-2026-be2887",
-    "src": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU4ODdfMDYtMTEtMjAyNl8zNzM3MTYx",
-    "code": "gerc"
+    "value": "2,000 MW",
+    "label": "Night and evening peak power UPPCL may tender for 16 April to 15 October each year, FY 2027-28 to FY 2031-32",
+    "doc": "c681bb3c8a04b2acf2b94814671ddd3d0f9bc17709e888ac9522a479df80c211",
+    "pid": "p19.2",
+    "href": "/orders/uperc/2026/2213-of-2025-c681bb",
+    "src": "https://www.uperc.org/App_File/P-No-2213of2025-pdf1029202643546PM.pdf",
+    "code": "uperc"
    }
   ],
   "charts": [
@@ -466,6 +481,20 @@
       "href": "/orders/tnerc/2026/m-p-no-23-of-2026-e22620",
       "src": "https://tnerc.tn.gov.in/Orders/files/CO-MPNo23%20221020261439.pdf",
       "code": "tnerc"
+     },
+     {
+      "label": "UP: peak tender, first season",
+      "doc": "c681bb3c8a04b2acf2b94814671ddd3d0f9bc17709e888ac9522a479df80c211",
+      "basis": [
+       "p16.2",
+       "p19.2"
+      ],
+      "start": "2027-04-16",
+      "end": "2027-10-15",
+      "tag": "then each year to FY 2031-32",
+      "href": "/orders/uperc/2026/2213-of-2025-c681bb",
+      "src": "https://www.uperc.org/App_File/P-No-2213of2025-pdf1029202643546PM.pdf",
+      "code": "uperc"
      }
     ]
    }
@@ -510,6 +539,15 @@
     "href": "/orders/tnerc/2026/m-p-no-23-of-2026-e22620",
     "src": "https://tnerc.tn.gov.in/Orders/files/CO-MPNo23%20221020261439.pdf",
     "code": "tnerc"
+   },
+   {
+    "date": "2027-04-16",
+    "text": "Supply under UPPCL's 2,000 MW peak tender is due to start",
+    "doc": "c681bb3c8a04b2acf2b94814671ddd3d0f9bc17709e888ac9522a479df80c211",
+    "pid": "p16.2",
+    "href": "/orders/uperc/2026/2213-of-2025-c681bb",
+    "src": "https://www.uperc.org/App_File/P-No-2213of2025-pdf1029202643546PM.pdf",
+    "code": "uperc"
    },
    {
     "date": "2027-11-25",
