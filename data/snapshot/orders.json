@@ -3253,19 +3253,19 @@
     },
     {
      "id": "hours",
-     "label": "Supply hours a day (19:00 to 05:00)",
+     "label": "Supply hours a day (00:00 to 05:00 and 19:00 to 24:00)",
      "value": 10,
      "unit": "hours",
      "basis": [
-      "p2.7"
+      "p19.2"
      ]
     },
     {
      "id": "days",
-     "label": "Days in April to September",
+     "label": "Days from 16 April to 15 October",
      "value": 183,
      "unit": "days",
-     "assumption": "Assumption for the illustration: every day from April to September (p2.7), which is 183 days."
+     "assumption": "Assumption for the illustration: supply on every day of the season the order sets, 16 April to 15 October (p19.2), which is 183 days."
     },
     {
      "id": "rupee",
@@ -3304,7 +3304,7 @@
    "takeaway": "Each rupee a unit on the discovered tariff is worth about Rs 366 crore a year to UPPCL, or Rs 1,830 crore over the five-year term, if all of it is scheduled.",
    "caveats": [
     "Power is despatched on merit order (p17.1), so scheduled energy can be lower.",
-    "Single-part tariff: UPPCL pays only for energy scheduled, subject to the PPA's offtake terms."
+    "The tariff is single-part (p16.2); what UPPCL owes for capacity it does not schedule depends on the PPA's terms."
    ],
    "approved_by": null,
    "draft": true
