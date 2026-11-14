@@ -14,7 +14,7 @@ import re
 
 from . import config, db, mock, registry
 from .claude_runner import ClaudeError, UsageLimitReached, ask_json
-from .common import NotPrepared, fill, prepared_output, load_prompt, load_schema, norm, order_text
+from .common import NotPrepared, fill, prepared_output, load_prompt, load_schema, norm, order_text, use_prepared
 
 CASE_NO = re.compile(r"(?:petition|appeal|case|o\.?p\.?|i\.?a\.?)\s*no\.?\s*([\w\-/]+\s*(?:of|/)\s*\d{4})", re.I)
 
@@ -81,7 +81,7 @@ def run(limit: int | None = None) -> dict:
         for d in docs:
             text, paras = order_text(conn, d["id"])
             try:
-                if config.READER == "file":
+                if use_prepared(f"{d['id']}.read.json"):
                     out = prepared_output(f"{d['id']}.read.json", schema)
                 elif config.READER == "mock":
                     out = mock.read(paras, registry.lookup_index(conn), d["commission"])
@@ -117,9 +117,10 @@ def run(limit: int | None = None) -> dict:
                     (d["id"], r["link_type"], r["target_kind"], r["target_id"], r["citation_text"],
                      r["resolved"], r["pid"], r["excerpt"]))
             conn.execute(
-                """UPDATE orders SET parties = ?, issue = ?, outcome = ?, summary = ?,
+                """UPDATE orders SET parties = ?, issue = ?, outcome = ?, summary = ?, headline = ?,
                        summary_status = 'proposed' WHERE doc_id = ?""",
-                (json.dumps(out["parties"]), out["issue"], out["outcome"], out["summary"], d["id"]))
+                (json.dumps(out["parties"]), out["issue"], out["outcome"], out["summary"],
+                 (out.get("headline") or "").strip()[:120] or None, d["id"]))
             db.set_stage(conn, d["id"], "read")
             db.audit(conn, "pipeline", "read", d["id"], {"links": len(refs), "dropped": dropped})
             done += 1

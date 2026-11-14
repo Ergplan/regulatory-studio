@@ -1,9 +1,31 @@
 {% extends "base.html" %}{% block title %}Digest {{ dg.id }}{% endblock %}
 {% block body %}
-<h1>Weekly digest {{ dg.id }}</h1><p class="muted">{{ dg.from_date }} to {{ dg.to_date }} · <span class="pill {{ dg.status }}">{{ dg.status }}</span></p>
-<div class="card"><form method="post" action="/digest/{{ dg.id }}"><label>Introduction</label><textarea name="intro" style="min-height:120px">{{ dg.intro }}</textarea>
-<p class="row"><button name="action" value="save">Save</button><button class="primary" name="action" value="approve">Approve digest</button></p></form></div>
-<p class="muted">Only items whose summary is approved are published and emailed.</p>
-{% for i in items %}<div class="card"><div class="row"><b>{{ i.commission|upper }}</b><a href="/order/{{ i.id }}">{{ i.title }}</a><span class="pill {{ i.summary_status }}">{{ i.summary_status }}</span></div>
+<style>.excerpt{font-style:italic;color:var(--quiet);margin:4px 0;font-size:14px}table.mini{border-collapse:collapse;width:100%;font-size:14px}table.mini td,table.mini th{border-top:1px solid #e3e6eb;padding:4px 8px 4px 0;text-align:left}</style>
+<h1>Weekly digest {{ dg.id }}</h1>
+<p class="muted">Edition of {{ dg.edition_date or dg.to_date }} · covers items read since the last approved edition · <span class="pill {{ dg.status }}">{{ dg.status }}</span></p>
+<div class="card"><form method="post" action="/digest/{{ dg.id }}"><label>Lead</label><textarea name="intro" style="min-height:140px">{{ dg.intro }}</textarea>
+<p class="row"><button name="action" value="save">Save</button><button class="primary" name="action" value="approve">Approve digest</button></p></form>
+<p class="muted">Approving the digest does not approve its items. Only items whose own summary is approved are published and emailed, and a key point, number or chart item is shown only if every document it cites is approved.</p></div>
+
+{% if key_points %}<div class="card"><b>Key points</b>
+{% for p in key_points %}<div class="link" style="margin:8px 0"><div>{{ p.text }}</div>
+{% for b in p.basis %}<div class="excerpt">{{ names.get(b.doc, b.doc[:10]) }} {{ b.pid }}: “{{ texts[(b.doc, b.pid)][:300] }}”</div>{% endfor %}</div>{% endfor %}</div>{% endif %}
+
+{% if numbers %}<div class="card"><b>Numbers to know</b>
+{% for n in numbers %}<div class="link" style="margin:8px 0"><div><b>{{ n.value }}</b> · {{ n.label }}</div>
+<div class="excerpt">{{ names.get(n.doc, n.doc[:10]) }} {{ n.pid }}: “{{ texts[(n.doc, n.pid)][:300] }}”</div></div>{% endfor %}</div>{% endif %}
+
+{% if charts %}<div class="card"><b>Charts across documents</b>
+{% for ch in charts %}<p style="margin:10px 0 4px"><b>{{ ch.title }}</b>{% if ch.unit %} <span class="muted">({{ ch.unit }})</span>{% endif %}</p>
+<table class="mini"><tr><th>Item</th><th>Value</th><th>Source</th></tr>
+{% for i in ch["items"] %}<tr><td>{{ i.label }}{% if i.tag %} <span class="muted">{{ i.tag }}</span>{% endif %}</td><td>{{ i.value if i.value is defined else (i.start ~ ((' to ' ~ i.end) if i.end else '')) }}</td>
+<td>{{ names.get(i.doc, i.doc[:10]) }} {{ i.basis|join(', ') }}</td></tr>{% endfor %}</table>{% if ch.note %}<p class="muted">{{ ch.note }}</p>{% endif %}{% endfor %}</div>{% endif %}
+
+{% if watch %}<div class="card"><b>Dates to watch</b>
+{% for w in watch %}<div style="margin:6px 0"><b>{{ w.date }}</b> {{ w.text }}{% if w.doc %} <span class="muted">({{ names.get(w.doc, w.doc[:10]) }} {{ w.pid }})</span>{% endif %}</div>{% endfor %}</div>{% endif %}
+
+<h2>Items in this edition ({{ items|length }})</h2>
+{% for i in items %}<div class="card"><div class="row"><b>{{ i.commission|upper }}</b><a href="/{{ 'order' if i.kind == 'order' else 'consultation' }}/{{ i.id }}">{{ i.title }}</a>
+<span class="pill">{{ 'order' if i.kind == 'order' else 'draft regulation' }}</span><span class="pill {{ i.summary_status }}">summary {{ i.summary_status }}</span></div>
 <p>{{ i.summary }}</p></div>{% endfor %}
 {% endblock %}

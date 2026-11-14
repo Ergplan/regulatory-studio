@@ -4,11 +4,12 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 
 from . import config, db
 
-STAGES = ["intake", "extract", "registry", "amend", "consult", "triage", "read", "check", "impact", "figures", "comments", "draft"]
+STAGES = ["intake", "extract", "registry", "amend", "consult", "triage", "read", "headlines", "check", "impact", "figures", "comments", "draft"]
 
 
 def _run_stage(name: str, limit: int | None, docs: list[str] | None = None, personas: list[str] | None = None) -> dict:
@@ -34,6 +35,9 @@ def _run_stage(name: str, limit: int | None, docs: list[str] | None = None, pers
     if name == "read":
         from . import reader
         return reader.run(limit)
+    if name == "headlines":
+        from . import headlines
+        return headlines.run(limit)
     if name == "check":
         from . import checks
         return checks.run(limit)
@@ -50,8 +54,10 @@ def _run_stage(name: str, limit: int | None, docs: list[str] | None = None, pers
         from . import consult
         return consult.run(limit)
     if name == "draft":
+        import datetime as dt
         from . import drafting
-        return drafting.run(limit)
+        day = os.environ.get("REGSTUDIO_EDITION_DAY")   # e.g. 2026-11-20 to prepare that Friday's edition early
+        return drafting.run(limit, dt.date.fromisoformat(day) if day else None)
     raise SystemExit(f"unknown stage {name}")
 
 
@@ -120,6 +126,8 @@ def main(argv: list[str] | None = None) -> None:
     ar.add_argument("name")
     ar.add_argument("--email", help="the email this reviewer proves to Cloudflare Access; with it no password is needed")
     ar.add_argument("--password", action="store_true", help="with --email: also set a password, for signing in on the office network")
+    pr = sub.add_parser("promote", help="send documents that triage left out ('listed') to be read after all")
+    pr.add_argument("doc", nargs="+", help="document ids or their first 8+ characters")
     dp = sub.add_parser("deploy", help="push approved items to the public site, and the unreviewed preview to the preview site")
     dp.add_argument("--only", choices=["production", "preview"], help="default: both")
     dp.add_argument("--refresh", action="store_true", help="push even if nothing changed, so dates on the site are counted from today")
@@ -177,6 +185,19 @@ def main(argv: list[str] | None = None) -> None:
         except ValueError as e:
             raise SystemExit(str(e))
         print(f"{args.name} added; the review screen now requires sign-in")
+    elif args.cmd == "promote":
+        db.init()
+        done = []
+        with db.session() as conn:
+            for ref in args.doc:
+                rows = conn.execute("SELECT id, stage FROM documents WHERE id LIKE ?", (ref + "%",)).fetchall()
+                if len(rows) != 1 or rows[0]["stage"] != "listed":
+                    print(f"{ref}: skipped ({'not found or ambiguous' if len(rows) != 1 else 'stage is ' + rows[0]['stage']})")
+                    continue
+                db.set_stage(conn, rows[0]["id"], "triaged")
+                db.audit(conn, "pipeline", "promote", rows[0]["id"])
+                done.append(rows[0]["id"][:12])
+        print(json.dumps({"promoted": done}))
     elif args.cmd == "deploy":
         from . import deploy
         db.init()

@@ -13,7 +13,7 @@ export function impactSections(): ImpactSection[] {
     key: r.id, href: r.path, title: r.title, kind: "Notified regulation", impact: r.impact!, pdf: r.pdf ?? null, draft: !!site.preview, high: r.rating === "high", commission: r.commission,
     sub: r.notified_date ? `notified ${fmtDate(r.notified_date)}` : "" }));
   const ords = orders.filter((o) => o.impact).map((o) => ({
-    key: o.id, href: o.path, title: o.title ?? orderLabel(o), kind: "Order", impact: o.impact!, pdf: o.pdf, draft: !!o.draft, high: o.rating === "high", commission: o.commission,
+    key: o.id, href: o.path, title: o.impact?.headline || o.headline || o.title || orderLabel(o), kind: "Order", impact: o.impact!, pdf: o.pdf, draft: !!o.draft, high: o.rating === "high", commission: o.commission,
     sub: [o.case_number, o.date ? fmtDate(o.date) : ""].filter(Boolean).join(" · ") }));
   return [
     { id: "drafts", label: "Drafts", note: "Proposals: effects apply only if adopted", rows: drafts },

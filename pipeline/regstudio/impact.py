@@ -15,7 +15,7 @@ import re
 
 from . import config, db
 from .claude_runner import ClaudeError, UsageLimitReached, ask_json
-from .common import NotPrepared, fill, load_prompt, load_schema, order_text, prepared_output
+from .common import NotPrepared, fill, load_prompt, load_schema, order_text, prepared_output, use_prepared
 
 GROUPS = {
     "discoms": "Discoms", "ci_consumers": "C&I and open access consumers", "captive": "Captive users",
@@ -61,7 +61,7 @@ def _targets(conn, limit):
         rows += conn.execute(
             f"""SELECT d.id, d.commission, {title} AS title, '{kind}' AS kind, {summary} AS summary, '{t}' AS tbl
                 FROM {t} o JOIN documents d ON d.id = o.{key} WHERE o.impact = ?""", (REQUESTED,)).fetchall()
-    if config.READER == "file":  # a prepared file counts as a request
+    if config.READER in ("file", "claude"):  # a prepared file counts as a request
         for t, (key, kind, summary) in TABLES.items():
             title = "o.title" if t == "regulations" else "d.title"
             for r in conn.execute(f"""SELECT d.id, d.commission, {title} AS title, '{kind}' AS kind, {summary} AS summary,
@@ -123,7 +123,7 @@ def run(limit: int | None = None, docs: list[str] | None = None) -> dict:
         run_id = db.start_run(conn, "impact")
         for d in _targets(conn, limit):
             try:
-                if config.READER == "file":
+                if use_prepared(f"{d['id']}.impact.json"):
                     out = prepared_output(f"{d['id']}.impact.json", schema)
                 elif config.READER == "mock":
                     out = _mock()

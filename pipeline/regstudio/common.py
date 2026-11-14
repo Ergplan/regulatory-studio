@@ -55,11 +55,22 @@ class NotPrepared(Exception):
     """READER=file and no prepared output exists yet for this document."""
 
 
+def use_prepared(name: str) -> bool:
+    """A file prepared for this step is used instead of asking Claude: always in file mode, and in Claude mode
+    whenever one exists, so work prepared and checked in advance is not redone by the next scheduled run."""
+    return config.READER == "file" or (config.READER == "claude" and (config.READER_OUTPUTS / name).exists())
+
+
 def prepared_output(name: str, schema: dict) -> dict:
     import jsonschema
     path = config.READER_OUTPUTS / name
     if not path.exists():
         raise NotPrepared(name)
-    data = json.loads(path.read_text())
-    jsonschema.validators.validator_for(schema)(schema).validate(data)
+    from .claude_runner import ClaudeError
+    try:
+        data = json.loads(path.read_text())
+        jsonschema.validators.validator_for(schema)(schema).validate(data)
+    except (ValueError, jsonschema.ValidationError) as e:   # one bad file fails that document, not the whole run
+        msg = e.message if isinstance(e, jsonschema.ValidationError) else str(e)
+        raise ClaudeError(f"prepared file {name} is not valid: {msg}"[:300]) from e
     return data

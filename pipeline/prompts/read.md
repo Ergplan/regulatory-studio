@@ -23,6 +23,8 @@ Extract:
   - excerpt: a short passage copied word for word from that paragraph that shows the
     reliance (under 300 characters).
 
+Also write `headline`: what the order decides, for a business reader, in at most 15 words, using only facts in your summary (for example "Rajasthan pays up to Rs 9.99/kWh for peak power from the only bidder").
+
 Return ONLY a JSON object matching this schema, with no other text:
 {schema}
 

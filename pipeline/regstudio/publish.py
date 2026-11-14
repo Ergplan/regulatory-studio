@@ -64,7 +64,7 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
     with db.session() as conn:
         docs = conn.execute(
             """SELECT d.*, o.topics, o.significance, o.parties, o.issue, o.outcome, o.summary,
-                      o.reviewer, o.approved_at, o.revised_at, o.summary_status, o.impact, o.rating, o.figures, o.checks
+                      o.reviewer, o.approved_at, o.revised_at, o.summary_status, o.impact, o.rating, o.figures, o.checks, o.headline
                FROM documents d JOIN orders o ON o.doc_id = d.id
                WHERE o.summary_status IN (%s)""" % marks, ok).fetchall()
         docs = [d for d in docs if not (clean and SAMPLE_MARK in d["source_url"])]
@@ -125,7 +125,7 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
                 "topics": json.loads(d["topics"] or "[]"), "significance": d["significance"],
                 "parties": json.loads(d["parties"] or "[]"), "issue": d["issue"], "outcome": d["outcome"],
                 "impact": impact_load(d["impact"]), "rating": d["rating"], "figures": figures_load(d["figures"]), "checked": checks_public(d["checks"]),
-                "summary": d["summary"], "reviewed_by": d["reviewer"], "approved_at": d["approved_at"],
+                "summary": d["summary"], "headline": d["headline"], "reviewed_by": d["reviewer"], "approved_at": d["approved_at"],
                 "revised_at": d["revised_at"], "language": d["language"],
                 "sample": SAMPLE_MARK in d["source_url"], "links": links,
             })
@@ -156,17 +156,6 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
                 """SELECT text, in_force_from, in_force_to FROM clause_versions WHERE clause_id = ?
                    ORDER BY coalesce(in_force_from, '') DESC""", (c["id"],))]
 
-        digests = []
-        for g in conn.execute(f"SELECT * FROM digests WHERE status IN ({marks}) ORDER BY id DESC", ok):
-            items = [i for i in json.loads(g["items"] or "[]") if i in published_docs]
-            if items:
-                digests.append({"id": g["id"], "from": g["from_date"], "to": g["to_date"], "intro": g["intro"],
-                                "items": items, "approved_at": g["approved_at"], "reviewed_by": g["reviewer"],
-                                "draft": preview and g["status"] != "approved",
-                                "path": f"/digest/{g['id'].lower()}"})
-            if g["published_at"] is None and not preview:
-                conn.execute("UPDATE digests SET published_at = datetime('now') WHERE id = ?", (g["id"],))
-
         consultations = []
         for c in conn.execute(
                 f"""SELECT d.id, d.commission, d.title, d.source_url, d.doc_type, c.*
@@ -188,6 +177,35 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
                 "reviewed_by": c["reviewer"], "approved_at": c["approved_at"],
                 "draft": preview and c["summary_status"] != "approved",
                 "sample": SAMPLE_MARK in c["source_url"]})
+
+        # Digest editions, built after orders and drafts so an edition can carry both.
+        shown = {o["id"]: o for o in orders} | {c["id"]: c for c in consultations}
+        def where(doc):
+            d = shown[doc]
+            return {"href": d["path"], "src": d.get("pdf") or d.get("source_url"), "code": d["commission"]}
+        digests = []
+        for g in conn.execute(f"SELECT * FROM digests WHERE status IN ({marks}) ORDER BY id DESC", ok):
+            items = [i for i in json.loads(g["items"] or "[]") if i in shown]
+            if not items:
+                continue
+            keep = lambda refs: all(r in shown for r in refs)
+            points = [{**p, "basis": [{**b, **where(b["doc"])} for b in p["basis"]]}
+                      for p in json.loads(g["key_points"] or "[]") if keep([b["doc"] for b in p["basis"]])]
+            numbers = [{**n, **where(n["doc"])} for n in json.loads(g["numbers"] or "[]") if n["doc"] in shown]
+            charts = []
+            for ch in json.loads(g["charts"] or "[]"):
+                its = [{**i, **where(i["doc"])} for i in ch["items"] if i["doc"] in shown]
+                if len(its) >= 2:
+                    charts.append({**ch, "items": its})
+            watch = [{**w, **(where(w["doc"]) if w.get("doc") else {})} for w in json.loads(g["watch"] or "[]")
+                     if not w.get("doc") or w["doc"] in shown]
+            digests.append({"id": g["id"], "from": g["from_date"], "to": g["to_date"], "edition": g["edition_date"] or g["to_date"],
+                            "intro": g["intro"], "items": items, "key_points": points, "numbers": numbers, "charts": charts,
+                            "watch": watch, "approved_at": g["approved_at"], "reviewed_by": g["reviewer"],
+                            "draft": preview and g["status"] != "approved",
+                            "path": f"/digest/{g['id'].lower()}"})
+            if g["published_at"] is None and not preview:
+                conn.execute("UPDATE digests SET published_at = datetime('now') WHERE id = ?", (g["id"],))
 
     files = {
         "site.json": {"generated_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),

@@ -14,7 +14,7 @@ import json
 
 from . import config, db
 from .claude_runner import ClaudeError, UsageLimitReached, ask_json
-from .common import NotPrepared, fill, load_prompt, load_schema, order_text, prepared_output
+from .common import NotPrepared, fill, load_prompt, load_schema, order_text, prepared_output, use_prepared
 from .impact import PID, paragraph_ids
 
 MIN_ITEMS = {"bars": 2, "series": 3, "timeline": 2, "flow": 2}
@@ -103,7 +103,7 @@ def run(limit: int | None = None) -> dict:
         run_id = db.start_run(conn, "figures")
         for d in _targets(conn, limit):
             try:
-                if config.READER == "file":
+                if use_prepared(f"{d['id']}.figures.json"):
                     out = prepared_output(f"{d['id']}.figures.json", schema)
                 elif config.READER == "mock":
                     continue

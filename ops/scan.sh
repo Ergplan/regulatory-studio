@@ -23,6 +23,7 @@ step() { echo "--- $*"; "$@" || { STATUS="problems: see $LOG"; echo "FAILED: $*"
   step regstudio run consult --limit 20
   step regstudio run triage --limit 120
   step regstudio run read --limit 30
+  step regstudio run headlines --limit 40
   step regstudio run check --limit 30         # number check and two AI reviewers, before legal review
   step regstudio run impact --limit 20
   step regstudio run figures --limit 30

@@ -216,7 +216,7 @@ def order(request: Request, doc_id: str):
 @app.post("/order/{doc_id}/summary")
 def save_summary(request: Request, doc_id: str, action: str = Form(...), summary: str = Form(""),
                  issue: str = Form(""), outcome: str = Form(""), topics: list[str] = Form([]),
-                 title: str = Form("")):
+                 title: str = Form(""), headline: str = Form("")):
     name = need_reviewer(request)
     topics = [t for t in topics if t in config.TOPICS]
     with db.session() as conn:
@@ -225,6 +225,7 @@ def save_summary(request: Request, doc_id: str, action: str = Form(...), summary
             raise HTTPException(404)
         if title.strip():
             conn.execute("UPDATE documents SET title = ? WHERE id = ?", (title.strip()[:200], doc_id))
+        conn.execute("UPDATE orders SET headline = ? WHERE doc_id = ?", (headline.strip()[:120] or None, doc_id))
         if action == "approve":
             if not summary.strip():
                 raise HTTPException(400, "Summary is empty.")
@@ -360,12 +361,21 @@ def digest(request: Request, week: str):
         items = []
         for i in ids:
             row = conn.execute(
-                """SELECT d.id, d.commission, d.title, o.summary, o.summary_status FROM documents d
-                   JOIN orders o ON o.doc_id = d.id WHERE d.id = ?""", (i,)).fetchone()
+                """SELECT d.id, d.commission, d.title, d.doc_date, 'order' AS kind, o.summary, o.summary_status FROM documents d
+                   JOIN orders o ON o.doc_id = d.id WHERE d.id = ?
+                   UNION ALL
+                   SELECT d.id, d.commission, d.title, d.doc_date, 'draft' AS kind, c.summary, c.summary_status FROM documents d
+                   JOIN consultations c ON c.doc_id = d.id WHERE d.id = ?""", (i, i)).fetchone()
             if row:
-                items.append(row)
-    return templates.TemplateResponse(request, "digest.html", {"reviewer": reviewer(request), "dg": dg,
-                                                              "items": items})
+                items.append(dict(row))
+        names = {i["id"]: f"{i['commission'].upper()} · {(i['title'] or i['id'][:10])[:70]}" for i in items}
+        edition = {k: json.loads(dg[k] or "[]") if k in dg.keys() else [] for k in ("key_points", "numbers", "charts", "watch")}
+        texts = {}
+        for ref in [b for p in edition["key_points"] for b in p["basis"]] + edition["numbers"] + [w for w in edition["watch"] if w.get("doc")]:
+            r = conn.execute("SELECT text FROM paragraphs WHERE doc_id = ? AND pid = ?", (ref["doc"], ref["pid"])).fetchone()
+            texts[(ref["doc"], ref["pid"])] = r[0] if r else "(paragraph not found)"
+    return templates.TemplateResponse(request, "digest.html", {"reviewer": reviewer(request), "dg": dg, "items": items,
+                                                              "names": names, "texts": texts, **edition})
 
 
 @app.post("/digest/{week}")

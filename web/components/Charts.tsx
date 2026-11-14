@@ -30,7 +30,7 @@ function Series({ f }: { f: Figure }) {
         <li key={i.label} title={`${i.label}: ${num(i.value ?? 0)} ${f.unit ?? ""}`}>
           <span className="c-plot"><span className="c-val">{num(i.value ?? 0)}{d !== null && d !== 0 && <em>{d > 0 ? "+" : "−"}{num(Math.abs(d))}</em>}</span>
             <span className="c-bar" style={{ height: `${Math.max(2, ((i.value ?? 0) / max) * 100)}%` }} /></span>
-          <span className="c-label">{i.label}</span>
+          <span className="c-label">{i.href ? <Link href={i.href}>{i.label}</Link> : i.label}</span>
         </li>);
     })}</ol>
   );
@@ -46,7 +46,7 @@ function Timeline({ f }: { f: Figure }) {
       <ol>{f.items.map((i) => { const a = pos(day(i.start!)); const b = i.end ? pos(day(i.end)) : a; const past = (i.end ? day(i.end) : day(i.start!)) < today;
         return (
           <li key={i.label + i.start} className={past ? "past" : ""} title={`${i.label}: ${fmtDate(i.start)}${i.end ? ` to ${fmtDate(i.end)}` : ""}`}>
-            <span className="t-label">{i.label}<em>{fmtDate(i.start)}{i.end ? ` to ${fmtDate(i.end)}` : ""}</em></span>
+            <span className="t-label">{i.href ? <Link href={i.href}>{i.label}</Link> : i.label}<em>{fmtDate(i.start)}{i.end ? ` to ${fmtDate(i.end)}` : ""}</em></span>
             <span className="t-track">{showToday && <span className="t-today" style={{ left: `${pos(today)}%` }} />}
               {i.end ? <span className="t-span" style={{ left: `${a}%`, width: `${Math.max(1.5, b - a)}%` }} /> : <span className="t-dot" style={{ left: `${a}%` }} />}</span>
           </li>); })}</ol>
@@ -96,7 +96,7 @@ export default function Charts({ figures, pdf, pending = false }: { figures: Fig
         {f.note && <p className="chart-note">{f.note}</p>}
         <details className="chart-data"><summary>Figures and sources{pending ? " · awaiting review" : ""}</summary>
           <table><tbody>{f.items.map((i) => (
-            <tr key={i.label + (i.start ?? "")}><th scope="row">{i.label}{i.tag && <em> ({i.tag})</em>}</th><td>{cell(f, i)}</td><td><Cites basis={i.basis} pdf={pdf} /></td></tr>))}</tbody></table>
+            <tr key={i.label + (i.start ?? "")}><th scope="row">{i.label}{i.tag && <em> ({i.tag})</em>}</th><td>{cell(f, i)}</td><td>{i.code && (i.href ? <Link href={i.href} className="src-code">{i.code.toUpperCase()}</Link> : <span className="src-code">{i.code.toUpperCase()}</span>)}<Cites basis={i.basis} pdf={i.src ?? pdf} /></td></tr>))}</tbody></table>
         </details>
       </figure>))}</div>}
   </>);

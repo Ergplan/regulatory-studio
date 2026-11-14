@@ -27,7 +27,7 @@ function blocksFor(code: string): { blocks: Block[]; total: number; drafts: numb
     ...[...open, ...closed].map((c) => ({ id: c.id, href: c.path, kind: "Draft" as const, title: c.title, summary: c.summary, date: c.issued ?? "",
       tab: !isOpen(c) ? `Draft · listed deadline ${fmtDate(c.comment_deadline ?? c.hearing_date)} passed` : c.comment_deadline ? `Draft · comments by ${fmtDate(c.comment_deadline)}` : "Draft · open for comment",
       impact: c.impact, draftable: commentable(c), unreviewed: !!c.draft, rating: c.rating })),
-    ...ords.map((o) => ({ id: o.id, href: o.path, kind: "Order" as const, title: o.title ?? orderLabel(o), summary: o.summary, date: o.date ?? "",
+    ...ords.map((o) => ({ id: o.id, href: o.path, kind: "Order" as const, title: o.headline || o.title || orderLabel(o), summary: o.summary, date: o.date ?? "",
       tab: `Order · ${fmtDate(o.date)}`, impact: o.impact, draftable: false, unreviewed: !!o.draft, rating: o.rating })),
   ];
   // rated high by the team first, then items with an impact assessment; otherwise drafts by deadline and orders by date

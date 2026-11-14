@@ -55,5 +55,5 @@ def read(paras: dict[str, str], registry: list[dict], commission: str) -> dict:
 
 
 def digest(items: list[dict]) -> dict:
-    return {"intro": "[MOCK DIGEST INTRO] " + f"{len(items)} orders this week.",
+    return {"intro": "[MOCK DIGEST INTRO] " + f"{len(items)} items this week.",
             "order": [i["id"] for i in sorted(items, key=lambda i: -(i.get("significance") or 0))]}
