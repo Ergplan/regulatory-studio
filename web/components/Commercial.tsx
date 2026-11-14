@@ -20,16 +20,16 @@ export default function Commercial({ c, pdf }: { c: CommercialT; pdf?: string | 
         <ol className="calc-inputs">
           {c.inputs.map((i) => (
             <li key={i.id}>
-              <span className="c-label">{i.label}</span>
-              <b className="c-val">{num(i.value)} <small>{i.unit}</small></b>
-              <span className="c-src">{i.basis?.length ? <Cites basis={i.basis} pdf={pdf} /> : <><span className="assume">Assumption</span> {i.assumption?.replace(/^Assumption for the illustration:\s*/i, "")}</>}</span>
+              <span className="ci-label">{i.label}</span>
+              <b className="ci-val">{num(i.value)} <small>{i.unit}</small></b>
+              <span className="ci-src">{i.basis?.length ? <Cites basis={i.basis} pdf={pdf} /> : <><span className="assume">Assumption</span> {i.assumption?.replace(/^Assumption for the illustration:\s*/i, "")}</>}</span>
             </li>))}
         </ol>
         <ol className="calc-steps">
           {c.steps.map((s, n) => (
             <li key={s.id} className={n === c.steps.length - 1 ? "last" : ""}>
-              <span className="c-label">{s.label}</span>
-              <b className="c-val">{s.shown} <small>{s.unit}</small></b>
+              <span className="ci-label">{s.label}</span>
+              <b className="ci-val">{s.shown} <small>{s.unit}</small></b>
             </li>))}
         </ol>
       </div>
