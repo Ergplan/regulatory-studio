@@ -98,10 +98,10 @@ The jobs run while this user is logged in.
 ## A sign-in address on the public site
 
 `joulewise.tech` is managed by Vercel, so the review screen's real address is on a separate domain that Cloudflare
-manages (for example `review.joulewise-review.com`). To let the team use `review.joulewise.tech` and a "Team sign in"
+manages (for example `review.joulewise-review.com`). To let the team use `reviewer.joulewise.tech` and a "Team sign in"
 link instead: in the Vercel project set the environment variable `REVIEW_URL` to the real address (with `https://`),
-add the domain `review.joulewise.tech` to the project, and redeploy. The site then forwards `/review` and the whole
-`review.joulewise.tech` host to the review screen. Cloudflare still does the sign-in.
+add the domain `reviewer.joulewise.tech` to the project, and redeploy. The site then forwards `/review` and the whole
+`reviewer.joulewise.tech` host to the review screen. Cloudflare still does the sign-in.
 
 ## Day to day
 

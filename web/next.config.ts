@@ -8,7 +8,7 @@ const config: NextConfig = {
   async redirects() {
     if (!/^https:\/\/[a-z0-9.-]+$/i.test(review)) return [];
     return [
-      { source: "/:path*", has: [{ type: "host", value: "review.joulewise.tech" }], destination: `${review}/:path*`, permanent: false },
+      { source: "/:path*", has: [{ type: "host", value: "review(?:er)?\\.joulewise\\.tech" }], destination: `${review}/:path*`, permanent: false },
       { source: "/review", destination: `${review}/`, permanent: false },
     ];
   },
