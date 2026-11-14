@@ -1,21 +1,529 @@
 [
  {
-  "id": "2026-W46",
-  "from": "2026-11-09",
-  "to": "2026-11-15",
-  "intro": "Deviation settlement leads this edition. CERC has held that its powers to relax and remove difficulty under the DSM Regulations, 2024 cannot create a new generator category, so a 160 MW blended wind project stays in the tighter hybrid band. It has also deferred reserve-shortfall recovery of DAS Pool deficits to April 2027. In Uttar Pradesh, UPERC has cleared NPCL's 300 MW round-the-clock RE tender, allowing the whole capacity to go to one L1 bidder and limiting bidding to holders of a final connectivity grant. Also included: CERC's proposal to admit pumped storage to the HP-DAM, SJVN's ₹4.82–4.91/kWh FDRE tariffs for 448 MW, an ISTS waiver limited to commissioned capacity, and short-term RTC bagasse power at ₹5.10–5.12/kWh for NIDP.",
+  "id": "2026-W47",
+  "from": "2026-11-16",
+  "to": "2026-11-22",
+  "edition": "2026-11-20",
+  "intro": "Peak power leads this edition. Rajasthan told RERC that only about 10% of its evening exchange bids cleared in September; RERC let it buy Himachal hydro at Rs 15.50/kWh and take a single bidder's peak power at up to Rs 9.99/kWh. Tamil Nadu, which says it secured 15% to 25% of its peak bids even at the Rs 10 ceiling, has TNERC's approval to tender up to 3,200 MW a month for summer 2027. The longer-term answer is storage: CERC adopted Rs 6.27 to 6.28/kWh for 1,200 MW of four-hour evening supply from batteries in SECI's FDRE-VII, and TNERC approved 600 MW of solar with 1,800 MWh of storage at Rs 3.12/kWh. Developers should also note two hard lines: CERC will not extend the full ISTS waiver past 30 June 2026 even where transmission was late, and GERC would not stop a battery developer's bank guarantee over a West Asia force majeure claim.",
   "items": [
-   "5e7d1a2d457deaf42685c115e63a398f5b702c1b9c831fc6c495e346fd2ad550",
-   "d506f89fd88361790ac6b16ea1c34b6178d2be93c01cea645f7f624a02a1670d",
-   "6e2c51e21f8db2c588709bfb26b0f82af9e7eaad0fda9c15aacb62b75cdc6fc1",
-   "f36d5dc4d09d199719553d0d7a4edec081c13b1898fe33f8d10403e386d2d04c",
+   "2b3baf2760e69dc50e1457e7df5c0af71f76a38d8b5060333ae03609af2f3540",
+   "99882e10af2925e826ae6068acbc493f6379c2f9a9e1ca82c960f1baabb0cda3",
+   "e226201a92cfd8f4b0a2fc13d4279e0c683b5a880df20396fb8e109df7e349e4",
+   "c44cc147a584e43bcb31f6c28579eb9af1d61948be54f5ac20569dec2b7fa586",
+   "58bbccf942f90361c26041dc4bb9b667e03a8c1c9074177bb067a7c0ccafe343",
+   "cba276a48f21810757e9b1c7f6ddd91e4a35a5df17180838ed4abe3f4301333d",
+   "8c34b46430954acb27a9a02c2240b71f581ff477012fde4d7ef207911f091c9c",
+   "be28873788b9e610b7a3fcdfb54da0ea9bc5fb35d4b90ec86acd0f01e4939129",
+   "235f8a14010455416701a8beb7d1642698ff1ded3e2fc270076d055d611320a2",
+   "c4e0f063e038849e6630d3a2f1f79c20006fcad2bfd008aa8468a142796c2b08",
    "c2e7bf7e60c745127c604248070d1e46ab5050c13d974f4efdea32a7abd87ad6",
+   "9bff38cc7767cd3bc02ea6d7fbd0968c225fb308ebb6fe9bfb728e4359b6b3f1",
+   "6e2c51e21f8db2c588709bfb26b0f82af9e7eaad0fda9c15aacb62b75cdc6fc1",
+   "5e7d1a2d457deaf42685c115e63a398f5b702c1b9c831fc6c495e346fd2ad550",
+   "1834b0d3b5aa0976a7b4166f8a5f1c1c8d512833051eb46210b8a50b22794c9c",
+   "f36d5dc4d09d199719553d0d7a4edec081c13b1898fe33f8d10403e386d2d04c",
    "198e334df752469fe2028c92019ac36eddcd05df15f6e8868503782d5c9d0ee1",
-   "9bff38cc7767cd3bc02ea6d7fbd0968c225fb308ebb6fe9bfb728e4359b6b3f1"
+   "67a12385fc644da2fe590db4b01f83463ebf8cca6ef6260c669f60a7a629b046",
+   "ddca106dd1445f0fbe384017d0b1cb54c82ee55ca1fd1b632a89c5299a32f9e9",
+   "dbfb4cd8129f6baac8b7292ac3ee79c67b8b169151af20b54dbd54cd94d8949a",
+   "6d753f0f778c79b8fc0ac6a776c80f431b63eeb0b563e8923456f241e982fcf1",
+   "0e21133838c1ad20284f274b8ffe7c0f2b47d36050a617ab3dc385c714733051",
+   "2efc99923a7df73c32615f5c201230f17974ef1a2b73ed1b3d20b1d917f5952e"
+  ],
+  "key_points": [
+   {
+    "text": "Evening power is scarce: Rajasthan cleared only about 10% of its evening exchange bids in September, about 5% in the high-price market above Rs 10/kWh, and its exchange tenders on 2 and 8 October drew no bids. Tamil Nadu says it has secured 15% to 25% of its peak bids even at the Rs 10 ceiling.",
+    "basis": [
+     {
+      "doc": "2b3baf2760e69dc50e1457e7df5c0af71f76a38d8b5060333ae03609af2f3540",
+      "pid": "p3.3",
+      "href": "/orders/rerc/2026/2450-2026-2b3baf",
+      "src": "/pdf/2b3baf2760e69dc5.pdf",
+      "code": "rerc"
+     },
+     {
+      "doc": "2b3baf2760e69dc50e1457e7df5c0af71f76a38d8b5060333ae03609af2f3540",
+      "pid": "p4.19",
+      "href": "/orders/rerc/2026/2450-2026-2b3baf",
+      "src": "/pdf/2b3baf2760e69dc5.pdf",
+      "code": "rerc"
+     },
+     {
+      "doc": "e226201a92cfd8f4b0a2fc13d4279e0c683b5a880df20396fb8e109df7e349e4",
+      "pid": "p11.4",
+      "href": "/orders/tnerc/2026/m-p-no-23-of-2026-e22620",
+      "src": "https://tnerc.tn.gov.in/Orders/files/CO-MPNo23%20221020261439.pdf",
+      "code": "tnerc"
+     }
+    ]
+   },
+   {
+    "text": "Discoms are paying for it: RERC approved Himachal hydro through PTC at Rs 15.50/kWh and a single trader's peak power at Rs 9.49 to Rs 9.99/kWh, with costs open to prudence check at true-up; RERC called the Himachal deal an exception, not a precedent.",
+    "basis": [
+     {
+      "doc": "99882e10af2925e826ae6068acbc493f6379c2f9a9e1ca82c960f1baabb0cda3",
+      "pid": "p5.3",
+      "href": "/orders/rerc/2026/2451-2026-99882e",
+      "src": "/pdf/99882e10af2925e8.pdf",
+      "code": "rerc"
+     },
+     {
+      "doc": "99882e10af2925e826ae6068acbc493f6379c2f9a9e1ca82c960f1baabb0cda3",
+      "pid": "p16.7",
+      "href": "/orders/rerc/2026/2451-2026-99882e",
+      "src": "/pdf/99882e10af2925e8.pdf",
+      "code": "rerc"
+     },
+     {
+      "doc": "2b3baf2760e69dc50e1457e7df5c0af71f76a38d8b5060333ae03609af2f3540",
+      "pid": "p9.6",
+      "href": "/orders/rerc/2026/2450-2026-2b3baf",
+      "src": "/pdf/2b3baf2760e69dc5.pdf",
+      "code": "rerc"
+     },
+     {
+      "doc": "2b3baf2760e69dc50e1457e7df5c0af71f76a38d8b5060333ae03609af2f3540",
+      "pid": "p14.1",
+      "href": "/orders/rerc/2026/2450-2026-2b3baf",
+      "src": "/pdf/2b3baf2760e69dc5.pdf",
+      "code": "rerc"
+     }
+    ]
+   },
+   {
+    "text": "Storage-backed peak supply is being locked in for 25 years: Rs 6.27 to 6.28/kWh for four hours of evening supply from batteries (SECI FDRE-VII, against Rs 6.74/kWh adopted in June), and Rs 3.12/kWh for TNPDCL's solar with six peak hours from 1,800 MWh of storage.",
+    "basis": [
+     {
+      "doc": "c44cc147a584e43bcb31f6c28579eb9af1d61948be54f5ac20569dec2b7fa586",
+      "pid": "p18.20",
+      "href": "/orders/cerc/2026/172-at-2026-c44cc1",
+      "src": "https://cercind.gov.in/2026/Orders/172-AT-2026.pdf",
+      "code": "cerc"
+     },
+     {
+      "doc": "c44cc147a584e43bcb31f6c28579eb9af1d61948be54f5ac20569dec2b7fa586",
+      "pid": "p25.1",
+      "href": "/orders/cerc/2026/172-at-2026-c44cc1",
+      "src": "https://cercind.gov.in/2026/Orders/172-AT-2026.pdf",
+      "code": "cerc"
+     },
+     {
+      "doc": "58bbccf942f90361c26041dc4bb9b667e03a8c1c9074177bb067a7c0ccafe343",
+      "pid": "p23.6",
+      "href": "/orders/tnerc/2026/m-p-no-21-of-2026-58bbcc",
+      "src": "https://tnerc.tn.gov.in/Orders/files/CO-MPNo21%20221020261438.pdf",
+      "code": "tnerc"
+     }
+    ]
+   },
+   {
+    "text": "Commissions are pushing discoms to plan ahead: RERC directed RUVITL to move on battery storage, FDRE and demand flexibility, and TNERC said short-term tenders are no substitute for long- and medium-term contracts.",
+    "basis": [
+     {
+      "doc": "2b3baf2760e69dc50e1457e7df5c0af71f76a38d8b5060333ae03609af2f3540",
+      "pid": "p13.2",
+      "href": "/orders/rerc/2026/2450-2026-2b3baf",
+      "src": "/pdf/2b3baf2760e69dc5.pdf",
+      "code": "rerc"
+     },
+     {
+      "doc": "e226201a92cfd8f4b0a2fc13d4279e0c683b5a880df20396fb8e109df7e349e4",
+      "pid": "p17.2",
+      "href": "/orders/tnerc/2026/m-p-no-23-of-2026-e22620",
+      "src": "https://tnerc.tn.gov.in/Orders/files/CO-MPNo23%20221020261439.pdf",
+      "code": "tnerc"
+     }
+    ]
+   },
+   {
+    "text": "The full ISTS waiver for delayed wind and solar projects ends with 30 June 2026. CERC refused it to four Tata Power Renewable projects due after that date even though transmission was late, and confirmed it for a 198 MW project that reached COD within its extended date.",
+    "basis": [
+     {
+      "doc": "cba276a48f21810757e9b1c7f6ddd91e4a35a5df17180838ed4abe3f4301333d",
+      "pid": "p11.6",
+      "href": "/orders/cerc/2026/168-mp-2026-187-mp-2026-193-mp-2026-289-mp-2026-cba276",
+      "src": "https://cercind.gov.in/2026/Orders/187-MP-2026-Ors.pdf",
+      "code": "cerc"
+     },
+     {
+      "doc": "8c34b46430954acb27a9a02c2240b71f581ff477012fde4d7ef207911f091c9c",
+      "pid": "p7.5",
+      "href": "/orders/cerc/2026/169-mp-2026-8c34b4",
+      "src": "https://cercind.gov.in/2026/Orders/169-MP-2026.pdf",
+      "code": "cerc"
+     }
+    ]
+   },
+   {
+    "text": "A pending force majeure claim does not protect a bank guarantee: GERC declined to stop GUVNL encashing a BESS developer's guarantee and pointed it to the contract's paid extension of Rs 1,000 per MW per day.",
+    "basis": [
+     {
+      "doc": "be28873788b9e610b7a3fcdfb54da0ea9bc5fb35d4b90ec86acd0f01e4939129",
+      "pid": "p61.4",
+      "href": "/orders/gerc/2026/ia-no-85-2026-in-petition-no-2749-2026-be2887",
+      "src": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU4ODdfMDYtMTEtMjAyNl8zNzM3MTYx",
+      "code": "gerc"
+     },
+     {
+      "doc": "be28873788b9e610b7a3fcdfb54da0ea9bc5fb35d4b90ec86acd0f01e4939129",
+      "pid": "p66.5",
+      "href": "/orders/gerc/2026/ia-no-85-2026-in-petition-no-2749-2026-be2887",
+      "src": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU4ODdfMDYtMTEtMjAyNl8zNzM3MTYx",
+      "code": "gerc"
+     }
+    ]
+   }
+  ],
+  "numbers": [
+   {
+    "value": "Rs 15.50/kWh",
+    "label": "Himachal hydro bought through PTC for Rajasthan's peaks, including trading margin",
+    "doc": "99882e10af2925e826ae6068acbc493f6379c2f9a9e1ca82c960f1baabb0cda3",
+    "pid": "p5.3",
+    "href": "/orders/rerc/2026/2451-2026-99882e",
+    "src": "/pdf/99882e10af2925e8.pdf",
+    "code": "rerc"
+   },
+   {
+    "value": "Rs 9.99/kWh",
+    "label": "Evening peak power from the only bidder, NVVN, to Rajasthan in November and December",
+    "doc": "2b3baf2760e69dc50e1457e7df5c0af71f76a38d8b5060333ae03609af2f3540",
+    "pid": "p9.6",
+    "href": "/orders/rerc/2026/2450-2026-2b3baf",
+    "src": "/pdf/2b3baf2760e69dc5.pdf",
+    "code": "rerc"
+   },
+   {
+    "value": "3,200 MW",
+    "label": "Most Tamil Nadu will buy in a month on the summer 2027 short-term tender (April and May)",
+    "doc": "e226201a92cfd8f4b0a2fc13d4279e0c683b5a880df20396fb8e109df7e349e4",
+    "pid": "p18.6",
+    "href": "/orders/tnerc/2026/m-p-no-23-of-2026-e22620",
+    "src": "https://tnerc.tn.gov.in/Orders/files/CO-MPNo23%20221020261439.pdf",
+    "code": "tnerc"
+   },
+   {
+    "value": "21,724 MW",
+    "label": "Tamil Nadu's record demand, on 14 July 2026",
+    "doc": "e226201a92cfd8f4b0a2fc13d4279e0c683b5a880df20396fb8e109df7e349e4",
+    "pid": "p3.1",
+    "href": "/orders/tnerc/2026/m-p-no-23-of-2026-e22620",
+    "src": "https://tnerc.tn.gov.in/Orders/files/CO-MPNo23%20221020261439.pdf",
+    "code": "tnerc"
+   },
+   {
+    "value": "Rs 6.27/kWh",
+    "label": "Lowest tariff for four-hour evening supply from batteries, SECI FDRE-VII",
+    "doc": "c44cc147a584e43bcb31f6c28579eb9af1d61948be54f5ac20569dec2b7fa586",
+    "pid": "p18.20",
+    "href": "/orders/cerc/2026/172-at-2026-c44cc1",
+    "src": "https://cercind.gov.in/2026/Orders/172-AT-2026.pdf",
+    "code": "cerc"
+   },
+   {
+    "value": "6,145 MW",
+    "label": "Offered by bidders for the 1,200 MW in FDRE-VII",
+    "doc": "c44cc147a584e43bcb31f6c28579eb9af1d61948be54f5ac20569dec2b7fa586",
+    "pid": "p18.19",
+    "href": "/orders/cerc/2026/172-at-2026-c44cc1",
+    "src": "https://cercind.gov.in/2026/Orders/172-AT-2026.pdf",
+    "code": "cerc"
+   },
+   {
+    "value": "Rs 3.12/kWh",
+    "label": "TNPDCL's 25-year price for 600 MW of solar with 300 MW/1,800 MWh of storage, before SECI's margin",
+    "doc": "58bbccf942f90361c26041dc4bb9b667e03a8c1c9074177bb067a7c0ccafe343",
+    "pid": "p23.6",
+    "href": "/orders/tnerc/2026/m-p-no-21-of-2026-58bbcc",
+    "src": "https://tnerc.tn.gov.in/Orders/files/CO-MPNo21%20221020261438.pdf",
+    "code": "tnerc"
+   },
+   {
+    "value": "Rs 1,000",
+    "label": "Per MW per day, paid in advance, to extend financial closure under GUVNL's BESS agreement",
+    "doc": "be28873788b9e610b7a3fcdfb54da0ea9bc5fb35d4b90ec86acd0f01e4939129",
+    "pid": "p63.2",
+    "href": "/orders/gerc/2026/ia-no-85-2026-in-petition-no-2749-2026-be2887",
+    "src": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU4ODdfMDYtMTEtMjAyNl8zNzM3MTYx",
+    "code": "gerc"
+   }
+  ],
+  "charts": [
+   {
+    "type": "bars",
+    "title": "What power cost in this edition's orders",
+    "items": [
+     {
+      "label": "Solar, GUVNL Phase XXVIII",
+      "doc": "235f8a14010455416701a8beb7d1642698ff1ded3e2fc270076d055d611320a2",
+      "basis": [
+       "p14.16"
+      ],
+      "value": 2.34,
+      "context": true,
+      "href": "/orders/gerc/2026/2695-2026-235f8a",
+      "src": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU4OTRfMDctMTEtMjAyNl80MjY4MDE2",
+      "code": "gerc"
+     },
+     {
+      "label": "Solar, SECI to WBSEDCL",
+      "doc": "c4e0f063e038849e6630d3a2f1f79c20006fcad2bfd008aa8468a142796c2b08",
+      "basis": [
+       "p20.19"
+      ],
+      "value": 2.42,
+      "context": true,
+      "href": "/orders/cerc/2026/200-at-2026-c4e0f0",
+      "src": "https://cercind.gov.in/2026/Orders/200-AT-2026.pdf",
+      "code": "cerc"
+     },
+     {
+      "label": "Solar + 6h storage, TNPDCL",
+      "doc": "58bbccf942f90361c26041dc4bb9b667e03a8c1c9074177bb067a7c0ccafe343",
+      "basis": [
+       "p23.6"
+      ],
+      "value": 3.12,
+      "href": "/orders/tnerc/2026/m-p-no-21-of-2026-58bbcc",
+      "src": "https://tnerc.tn.gov.in/Orders/files/CO-MPNo21%20221020261438.pdf",
+      "code": "tnerc"
+     },
+     {
+      "label": "Round-the-clock FDRE, SJVN (lowest)",
+      "doc": "c2e7bf7e60c745127c604248070d1e46ab5050c13d974f4efdea32a7abd87ad6",
+      "basis": [
+       "p19.5"
+      ],
+      "value": 4.82,
+      "href": "/orders/cerc/2026/233-at-2026-c2e7bf",
+      "src": "https://cercind.gov.in/2026/Orders/233-AT-2026.pdf",
+      "code": "cerc"
+     },
+     {
+      "label": "Bagasse round the clock, NIDP",
+      "doc": "9bff38cc7767cd3bc02ea6d7fbd0968c225fb308ebb6fe9bfb728e4359b6b3f1",
+      "basis": [
+       "p11.2"
+      ],
+      "value": 5.12,
+      "href": "/orders/uperc/2026/2416-of-2026-9bff38",
+      "src": "https://www.uperc.org/App_File/Pt-no-2416of2026NIDP-14-10-2026-PDF1014202661203PM.pdf",
+      "code": "uperc"
+     },
+     {
+      "label": "4h evening peak from batteries, FDRE-VII",
+      "doc": "c44cc147a584e43bcb31f6c28579eb9af1d61948be54f5ac20569dec2b7fa586",
+      "basis": [
+       "p18.20"
+      ],
+      "value": 6.27,
+      "href": "/orders/cerc/2026/172-at-2026-c44cc1",
+      "src": "https://cercind.gov.in/2026/Orders/172-AT-2026.pdf",
+      "code": "cerc"
+     },
+     {
+      "label": "Morning peak, NVVN to Rajasthan",
+      "doc": "2b3baf2760e69dc50e1457e7df5c0af71f76a38d8b5060333ae03609af2f3540",
+      "basis": [
+       "p9.6"
+      ],
+      "value": 9.49,
+      "href": "/orders/rerc/2026/2450-2026-2b3baf",
+      "src": "/pdf/2b3baf2760e69dc5.pdf",
+      "code": "rerc"
+     },
+     {
+      "label": "Evening peak, NVVN to Rajasthan",
+      "doc": "2b3baf2760e69dc50e1457e7df5c0af71f76a38d8b5060333ae03609af2f3540",
+      "basis": [
+       "p9.6"
+      ],
+      "value": 9.99,
+      "href": "/orders/rerc/2026/2450-2026-2b3baf",
+      "src": "/pdf/2b3baf2760e69dc5.pdf",
+      "code": "rerc"
+     },
+     {
+      "label": "Hydro peak via PTC to Rajasthan",
+      "doc": "99882e10af2925e826ae6068acbc493f6379c2f9a9e1ca82c960f1baabb0cda3",
+      "basis": [
+       "p5.3"
+      ],
+      "value": 15.5,
+      "href": "/orders/rerc/2026/2451-2026-99882e",
+      "src": "/pdf/99882e10af2925e8.pdf",
+      "code": "rerc"
+     }
+    ],
+    "unit": "Rs/kWh",
+    "note": "Tariffs as each order states them. Products differ in hours, firmness and term, so read each row with its order. Himachal's Rs 15.50 includes the trading margin; the others are before any margin."
+   },
+   {
+    "type": "bars",
+    "title": "Share of discoms' peak bids that cleared on the exchanges",
+    "items": [
+     {
+      "label": "Tamil Nadu, peak blocks at the Rs 10 ceiling",
+      "doc": "e226201a92cfd8f4b0a2fc13d4279e0c683b5a880df20396fb8e109df7e349e4",
+      "basis": [
+       "p11.4"
+      ],
+      "value": 25,
+      "tag": "15% to 25%",
+      "href": "/orders/tnerc/2026/m-p-no-23-of-2026-e22620",
+      "src": "https://tnerc.tn.gov.in/Orders/files/CO-MPNo23%20221020261439.pdf",
+      "code": "tnerc"
+     },
+     {
+      "label": "Rajasthan, evening, September 2026",
+      "doc": "2b3baf2760e69dc50e1457e7df5c0af71f76a38d8b5060333ae03609af2f3540",
+      "basis": [
+       "p3.3"
+      ],
+      "value": 10,
+      "tag": "about",
+      "href": "/orders/rerc/2026/2450-2026-2b3baf",
+      "src": "/pdf/2b3baf2760e69dc5.pdf",
+      "code": "rerc"
+     },
+     {
+      "label": "Rajasthan, HP-DAM above Rs 10/kWh",
+      "doc": "2b3baf2760e69dc50e1457e7df5c0af71f76a38d8b5060333ae03609af2f3540",
+      "basis": [
+       "p3.3"
+      ],
+      "value": 5,
+      "tag": "about",
+      "href": "/orders/rerc/2026/2450-2026-2b3baf",
+      "src": "/pdf/2b3baf2760e69dc5.pdf",
+      "code": "rerc"
+     }
+    ],
+    "unit": "%",
+    "note": "As the discoms told their commissions. Tamil Nadu gave a range of 15% to 25%; the upper end is shown."
+   },
+   {
+    "type": "timeline",
+    "title": "When the power bought in these orders flows",
+    "items": [
+     {
+      "label": "Coal captives run at maximum (MoP Section 11)",
+      "doc": "2b3baf2760e69dc50e1457e7df5c0af71f76a38d8b5060333ae03609af2f3540",
+      "basis": [
+       "p3.5"
+      ],
+      "start": "2026-10-01",
+      "end": "2026-12-31",
+      "href": "/orders/rerc/2026/2450-2026-2b3baf",
+      "src": "/pdf/2b3baf2760e69dc5.pdf",
+      "code": "rerc"
+     },
+     {
+      "label": "Rajasthan: peak power from NVVN",
+      "doc": "2b3baf2760e69dc50e1457e7df5c0af71f76a38d8b5060333ae03609af2f3540",
+      "basis": [
+       "p9.6",
+       "p13.7"
+      ],
+      "start": "2026-11-01",
+      "end": "2026-12-31",
+      "href": "/orders/rerc/2026/2450-2026-2b3baf",
+      "src": "/pdf/2b3baf2760e69dc5.pdf",
+      "code": "rerc"
+     },
+     {
+      "label": "Rajasthan: Himachal hydro via PTC",
+      "doc": "99882e10af2925e826ae6068acbc493f6379c2f9a9e1ca82c960f1baabb0cda3",
+      "basis": [
+       "p2.5"
+      ],
+      "start": "2026-11-01",
+      "end": "2027-02-28",
+      "href": "/orders/rerc/2026/2451-2026-99882e",
+      "src": "/pdf/99882e10af2925e8.pdf",
+      "code": "rerc"
+     },
+     {
+      "label": "NIDP: 5 MW bagasse round the clock",
+      "doc": "9bff38cc7767cd3bc02ea6d7fbd0968c225fb308ebb6fe9bfb728e4359b6b3f1",
+      "basis": [
+       "p11.2"
+      ],
+      "start": "2026-11-01",
+      "end": "2027-03-31",
+      "href": "/orders/uperc/2026/2416-of-2026-9bff38",
+      "src": "https://www.uperc.org/App_File/Pt-no-2416of2026NIDP-14-10-2026-PDF1014202661203PM.pdf",
+      "code": "uperc"
+     },
+     {
+      "label": "Tamil Nadu: summer short-term tender",
+      "doc": "e226201a92cfd8f4b0a2fc13d4279e0c683b5a880df20396fb8e109df7e349e4",
+      "basis": [
+       "p18.4"
+      ],
+      "start": "2027-02-01",
+      "end": "2027-07-31",
+      "href": "/orders/tnerc/2026/m-p-no-23-of-2026-e22620",
+      "src": "https://tnerc.tn.gov.in/Orders/files/CO-MPNo23%20221020261439.pdf",
+      "code": "tnerc"
+     }
+    ]
+   }
+  ],
+  "watch": [
+   {
+    "date": "2026-11-17",
+    "text": "UPERC hears Fourth Partner Energy's petition on adding storage to commissioned renewable plants",
+    "doc": "0e21133838c1ad20284f274b8ffe7c0f2b47d36050a617ab3dc385c714733051",
+    "pid": "p3.10",
+    "href": "/orders/uperc/2026/2355-of-2026-0e2113",
+    "src": "https://www.uperc.org/App_File/PetitionNo-2355of2026(08-10-2026)-PDF1092026110031AM.pdf",
+    "code": "uperc"
+   },
+   {
+    "date": "2026-11-27",
+    "text": "Comments close on CERC's draft ISTS charge waiver for wind and solar projects held up by transmission (date as listed by CERC)"
+   },
+   {
+    "date": "2026-12-15",
+    "text": "UPERC hears Rosa Power's claim that the biomass co-firing policy is a change in law",
+    "doc": "6d753f0f778c79b8fc0ac6a776c80f431b63eeb0b563e8923456f241e982fcf1",
+    "pid": "p3.2",
+    "href": "/orders/uperc/2026/2426-of-2026-6d753f",
+    "src": "https://www.uperc.org/App_File/P-no-2426of2026-PDF1030202653633PM.pdf",
+    "code": "uperc"
+   },
+   {
+    "date": "2026-12-31",
+    "text": "Ministry of Power's direction to coal captives of 50 MW and above to run at maximum ends",
+    "doc": "2b3baf2760e69dc50e1457e7df5c0af71f76a38d8b5060333ae03609af2f3540",
+    "pid": "p3.5",
+    "href": "/orders/rerc/2026/2450-2026-2b3baf",
+    "src": "/pdf/2b3baf2760e69dc5.pdf",
+    "code": "rerc"
+   },
+   {
+    "date": "2027-02-01",
+    "text": "Tamil Nadu's summer 2027 short-term supply starts",
+    "doc": "e226201a92cfd8f4b0a2fc13d4279e0c683b5a880df20396fb8e109df7e349e4",
+    "pid": "p18.4",
+    "href": "/orders/tnerc/2026/m-p-no-23-of-2026-e22620",
+    "src": "https://tnerc.tn.gov.in/Orders/files/CO-MPNo23%20221020261439.pdf",
+    "code": "tnerc"
+   },
+   {
+    "date": "2027-11-25",
+    "text": "Waaree's temporary use of GETCO's Ambheta bay ends, with no extension",
+    "doc": "ddca106dd1445f0fbe384017d0b1cb54c82ee55ca1fd1b632a89c5299a32f9e9",
+    "pid": "p46.6",
+    "href": "/orders/gerc/2026/2706-2026-ddca10",
+    "src": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU4OTVfMDctMTEtMjAyNl8zODU4OTY5",
+    "code": "gerc"
+   }
   ],
   "approved_at": null,
   "reviewed_by": null,
   "draft": true,
-  "path": "/digest/2026-w46"
+  "path": "/digest/2026-w47"
  }
 ]
