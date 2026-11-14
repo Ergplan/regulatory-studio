@@ -11,7 +11,7 @@ export interface Order {
   id: string; path: string; commission: string; doc_type: string; title: string | null; case_number: string | null;
   date: string | null; source_url: string; source_listing?: boolean; pdf: string | null; topics: string[]; significance: number;
   parties: { name: string; role: string }[]; issue: string; outcome: string; summary: string; headline?: string | null;
-  reviewed_by: string; approved_at: string; revised_at: string | null; language: string | null; sample: boolean; draft?: boolean; links: Link[]; impact?: Impact | null; rating?: Rating; figures?: Figure[]; checked?: Checked | null;
+  reviewed_by: string; approved_at: string; revised_at: string | null; language: string | null; sample: boolean; draft?: boolean; links: Link[]; impact?: Impact | null; rating?: Rating; figures?: Figure[]; checked?: Checked | null; commercial?: Commercial | null;
 }
 export interface Regulation { id: string; path: string; commission: string; title: string; short_title: string | null; notified_date: string | null; source_url: string | null; source_listing?: boolean; pdf?: string | null; sample: boolean; impact?: Impact | null; rating?: Rating; figures?: Figure[] }
 export interface ClauseVersion { text: string; in_force_from: string | null; in_force_to: string | null }
@@ -28,6 +28,9 @@ export type Rating = "high" | "medium" | "low" | null;
 export interface FigureItem { label: string; value?: number; start?: string; end?: string; tag?: string; context?: boolean; detail?: string; otherwise?: string; href?: string; src?: string | null; code?: string; basis: string[] }
 /** Pre-review checks that ran on a summary: an automatic number check and up to two independent AI reviewers. Findings are not published. */
 export interface Checked { reviewers: number; numbers: boolean }
+export interface CommercialInput { id: string; label: string; value: number; unit: string; basis?: string[]; assumption?: string }
+export interface CommercialStep { id: string; label: string; expr: string; value: number; shown: string; unit: string }
+export interface Commercial { title: string; question: string; inputs: CommercialInput[]; steps: CommercialStep[]; takeaway: string; caveats: string[]; approved_by: string | null; draft: boolean }
 export interface Figure { type: "bars" | "series" | "timeline" | "flow"; title: string; unit?: string; note?: string; items: FigureItem[] }
 export type Effect = "opportunity" | "cost" | "mixed";
 export interface Cited { text: string; basis: string[] }
@@ -51,7 +54,7 @@ export interface Consultation {
   id: string; path: string; commission: string; title: string; kind: "draft_regulation" | "draft_amendment" | "consultation_paper" | "proposal";
   issued: string | null; comment_deadline: string | null; hearing_date: string | null; summary: string; proposes: string[];
   amends: string | null; source_url: string; related: { label: string; url: string }[]; reviewed_by: string | null;
-  approved_at: string | null; draft?: boolean; sample: boolean; impact?: Impact | null; comments?: Record<string, CommentDraft>; rating?: Rating; figures?: Figure[]; checked?: Checked | null;
+  approved_at: string | null; draft?: boolean; sample: boolean; impact?: Impact | null; comments?: Record<string, CommentDraft>; rating?: Rating; figures?: Figure[]; checked?: Checked | null; commercial?: Commercial | null;
 }
 export interface Site { generated_at: string; commissions: Record<string, string>; topics: Record<string, string>; link_types: Record<string, string>; contains_sample_data: boolean; preview?: boolean }
 

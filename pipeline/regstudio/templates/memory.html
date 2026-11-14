@@ -1,0 +1,22 @@
+{% extends "base.html" %}{% block title %}Memory{% endblock %}
+{% block body %}
+<h1>What the studio has learnt</h1>
+<p class="muted">Approved notes go with every request to Claude: style notes always, sector facts for the commission and topic in question.
+They are also written to <code>data/memory/house_notes.md</code> for Claude Code on this Mac. A fact must cite the paragraph it comes from.</p>
+{% for title, rows, st in [('Waiting for a decision', proposed, 'proposed'), ('Remembered', approved, 'approved'), ('Retired', retired, 'retired')] %}
+<h2>{{ title }} ({{ rows|length }})</h2>
+{% for l in rows %}<form method="post" action="/lesson/{{ l.id }}" class="card" style="padding:10px">
+<div class="row"><span class="pill">{{ l.kind }}</span><span class="pill">{{ l.scope }}</span>
+<span class="muted">from {{ 'Claude' if l.added_by == 'model' else l.added_by }}{% if l.comment_id %}, comment {{ l.comment_id }}{% endif %}{% if l.doc_id %} · <a href="/order/{{ l.doc_id }}">{{ l.doc_id[:10] }}</a> {{ l.pid }}{% endif %}{% if l.approved_by %} · approved by {{ l.approved_by }}{% endif %}</span></div>
+<textarea name="text" style="min-height:44px;margin-top:6px">{{ l.text }}</textarea>
+<div class="row"><select name="scope" style="width:auto">{% for s in scopes %}<option {{ 'selected' if s == l.scope }}>{{ s }}</option>{% endfor %}</select>
+{% if st != 'approved' %}<button class="good" name="action" value="approve">Remember</button>{% else %}<button name="action" value="save">Save wording</button>{% endif %}
+{% if st != 'retired' %}<button name="action" value="retire">Retire</button>{% endif %}</div></form>
+{% else %}<p class="muted">None.</p>{% endfor %}{% endfor %}
+<h2>Add a note yourself</h2>
+<form method="post" action="/memory" class="card"><div class="row"><select name="kind" style="width:auto"><option value="style">style: how to write</option><option value="fact">fact about the sector</option></select>
+<select name="scope" style="width:auto">{% for s in scopes %}<option>{{ s }}</option>{% endfor %}</select></div>
+<label>Note</label><textarea name="text" required style="min-height:60px"></textarea>
+<div class="row"><div style="flex:1"><label>Source document id (facts)</label><input name="doc_id"></div><div style="flex:0 0 140px"><label>Paragraph (facts)</label><input name="pid" placeholder="p12.3"></div></div>
+<p><button class="primary">Remember this</button></p></form>
+{% endblock %}

@@ -174,6 +174,11 @@ def run(limit: int | None = None, day: dt.date | None = None) -> dict:
                     f"id: {i['id']}\nkind: {i['kind']}\ncommission: {i['commission'].upper()}\ndate: {i['doc_date']}\n"
                     f"title: {i['title']}\nsummary: {i['summary']}\nfacts with their paragraph ids:\n{_facts(i) or '(none)'}"
                     for i in items)
+                notes = conn.execute("SELECT quote, body, author FROM review_comments WHERE digest_id = ? AND status = 'open'",
+                                     (week_id,)).fetchall()
+                if notes:
+                    listing += "\n\nThe legal team's comments on the earlier draft of this edition (follow them):\n" + "\n".join(
+                        f"- {n['author']}: " + (f'about "{n["quote"]}": ' if n["quote"] else "") + n["body"] for n in notes)
                 out = ask_json(fill(load_prompt("digest.md"), schema=json.dumps(schema), items=listing,
                                     edition=friday.isoformat()), schema)
         except NotPrepared:

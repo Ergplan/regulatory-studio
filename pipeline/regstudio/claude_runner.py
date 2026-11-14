@@ -79,6 +79,8 @@ def _call(prompt: str) -> str:
 def ask_json(prompt: str, schema: dict, retries: int = 1) -> dict:
     """Send the prompt; parse and validate the JSON reply; retry once with the errors."""
     validator = jsonschema.validators.validator_for(schema)(schema)
+    from .learning import with_notes   # the legal team's approved house notes go with every request
+    prompt = with_notes(prompt)
     attempt_prompt = prompt
     last_error = ""
     for _ in range(retries + 1):

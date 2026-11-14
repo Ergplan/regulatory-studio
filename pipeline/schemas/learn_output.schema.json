@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Durable facts about the Indian power sector, learnt from one document",
+  "type": "object",
+  "required": ["facts"],
+  "additionalProperties": false,
+  "properties": {
+    "facts": {"type": "array", "maxItems": 4, "items": {"type": "object", "required": ["text", "pid"], "additionalProperties": false, "properties": {
+      "text": {"type": "string", "maxLength": 400},
+      "scope": {"type": "string"},
+      "pid": {"type": "string", "pattern": "^p[0-9]+\\.[0-9]+$"}}}}
+  }
+}

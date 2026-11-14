@@ -501,3 +501,126 @@ def test_prepared_files_are_used_in_claude_mode_and_headlines_fill_older_summari
     server(f"/order/{doc}/summary", {"action": "save", "summary": "S", "issue": "i", "outcome": "o", "headline": "Reviewer's headline"})
     publish.run(preview=True)
     assert json.loads((config.PREVIEW / "orders.json").read_text())[0]["headline"] == "Reviewer's headline"
+
+
+# ---------- comments, revisions, memory, commercial illustrations ----------
+
+def _first_pid(doc):
+    return _db().execute("SELECT pid FROM paragraphs WHERE doc_id = ? ORDER BY page, idx", (doc,)).fetchone()[0]
+
+
+def test_comment_revision_and_lessons(server, monkeypatch):
+    from regstudio import config as _cfg
+    monkeypatch.setattr(_cfg, 'READER', 'file')
+    from regstudio import config, learning
+    doc, _, _ = _ids()
+    pid = _first_pid(doc)
+    server("/whoami", {"name": "Test Reviewer"})
+    assert server(f"/notes/{doc}", {"target": "summary", "body": "Say that the holding is limited to existing plants.",
+                                    "quote": "all plants"}) == 303
+    cid = _db().execute("SELECT id FROM review_comments WHERE doc_id = ?", (doc,)).fetchone()[0]
+    config.READER_OUTPUTS.mkdir(parents=True, exist_ok=True)
+    (config.READER_OUTPUTS / f"{doc}.revise.json").write_text(json.dumps({
+        "replies": [{"comment_id": cid, "reply": "Narrowed to existing plants.", "action": "changed"}],
+        "summary": "The holding applies only to existing plants.", "basis": [pid],
+        "lessons": [{"kind": "style", "text": "State who a holding applies to.", "scope": "all"},
+                    {"kind": "fact", "text": "A fact with no paragraph is not kept.", "scope": "all"}]}))
+    assert learning.revise() == {"revised": 1, "failed": 0}
+    c = _db()
+    assert c.execute("SELECT status, reply FROM review_comments WHERE id = ?", (cid,)).fetchone()["status"] == "answered"
+    rev = c.execute("SELECT id, fields FROM revisions WHERE doc_id = ?", (doc,)).fetchone()
+    assert json.loads(rev["fields"]) == {"summary": "The holding applies only to existing plants."}
+    lessons = c.execute("SELECT id, kind, status FROM lessons").fetchall()
+    assert [l["kind"] for l in lessons] == ["style"] and lessons[0]["status"] == "proposed"
+    page = server.get(f"/order/{doc}")
+    assert "Proposed revision" in page and "Narrowed to existing plants." in page and "State who a holding applies to." in page
+    # Nothing in prompts until a reviewer approves the lesson.
+    assert "State who" not in learning.with_notes("prompt")
+    assert server(f"/lesson/{lessons[0]['id']}", {"action": "approve"}) == 303
+    assert "State who a holding applies to." in learning.with_notes("prompt")
+    assert "State who a holding applies to." in (config.MEMORY / "house_notes.md").read_text()
+    # Accepting changes the text but does not approve it.
+    assert server(f"/revision/{rev['id']}", {"action": "accept"}) == 303
+    o = _db().execute("SELECT summary, summary_status FROM orders WHERE doc_id = ?", (doc,)).fetchone()
+    assert o["summary"] == "The holding applies only to existing plants." and o["summary_status"] == "proposed"
+    assert _db().execute("SELECT status FROM review_comments WHERE id = ?", (cid,)).fetchone()[0] == "resolved"
+    assert server(f"/revision/{rev['id']}", {"action": "accept"}) == 409
+
+
+def test_rejected_revision_reopens_comments(server, monkeypatch):
+    from regstudio import config as _cfg
+    monkeypatch.setattr(_cfg, 'READER', 'file')
+    from regstudio import learning
+    doc, _, _ = _ids()
+    server("/whoami", {"name": "Test Reviewer"})
+    server(f"/notes/{doc}", {"target": "headline", "body": "Shorter headline please."})
+    with db_session() as conn:
+        conn.execute("UPDATE orders SET headline = 'Old headline' WHERE doc_id = ?", (doc,))
+    from regstudio import config
+    config.READER_OUTPUTS.mkdir(parents=True, exist_ok=True)
+    cid = _db().execute("SELECT id FROM review_comments").fetchone()[0]
+    (config.READER_OUTPUTS / f"{doc}.revise.json").write_text(json.dumps(
+        {"replies": [{"comment_id": cid, "reply": "Shortened.", "action": "changed"}], "headline": "New headline"}))
+    learning.revise(doc=doc)
+    rid = _db().execute("SELECT id FROM revisions").fetchone()[0]
+    assert server(f"/revision/{rid}", {"action": "reject"}) == 303
+    assert _db().execute("SELECT status FROM review_comments WHERE id = ?", (cid,)).fetchone()[0] == "open"
+    assert _db().execute("SELECT headline FROM orders WHERE doc_id = ?", (doc,)).fetchone()[0] == "Old headline"
+
+
+def db_session():
+    from regstudio import db
+    return db.session()
+
+
+def test_commercial_arithmetic_is_done_by_code():
+    from regstudio import commercial
+    out = {"title": "t", "question": "q",
+           "inputs": [{"id": "mw", "label": "Capacity", "value": 100, "unit": "MW", "basis": ["p1.1"]},
+                      {"id": "rate", "label": "Rate", "value": 6.27, "unit": "Rs/kWh", "basis": ["p1.2"]},
+                      {"id": "hours", "label": "Hours", "value": 4, "assumption": "four hours a day"}],
+           "steps": [{"id": "mwh", "label": "Energy", "expr": "mw * hours * 365", "unit": "MWh"},
+                     {"id": "crore", "label": "Cost", "expr": "mwh * rate / 10000", "unit": "Rs crore", "decimals": 2}],
+           "takeaway": "About Rs {crore} crore a year."}
+    r = commercial.build(out, {"p1.1", "p1.2"})
+    assert r["steps"][0]["shown"] == "1,46,000" and r["takeaway"] == "About Rs 91.54 crore a year."
+    assert commercial.build({**out, "takeaway": "About Rs 92 crore."}, {"p1.1", "p1.2"}) is None      # digits typed by the model
+    assert commercial.build(out, {"p1.1"}) is None                                                   # input neither cited nor assumed
+    bad = {**out, "steps": [{"id": "x", "label": "x", "expr": "__import__('os')"}]}
+    assert commercial.build(bad, {"p1.1", "p1.2"}) is None
+    assert commercial.fmt(12345678.9, 1) == "1,23,45,678.9"
+
+
+def test_commercial_needs_commercial_team_approval_to_publish(server, monkeypatch):
+    from regstudio import config as _cfg
+    monkeypatch.setattr(_cfg, 'READER', 'file')
+    from regstudio import commercial, config, publish
+    doc, _, _ = _ids()
+    pid = _first_pid(doc)
+    server("/whoami", {"name": "Test Reviewer"})
+    server(f"/order/{doc}/summary", {"action": "approve", "summary": "Reviewed.", "issue": "i", "outcome": "o"})
+    assert server(f"/commercial/{doc}", {"action": "request"}) == 303
+    config.READER_OUTPUTS.mkdir(parents=True, exist_ok=True)
+    (config.READER_OUTPUTS / f"{doc}.commercial.json").write_text(json.dumps({
+        "title": "Illustration", "question": "What does it cost?",
+        "inputs": [{"id": "a", "label": "A", "value": 2, "basis": [pid]}, {"id": "b", "label": "B", "value": 3, "assumption": "for the example"}],
+        "steps": [{"id": "c", "label": "Product", "expr": "a * b"}], "takeaway": "The product is {c}."}))
+    assert commercial.run()["illustrations"] == 1
+    assert "The product is 6." in server.get(f"/order/{doc}")
+
+    def published():
+        publish.run()
+        return json.loads((config.SNAPSHOT / "orders.json").read_text())[0].get("commercial")
+    assert published() is None
+    assert server(f"/commercial/{doc}", {"action": "approve"}) == 303
+    c = published()
+    assert c["takeaway"] == "The product is 6." and c["approved_by"] == "Test Reviewer" and c["draft"] is False
+
+
+def test_memory_page_and_manual_notes(server):
+    from regstudio import learning
+    server("/whoami", {"name": "Test Reviewer"})
+    assert server("/memory", {"kind": "fact", "text": "No source given.", "scope": "all"}) == 400
+    assert server("/memory", {"kind": "style", "text": "Use Rs, not INR.", "scope": "all"}) == 303
+    assert "Use Rs, not INR." in server.get("/memory")
+    assert "Use Rs, not INR." in learning.with_notes("Summarise this order.")

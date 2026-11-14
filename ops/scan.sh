@@ -28,6 +28,11 @@ step() { echo "--- $*"; "$@" || { STATUS="problems: see $LOG"; echo "FAILED: $*"
   step regstudio run impact --limit 20
   step regstudio run figures --limit 30
   step regstudio run comments --limit 10
+  step regstudio run revise --limit 20         # answer the legal team's comments with proposed revisions
+  step regstudio run learn --limit 15          # propose a few cited sector facts from newly read documents
+  step regstudio run commercial --limit 8      # beta commercial illustrations that were asked for
+  step regstudio run check --limit 30          # re-check any summary changed by an accepted revision
+  regstudio memory                             # refresh data/memory/house_notes.md
   [ "$(date +%u)" = "5" ] && step regstudio run draft   # Friday: assemble the week's digest
   step regstudio deploy --refresh               # preview site shows the new proposals; public site only what is approved
   regstudio status

@@ -1,0 +1,32 @@
+{# Comments from the legal team, Claude's proposed revision in reply, and what it proposes to learn. #}
+<div class="card" id="notes"><div class="row"><b>Comments for Claude</b>
+{% set open_n = notes|selectattr('status', 'equalto', 'open')|list|length %}
+{% if open_n %}<span class="pill proposed">{{ open_n }} open</span>{% endif %}</div>
+<p class="muted" style="margin:4px 0 8px">Say what is wrong or missing. Claude replies, proposes a revision for you to accept or reject, and suggests what to remember next time. Nothing changes until you accept.</p>
+{% for c in notes %}<div class="link" style="margin:8px 0;border-left:3px solid {{ 'var(--warn)' if c.status == 'open' else 'var(--accent)' if c.status == 'answered' else 'var(--line)' }};padding-left:10px">
+<div class="row"><span class="pill">{{ c.target }}</span><b>{{ c.author }}</b><span class="muted">{{ c.created_at[:16] }}</span>
+<span class="pill {{ 'proposed' if c.status in ('open', 'answered') else 'approved' if c.status == 'resolved' else '' }}">{{ c.status }}</span></div>
+{% if c.quote %}<div class="excerpt">“{{ c.quote }}”</div>{% endif %}<div>{{ c.body }}</div>
+{% if c.reply %}<div style="margin-top:4px"><span class="muted">Claude:</span> {{ c.reply }}</div>{% endif %}
+<form method="post" action="/comment/{{ c.id }}" class="row" style="margin-top:4px">
+{% if c.status in ('open', 'answered') %}<button name="action" value="resolved">Mark resolved</button><button name="action" value="dismissed">Dismiss</button>
+{% else %}<button name="action" value="open">Reopen</button>{% endif %}</form></div>{% endfor %}
+
+{% for r in revisions %}<div class="card" style="background:#fbfcff;margin-top:10px"><div class="row"><b>Proposed revision</b><span class="muted">answers comment{{ 's' if r.comment_ids|length != 1 }} {{ r.comment_ids|join(', ') }}</span></div>
+{% for f, new in r.fields.items() %}<label>{{ f|capitalize }}</label>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="excerpt" style="text-decoration:line-through;opacity:.75">{{ current.get(f) or '(empty)' }}</div><div><b>{{ new }}</b></div></div>{% endfor %}
+<form method="post" action="/revision/{{ r.id }}" class="row" style="margin-top:8px"><button class="good" name="action" value="accept">Accept revision</button>
+<button class="bad" name="action" value="reject">Reject, keep the comments open</button></form>
+<p class="muted" style="margin:6px 0 0">Accepting replaces those fields, sends the summary back to "proposed" and re-runs the checks. You approve the summary separately.</p></div>{% endfor %}
+
+{% if lessons_here %}<div style="margin-top:10px"><b>Claude proposes to remember</b> <a href="/memory">all notes</a>
+{% for l in lessons_here %}<form method="post" action="/lesson/{{ l.id }}" class="row" style="margin:4px 0"><span class="pill">{{ l.kind }}</span><span style="flex:1">{{ l.text }}</span>
+<button class="good" name="action" value="approve">Remember</button><button name="action" value="retire">Don't</button></form>{% endfor %}</div>{% endif %}
+
+<form method="post" action="/notes/{{ notes_doc }}" style="margin-top:10px">
+<div class="row"><div style="flex:0 0 160px"><label>About</label><select name="target">{% for t in ['summary', 'headline', 'impact', 'figures', 'commercial', 'other'] %}<option>{{ t }}</option>{% endfor %}</select></div>
+<div style="flex:1"><label>Words in question (optional)</label><input name="quote" maxlength="600"></div></div>
+<label>Comment</label><textarea name="body" style="min-height:70px" required placeholder="e.g. The holding is limited to existing plants; say so. Paragraph 21 is about the fourth proviso only."></textarea>
+<p class="row"><button class="primary" name="next" value="stay">Add comment</button>{% if can_revise %}<button name="next" value="revise">Add and ask Claude to revise now</button>{% endif %}</p></form>
+{% if can_revise and notes|selectattr("status", "equalto", "open")|list %}<form method="post" action="/revise/{{ notes_doc }}"><button>Send the open comments to Claude now</button> <span class="muted">or wait for the next scan</span></form>{% endif %}
+</div>
