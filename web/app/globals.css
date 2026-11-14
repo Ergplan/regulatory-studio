@@ -578,13 +578,13 @@ ul.d-nums span { font-size: 14px; line-height: 1.4; color: var(--body); }
 @media (max-width: 720px) { .calc { grid-template-columns: minmax(0, 1fr); } }
 .calc ol { list-style: none; margin: 0; padding: 0; }
 .calc li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px; padding: 9px 0; border-bottom: 1px solid var(--line); }
-.calc .c-label { font-size: 14px; }
-.calc .c-val { font-family: var(--mono); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
-.calc .c-val small { color: var(--mute); font-weight: 400; }
-.calc .c-src { grid-column: 1 / -1; font-size: 12.5px; color: var(--mute); }
+.calc .ci-label { font-size: 14px; font-family: var(--sans); letter-spacing: 0; text-align: left; border: 0; padding: 0; text-transform: none; }
+.calc .ci-val { font-family: var(--mono); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.calc .ci-val small { color: var(--mute); font-weight: 400; }
+.calc .ci-src { grid-column: 1 / -1; font-size: 12.5px; color: var(--mute); }
 .calc .assume { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--heat); }
 .calc-steps { border-left: 2px solid var(--power); padding-left: 14px !important; }
-.calc-steps li.last .c-val { color: var(--power); font-size: 1.1em; }
+.calc-steps li.last .ci-val { color: var(--power); font-size: 1.1em; }
 .calc-bars { display: grid; gap: 8px; margin: 6px 0 14px; }
 .cb-row { display: grid; grid-template-columns: minmax(0, 12em) minmax(0, 1fr) auto; gap: 10px; align-items: center; font-size: 13px; }
 @media (max-width: 560px) { .cb-row { grid-template-columns: minmax(0, 1fr) auto; } .cb-track { grid-column: 1 / -1; grid-row: 2; } }
