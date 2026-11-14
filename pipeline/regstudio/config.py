@@ -27,6 +27,7 @@ SCHEMAS = PIPELINE / "schemas"
 # "file" loads outputs prepared in an interactive Claude session from READER_OUTPUTS.
 READER = os.environ.get("REGSTUDIO_READER", "claude")
 READER_OUTPUTS = Path(os.environ.get("REGSTUDIO_READER_OUTPUTS", DATA / "reader_outputs"))
+MEMORY = Path(os.environ.get("REGSTUDIO_MEMORY", DATA / "memory"))   # approved house notes as Markdown
 COMMENTS = Path(os.environ.get("REGSTUDIO_COMMENTS", DATA / "comments"))  # Studio comment drafts as Markdown files
 CLAUDE_BIN = os.environ.get("REGSTUDIO_CLAUDE_BIN", "claude")
 CLAUDE_MODEL = os.environ.get("REGSTUDIO_CLAUDE_MODEL", "")

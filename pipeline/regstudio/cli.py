@@ -9,7 +9,7 @@ import sys
 
 from . import config, db
 
-STAGES = ["intake", "extract", "registry", "amend", "consult", "triage", "read", "headlines", "check", "impact", "figures", "comments", "draft"]
+STAGES = ["intake", "extract", "registry", "amend", "consult", "triage", "read", "headlines", "check", "impact", "figures", "commercial", "comments", "learn", "revise", "draft"]
 
 
 def _run_stage(name: str, limit: int | None, docs: list[str] | None = None, personas: list[str] | None = None) -> dict:
@@ -35,6 +35,15 @@ def _run_stage(name: str, limit: int | None, docs: list[str] | None = None, pers
     if name == "read":
         from . import reader
         return reader.run(limit)
+    if name == "commercial":
+        from . import commercial
+        return commercial.run(limit)
+    if name == "learn":
+        from . import learning
+        return learning.learn(limit)
+    if name == "revise":
+        from . import learning
+        return learning.revise(limit)
     if name == "headlines":
         from . import headlines
         return headlines.run(limit)
@@ -126,6 +135,9 @@ def main(argv: list[str] | None = None) -> None:
     ar.add_argument("name")
     ar.add_argument("--email", help="the email this reviewer proves to Cloudflare Access; with it no password is needed")
     ar.add_argument("--password", action="store_true", help="with --email: also set a password, for signing in on the office network")
+    me = sub.add_parser("memory", help="write the approved house notes to data/memory/house_notes.md and show counts")
+    cm = sub.add_parser("commercial", help="ask for a commercial illustration (beta) of these documents")
+    cm.add_argument("doc", nargs="+")
     pr = sub.add_parser("promote", help="send documents that triage left out ('listed') to be read after all")
     pr.add_argument("doc", nargs="+", help="document ids or their first 8+ characters")
     dp = sub.add_parser("deploy", help="push approved items to the public site, and the unreviewed preview to the preview site")
@@ -185,6 +197,18 @@ def main(argv: list[str] | None = None) -> None:
         except ValueError as e:
             raise SystemExit(str(e))
         print(f"{args.name} added; the review screen now requires sign-in")
+    elif args.cmd == "memory":
+        db.init()
+        from . import learning
+        with db.session() as conn:
+            path = learning.export(conn)
+            counts = {f"{k}_{s}": n for k, s, n in conn.execute("SELECT kind, status, count(*) FROM lessons GROUP BY kind, status")}
+        print(json.dumps({"written": path, **counts}, indent=2))
+    elif args.cmd == "commercial":
+        db.init()
+        from . import commercial
+        with db.session() as conn:
+            print(json.dumps({"requested": commercial.request(conn, args.doc)}))
     elif args.cmd == "promote":
         db.init()
         done = []

@@ -568,3 +568,28 @@ ul.d-nums span { font-size: 14px; line-height: 1.4; color: var(--body); }
 .d-watch li { display: grid; grid-template-columns: 8.5em minmax(0, 1fr) auto; gap: 4px 14px; align-items: baseline; font-size: 15px; color: var(--body); }
 .d-watch time { font-family: var(--mono); font-size: 13px; color: var(--gold); }
 @media (max-width: 620px) { .d-watch li { grid-template-columns: 1fr; } .d-lead { font-size: 17px; } ul.d-nums b { font-size: 21px; } }
+
+/* Commercial illustration (beta) */
+.commercial { margin-top: 28px; }
+.commercial h2 { margin: 4px 0 6px; }
+.commercial .beta { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; border: 1px solid var(--heat); color: var(--heat); padding: 1px 6px; margin-left: 8px; }
+.commercial .beta.warn { border-color: var(--line-2); color: var(--mute); }
+.calc { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 18px; margin: 16px 0; }
+@media (max-width: 720px) { .calc { grid-template-columns: minmax(0, 1fr); } }
+.calc ol { list-style: none; margin: 0; padding: 0; }
+.calc li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.calc .c-label { font-size: 14px; }
+.calc .c-val { font-family: var(--mono); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.calc .c-val small { color: var(--mute); font-weight: 400; }
+.calc .c-src { grid-column: 1 / -1; font-size: 12.5px; color: var(--mute); }
+.calc .assume { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--heat); }
+.calc-steps { border-left: 2px solid var(--power); padding-left: 14px !important; }
+.calc-steps li.last .c-val { color: var(--power); font-size: 1.1em; }
+.calc-bars { display: grid; gap: 8px; margin: 6px 0 14px; }
+.cb-row { display: grid; grid-template-columns: minmax(0, 12em) minmax(0, 1fr) auto; gap: 10px; align-items: center; font-size: 13px; }
+@media (max-width: 560px) { .cb-row { grid-template-columns: minmax(0, 1fr) auto; } .cb-track { grid-column: 1 / -1; grid-row: 2; } }
+.cb-track { height: 10px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.cb-bar { display: block; height: 100%; background: var(--power); border-radius: 0 4px 4px 0; }
+.cb-row b { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.commercial .takeaway { font-weight: 600; font-size: 1.05em; }
+.commercial .caveats { color: var(--mute); font-size: 13.5px; padding-left: 18px; }

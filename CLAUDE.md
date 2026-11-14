@@ -50,7 +50,7 @@ valid token is refused; the review screen binds to 127.0.0.1; no credentials or 
 ## Prepared files and the weekly digest
 
 A file in `data/reader_outputs/` named `<doc id>.<step>.json` (triage, read, headline, impact, figures,
-check.fact, check.legal) or `<week>.digest.json` is used instead of asking Claude, in file mode and in
+check.fact, check.legal, revise, learn, commercial) or `<week>.digest.json` is used instead of asking Claude, in file mode and in
 Claude mode, so work prepared in advance is not redone by a scheduled run. It is still a proposal.
 
 The Friday `draft` stage builds the edition: items read since the last approved edition (six-week look-back),
@@ -58,6 +58,20 @@ a lead, key points, numbers, up to three charts across documents and dates to wa
 `{doc, pid}`; anything uncited, or a number not found in its document, is dropped. To prepare an edition
 early: `REGSTUDIO_EDITION_DAY=2026-11-20 regstudio run draft`. `regstudio promote <id>` sends a document
 that triage left out to be read.
+
+## Comments, memory and commercial illustrations
+
+- **Comments.** On the review screen the legal team comments on a summary, headline, impact note, chart, illustration
+  or edition. Stage `revise` answers open comments with a reply each and a proposed revision (a diff the reviewer
+  accepts or rejects). Accepting changes the text but sends the summary back to `proposed`; it is never an approval.
+- **Memory.** With a revision Claude may propose lessons: a style note, or a fact about the Indian power sector that
+  must cite `{doc, pid}`. Stage `learn` proposes up to four cited facts per read document. Only lessons a reviewer
+  approves (on `/memory`) are used: they are appended to every prompt sent to Claude (style always; facts by
+  commission and topic) and written to `data/memory/house_notes.md`. Read that file before writing summaries here.
+- **Commercial illustrations (beta).** `regstudio commercial <id>` or the review-screen button asks for one; stage
+  `commercial` builds it. Every input cites a paragraph or is marked as an assumption with its reason; the steps are
+  computed by `commercial.py` (+ - * / only) and the takeaway may quote numbers only through `{step}` slots. The
+  jouleWise commercial team approves it separately; the public site shows only approved illustrations.
 
 ## Market impact and Studio comments
 

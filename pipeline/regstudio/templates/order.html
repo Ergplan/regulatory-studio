@@ -17,6 +17,7 @@
 <div class="para" id="para"><span class="muted">Click a link's paragraph id to see the passage it rests on.</span></div></div>
 <div class="side">
 {% include "_checks.html" %}
+{% include "_review_notes.html" %}
 <div class="card"><form method="post" action="/order/{{ d.id }}/summary">
 <label>Title on the website (plain English, e.g. "NPCL's 300 MW round-the-clock RE tender approved")</label><input name="title" value="{{ d.title or '' }}" maxlength="200">
 <label>Headline (what it decides, for a business reader)</label><input name="headline" value="{{ o.headline or '' }}" maxlength="120">
@@ -31,6 +32,7 @@
 <button class="bad" name="action" value="reject" onclick="return confirm('Drop this order from the digest?')">Not for publication</button></div>
 </form></div>
 {% include "_impact.html" %}
+{% include "_commercial.html" %}
 <h2>Links ({{ links|length }})</h2><p class="muted">Each link is published only if approved. Approving requires a target.</p>
 {% for l in links %}<div class="link {{ l.status }}" id="link-{{ l.id }}">
 <div class="row"><b>{{ LINK_TYPES[l.link_type] }}</b> → {% if l.target_id %}<code>{{ l.target_id }}</code>{% else %}<span class="unres">unresolved</span>{% endif %}

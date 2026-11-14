@@ -28,4 +28,11 @@
 {% for i in items %}<div class="card"><div class="row"><b>{{ i.commission|upper }}</b><a href="/{{ 'order' if i.kind == 'order' else 'consultation' }}/{{ i.id }}">{{ i.title }}</a>
 <span class="pill">{{ 'order' if i.kind == 'order' else 'draft regulation' }}</span><span class="pill {{ i.summary_status }}">summary {{ i.summary_status }}</span></div>
 <p>{{ i.summary }}</p></div>{% endfor %}
+<div class="card" id="notes"><b>Comments on this edition</b>
+<p class="muted" style="margin:4px 0 8px">Notes on the lead, key points, numbers or charts. They are kept with the edition and Claude reads them when it next drafts.</p>
+{% for c in dnotes %}<div style="margin:6px 0;border-left:3px solid var(--line);padding-left:10px"><b>{{ c.author }}</b> <span class="muted">{{ c.created_at[:16] }}</span> <span class="pill">{{ c.status }}</span>
+{% if c.quote %}<div class="excerpt">“{{ c.quote }}”</div>{% endif %}<div>{{ c.body }}</div>
+<form method="post" action="/comment/{{ c.id }}" class="row">{% if c.status == 'open' %}<button name="action" value="resolved">Mark resolved</button>{% else %}<button name="action" value="open">Reopen</button>{% endif %}</form></div>{% endfor %}
+<form method="post" action="/digest/{{ dg.id }}/note"><label>Words in question (optional)</label><input name="quote" maxlength="600">
+<label>Comment</label><textarea name="body" required style="min-height:60px"></textarea><p><button class="primary">Add comment</button></p></form></div>
 {% endblock %}

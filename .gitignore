@@ -29,5 +29,6 @@ pipeline/tests/fixtures/inbox/
 data/preview_snapshot/
 web/tsconfig.tsbuildinfo
 data/comments/
+data/memory/
 ops/studio.env
 data/_to_delete/

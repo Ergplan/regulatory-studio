@@ -62,6 +62,23 @@ flowchart LR
    reads the findings, edits and approves.
 6. Within 10 minutes the publisher pushes the approved text to `main`. Vercel rebuilds the public site.
 
+## How the studio learns
+
+```
+legal comment ──> revise (Claude) ──> reply + proposed revision ──> reviewer accepts / rejects
+                                  └─> proposed lessons ──────────> reviewer approves on /memory
+approved lessons ──> appended to every Claude prompt + data/memory/house_notes.md
+read documents ──> learn (Claude) ──> up to four cited sector facts, proposed
+```
+
+The memory holds only what a reviewer approved: style notes (how the legal team wants things written) and
+facts about the Indian power sector, each tied to a paragraph of a document. It grows with every scan and every
+round of comments; nothing the model proposes is used until a person approves it.
+
+Commercial illustrations (beta) are simple worked examples (energy, cost, sensitivity to tariff) built from cited
+inputs and stated assumptions, computed by code, and approved by the jouleWise commercial team before the public
+site shows them.
+
 ## What protects the review screen
 
 - The screen listens on `127.0.0.1` only. The tunnel is the single way in from outside.

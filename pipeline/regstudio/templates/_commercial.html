@@ -1,0 +1,15 @@
+{# Commercial illustration (beta): reviewed by the jouleWise commercial team, separately from the legal summary. #}
+<div class="card" id="commercial"><div class="row"><b>Commercial illustration</b><span class="pill">beta</span>
+{% if commercial_status %}<span class="pill {{ commercial_status }}">{{ commercial_status }}{% if commercial_by %} · {{ commercial_by }}{% endif %}</span>{% endif %}</div>
+{% if commercial %}<p style="margin:6px 0"><b>{{ commercial.title }}</b><br><span class="muted">{{ commercial.question }}</span></p>
+<table class="mini" style="font-size:13px"><tr><th>Input</th><th>Value</th><th>Source</th></tr>
+{% for i in commercial.inputs %}<tr><td>{{ i.label }}</td><td>{{ i.value|inr }} {{ i.unit }}</td><td>{% if i.basis %}{% for b in i.basis %}<a href="#" onclick="return typeof show === 'function' ? show('{{ b }}') : false">{{ b }}</a> {% endfor %}{% else %}<span class="pill proposed">assumption</span> {{ i.assumption|replace('Assumption for the illustration: ', '') }}{% endif %}</td></tr>{% endfor %}
+{% for s in commercial.steps %}<tr><td>{{ s.label }}</td><td><b>{{ s.shown }} {{ s.unit }}</b></td><td class="muted"><code>{{ s.expr }}</code></td></tr>{% endfor %}</table>
+<p style="margin:8px 0 4px"><b>{{ commercial.takeaway }}</b></p>
+{% for c in commercial.caveats %}<div class="muted">· {{ c }}</div>{% endfor %}
+<p class="muted">The arithmetic above was done by the software from the inputs shown, not by the model.</p>{% endif %}
+<form method="post" action="/commercial/{{ impact_doc }}" class="row" style="margin-top:6px">
+{% if commercial %}<button class="good" name="action" value="approve">Approve for the website (commercial team)</button><button class="bad" name="action" value="reject">Reject</button>{% endif %}
+<button name="action" value="request">{{ 'Ask for a new one' if commercial else 'Ask for an illustration' }}</button></form>
+{% if commercial_status == 'requested' %}<p class="muted">Requested: the next <code>regstudio run commercial</code> prepares it.</p>{% endif %}
+</div>

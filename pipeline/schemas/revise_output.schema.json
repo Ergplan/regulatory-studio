@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "A proposed revision that answers the legal team's comments",
+  "type": "object",
+  "required": ["replies"],
+  "additionalProperties": false,
+  "properties": {
+    "replies": {"type": "array", "items": {"type": "object", "required": ["comment_id", "reply", "action"], "additionalProperties": false, "properties": {
+      "comment_id": {"type": "integer"},
+      "reply": {"type": "string", "maxLength": 600, "description": "what you changed, or why you did not, citing paragraph ids"},
+      "action": {"enum": ["changed", "explained", "cannot"]}}}},
+    "headline": {"type": "string", "maxLength": 120, "description": "only if it changes"},
+    "issue": {"type": "string", "maxLength": 600},
+    "outcome": {"type": "string", "maxLength": 600},
+    "summary": {"type": "string", "maxLength": 2000},
+    "basis": {"type": "array", "maxItems": 12, "items": {"type": "string", "pattern": "^p[0-9]+\\.[0-9]+$"}},
+    "lessons": {"type": "array", "maxItems": 4, "description": "what to remember for next time", "items": {"type": "object", "required": ["kind", "text"], "additionalProperties": false, "properties": {
+      "kind": {"enum": ["style", "fact"], "description": "style: how the team wants things written, for every summary; fact: true about the sector, from this document"},
+      "text": {"type": "string", "maxLength": 400},
+      "scope": {"type": "string", "description": "all, a commission code such as cerc, or a topic slug"},
+      "pid": {"type": "string", "pattern": "^p[0-9]+\\.[0-9]+$", "description": "required for a fact"}}}}
+  }
+}

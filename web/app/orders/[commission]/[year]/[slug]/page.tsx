@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Brief from "@/components/Brief";
+import Commercial from "@/components/Commercial";
 import Charts from "@/components/Charts";
 import Impact from "@/components/Impact";
 import ProjectCta, { askFor } from "@/components/ProjectCta";
@@ -97,6 +98,7 @@ export default async function OrderPage({ params }: { params: Promise<Params> })
             <dt>Topics</dt><dd>{o.topics.map((t) => <Link key={t} href={`/topics/${t}`} className="chip">{topicName(t)}</Link>)}</dd>
           </dl>
           <Charts figures={o.figures ?? []} pdf={o.pdf} pending={o.draft} />
+          {o.commercial && <Commercial c={o.commercial} pdf={o.pdf} />}
           {o.impact && <Impact impact={o.impact} pdf={o.pdf} draft={o.draft} />}
           {!o.impact && <ProjectCta ask={ask} about={about} path={o.path} />}
         </section>

@@ -49,6 +49,15 @@ def is_document_url(url: str | None) -> bool:
     return u.endswith(".pdf") or "/viewdocument/" in u
 
 
+def commercial_public(row, preview: bool) -> dict | None:
+    """The beta commercial illustration: on the public site only once the commercial team approved it."""
+    status = row["commercial_status"]
+    if not row["commercial"] or status not in (("approved", "proposed") if preview else ("approved",)):
+        return None
+    return {**json.loads(row["commercial"]), "approved_by": row["commercial_by"] if status == "approved" else None,
+            "draft": status != "approved"}
+
+
 def run(clean: bool = False, preview: bool = False, out=None) -> dict:
     """preview=True is for a private look at the site before review: it also includes *proposed*
     summaries, links, regulations and clauses, marks every order and the whole site as an unreviewed
@@ -64,7 +73,8 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
     with db.session() as conn:
         docs = conn.execute(
             """SELECT d.*, o.topics, o.significance, o.parties, o.issue, o.outcome, o.summary,
-                      o.reviewer, o.approved_at, o.revised_at, o.summary_status, o.impact, o.rating, o.figures, o.checks, o.headline
+                      o.reviewer, o.approved_at, o.revised_at, o.summary_status, o.impact, o.rating, o.figures, o.checks, o.headline,
+                      o.commercial, o.commercial_status, o.commercial_by
                FROM documents d JOIN orders o ON o.doc_id = d.id
                WHERE o.summary_status IN (%s)""" % marks, ok).fetchall()
         docs = [d for d in docs if not (clean and SAMPLE_MARK in d["source_url"])]
@@ -125,6 +135,7 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
                 "topics": json.loads(d["topics"] or "[]"), "significance": d["significance"],
                 "parties": json.loads(d["parties"] or "[]"), "issue": d["issue"], "outcome": d["outcome"],
                 "impact": impact_load(d["impact"]), "rating": d["rating"], "figures": figures_load(d["figures"]), "checked": checks_public(d["checks"]),
+                "commercial": commercial_public(d, preview),
                 "summary": d["summary"], "headline": d["headline"], "reviewed_by": d["reviewer"], "approved_at": d["approved_at"],
                 "revised_at": d["revised_at"], "language": d["language"],
                 "sample": SAMPLE_MARK in d["source_url"], "links": links,
@@ -170,6 +181,7 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
                 "issued": c["issued_date"], "comment_deadline": c["comment_deadline"], "hearing_date": c["hearing_date"],
                 "summary": c["summary"], "proposes": json.loads(c["proposes"] or "[]"), "amends": c["amends"],
                 "impact": impact_load(c["impact"]), "rating": c["rating"], "figures": figures_load(c["figures"]), "checked": checks_public(c["checks"]),
+                "commercial": commercial_public(c, preview),
                 "comments": {k["persona"]: {**json.loads(k["body"]), "draft": k["status"] != "approved"} for k in conn.execute(
                     f"SELECT persona, body, status FROM comment_drafts WHERE doc_id = ? AND body IS NOT NULL AND status IN ({marks})",
                     (c["id"], *ok))},

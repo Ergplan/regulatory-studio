@@ -21,6 +21,6 @@ textarea{min-height:90px}label{display:block;font-size:12px;color:var(--quiet);m
 .inline{display:inline}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .flash{padding:10px;border-radius:6px;background:#fff4e5;border:1px solid #f0c36d;margin-bottom:12px}
 </style>{% block head %}{% endblock %}</head>
-<body><header><a href="/">Regulatory Studio · Review</a><span class="muted">Nothing is published until approved here</span>
+<body><header><a href="/">Regulatory Studio · Review</a><a href="/memory" style="font-weight:400">Memory</a><span class="muted">Nothing is published until approved here</span>
 <span class="who">{% if reviewer %}Reviewing as <b>{{ reviewer }}</b> · <a href="/logout">sign out</a>{% else %}No reviewer set{% endif %}</span></header>
 <main>{% block body %}{% endblock %}</main></body></html>

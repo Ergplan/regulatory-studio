@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { HighBadge } from "@/components/AnalysisBlock";
 import Brief from "@/components/Brief";
+import Commercial from "@/components/Commercial";
 import Charts, { consultationTimeline } from "@/components/Charts";
 import Impact from "@/components/Impact";
 import ProjectCta, { askFor } from "@/components/ProjectCta";
@@ -50,6 +51,7 @@ export default async function ConsultationPage({ params }: { params: Promise<Par
         {c.proposes.length > 0 && <ul>{c.proposes.map((p, i) => <li key={i}>{p}</li>)}</ul>}
         {c.amends && <p className="muted">Would amend: {c.amends}</p>}
         <Charts figures={figs} pdf={c.source_url} pending={c.draft} />
+          {c.commercial && <Commercial c={c.commercial} pdf={c.source_url} />}
         {c.impact && <Impact impact={c.impact} pdf={c.source_url} draft={c.draft} />}
         {!c.impact && <ProjectCta ask={ask} about={c.title} path={c.path} />}
       </section>

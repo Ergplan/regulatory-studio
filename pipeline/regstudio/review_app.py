@@ -16,12 +16,13 @@ from fastapi import BackgroundTasks, FastAPI, Form, HTTPException, Request
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
-from . import access, amend, auth, config, db, deploy, registry
+from . import access, amend, auth, commercial, config, db, deploy, learning, registry
 
 app = FastAPI(title="Regulatory Studio review")
 templates = Jinja2Templates(directory=str(Path(__file__).parent / "templates"))
 templates.env.globals.update(COMMISSIONS=config.COMMISSIONS, LINK_TYPES=config.LINK_TYPES,
                              TOPICS=config.TOPICS)
+templates.env.filters["inr"] = lambda v: commercial.fmt(float(v), 0 if float(v) == int(float(v)) else 2)
 
 
 @app.middleware("http")
@@ -210,7 +211,7 @@ def order(request: Request, doc_id: str):
     return templates.TemplateResponse(request, "order.html", {
         "reviewer": reviewer(request), "d": d, "o": o, "links": links, "paras": paras,
         "parties": json.loads(o["parties"] or "[]"), "topics": json.loads(o["topics"] or "[]"),
-        "targets": targets, "suggest": suggest, **impact_context(o)})
+        "targets": targets, "suggest": suggest, **impact_context(o), **notes_context(doc_id, o, True)})
 
 
 @app.post("/order/{doc_id}/summary")
@@ -374,7 +375,9 @@ def digest(request: Request, week: str):
         for ref in [b for p in edition["key_points"] for b in p["basis"]] + edition["numbers"] + [w for w in edition["watch"] if w.get("doc")]:
             r = conn.execute("SELECT text FROM paragraphs WHERE doc_id = ? AND pid = ?", (ref["doc"], ref["pid"])).fetchone()
             texts[(ref["doc"], ref["pid"])] = r[0] if r else "(paragraph not found)"
-    return templates.TemplateResponse(request, "digest.html", {"reviewer": reviewer(request), "dg": dg, "items": items,
+    with db.session() as conn:
+        dnotes = learning.comments_for(conn, digest_id=week)
+    return templates.TemplateResponse(request, "digest.html", {"reviewer": reviewer(request), "dg": dg, "items": items, "dnotes": dnotes,
                                                               "names": names, "texts": texts, **edition})
 
 
@@ -465,7 +468,7 @@ def consultation(request: Request, doc_id: str):
     return templates.TemplateResponse(request, "consultation.html", {
         "reviewer": reviewer(request), "d": d, "c": c, "paras": paras, "KINDS": KINDS,
         "proposes": json.loads(c["proposes"] or "[]"), "related": json.loads(c["related"] or "[]"), **impact_context(c),
-        "comment_drafts": comment_context(doc_id)})
+        "comment_drafts": comment_context(doc_id), **notes_context(doc_id, c, False)})
 
 
 def _iso_or_none(value: str) -> str | None:
@@ -680,3 +683,149 @@ async def save_figures(request: Request, doc_id: str):
         reg = conn.execute("SELECT id FROM regulations WHERE doc_id = ?", (doc_id,)).fetchone() if table == "regulations" else None
     back_to = {"orders": f"/order/{doc_id}", "consultations": f"/consultation/{doc_id}"}.get(table) or f"/regulation/{reg['id']}"
     return back(f"{back_to}#figures")
+
+
+# ---------- comments for Claude, revisions, memory, commercial illustrations ----------
+
+def notes_context(doc_id: str, row, can_revise: bool) -> dict:
+    with db.session() as conn:
+        notes = learning.comments_for(conn, doc_id=doc_id)
+        revs = [dict(r) | {"fields": json.loads(r["fields"]), "comment_ids": json.loads(r["comment_ids"])}
+                for r in conn.execute("SELECT * FROM revisions WHERE doc_id = ? AND status = 'proposed' ORDER BY id", (doc_id,))]
+        ids = [n["id"] for n in notes] or [-1]
+        lessons = [dict(r) for r in conn.execute(
+            f"""SELECT * FROM lessons WHERE status = 'proposed'
+                AND (doc_id = ? OR comment_id IN ({",".join("?" * len(ids))})) ORDER BY id""", (doc_id, *ids))]
+    keys = row.keys()
+    current = {f: row[f] for f in ("headline", "issue", "outcome", "summary") if f in keys}
+    raw = row["commercial"] if "commercial" in keys else None
+    return {"notes": notes, "revisions": revs, "lessons_here": lessons, "current": current, "notes_doc": doc_id,
+            "can_revise": can_revise, "commercial": commercial.load(raw),
+            "commercial_status": row["commercial_status"] if "commercial_status" in keys else None,
+            "commercial_by": row["commercial_by"] if "commercial_by" in keys else None}
+
+
+def _doc_page(conn, doc_id: str) -> str:
+    if conn.execute("SELECT 1 FROM orders WHERE doc_id = ?", (doc_id,)).fetchone():
+        return f"/order/{doc_id}"
+    if conn.execute("SELECT 1 FROM consultations WHERE doc_id = ?", (doc_id,)).fetchone():
+        return f"/consultation/{doc_id}"
+    raise HTTPException(404)
+
+
+def _revise_in_background(doc_id: str) -> None:
+    try:
+        learning.revise(doc=doc_id)
+    except Exception as e:                      # noqa: BLE001 - shown in the audit log, never crashes the app
+        with db.session() as conn:
+            db.audit(conn, "pipeline", "revise.error", doc_id, {"error": str(e)[:300]})
+
+
+@app.post("/notes/{doc_id}")
+def add_note(request: Request, background: BackgroundTasks, doc_id: str, body: str = Form(...), target: str = Form("summary"),
+             quote: str = Form(""), next: str = Form("stay")):
+    who = need_reviewer(request)
+    with db.session() as conn:
+        page = _doc_page(conn, doc_id)
+        learning.add_comment(conn, who, body, target, doc_id=doc_id, quote=quote)
+    if next == "revise" and page.startswith("/order/"):
+        background.add_task(_revise_in_background, doc_id)
+    return back(page + "#notes")
+
+
+@app.post("/revise/{doc_id}")
+def revise_now(request: Request, background: BackgroundTasks, doc_id: str):
+    need_reviewer(request)
+    with db.session() as conn:
+        page = _doc_page(conn, doc_id)
+    background.add_task(_revise_in_background, doc_id)
+    return back(page + "#notes")
+
+
+@app.post("/comment/{comment_id}")
+def decide_note(request: Request, comment_id: int, action: str = Form(...)):
+    who = need_reviewer(request)
+    if action not in ("resolved", "dismissed", "open"):
+        raise HTTPException(400)
+    with db.session() as conn:
+        row = conn.execute("SELECT doc_id, digest_id FROM review_comments WHERE id = ?", (comment_id,)).fetchone()
+        if not row:
+            raise HTTPException(404)
+        learning.close_comment(conn, comment_id, who, action)
+        page = _doc_page(conn, row["doc_id"]) if row["doc_id"] else f"/digest/{row['digest_id']}"
+    return back(page + "#notes")
+
+
+@app.post("/revision/{revision_id}")
+def decide_revision(request: Request, revision_id: int, action: str = Form(...)):
+    who = need_reviewer(request)
+    if action not in ("accept", "reject"):
+        raise HTTPException(400)
+    with db.session() as conn:
+        try:
+            doc_id = learning.decide_revision(conn, revision_id, who, action)
+        except ValueError:
+            raise HTTPException(409, "This revision has already been decided.")
+    return back(f"/order/{doc_id}#notes")
+
+
+@app.post("/digest/{week}/note")
+def digest_note(request: Request, week: str, body: str = Form(...), quote: str = Form("")):
+    who = need_reviewer(request)
+    with db.session() as conn:
+        learning.add_comment(conn, who, body, "edition", digest_id=week, quote=quote)
+    return back(f"/digest/{week}#notes")
+
+
+@app.get("/memory", response_class=HTMLResponse)
+def memory(request: Request):
+    with db.session() as conn:
+        rows = [dict(r) for r in conn.execute("SELECT * FROM lessons ORDER BY kind, scope, id DESC")]
+    scopes = ["all", *config.COMMISSIONS, *config.TOPICS]
+    return templates.TemplateResponse(request, "memory.html", {
+        "reviewer": reviewer(request), "scopes": scopes,
+        **{k: [r for r in rows if r["status"] == k] for k in ("proposed", "approved", "retired")}})
+
+
+@app.post("/memory")
+def add_memory(request: Request, kind: str = Form(...), text: str = Form(...), scope: str = Form("all"),
+               doc_id: str = Form(""), pid: str = Form("")):
+    who = need_reviewer(request)
+    with db.session() as conn:
+        lid = learning.add_lesson(conn, kind, text, who, scope, doc_id.strip() or None, pid.strip() or None, approved=True)
+        if not lid:
+            raise HTTPException(400, "Not saved: a fact needs its source document and paragraph, and the note must be new.")
+        db.audit(conn, who, "lesson.add", str(lid))
+        learning.export(conn)
+    return back("/memory")
+
+
+@app.post("/lesson/{lesson_id}")
+def decide_lesson(request: Request, lesson_id: int, action: str = Form(...), text: str = Form(None), scope: str = Form(None)):
+    who = need_reviewer(request)
+    if action not in ("approve", "retire", "save"):
+        raise HTTPException(400)
+    with db.session() as conn:
+        learning.decide_lesson(conn, lesson_id, who, action, text, scope)
+    ref = request.headers.get("referer") or "/memory"
+    return back(urllib.parse.urlparse(ref).path or "/memory")
+
+
+@app.post("/commercial/{doc_id}")
+def decide_commercial(request: Request, doc_id: str, action: str = Form(...)):
+    who = need_reviewer(request)
+    with db.session() as conn:
+        page = _doc_page(conn, doc_id)
+        table = "orders" if page.startswith("/order/") else "consultations"
+        if action == "request":
+            conn.execute(f"UPDATE {table} SET commercial_status = 'requested', commercial_by = NULL WHERE doc_id = ?", (doc_id,))
+        elif action in ("approve", "reject"):
+            row = conn.execute(f"SELECT commercial FROM {table} WHERE doc_id = ?", (doc_id,)).fetchone()
+            if not row or not row["commercial"]:
+                raise HTTPException(409, "There is no illustration to decide on.")
+            conn.execute(f"UPDATE {table} SET commercial_status = ?, commercial_by = ? WHERE doc_id = ?",
+                         ("approved" if action == "approve" else "rejected", who, doc_id))
+        else:
+            raise HTTPException(400)
+        db.audit(conn, who, f"commercial.{action}", doc_id)
+    return back(page + "#commercial")
