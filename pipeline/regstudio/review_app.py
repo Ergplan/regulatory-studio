@@ -16,7 +16,7 @@ from fastapi import BackgroundTasks, FastAPI, Form, HTTPException, Request
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
-from . import access, amend, auth, commercial, config, db, deploy, learning, registry
+from . import access, amend, auth, commercial, config, db, deploy, learning, priority, registry
 
 app = FastAPI(title="Regulatory Studio review")
 templates = Jinja2Templates(directory=str(Path(__file__).parent / "templates"))
@@ -112,7 +112,7 @@ def queue(request: Request):
     with db.session() as conn:
         orders = conn.execute(
             """SELECT d.id, d.commission, d.title, d.case_number, d.doc_date, d.ocr, d.language,
-                      o.significance, o.summary_status,
+                      o.significance, o.summary_status, o.summary, o.issue, o.outcome, o.headline, o.topics, o.impact, o.parties,
                       (SELECT count(*) FROM links l WHERE l.from_doc = d.id AND l.status = 'proposed') AS open_links
                FROM documents d JOIN orders o ON o.doc_id = d.id
                WHERE o.summary_status IN ('proposed', 'approved') AND d.stage IN ('read', 'drafted')
@@ -129,14 +129,22 @@ def queue(request: Request):
                FROM documents d JOIN amendment_changes a ON a.amendment_doc = d.id
                WHERE a.status = 'proposed' GROUP BY d.id ORDER BY d.doc_date DESC""").fetchall()
         consultations = conn.execute(
-            """SELECT d.id, d.commission, d.title, c.kind, c.comment_deadline, c.hearing_date, c.summary_status
+            """SELECT d.id, d.commission, d.title, c.kind, c.comment_deadline, c.hearing_date, c.summary_status,
+                      c.summary, c.proposes, c.amends, c.impact
                FROM documents d JOIN consultations c ON c.doc_id = d.id
                WHERE c.summary_status IN ('proposed', 'approved')
                ORDER BY c.summary_status = 'approved', coalesce(c.comment_deadline, '9999') ASC""").fetchall()
         listed = conn.execute("SELECT count(*) FROM documents WHERE stage = 'listed'").fetchone()[0]
         errors = conn.execute("SELECT id, commission, title, error FROM documents WHERE stage = 'error'").fetchall()
+    orders = sorted((dict(o) | {"priority": priority.for_order(o)} for o in orders),
+                    key=lambda o: (o["summary_status"] == "approved", -o["priority"]["score"]))
+    consultations = sorted((dict(c) | {"priority": priority.for_consultation(c)} for c in consultations),
+                           key=lambda c: (c["summary_status"] == "approved", -c["priority"]["score"]))
+    first = sorted([o | {"href": f"/order/{o['id']}", "what": "Order"} for o in orders if o["summary_status"] == "proposed"]
+                   + [c | {"href": f"/consultation/{c['id']}", "what": "Draft"} for c in consultations if c["summary_status"] == "proposed"],
+                   key=lambda i: -i["priority"]["score"])[:8]
     return templates.TemplateResponse(request, "queue.html", {
-        "reviewer": reviewer(request), "orders": orders, "regs": regs, "digests": digests, "amendments": amendments,
+        "reviewer": reviewer(request), "orders": orders, "first": first, "regs": regs, "digests": digests, "amendments": amendments,
         "listed": listed, "errors": errors, "sources": _download_health(), "deploy": deploy.last(), "scan": _last_scan(),
         "consultations": consultations})
 
@@ -699,7 +707,12 @@ def notes_context(doc_id: str, row, can_revise: bool) -> dict:
     keys = row.keys()
     current = {f: row[f] for f in ("headline", "issue", "outcome", "summary") if f in keys}
     raw = row["commercial"] if "commercial" in keys else None
-    return {"notes": notes, "revisions": revs, "lessons_here": lessons, "current": current, "notes_doc": doc_id,
+    doc = None
+    with db.session() as conn:
+        doc = conn.execute("SELECT commission, title, doc_date FROM documents WHERE id = ?", (doc_id,)).fetchone()
+    full = dict(row) | (dict(doc) if doc else {})
+    return {"priority": priority.for_order(full) if can_revise else priority.for_consultation(full),
+            "notes": notes, "revisions": revs, "lessons_here": lessons, "current": current, "notes_doc": doc_id,
             "can_revise": can_revise, "commercial": commercial.load(raw),
             "commercial_status": row["commercial_status"] if "commercial_status" in keys else None,
             "commercial_by": row["commercial_by"] if "commercial_by" in keys else None}

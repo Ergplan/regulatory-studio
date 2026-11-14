@@ -73,6 +73,13 @@ that triage left out to be read.
   computed by `commercial.py` (+ - * / only) and the takeaway may quote numbers only through `{step}` slots. The
   jouleWise commercial team approves it separately; the public site shows only approved illustrations.
 
+## Review priority
+
+`priority.py` scores every order and draft out of 100 to order the review queue: stakeholder reach (40),
+business opportunity for jouleWise and Urja Praxis (30), leads (20), urgency (10). It is computed by code from
+kind, parties, significance, subjects and dates, shown with its reasons, and never published. Open drafts rank
+highest, then orders with several parties. Tune the weights and subject lists in that file.
+
 ## Market impact and Studio comments
 
 Both are opt-in per document (review screen button, or `regstudio run impact --doc <id>` /
