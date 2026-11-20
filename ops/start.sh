@@ -36,6 +36,12 @@ sqlite3 data/store/working.db ".backup 'data/store/backups/working-$(date +%Y%m%
 say "2/7  Fetching new orders from the commission websites (a few minutes)"
 run regstudio download --limit 80
 
+# Documents the first sort left out but which should be read after all (one id per line).
+if [ -f data/reader_outputs/promote.txt ]; then
+  for id in $(cat data/reader_outputs/promote.txt); do regstudio promote "$id" >> "$LOG" 2>&1; done
+  mv data/reader_outputs/promote.txt "data/reader_outputs/promote-done-$(date +%Y%m%d-%H%M).txt"
+fi
+
 say "3/7  Reading and checking them (this is the long step; scanned PDFs are slow)"
 for stage in intake extract registry amend consult triage read headlines check impact figures commercial revise learn; do
   echo "     $stage"
