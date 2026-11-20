@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <header className="site-header"><div className="wrap">
           <Link href="/" className="brand">Regulatory Studio<small><span className="j">joule</span><span className="w">Wise</span> × <span className="w">Urja Praxis</span></small></Link>
           <nav className="nav" aria-label="Main">
-            <Link href="/consultations">Updates</Link><Link href="/impact">Impact</Link><Link href="/digest">Digest</Link><Link href="/search">Search</Link>
+            <Link href="/consultations">Updates</Link><Link href="/impact">Impact</Link><Link href="/digest">Digest</Link><Link href="/archive">Archive</Link><Link href="/search">Search</Link>
             <Link href="/discuss" className="nav-cta">Discuss my project</Link>
           </nav>
         </div></header>

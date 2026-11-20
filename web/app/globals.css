@@ -593,3 +593,12 @@ ul.d-nums span { font-size: 14px; line-height: 1.4; color: var(--body); }
 .cb-row b { font-family: var(--mono); font-variant-numeric: tabular-nums; }
 .commercial .takeaway { font-weight: 600; font-size: 1.05em; }
 .commercial .caveats { color: var(--mute); font-size: 13.5px; padding-left: 18px; }
+
+/* Weekly archive */
+.archive { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 0; }
+.archive > li { padding: 20px 0; border-top: 1px solid var(--line); display: grid; gap: 6px; }
+.arch-week { font-size: 1.25rem; font-weight: 600; color: var(--ink); text-decoration: none; }
+.arch-week:hover, .arch-week:focus-visible { color: var(--power); }
+.arch-meta { font-family: var(--mono); font-size: 12px; letter-spacing: .04em; color: var(--mute); }
+.arch-heads { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 4px; font-size: 15px; }
+.arch-nav { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 14px; }

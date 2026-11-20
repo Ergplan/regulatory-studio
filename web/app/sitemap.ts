@@ -1,3 +1,4 @@
+import { weeks } from "@/lib/archive";
 import type { MetadataRoute } from "next";
 import { GROUPS, SITE_URL, actSections, clauses, consultations, digests, orders, regulations, site } from "@/lib/data";
 
@@ -13,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...clauses.filter((c) => !regulations.find((r) => r.id === c.regulation_id)?.sample).map((c) => at(c.path)),
     ...actSections.map((a) => at(`/act/${a.id}`)),
     ...digests.map((d) => at(d.path, d.approved_at ?? d.to)),
+    at("/archive"), ...weeks.map((w) => at(w.path, w.to)),
     ...consultations.filter((c) => !c.sample).map((c) => at(c.path, c.approved_at ?? c.issued)),
   ];
 }
