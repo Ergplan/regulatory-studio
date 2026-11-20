@@ -9,7 +9,7 @@
   "date": "2026-10-28",
   "source_url": "https://cercind.gov.in/2026/Orders/13-SM-2026.pdf",
   "source_listing": false,
-  "pdf": "/pdf/f36d5dc4d09d1997.pdf",
+  "pdf": "https://cercind.gov.in/2026/Orders/13-SM-2026.pdf",
   "draft": false,
   "topics": [
    "power-market"
@@ -110,7 +110,7 @@
   "date": "2026-11-02",
   "source_url": "https://cercind.gov.in/2026/Orders/979-MP-2025.pdf",
   "source_listing": false,
-  "pdf": "/pdf/5e7d1a2d457deaf4.pdf",
+  "pdf": "https://cercind.gov.in/2026/Orders/979-MP-2025.pdf",
   "draft": false,
   "topics": [
    "dsm"
@@ -319,5 +319,3530 @@
     "page": 3
    }
   ]
+ },
+ {
+  "id": "d58d1d4f67cb79ae65877d7818abff478c7a341b62e2eb52c03e6ee5284b1bd9",
+  "path": "/orders/cerc/2026/135-mp-2026-d58d1d",
+  "commission": "cerc",
+  "doc_type": "order",
+  "title": "Ambuja Cements Limited",
+  "case_number": "Petition No. 135/MP/2026",
+  "date": "2026-11-18",
+  "source_url": "https://cercind.gov.in/2026/orders/135-MP-2026.pdf",
+  "source_listing": false,
+  "pdf": "https://cercind.gov.in/2026/orders/135-MP-2026.pdf",
+  "draft": true,
+  "topics": [
+   "ists-charges",
+   "connectivity-gna"
+  ],
+  "significance": 2,
+  "parties": [
+   {
+    "name": "Ambuja Cements Limited",
+    "role": "Petitioner"
+   },
+   {
+    "name": "Central Transmission Utility of India Limited (CTUIL)",
+    "role": "Respondent"
+   }
+  ],
+  "issue": "Whether Ambuja Cements' 150 MW captive solar project, commissioned after 30 June 2025 because the solar park's pooling station was late, still qualifies for the inter-State transmission charge waiver under Regulation 13(2)(h) of the 2020 Sharing Regulations.",
+  "outcome": "Yes. The Commission accepted the Committee's recommendation to extend the scheduled commissioning date to 08.08.2025. The project is eligible for the waiver as if it had achieved COD on or before 30.06.2025.",
+  "impact": null,
+  "rating": null,
+  "figures": [],
+  "checked": {
+   "reviewers": 0,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "Ambuja Cements Limited built a 150 MW solar plant for captive use across its cement facilities, in the 750 MW solar park of Essel Saurya Urja Company of Rajasthan Limited at Phalodi-Pokhran, Rajasthan. The park's scheduled commissioning date was 30.06.2025. Ambuja said its plant was ready, but allocation of land and the commissioning and charging of the park's pooling station were delayed. The plant was commissioned in two parts, 70 MW on 02.08.2025 and 80 MW on 08.08.2025. A Committee under Regulation 13(2)(h) of the 2020 Sharing Regulations found the delay beyond Ambuja's control and recommended extending the date to 08.08.2025 for the purpose of the waiver; CTUIL adopted the recommendation. The Commission applied the regulation's three conditions: a scheduled date on or before 30th June 2025, a delay not attributable to the generator, and commissioning by the extended date. It held the project eligible for the waiver of inter-State transmission charges as if it had achieved COD on or before 30.06.2025.",
+  "headline": "CERC allows ISTS charge waiver for Ambuja Cements' 150 MW captive solar project in Rajasthan",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "0701d3a4c27f3edfe7cd2972aea5d94a79840b8a8aa289d681d2a580e046bb87",
+  "path": "/orders/cerc/2026/246-mp-2026-along-with-ia-no-82-2026-0701d3",
+  "commission": "cerc",
+  "doc_type": "order",
+  "title": "Zenataris Renewable Energy Private Limited",
+  "case_number": "Petition No. 246/MP/2026 along with IA No. 82/2026",
+  "date": "2026-11-18",
+  "source_url": "https://cercind.gov.in/2026/orders/246-MP-2026.pdf",
+  "source_listing": false,
+  "pdf": "https://cercind.gov.in/2026/orders/246-MP-2026.pdf",
+  "draft": true,
+  "topics": [
+   "ists-charges",
+   "connectivity-gna",
+   "green-energy-oa"
+  ],
+  "significance": 3,
+  "parties": [
+   {
+    "name": "Zenataris Renewable Energy Private Limited",
+    "role": "petitioner"
+   },
+   {
+    "name": "Central Transmission Utility of India Limited",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Whether the Petitioner's 171.6 MW wind-solar hybrid project qualifies for an extension of its scheduled commercial operation date (SCOD) and a 100% waiver of inter-State transmission charges under Regulation 13(2)(h) of the 2020 Sharing Regulations, as if it had achieved COD on or before 30.06.2025.",
+  "outcome": "The Commission held that the project capacity that achieved COD on or before 30.06.2026 is eligible for the waiver as if it had achieved COD on or before 30.06.2025, subject to NLDC verifying the COD certificates. The 5.6 MW of wind capacity that achieved COD on 30.08.2026 is not eligible. The prayers for further extension until the transmission line is commissioned, and for aligning the connectivity start date with that date, were rejected because the 2020 Sharing Regulations contain no provision for them.",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "timeline",
+    "title": "SCOD, Committee reports, extended SCOD and claimed COD dates for the 171.6 MW project",
+    "items": [
+     {
+      "label": "Original SCOD / connectivity start date",
+      "basis": [
+       "p3.15",
+       "p8.10",
+       "p10.6"
+      ],
+      "start": "2025-06-30"
+     },
+     {
+      "label": "Committee report: 1st extension",
+      "basis": [
+       "p4.5",
+       "p8.11"
+      ],
+      "start": "2025-10-27"
+     },
+     {
+      "label": "Committee report: 2nd extension",
+      "basis": [
+       "p4.6",
+       "p9.4"
+      ],
+      "start": "2026-03-18"
+     },
+     {
+      "label": "COD 66 MW wind (Petitioner's claim)",
+      "basis": [
+       "p8.3",
+       "p10.8"
+      ],
+      "start": "2026-05-08"
+     },
+     {
+      "label": "COD 94.325 MW solar (Petitioner's claim)",
+      "basis": [
+       "p8.3",
+       "p10.8"
+      ],
+      "start": "2026-05-22"
+     },
+     {
+      "label": "Extended SCOD for the waiver",
+      "basis": [
+       "p9.4",
+       "p10.7",
+       "p10.11"
+      ],
+      "start": "2026-06-30"
+     },
+     {
+      "label": "COD 5.6 MW wind (Petitioner's claim)",
+      "basis": [
+       "p7.5",
+       "p8.4",
+       "p10.9"
+      ],
+      "start": "2026-08-30"
+     },
+     {
+      "label": "Date of order",
+      "basis": [
+       "p1.3"
+      ],
+      "start": "2026-11-18"
+     }
+    ],
+    "note": "COD dates are as stated by the Petitioner; NLDC is to verify the COD certificates"
+   },
+   {
+    "type": "flow",
+    "title": "Who gets the ISTS charge waiver under Regulation 13(2)(h)",
+    "items": [
+     {
+      "label": "SCOD on or before 30.06.2025",
+      "basis": [
+       "p9.8",
+       "p10.2"
+      ],
+      "detail": "Wind, solar or wind-solar hybrid project with its scheduled date of commercial operation on or before 30th June 2025",
+      "otherwise": "Condition not met; no waiver under Regulation 13(2)(h)"
+     },
+     {
+      "label": "Delay not attributable to the generator",
+      "basis": [
+       "p10.3"
+      ],
+      "detail": "COD delayed by Force Majeure, including non-availability of the transmission system, or for reasons not attributable to the REGS",
+      "otherwise": "Condition not met; no waiver under Regulation 13(2)(h)"
+     },
+     {
+      "label": "Extension granted",
+      "basis": [
+       "p9.8",
+       "p9.10",
+       "p10.11"
+      ],
+      "detail": "The Commission grants it on the Committee's recommendation, at most six months at a time and not more than two times"
+     },
+     {
+      "label": "COD by the extended date",
+      "basis": [
+       "p10.4",
+       "p10.11"
+      ],
+      "detail": "Here the extended date is 30.06.2026",
+      "otherwise": "Not eligible for relief: the 5.6 MW of wind (COD 30.08.2026)"
+     },
+     {
+      "label": "NLDC verification",
+      "basis": [
+       "p10.12"
+      ],
+      "detail": "NLDC verifies the COD certificates for the capacity that achieved COD on or before 30.06.2026"
+     },
+     {
+      "label": "Waiver",
+      "basis": [
+       "p9.8",
+       "p10.11"
+      ],
+      "detail": "Eligible for the waiver of inter-state transmission charges as if COD had been achieved on or before 30.06.2025"
+     }
+    ]
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "Zenataris Renewable Energy Private Limited has connectivity at Hiriyur sub-station for a 171.6 MW wind-solar hybrid project in Vijayanagara district, Karnataka, with a connectivity start date and SCOD of 30.06.2025. The Narendra (New)-Pune 765 kV common transmission system was delayed, and CTUIL told the Commission that its anticipated CoD is December 2026. A Committee constituted under Regulation 13(2)(h) of the 2020 Sharing Regulations issued reports on 27.10.2025 and 18.03.2026. These recommended extending the SCOD up to 30.06.2026 or until the transmission system is commissioned, whichever is earlier. The Petitioner stated that 66 MW of wind and 109.45 MW of solar capacity achieved COD, and that the remaining 5.6 MW of wind achieved COD on 30.08.2026. The Commission noted that Regulation 13(2)(h) allows an extension only for the purpose of the waiver, for a limited period of one year, and only if the project achieves COD by the extended date. It held that the capacity that achieved COD by 30.06.2026 is eligible for the waiver as if it had achieved COD on or before 30.06.2025, with NLDC to verify the COD certificates. The 5.6 MW of wind capacity is not eligible. The requests for further extension and for re-aligning the connectivity start date were rejected for lack of any provision in the Regulations.",
+  "headline": "Zenataris gets ISTS charge waiver for capacity reaching COD by June 2026, not 5.6 MW wind",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "8d4c10cb7238f98941e0cec4b37ff6e3d0c3b95be139d100a71c1b0eb871c438",
+  "path": "/orders/cerc/2026/94-at-2026-8d4c10",
+  "commission": "cerc",
+  "doc_type": "order",
+  "title": "NHPC Limited",
+  "case_number": "Petition No. 94/AT/2026",
+  "date": "2026-11-19",
+  "source_url": "https://cercind.gov.in/2026/Orders/94-AT-2026.pdf",
+  "source_listing": false,
+  "pdf": "https://cercind.gov.in/2026/Orders/94-AT-2026.pdf",
+  "draft": true,
+  "topics": [
+   "ppa-adoption",
+   "generation-tariff"
+  ],
+  "significance": 4,
+  "parties": [
+   {
+    "name": "NHPC Limited",
+    "role": "petitioner"
+   },
+   {
+    "name": "Jevargi Solar Power Private Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Juniper Green Energy Private Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Avaada Energy Private Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "ACME Solar Holdings Limited",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Whether the Commission should adopt, under Section 63 of the Electricity Act, 2003, the tariff for 1150 MW of additional firm and despatchable renewable power with energy storage that NHPC allocated under a \"Greenshoe Option\" in its tender of 28.06.2024. NHPC also asked for approval of a trading margin of Rs 0.07/kWh.",
+  "outcome": "The Commission adopted the tariff of Rs 4.48/kWh for the Greenshoe capacity. It restricted Juniper Green Energy's allocation to 200 MW instead of 300 MW, so the total is 1050 MW. Adoption is subject to PSAs being signed with distribution licensees. The Rs 0.07/kWh trading margin is acceptable if distribution licensees agree, but it is limited to Rs 0.02/kWh where the required escrow or letter of credit is not provided.",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "bars",
+    "title": "Greenshoe capacity by developer: allocated by NHPC and adopted by the Commission",
+    "items": [
+     {
+      "label": "Avaada Energy (adopted)",
+      "basis": [
+       "p12.2",
+       "p12.15"
+      ],
+      "value": 600,
+      "tag": "adopted"
+     },
+     {
+      "label": "Juniper Green Energy (allocated by NHPC)",
+      "basis": [
+       "p10.11",
+       "p12.2"
+      ],
+      "value": 300,
+      "tag": "allocated, not adopted",
+      "context": true
+     },
+     {
+      "label": "Juniper Green Energy (adopted)",
+      "basis": [
+       "p12.2",
+       "p12.15"
+      ],
+      "value": 200,
+      "tag": "adopted"
+     },
+     {
+      "label": "ACME Solar Holdings (adopted)",
+      "basis": [
+       "p12.2",
+       "p12.15"
+      ],
+      "value": 250,
+      "tag": "adopted"
+     }
+    ],
+    "unit": "MW",
+    "note": "Jevargi Solar took no Greenshoe capacity. The Commission cut Juniper's allocation from 300 MW to 200 MW."
+   },
+   {
+    "type": "bars",
+    "title": "Trading margin: NHPC's request and the cap without escrow or letter of credit",
+    "items": [
+     {
+      "label": "Margin NHPC asked for",
+      "basis": [
+       "p12.14",
+       "p13.9"
+      ],
+      "value": 0.07,
+      "tag": "valid if discoms agree"
+     },
+     {
+      "label": "Cap if no escrow or letter of credit",
+      "basis": [
+       "p13.10"
+      ],
+      "value": 0.02,
+      "tag": "ceiling"
+     }
+    ],
+    "unit": "Rs/kWh"
+   },
+   {
+    "type": "timeline",
+    "title": "From tender to adoption of the Greenshoe tariff",
+    "items": [
+     {
+      "label": "NHPC issues RfS",
+      "basis": [
+       "p8.14"
+      ],
+      "start": "2024-06-28"
+     },
+     {
+      "label": "e-reverse auction",
+      "basis": [
+       "p8.14"
+      ],
+      "start": "2024-12-10"
+     },
+     {
+      "label": "LOAs issued, Greenshoe capacity allocated",
+      "basis": [
+       "p5.13",
+       "p8.14"
+      ],
+      "start": "2025-01-30"
+     },
+     {
+      "label": "Base 1,200 MW tariff adopted (87/AT/2025)",
+      "basis": [
+       "p2.17"
+      ],
+      "start": "2025-06-19"
+     },
+     {
+      "label": "Review petition dismissed, fresh petition allowed",
+      "basis": [
+       "p3.1",
+       "p3.2",
+       "p3.3"
+      ],
+      "start": "2026-01-15"
+     },
+     {
+      "label": "ACME PSA signed with PSPCL (250 MW)",
+      "basis": [
+       "p10.11"
+      ],
+      "start": "2026-01-27"
+     },
+     {
+      "label": "ACME PPA signed (250 MW)",
+      "basis": [
+       "p10.11"
+      ],
+      "start": "2026-01-29"
+     },
+     {
+      "label": "Greenshoe tariff adopted (94/AT/2026)",
+      "basis": [
+       "p1.3",
+       "p12.2"
+      ],
+      "start": "2026-11-19"
+     }
+    ]
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "NHPC Limited asked the Commission to adopt, under Section 63 of the Electricity Act, 2003, the tariff for 1,150 MW of additional firm and despatchable renewable power with energy storage. NHPC had allocated this capacity under a \"Greenshoe Option\" at the lowest auction tariff of Rs 4.48/kWh. The Commission adopted tariffs for the 1,200 MW base capacity on 19.06.2025 in Petition No. 87/AT/2025. When it later dismissed NHPC's review petition, it allowed a fresh petition for the Greenshoe quantity. The Commission noted that the Central Government's bidding guidelines do not define or expressly provide for a \"Greenshoe Option\". It said such allocation might raise concerns about transparency and equal treatment of bidders. It expects implementing agencies not to use the option in future without an express provision in the guidelines. Treating this as a legacy case, it adopted the tariffs. It restricted Juniper Green Energy's Greenshoe allocation to 200 MW instead of 300 MW, giving 1,050 MW at Rs 4.48/kWh, subject to PSAs being signed with distribution licensees. A trading margin of Rs 0.07/kWh is deemed consistent with the Trading Licence Regulations if distribution licensees agree. Where the escrow or letter of credit is not provided, it is capped at Rs 0.02/kWh.",
+  "headline": "CERC adopts Rs 4.48/kWh tariff for 1,050 MW of NHPC greenshoe storage-backed RE power",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "33db7203f1c812e9a21f46e75d55bc1f57c2ee566fabc1d3b110243acd39e442",
+  "path": "/orders/gerc/2026/2670-2026-33db72",
+  "commission": "gerc",
+  "doc_type": "order",
+  "title": "Parighosh Realtors and Developers, LLP. v. GETCO",
+  "case_number": "Petition No. 2670/2026",
+  "date": "2026-11-16",
+  "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDBfMTctMTEtMjAyNl85ODAxODYy",
+  "source_listing": false,
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDBfMTctMTEtMjAyNl85ODAxODYy",
+  "draft": true,
+  "topics": [
+   "connectivity-gna",
+   "open-access"
+  ],
+  "significance": 3,
+  "parties": [
+   {
+    "name": "Parighosh Realtors and Developers, LLP",
+    "role": "petitioner"
+   },
+   {
+    "name": "Gujarat Energy Transmission Corp. Limited",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Whether the Petitioner is exempt from furnishing the Associated Transmission System Bank Guarantee (ATS BG) of Rs. 20 lakh per MW, Rs. 40 crore in total, for 200 MW connectivity at the 220 kV Bhachunda Substation. Its argument was that the substation's 220 kV switchyard and lines were commissioned in December 2020, before it applied.",
+  "outcome": "The Commission held that the ATS BG requirement applies because the application was processed under Clause 2.2 read with Clause 7.3 for lack of evacuation margin and was granted provisionally subject to system strengthening. It rejected the prayers for exemption and for Final Connectivity without the guarantee.",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "timeline",
+    "title": "Petitioner's 200 MW connectivity and the ATS BG demand: key dates",
+    "items": [
+     {
+      "label": "Connectivity Procedure, 2025 approved and in force",
+      "basis": [
+       "p73.2"
+      ],
+      "start": "2025-08-04"
+     },
+     {
+      "label": "GETCO grants provisional connectivity, 200 MW",
+      "basis": [
+       "p13.4",
+       "p5.2"
+      ],
+      "start": "2025-11-15"
+     },
+     {
+      "label": "GETCO asks Commission to delete Clause 5.7(iv)",
+      "basis": [
+       "p69.4"
+      ],
+      "start": "2025-12-05"
+     },
+     {
+      "label": "Commission directs compliance with the Procedure",
+      "basis": [
+       "p70.1"
+      ],
+      "start": "2026-05-15"
+     },
+     {
+      "label": "GETCO demands ATS BG of Rs 40 crore",
+      "basis": [
+       "p13.4"
+      ],
+      "start": "2026-05-30"
+     },
+     {
+      "label": "Petition filed",
+      "basis": [
+       "p14.1"
+      ],
+      "start": "2026-06-17"
+     },
+     {
+      "label": "Deadline to furnish ATS BG",
+      "basis": [
+       "p13.4"
+      ],
+      "start": "2026-06-30"
+     },
+     {
+      "label": "Commission's order: petition rejected",
+      "basis": [
+       "p1.4",
+       "p85.2"
+      ],
+      "start": "2026-11-16"
+     }
+    ]
+   },
+   {
+    "type": "flow",
+    "title": "Provisional connectivity under Clause 7.3 and the ATS BG",
+    "items": [
+     {
+      "label": "Application at a 5.1(i) or 5.1(ii) substation",
+      "basis": [
+       "p79.1",
+       "p79.2"
+      ],
+      "detail": "Clause 7.3 covers provisional connectivity under both Clause 5.1(i) and Clause 5.1(ii)"
+     },
+     {
+      "label": "Evacuation margin not available",
+      "basis": [
+       "p84.1"
+      ],
+      "detail": "The application was found not feasible under the existing network and was processed under Clause 2.2 read with Clause 7.3"
+     },
+     {
+      "label": "Provisional connectivity offered",
+      "basis": [
+       "p75.2"
+      ],
+      "detail": "Within 60 days: with system strengthening at the preferred location, or at a new proposed substation, with a tentative timeline"
+     },
+     {
+      "label": "Applicant confirms and furnishes ATS BG",
+      "basis": [
+       "p75.2",
+       "p79.1",
+       "p79.2"
+      ],
+      "detail": "ATS BG of Rs 20 lakh/MW within 30 days of the STU/DISCOM communication",
+      "otherwise": "Application closed; SBG and Land BG, if applicable, returned within 30 days"
+     },
+     {
+      "label": "Connectivity granted",
+      "basis": [
+       "p76.1"
+      ],
+      "detail": "On receipt of confirmation with ATS BG, STU/DISCOM grants connectivity"
+     }
+    ],
+    "note": "The route the Commission held applied to the petitioner's application"
+   },
+   {
+    "type": "bars",
+    "title": "Bank guarantees for the 200 MW project",
+    "items": [
+     {
+      "label": "Security Bank Guarantee furnished",
+      "basis": [
+       "p4.3",
+       "p68.2"
+      ],
+      "value": 20,
+      "tag": "petitioner's statement"
+     },
+     {
+      "label": "ATS Bank Guarantee demanded",
+      "basis": [
+       "p13.4",
+       "p71.2"
+      ],
+      "value": 40,
+      "tag": "GETCO demand, upheld"
+     }
+    ],
+    "unit": "Rs crore",
+    "note": "Security BG figure is the petitioner's statement; ATS BG is GETCO's demand, upheld by the Commission"
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "Parighosh Realtors and Developers is developing a 200 MW wind-solar hybrid project in Kutch with connectivity at GETCO's 220 kV Bhachunda substation. GETCO demanded an Associated Transmission System Bank Guarantee (ATS BG) of Rs 20 lakh per MW, Rs 40 crore in total. The developer argued that the 220 kV switchyard and lines were commissioned in December 2020, the substation was state-planned under the Green Energy Corridor, and no new transmission was being built on its account. GETCO said there was no evacuation margin when the application was received, so it was put on hold. It was later processed under Clause 2.2 read with Clause 7.3 of the Connectivity Procedure, 2025, and provisional connectivity was granted on 15.11.2025, subject to system strengthening, with a tentative timeline of December 2027. The Commission held that the earlier commissioning of the 220 kV switchyard does not show that the 200 MW could be evacuated without strengthening. It found that Clause 7.3 covers provisional connectivity under Clauses 5.1(i) and 5.1(ii) and requires the ATS BG. It followed its decisions in Petition Nos. 2626 and 2634 of 2026 and found that GETCO's reliance on Clause 7.3 was not a new ground. The petition was rejected, and the developer must furnish the ATS BG.",
+  "headline": "Gujarat developer must furnish Rs 40 crore transmission bank guarantee for 200 MW Bhachunda connectivity",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "6cc00073cac6f1d2a10b1771353072d0a0d7d2cd3e111cfff80335e1d07b68b2",
+  "path": "/orders/gerc/2026/2701-2026-6cc000",
+  "commission": "gerc",
+  "doc_type": "order",
+  "title": "M/s Astica Tiles LLP v. PGVCL & Others",
+  "case_number": "Petition No. 2701/2026",
+  "date": "2026-11-18",
+  "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDJfMTgtMTEtMjAyNl8zMDY4MjE0",
+  "source_listing": false,
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDJfMTgtMTEtMjAyNl8zMDY4MjE0",
+  "draft": true,
+  "topics": [
+   "connectivity-gna",
+   "green-energy-oa"
+  ],
+  "significance": 3,
+  "parties": [
+   {
+    "name": "M/s Astica Tiles LLP",
+    "role": "petitioner"
+   },
+   {
+    "name": "Paschim Gujarat Vij Company Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Gujarat Energy Transmission Corp. Limited",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Whether the delay in completing the evacuation infrastructure for the Petitioner's 4 MW captive solar project was caused by unforeseen circumstances under Clause 3.9 of GERC Order No. 06 of 2024, as modified by the Order dated 21.01.2026 in Petition No. 2564 of 2025. The delay was attributed to the State not deciding on the mutation entry for the project land. If it was, the Commission had to decide whether an extension of the Scheduled Date of Commissioning (SCOD) and the related reliefs should be granted.",
+  "outcome": "The Commission held that the Petitioner had not shown that the circumstances it pleaded justified extending the time for completing the evacuation infrastructure under Clause 3.9. It rejected the petition, including the related reliefs on the bank guarantee and connectivity.",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "timeline",
+    "title": "Astica Tiles: connectivity, commissioning deadlines and the extension sought",
+    "items": [
+     {
+      "label": "Stage-II connectivity for 4 MW granted",
+      "basis": [
+       "p5.7",
+       "p5.8"
+      ],
+      "start": "2025-03-06"
+     },
+     {
+      "label": "Original 12-month deadline",
+      "basis": [
+       "p7.4"
+      ],
+      "start": "2026-03-06"
+     },
+     {
+      "label": "SCOD after the 18-month general extension",
+      "basis": [
+       "p7.5",
+       "p7.6"
+      ],
+      "start": "2026-09-06"
+     },
+     {
+      "label": "Final hearing",
+      "basis": [
+       "p47.9",
+       "p47.10"
+      ],
+      "start": "2026-10-15"
+     },
+     {
+      "label": "Order rejecting the petition",
+      "basis": [
+       "p2.2",
+       "p60.1"
+      ],
+      "start": "2026-11-18"
+     },
+     {
+      "label": "Extended SCOD sought by petitioner (rejected)",
+      "basis": [
+       "p3.2",
+       "p14.5",
+       "p14.6"
+      ],
+      "start": "2027-09-05"
+     }
+    ],
+    "note": "The 2027 date is the extension the petitioner asked for, which the Commission rejected. Prayer (iv) gives the current SCOD as 05.09.2026; the facts give 06.09.2026."
+   },
+   {
+    "type": "flow",
+    "title": "How Clause 3.9 of Order No. 6 of 2024 sets the developer's obligations",
+    "items": [
+     {
+      "label": "Bank guarantee on allotment",
+      "basis": [
+       "p6.7",
+       "p6.4"
+      ],
+      "detail": "Developer gives a bank guarantee of Rs 10 lakh per MW of allotted transmission capacity (Rs 40 lakh for 4 MW here)"
+     },
+     {
+      "label": "Evacuation line ready first",
+      "basis": [
+       "p55.1",
+       "p50.4",
+       "p59.2"
+      ],
+      "detail": "Entire evacuation line with bays and metering completed within one and a half years of allotment of transmission capacity",
+      "otherwise": "Extension only if the developer proves unforeseen reasons; it is not automatic and must be for a definite period"
+     },
+     {
+      "label": "First 10% of capacity",
+      "basis": [
+       "p55.1"
+      ],
+      "detail": "At least 10% of the allotted capacity commissioned within one month of charging the evacuation line"
+     },
+     {
+      "label": "Balance of capacity",
+      "basis": [
+       "p55.1",
+       "p45.1",
+       "p59.2"
+      ],
+      "detail": "Balance generation capacity commissioned within one year of charging",
+      "otherwise": "Connectivity is cancelled and the capacity is listed as spare for other applicants"
+     }
+    ],
+    "note": "Read from the Commission's description of Clause 3.9 as modified on 21.01.2026."
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "Astica Tiles LLP, a tile manufacturer, holds 11 kV connectivity from PGVCL for a 4 MW captive solar plant at Village Liya, Surendranagar. The SCOD for its evacuation infrastructure was 06.09.2026 under Clause 3.9 of GERC Order No. 6 of 2024, as modified by the order of 21.01.2026. It sought an extension to 05.09.2027. Its case was that the State had not decided on certifying the mutation entry for its leased land, which held up Non-Agricultural permission, and that this was an unforeseen reason. It also sought protection of its Rs 40 lakh bank guarantee and its connectivity. PGVCL opposed the petition. The Commission held that Clause 3.9 gives no automatic extension and that the developer must make out its case. Land-revenue formalities were the developer's responsibility. Confirmation under Section 6 of the Saurashtra Estates Acquisition Act, 1952 has been required for over seventy years, so the need for it could not be unforeseen. No document showed any step towards building the evacuation line, and the land issue did not explain why the line was not built. An extension tied to an uncertain future land decision would hold capacity indefinitely. The petition was rejected, along with the related reliefs.",
+  "headline": "GERC refuses SCOD extension for 4 MW captive solar evacuation line despite pending land mutation",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "626c8ff53e9eff2827de6d3f03b07ca00fc1289da9aadc7905c901151028a8ed",
+  "path": "/orders/gerc/2026/2708-2026-626c8f",
+  "commission": "gerc",
+  "doc_type": "order",
+  "title": "M/s Saans Vitrified LLP v. PGVCL & Others",
+  "case_number": "Petition No. 2708/2026",
+  "date": "2026-11-18",
+  "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDNfMTgtMTEtMjAyNl85MTEyMTg3",
+  "source_listing": false,
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDNfMTgtMTEtMjAyNl85MTEyMTg3",
+  "draft": true,
+  "topics": [
+   "connectivity-gna",
+   "green-energy-oa"
+  ],
+  "significance": 3,
+  "parties": [
+   {
+    "name": "M/s Saans Vitrified LLP",
+    "role": "petitioner"
+   },
+   {
+    "name": "Paschim Gujarat Vij Company Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Gujarat Energy Transmission Corp. Limited",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Whether the petitioner showed that the delay in completing evacuation infrastructure for its 4 MW captive solar plant was due to unforeseen circumstances under Clause 3.9 of GERC Order No. 06 of 2024, as modified by the order of 21.01.2026. If so, the scheduled date of commissioning of 06.09.2026 would be extended and the consequential reliefs granted.",
+  "outcome": "The Commission held that the petitioner had not established grounds for extending the time to complete evacuation infrastructure under Clause 3.9. It rejected the petition, including the consequential reliefs on the bank guarantee and connectivity.",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "timeline",
+    "title": "Key dates for the petitioner's evacuation infrastructure",
+    "items": [
+     {
+      "label": "Stage-II connectivity (transmission capacity allotted)",
+      "basis": [
+       "p5.5",
+       "p7.3"
+      ],
+      "start": "2025-03-06"
+     },
+     {
+      "label": "Collector's proposal sent to State Government",
+      "basis": [
+       "p9.2",
+       "p10.1"
+      ],
+      "start": "2025-08-06"
+     },
+     {
+      "label": "Original 12-month deadline",
+      "basis": [
+       "p7.3"
+      ],
+      "start": "2026-03-06"
+     },
+     {
+      "label": "Deadline after general order of 21.01.2026 (18 months)",
+      "basis": [
+       "p7.4",
+       "p7.5"
+      ],
+      "start": "2026-09-06"
+     },
+     {
+      "label": "Order rejecting the petition",
+      "basis": [
+       "p2.1",
+       "p59.1"
+      ],
+      "start": "2026-11-18"
+     },
+     {
+      "label": "Extension sought by petitioner",
+      "basis": [
+       "p3.1",
+       "p58.1"
+      ],
+      "start": "2027-09-06"
+     }
+    ],
+    "note": "The date of 06.09.2027 is the extension the petitioner asked for. The Commission rejected it."
+   },
+   {
+    "type": "flow",
+    "title": "How Clause 3.9 sequences evacuation and commissioning",
+    "items": [
+     {
+      "label": "Complete evacuation line",
+      "basis": [
+       "p54.1",
+       "p49.3",
+       "p49.4",
+       "p49.5"
+      ],
+      "detail": "The entire evacuation line, with bays and metering, is completed within one and a half years of allotment of transmission capacity",
+      "otherwise": "The developer may seek an extension only by proving unforeseen reasons; there is no automatic right"
+     },
+     {
+      "label": "Commission first 10%",
+      "basis": [
+       "p54.1",
+       "p44.2"
+      ],
+      "detail": "At least 10% of the allotted capacity is commissioned within one month of charging the evacuation line"
+     },
+     {
+      "label": "Commission the balance",
+      "basis": [
+       "p54.1",
+       "p44.2"
+      ],
+      "detail": "The balance of the generation capacity is commissioned within one year of charging",
+      "otherwise": "The STU cancels the connectivity and open access"
+     },
+     {
+      "label": "Cancelled capacity released",
+      "basis": [
+       "p58.2"
+      ],
+      "detail": "Connectivity capacity that is cancelled is listed as spare capacity for other applicants"
+     }
+    ]
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "Saans Vitrified LLP holds 4 MW of connectivity at GETCO's 66 kV Ratanpar sub-station for a captive solar plant in Village Liya, Surendranagar. Clause 3.9 of GERC Order No. 6 of 2024 sets the deadline for evacuation infrastructure. The Commission's general order of 21.01.2026 extended that period to 18 months, so the petitioner's deadline was 06.09.2026. The petitioner asked for more time. It said the mutation entry for its leased land, and so its Non-Agricultural permission, was held up because a Collector's proposal of 06.08.2025 was still pending with the State Government. PGVCL opposed the petition. The Commission held that Clause 3.9 gives no automatic right to an extension and that the petitioner must prove its case. Section 6 of the Saurashtra Estates Acquisition Act, 1952 has required confirmation of such land transfers for over seventy years, so the requirement was not unforeseen. No documents showed any attempt to build the evacuation line, and the land issue did not explain why the line was not finished. An extension tied to an undated future land decision would hold the capacity indefinitely. The Commission rejected the petition and the consequential reliefs. It expressed no view on the land documents.",
+  "headline": "GERC refuses extension for 4 MW captive solar evacuation line; pending land mutation not unforeseen",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "4e26ffef45e723df090990a7e09f98286332a9ea64568d61495c87076252eda7",
+  "path": "/orders/gerc/2026/2709-2026-4e26ff",
+  "commission": "gerc",
+  "doc_type": "order",
+  "title": "M/s Bluegress Porselano LLP v. PGVCL & Others",
+  "case_number": "Petition No. 2709/2026",
+  "date": "2026-11-18",
+  "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDRfMTgtMTEtMjAyNl84Mzg5Nzc3",
+  "source_listing": false,
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDRfMTgtMTEtMjAyNl84Mzg5Nzc3",
+  "draft": true,
+  "topics": [
+   "connectivity-gna"
+  ],
+  "significance": 3,
+  "parties": [
+   {
+    "name": "M/s Bluegress Porselano LLP",
+    "role": "petitioner"
+   },
+   {
+    "name": "Paschim Gujarat Vij Company Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Gujarat Energy Transmission Corp. Limited",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Whether the Petitioner showed that the delay in completing the evacuation infrastructure for its 3 MW captive solar project happened for unforeseen reasons under Clause 3.9 of GERC Order No. 6 of 2024, as modified by the Order dated 21.01.2026. If so, the Scheduled Date of Commissioning (SCOD) would be extended and the consequential reliefs granted.",
+  "outcome": "The Commission held that the circumstances pleaded did not justify extending the time for completing the evacuation infrastructure under Clause 3.9. It rejected the petition and refused the consequential reliefs on the bank guarantee and connectivity.",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "timeline",
+    "title": "Connectivity, SCOD and petition dates for the 3 MW captive solar project",
+    "items": [
+     {
+      "label": "Stage-II connectivity granted (allotment)",
+      "basis": [
+       "p5.6",
+       "p7.1"
+      ],
+      "start": "2025-03-06"
+     },
+     {
+      "label": "Collector's proposal sent to State Government",
+      "basis": [
+       "p9.2",
+       "p10.1"
+      ],
+      "start": "2025-08-06"
+     },
+     {
+      "label": "General Order: evacuation timeframe 12 to 18 months",
+      "basis": [
+       "p7.2"
+      ],
+      "start": "2026-01-21"
+     },
+     {
+      "label": "Original 12-month deadline",
+      "basis": [
+       "p7.1"
+      ],
+      "start": "2026-03-06"
+     },
+     {
+      "label": "SCOD of evacuation infrastructure (18 months)",
+      "basis": [
+       "p7.3"
+      ],
+      "start": "2026-09-06"
+     },
+     {
+      "label": "Final hearing",
+      "basis": [
+       "p46.10"
+      ],
+      "start": "2026-10-15"
+     },
+     {
+      "label": "Order: petition dismissed",
+      "basis": [
+       "p2.2",
+       "p59.2"
+      ],
+      "start": "2026-11-18"
+     },
+     {
+      "label": "Extended SCOD sought (petitioner's claim)",
+      "basis": [
+       "p3.2"
+      ],
+      "start": "2027-09-06"
+     }
+    ],
+    "note": "The 06.09.2027 date is the extension the petitioner asked for. The Commission refused it."
+   },
+   {
+    "type": "flow",
+    "title": "Clause 3.9 timelines for evacuation infrastructure and commissioning",
+    "items": [
+     {
+      "label": "Transmission capacity allotted",
+      "basis": [
+       "p6.3",
+       "p55.1"
+      ],
+      "detail": "Developer furnishes a Bank Guarantee of Rs. 10 lakh per MW to GETCO"
+     },
+     {
+      "label": "Evacuation system completed",
+      "basis": [
+       "p53.4",
+       "p6.7",
+       "p6.3"
+      ],
+      "detail": "Entire evacuation line with bays and metering completed within one and a half years of allotment, before SCOD",
+      "otherwise": "GETCO encashes the Bank Guarantee"
+     },
+     {
+      "label": "Line charged: first 10% commissioned",
+      "basis": [
+       "p54.1",
+       "p44.2",
+       "p58.2"
+      ],
+      "detail": "At least 10% of allotted capacity commissioned within one month of charging",
+      "otherwise": "Connectivity and open access cancelled; capacity listed as spare for other applicants"
+     },
+     {
+      "label": "Balance capacity commissioned",
+      "basis": [
+       "p54.1"
+      ],
+      "detail": "Remaining capacity commissioned within one year of charging the evacuation infrastructure"
+     },
+     {
+      "label": "Extension for unforeseen reasons",
+      "basis": [
+       "p49.2",
+       "p49.3",
+       "p49.4",
+       "p58.2"
+      ],
+      "detail": "Developer may petition; no automatic extension; burden on developer; any extension must be definite",
+      "otherwise": "Extension refused; consequential reliefs on BG and connectivity fall with it"
+     }
+    ],
+    "note": "As the Commission reads Clause 3.9 of Order No. 6 of 2024, modified by the Order of 21.01.2026"
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "Bluegress Porselano LLP, a tile manufacturer, asked the Commission to extend the SCOD of the evacuation infrastructure for its 3 MW captive solar plant beyond 06.09.2026 under Clause 3.9 of GERC Order No. 6 of 2024. It argued that the mutation entry for the project land was still pending. A Collector's proposal of 06.08.2025 was awaiting a State Government decision, and this held up Non-Agricultural permission. PGVCL argued that the land problem was foreseeable and that the petitioner had not taken steps towards physical readiness. The Commission held that Clause 3.9 gives no automatic extension and that the burden lay on the petitioner. It found no documents showing any attempt to build the evacuation infrastructure. It held that the land issue had no bearing on building that infrastructure. It also held that the confirmation requirement under Section 6 of the Saurashtra Estates Acquisition Act, 1952 could not be called unforeseen. An extension that depended on a future decision of the land authorities would not be definite and would hold the allotted capacity indefinitely. The petition was dismissed, including the reliefs on the bank guarantee and connectivity. The Commission expressed no view on the land documents or the revenue proceedings.",
+  "headline": "GERC refuses SCOD extension for 3 MW captive solar evacuation line over land delays",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "4fb711386190e40f457ec423c41e163e45249b58f9ccaf46e805c92f1abc99d2",
+  "path": "/orders/gerc/2026/2710-2026-4fb711",
+  "commission": "gerc",
+  "doc_type": "order",
+  "title": "M/s Bluezone Vitrified Pvt. Limited v. PGVCL & Others",
+  "case_number": "Petition No. 2710/2026",
+  "date": "2026-11-18",
+  "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDVfMTgtMTEtMjAyNl82ODU3OTkz",
+  "source_listing": false,
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDVfMTgtMTEtMjAyNl82ODU3OTkz",
+  "draft": true,
+  "topics": [
+   "connectivity-gna",
+   "generation-tariff"
+  ],
+  "significance": 3,
+  "parties": [
+   {
+    "name": "M/s Bluezone Vitrified Pvt. Limited",
+    "role": "petitioner"
+   },
+   {
+    "name": "Paschim Gujarat Vij Company Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Gujarat Energy Transmission Corp. Limited",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Whether the delay in completing the evacuation infrastructure for the Petitioner's proposed 3 MW captive solar project, attributed to a pending mutation entry and State-level confirmation holding up Non-Agricultural permission for the project land, was due to unforeseen circumstances under Clause 3.9 of GERC Order No. 06 of 2024 so as to warrant extension of the SCOD and consequential reliefs.",
+  "outcome": "The Commission held that the Petitioner had not established grounds for extension under Clause 3.9, as the land confirmation requirement was not unforeseen and no step towards building the evacuation infrastructure was shown; the petition and the consequential reliefs on the bank guarantee and connectivity were rejected.",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "timeline",
+    "title": "Dates for Bluezone's 3 MW evacuation infrastructure",
+    "items": [
+     {
+      "label": "Lease deed to petitioner",
+      "basis": [
+       "p7.7",
+       "p53.1"
+      ],
+      "start": "2025-01-08"
+     },
+     {
+      "label": "Sale deed to lessors",
+      "basis": [
+       "p8.3",
+       "p8.4",
+       "p53.1"
+      ],
+      "start": "2025-01-15"
+     },
+     {
+      "label": "Stage-II connectivity (capacity allotted)",
+      "basis": [
+       "p5.3",
+       "p7.3"
+      ],
+      "start": "2025-03-06"
+     },
+     {
+      "label": "Collector's proposal to State Government",
+      "basis": [
+       "p9.2",
+       "p10.2"
+      ],
+      "start": "2025-08-06"
+     },
+     {
+      "label": "Original 12-month deadline",
+      "basis": [
+       "p7.3"
+      ],
+      "start": "2026-03-06"
+     },
+     {
+      "label": "Deadline after 21.01.2026 general order",
+      "basis": [
+       "p7.4",
+       "p7.5"
+      ],
+      "start": "2026-09-06"
+     },
+     {
+      "label": "Commission's order: petition rejected",
+      "basis": [
+       "p2.2",
+       "p59.2"
+      ],
+      "start": "2026-11-18"
+     },
+     {
+      "label": "Extension sought (petitioner's claim)",
+      "basis": [
+       "p3.2",
+       "p58.4"
+      ],
+      "start": "2027-09-06"
+     }
+    ],
+    "note": "The 06.09.2027 date is the extension the petitioner asked for. The Commission did not grant it."
+   },
+   {
+    "type": "flow",
+    "title": "Clause 3.9 of Order No. 06 of 2024: evacuation line and commissioning",
+    "items": [
+     {
+      "label": "Transmission capacity allotted",
+      "basis": [
+       "p6.4",
+       "p55.3"
+      ],
+      "detail": "Developer gives a bank guarantee of Rs 10 lakh per MW"
+     },
+     {
+      "label": "Evacuation line completed",
+      "basis": [
+       "p54.3",
+       "p7.4",
+       "p6.4"
+      ],
+      "detail": "Whole line with bays and metering within one and a half years of allotment",
+      "otherwise": "Bank guarantee encashed"
+     },
+     {
+      "label": "Extension by the Commission",
+      "basis": [
+       "p49.3",
+       "p49.4",
+       "p58.5"
+      ],
+      "detail": "Only for unforeseen reasons shown by the developer; not automatic, and the period must be definite",
+      "otherwise": "No extension"
+     },
+     {
+      "label": "Line charged: first 10%",
+      "basis": [
+       "p54.3"
+      ],
+      "detail": "At least 10% of allotted capacity commissioned within one month of charging"
+     },
+     {
+      "label": "Balance of capacity",
+      "basis": [
+       "p54.3",
+       "p44.3",
+       "p58.5"
+      ],
+      "detail": "Rest of the capacity commissioned within one year of charging",
+      "otherwise": "Connectivity cancelled; capacity listed as spare for other applicants"
+     }
+    ]
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "Bluezone Vitrified, a Morbi tile maker, is developing a 3 MW captive solar plant at Village Liya, Surendranagar, connected at 11 kV to GETCO's 66 kV Ratanpar sub-station. Under Clause 3.9 of GERC Order No. 06 of 2024, as modified by the general order of 21.01.2026, its evacuation infrastructure was due by 06.09.2026. It sought an extension to 06.09.2027, arguing that a pending mutation entry and a State-level confirmation of the land sale had held up Non-Agricultural permission, and asked for protection of its Rs 30 lakh bank guarantee and connectivity. PGVCL argued the land problem was foreseeable. The Commission held that the confirmation requirement under Section 6 of the Saurashtra Estates Acquisition Act, 1952 had been in the statute for over seventy years and could not be unforeseen, and that land formalities were the developer's responsibility. It found no document showing any step on the evacuation line, such as route survey, material procurement or sub-station work, and held the land issue did not by itself prevent that work. It added that an extension under Clause 3.9 must be definite, not tied to a future land decision. The petition and consequential reliefs were rejected; the Commission expressed no view on the land documents.",
+  "headline": "GERC refuses 3 MW captive solar developer more time for evacuation line over land delay",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "de5be8add58669b906a07cad930492098de492817ff03322625eef507f6cb0cd",
+  "path": "/orders/gerc/2026/2712-2026-de5be8",
+  "commission": "gerc",
+  "doc_type": "order",
+  "title": "M/s Lizon Ceramica LLP v. PGVCL & Others",
+  "case_number": "Petition No. 2712/2026",
+  "date": "2026-11-18",
+  "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDZfMTgtMTEtMjAyNl83MzAxMTQw",
+  "source_listing": false,
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDZfMTgtMTEtMjAyNl83MzAxMTQw",
+  "draft": true,
+  "topics": [
+   "connectivity-gna",
+   "green-energy-oa"
+  ],
+  "significance": 3,
+  "parties": [
+   {
+    "name": "M/s Lizon Ceramica LLP",
+    "role": "petitioner"
+   },
+   {
+    "name": "Paschim Gujarat Vij Company Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Gujarat Energy Transmission Corp. Limited",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Whether the delay in completing the evacuation infrastructure for the Petitioner's 4 MW captive solar project was caused by unforeseen circumstances under Clause 3.9 of GERC Order No. 06 of 2024 (as modified by the Order dated 21.01.2026 in Petition No. 2564 of 2025). The delay was attributed to a pending mutation entry and the resulting lack of Non-Agricultural permission for the project land. If so, the Commission had to decide whether to extend the SCOD and grant protection for the bank guarantee and connectivity.",
+  "outcome": "The Commission held that the Petitioner had not shown that the pleaded circumstances warranted an extension of time for completing the evacuation infrastructure under Clause 3.9. It rejected the extension and the consequential reliefs on the bank guarantee and connectivity, and dismissed the petition.",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "timeline",
+    "title": "Connectivity, commissioning deadlines and extension sought, 4 MW captive solar",
+    "items": [
+     {
+      "label": "Stage-I connectivity granted by PGVCL",
+      "basis": [
+       "p5.5",
+       "p5.6"
+      ],
+      "start": "2025-01-23"
+     },
+     {
+      "label": "Stage-II connectivity; transmission capacity allotted",
+      "basis": [
+       "p5.6",
+       "p7.1"
+      ],
+      "start": "2025-05-08"
+     },
+     {
+      "label": "Original 12-month deadline",
+      "basis": [
+       "p7.1"
+      ],
+      "start": "2026-05-08"
+     },
+     {
+      "label": "SCOD after general extension to 18 months",
+      "basis": [
+       "p7.2",
+       "p7.3"
+      ],
+      "start": "2026-11-08"
+     },
+     {
+      "label": "Commission's order rejecting the petition",
+      "basis": [
+       "p2.2",
+       "p59.2"
+      ],
+      "start": "2026-11-18"
+     },
+     {
+      "label": "Extension sought by petitioner (rejected)",
+      "basis": [
+       "p3.2"
+      ],
+      "start": "2026-11-08",
+      "end": "2027-11-08"
+     }
+    ],
+    "note": "The extension to 08.11.2027 was sought by the petitioner and rejected by the Commission."
+   },
+   {
+    "type": "flow",
+    "title": "How Clause 3.9 sets evacuation and commissioning deadlines",
+    "items": [
+     {
+      "label": "Capacity allotted",
+      "basis": [
+       "p6.5",
+       "p55.3"
+      ],
+      "detail": "Developer gives a bank guarantee of Rs 10 lakh per MW based on the allotment of transmission capacity"
+     },
+     {
+      "label": "Evacuation line ready",
+      "basis": [
+       "p54.3",
+       "p6.5"
+      ],
+      "detail": "Entire evacuation line with bays and metering completed within one and a half years of allotment",
+      "otherwise": "Bank guarantee encashed"
+     },
+     {
+      "label": "First 10% commissioned",
+      "basis": [
+       "p54.3",
+       "p44.8",
+       "p58.4"
+      ],
+      "detail": "At least 10% of allotted capacity commissioned within one month of charging the line",
+      "otherwise": "Connectivity cancelled; capacity listed as spare for other applicants"
+     },
+     {
+      "label": "Balance commissioned",
+      "basis": [
+       "p54.3"
+      ],
+      "detail": "Balance capacity commissioned within one year of charging the evacuation infrastructure"
+     },
+     {
+      "label": "Extension",
+      "basis": [
+       "p49.6",
+       "p50.1",
+       "p58.4"
+      ],
+      "detail": "Commission may extend for unforeseen reasons; the extension must be for a definite period and is not automatic"
+     }
+    ]
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "Lizon Ceramica LLP, a ceramic tile maker, is developing a 4 MW captive solar plant at Village Liya, Surendranagar, with connectivity from PGVCL at 11 kV to GETCO's 66 kV Ratanpar sub-station and a bank guarantee of Rs 40 lakh. It asked GERC to extend the scheduled commissioning date (SCOD) of its evacuation infrastructure under Clause 3.9 of Order No. 06 of 2024. Its reason was that a mutation entry for the leased land, and so Non-Agricultural permission, had stayed pending with the State Government. PGVCL opposed the petition. The Commission found that land-revenue formalities were part of the developer's own responsibility. It also held that the confirmation requirement under Section 6 of the Saurashtra Estates Acquisition Act, 1952, in place for over seventy years, could not be called unforeseen. It noted that no step had been shown towards building the evacuation line, that the land issue had no bearing on that work, and that an extension tied to an uncertain future land decision would hold the allotted capacity indefinitely. The petition and the related bank guarantee and connectivity reliefs were rejected. The Commission expressed no view on the validity of the land documents.",
+  "headline": "GERC refuses extension for 4 MW captive solar evacuation line despite pending land mutation",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "77cd4bf1ac6c1b1fd9f77a701810f88d7c67fdb7c5efaa74e2414810d547be52",
+  "path": "/orders/gerc/2026/2713-2026-77cd4b",
+  "commission": "gerc",
+  "doc_type": "order",
+  "title": "M/s Captiva Ceramic Industries v. PGVCL & Others",
+  "case_number": "Petition No. 2713/2026",
+  "date": "2026-11-18",
+  "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDdfMTgtMTEtMjAyNl81MzU2MDY5",
+  "source_listing": false,
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDdfMTgtMTEtMjAyNl81MzU2MDY5",
+  "draft": true,
+  "topics": [
+   "connectivity-gna",
+   "green-energy-oa"
+  ],
+  "significance": 3,
+  "parties": [
+   {
+    "name": "M/s Captiva Ceramic Industries",
+    "role": "petitioner"
+   },
+   {
+    "name": "Paschim Gujarat Vij Company Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Gujarat Energy Transmission Corp. Limited",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Whether the Petitioner had shown that the delay in completing the evacuation infrastructure for its 1 MW captive solar project, attributed to the pending mutation entry and Non-Agricultural permission for the project land, was due to unforeseen circumstances under Clause 3.9 of GERC Order No. 06 of 2024, as modified by the Order dated 21.01.2026 in Petition No. 2564 of 2025, so as to warrant extension of the SCOD and the consequential reliefs.",
+  "outcome": "The Commission held that the Petitioner had not established a basis for extending the time for completion of the evacuation infrastructure under Clause 3.9, refused the consequential reliefs relating to the bank guarantee and connectivity, and dismissed the petition.",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "timeline",
+    "title": "Captiva Ceramic's 1 MW captive solar project: connectivity, deadlines and the petition",
+    "items": [
+     {
+      "label": "Sale deed for project land registered",
+      "basis": [
+       "p11.2"
+      ],
+      "start": "2025-01-15"
+     },
+     {
+      "label": "Stage-I connectivity granted by PGVCL",
+      "basis": [
+       "p5.6"
+      ],
+      "start": "2025-01-23"
+     },
+     {
+      "label": "Lease deed (29 years) in petitioner's favour",
+      "basis": [
+       "p7.6",
+       "p48.6"
+      ],
+      "start": "2025-01-27"
+     },
+     {
+      "label": "Stage-II connectivity; 1 MW capacity allotted",
+      "basis": [
+       "p5.6",
+       "p7.3"
+      ],
+      "start": "2025-04-05"
+     },
+     {
+      "label": "Collector's proposal sent to State Government",
+      "basis": [
+       "p9.3",
+       "p10.2"
+      ],
+      "start": "2025-08-06"
+     },
+     {
+      "label": "General order extends 12 months to 18 months",
+      "basis": [
+       "p7.4"
+      ],
+      "start": "2026-01-21"
+     },
+     {
+      "label": "Original 12-month deadline (as petitioner states)",
+      "basis": [
+       "p7.3"
+      ],
+      "start": "2026-04-05"
+     },
+     {
+      "label": "Evacuation infrastructure SCOD as extended",
+      "basis": [
+       "p7.5",
+       "p3.2"
+      ],
+      "start": "2026-10-05"
+     }
+    ],
+    "note": "05.10.2027 is the extension the petitioner asked for. The Commission refused it."
+   },
+   {
+    "type": "flow",
+    "title": "Clause 3.9 of Order No. 6 of 2024: evacuation line first, then the plant",
+    "items": [
+     {
+      "label": "Transmission capacity allotted",
+      "basis": [
+       "p6.3",
+       "p55.3"
+      ],
+      "detail": "Developer furnishes a bank guarantee of Rs 10 lakh per MW"
+     },
+     {
+      "label": "Evacuation line completed",
+      "basis": [
+       "p54.4",
+       "p7.1",
+       "p49.4"
+      ],
+      "detail": "Entire line with bays and metering within one and a half years of allotment, ready before SCOD",
+      "otherwise": "Developer may ask the Commission for an extension for unforeseen reasons; this is not automatic"
+     },
+     {
+      "label": "Line charged: first 10% of capacity",
+      "basis": [
+       "p54.4",
+       "p44.8"
+      ],
+      "detail": "At least 10% of allotted capacity commissioned within one month of charging",
+      "otherwise": "STU cancels connectivity and open access"
+     },
+     {
+      "label": "Balance capacity commissioned",
+      "basis": [
+       "p54.4",
+       "p44.8",
+       "p58.4"
+      ],
+      "detail": "Remaining capacity commissioned within one year of charging the evacuation line",
+      "otherwise": "STU cancels connectivity; the capacity is listed as spare for other applicants"
+     }
+    ],
+    "note": "As the Commission read Clause 3.9 in paras 12.18 and 12.20. The cancellation consequence is the clause as the rejoinder quotes it."
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "M/s Captiva Ceramic Industries holds Stage-I and Stage-II connectivity from PGVCL for a 1 MW captive solar plant in Surendranagar district, connecting at 11 kV to GETCO's 66 kV Ratanpar sub-station. Under Clause 3.9 of GERC Order No. 6 of 2024, as modified on 21.01.2026, its evacuation infrastructure was due by 05.10.2026. It sought an extension because the mutation entry for the land's sale deed, and so Non-Agricultural permission, awaits a State Government decision on a Collector's proposal. PGVCL said the land issue was foreseeable and that no physical progress had been shown. The Commission held that confirmation under Section 6 of the Saurashtra Estates Acquisition Act, 1952, a requirement for over seventy years, is not unforeseen. It found no record of any step to build the evacuation line, which Clause 3.9 treats as an obligation separate from commissioning the plant, and held the land issue did not prevent that work. It also declined an extension tied to a future land decision for which no time frame is available. The petition was dismissed, and protection of the Rs 10 lakh bank guarantee and the connectivity, being consequential, was refused.",
+  "headline": "GERC refuses deadline extension for 1 MW captive solar evacuation line despite land delay",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "6110b5d619f180c55823f395866da3bc974c7a444397538309b6622f6f9a469e",
+  "path": "/orders/gerc/2026/2714-2026-6110b5",
+  "commission": "gerc",
+  "doc_type": "order",
+  "title": "M/s L-Stone Tiles LLP v. PGVCL & Others",
+  "case_number": "Petition No. 2714/2026",
+  "date": "2026-11-18",
+  "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDhfMTgtMTEtMjAyNl82NzYxNjI1",
+  "source_listing": false,
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDhfMTgtMTEtMjAyNl82NzYxNjI1",
+  "draft": true,
+  "topics": [
+   "connectivity-gna",
+   "green-energy-oa"
+  ],
+  "significance": 3,
+  "parties": [
+   {
+    "name": "M/s L-Stone Tiles LLP",
+    "role": "petitioner"
+   },
+   {
+    "name": "Paschim Gujarat Vij Company Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Gujarat Energy Transmission Corp. Limited",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Whether the petitioner showed that the delay in completing the evacuation infrastructure for its 2 MW captive solar project at Village Liya, Surendranagar, was due to unforeseen circumstances under Clause 3.9 of Order No. 06 of 2024. If so, it would be entitled to an extension of the SCOD and the consequential reliefs.",
+  "outcome": "The Commission found that the petitioner had not established grounds for extending the time to complete the evacuation infrastructure under Clause 3.9. It rejected the petition and the consequential reliefs on the bank guarantee and connectivity.",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "timeline",
+    "title": "Connectivity, SCOD and extension dates for the 2 MW Liya evacuation line",
+    "items": [
+     {
+      "label": "Stage-II connectivity and 2 MW allotment",
+      "basis": [
+       "p5.5",
+       "p7.1"
+      ],
+      "start": "2025-03-06"
+     },
+     {
+      "label": "Collector's proposal sent to State Government",
+      "basis": [
+       "p8.2"
+      ],
+      "start": "2025-08-06"
+     },
+     {
+      "label": "General order: 12 months extended to 18",
+      "basis": [
+       "p7.2"
+      ],
+      "start": "2026-01-21"
+     },
+     {
+      "label": "Original 12-month deadline (petitioner)",
+      "basis": [
+       "p7.1"
+      ],
+      "start": "2026-03-06"
+     },
+     {
+      "label": "SCOD of evacuation infrastructure",
+      "basis": [
+       "p7.3",
+       "p14.7"
+      ],
+      "start": "2026-09-06"
+     },
+     {
+      "label": "Rs 20 lakh bank guarantee validity",
+      "basis": [
+       "p5.7",
+       "p6.1"
+      ],
+      "start": "2024-11-11",
+      "end": "2026-11-10"
+     },
+     {
+      "label": "GERC order rejecting petition",
+      "basis": [
+       "p2.2",
+       "p57.4"
+      ],
+      "start": "2026-11-18"
+     },
+     {
+      "label": "Extended SCOD sought by petitioner (rejected)",
+      "basis": [
+       "p3.3",
+       "p56.3"
+      ],
+      "start": "2027-09-06"
+     }
+    ],
+    "note": "The 12-month deadline and the 06.09.2027 date are the petitioner's figures. The Commission rejected the extension."
+   },
+   {
+    "type": "flow",
+    "title": "How Clause 3.9 sequences the evacuation line and the plant",
+    "items": [
+     {
+      "label": "Capacity allotted, guarantee given",
+      "basis": [
+       "p14.8",
+       "p53.3"
+      ],
+      "detail": "Developer furnishes a bank guarantee at Rs 10 lakh per MW on allotment of transmission capacity"
+     },
+     {
+      "label": "Evacuation line completed",
+      "basis": [
+       "p52.3",
+       "p48.1",
+       "p56.4"
+      ],
+      "detail": "Entire evacuation line with bays and metering within one and a half years of allotment",
+      "otherwise": "Developer may seek extension for unforeseen reasons; the extension must be definite"
+     },
+     {
+      "label": "Line charged, first 10% commissioned",
+      "basis": [
+       "p52.3"
+      ],
+      "detail": "At least 10% of the allotted capacity within one month of charging the line"
+     },
+     {
+      "label": "Balance capacity commissioned",
+      "basis": [
+       "p52.3",
+       "p56.4"
+      ],
+      "detail": "Remaining generation capacity within one year of charging the evacuation line",
+      "otherwise": "Cancelled connectivity capacity is listed as spare for other applicants"
+     }
+    ],
+    "note": "Read from Clause 3.9 of Order No. 06 of 2024 as modified on 21.01.2026, and the Commission's reading of it."
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "M/s L-Stone Tiles LLP is a Morbi tile maker setting up a 2 MW captive solar plant at Village Liya, Surendranagar. It asked GERC to extend the scheduled commissioning date (SCOD) of its evacuation infrastructure beyond 06.09.2026. That date applied under Clause 3.9 of Order No. 06 of 2024, as modified by the general order of 21.01.2026. The petitioner said the mutation entry for its leased project land, and therefore Non-Agricultural permission, was held up because a Collector's proposal of 06.08.2025 was pending with the State Government. It also sought protection of its Rs 20 lakh bank guarantee and its connectivity. PGVCL opposed the petition. GETCO said the 11 kV connectivity falls within PGVCL's domain. The Commission held that the confirmation requirement under Section 6 of the Saurashtra Estates Acquisition Act, 1952 had been in the statute for over seventy years and could not be an unforeseen event. It found no record of any step to build the evacuation line and held that the land issue did not prevent that work. It also said an extension tied to a future decision of the land authorities would hold allotted capacity indefinitely. It rejected the petition and the consequential reliefs, and expressed no view on the land documents or the revenue proceedings.",
+  "headline": "GERC refuses SCOD extension for 2 MW captive solar plant delayed by land mutation",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "aedaf5855e0a7b46b347f755ec63e45605965de47dc59c06fdb8344b85e0c326",
+  "path": "/orders/gerc/2026/2715-2026-aedaf5",
+  "commission": "gerc",
+  "doc_type": "order",
+  "title": "M/s Linia Ceramic LLP v. PGVCL & Others",
+  "case_number": "Petition No. 2715/2026",
+  "date": "2026-11-18",
+  "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDlfMTgtMTEtMjAyNl83OTc1ODQ2",
+  "source_listing": false,
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDlfMTgtMTEtMjAyNl83OTc1ODQ2",
+  "draft": true,
+  "topics": [
+   "connectivity-gna",
+   "green-energy-oa"
+  ],
+  "significance": 3,
+  "parties": [
+   {
+    "name": "M/s Linia Ceramic LLP",
+    "role": "petitioner"
+   },
+   {
+    "name": "Paschim Gujarat Vij Company Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Gujarat Energy Transmission Corp. Limited",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Whether the petitioner had shown that the delay in completing the evacuation infrastructure for its 2 MW captive solar plant at Village Liya was caused by unforeseen circumstances under Clause 3.9 of GERC Order No. 6 of 2024. If so, it would be entitled to a later Scheduled Date of Commissioning and protection of its bank guarantee and connectivity.",
+  "outcome": "The Commission found no basis for an extension under Clause 3.9 and rejected the petition. Because the main relief failed, it also refused the consequential reliefs on the bank guarantee, penal consequences and connectivity. It expressed no opinion on the validity of the land documents or the pending revenue proceedings.",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "timeline",
+    "title": "Linia Ceramic 2 MW captive solar: evacuation deadlines and extension sought",
+    "items": [
+     {
+      "label": "Stage-II connectivity granted (PGVCL)",
+      "basis": [
+       "p5.4",
+       "p7.1"
+      ],
+      "start": "2025-03-06"
+     },
+     {
+      "label": "Collector's proposal sent to State Government",
+      "basis": [
+       "p9.1"
+      ],
+      "start": "2025-08-06"
+     },
+     {
+      "label": "Original 12-month deadline",
+      "basis": [
+       "p7.1"
+      ],
+      "start": "2026-03-06"
+     },
+     {
+      "label": "SCOD after general order of 21.01.2026 (18 months)",
+      "basis": [
+       "p7.2",
+       "p7.3"
+      ],
+      "start": "2026-09-06"
+     },
+     {
+      "label": "Extension sought by petitioner (rejected)",
+      "basis": [
+       "p3.3"
+      ],
+      "start": "2026-09-06",
+      "end": "2027-09-06"
+     },
+     {
+      "label": "Petition rejected",
+      "basis": [
+       "p2.2",
+       "p58.4"
+      ],
+      "start": "2026-11-18"
+     }
+    ],
+    "note": "Dates as pleaded by the petitioner; the extension to 06.09.2027 was sought and rejected."
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "M/s Linia Ceramic LLP is building a 2 MW captive solar plant at Village Liya, Surendranagar. It asked GERC to extend the scheduled commissioning date of its evacuation infrastructure beyond 06.09.2026 under Clause 3.9 of Order No. 6 of 2024, as modified by the general order of 21.01.2026. It argued that a proposal from the Collector to confirm the sale of the Vidi land was still pending with the State Government. This held up the mutation entry and Non-Agricultural permission. It also asked for protection of its bank guarantee and connectivity. PGVCL opposed the petition, arguing that the land issue was foreseeable. The Commission held that Clause 3.9 gives no automatic extension and that the developer must prove its case. It found that confirmation under Section 6 of the Saurashtra Estates Acquisition Act, 1952 is a long-standing requirement, not an unforeseen event. It also found that the petitioner had shown no step towards building the evacuation line, and that the land issue did not prevent that work. An extension tied to an uncertain future land decision would hold the allotted capacity indefinitely. The petition and the consequential reliefs were rejected.",
+  "headline": "GERC denies 2 MW captive solar developer more time for evacuation line despite land delay",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "789e62a59c745f5d7e3211bdd53caef96808a5515bcc680c3eb60cb3321b0897",
+  "path": "/orders/gerc/2026/2716-2026-789e62",
+  "commission": "gerc",
+  "doc_type": "order",
+  "title": "M/s L-Tile Granito LLP v. PGVCL & Others",
+  "case_number": "Petition No. 2716/2026",
+  "date": "2026-11-18",
+  "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MTBfMTgtMTEtMjAyNl8xMTc3MzMy",
+  "source_listing": false,
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MTBfMTgtMTEtMjAyNl8xMTc3MzMy",
+  "draft": true,
+  "topics": [
+   "connectivity-gna",
+   "green-energy-oa"
+  ],
+  "significance": 3,
+  "parties": [
+   {
+    "name": "M/s L-Tile Granito LLP",
+    "role": "petitioner"
+   },
+   {
+    "name": "Paschim Gujarat Vij Company Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Gujarat Energy Transmission Corp. Limited",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Whether the delay in completing the evacuation infrastructure for the Petitioner's 4 MW captive solar project at Village Liya, Surendranagar, occurred due to unforeseen circumstances within the meaning of Clause 3.9 of GERC Order No. 06 of 2024, so as to warrant an extension of the Scheduled Date of Commissioning and the consequential reliefs sought.",
+  "outcome": "The Commission held that the Petitioner had not established a basis under Clause 3.9 for extending the time for completing the evacuation infrastructure. It rejected the petition, including the consequential reliefs on the bank guarantee and on keeping the connectivity and transmission capacity, and expressed no opinion on the land documents or proceedings.",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "timeline",
+    "title": "Key dates: connectivity, commissioning deadline, extension sought and order",
+    "items": [
+     {
+      "label": "Stage-II connectivity, 4 MW capacity allotted",
+      "basis": [
+       "p5.4",
+       "p7.1"
+      ],
+      "start": "2025-03-06"
+     },
+     {
+      "label": "Collector's proposal sent to State Government",
+      "basis": [
+       "p9.1"
+      ],
+      "start": "2025-08-06"
+     },
+     {
+      "label": "General order: evacuation timeframe 12 to 18 months",
+      "basis": [
+       "p7.2"
+      ],
+      "start": "2026-01-21"
+     },
+     {
+      "label": "Original 12-month deadline (petitioner's account)",
+      "basis": [
+       "p7.1"
+      ],
+      "start": "2026-03-06"
+     },
+     {
+      "label": "SCOD of evacuation infrastructure",
+      "basis": [
+       "p7.3",
+       "p14.7"
+      ],
+      "start": "2026-09-06"
+     },
+     {
+      "label": "Final hearing",
+      "basis": [
+       "p46.9"
+      ],
+      "start": "2026-10-15"
+     },
+     {
+      "label": "Order: petition rejected",
+      "basis": [
+       "p2.2",
+       "p59.1"
+      ],
+      "start": "2026-11-18"
+     },
+     {
+      "label": "Extended SCOD sought by petitioner (not granted)",
+      "basis": [
+       "p3.2",
+       "p58.1"
+      ],
+      "start": "2027-09-06"
+     }
+    ],
+    "note": "06.09.2027 is the date the petitioner asked for. The Commission rejected it. The 06.03.2026 deadline is as stated in the petition."
+   },
+   {
+    "type": "flow",
+    "title": "Clause 3.9 of Order No. 6 of 2024: evacuation line, then generating capacity",
+    "items": [
+     {
+      "label": "Transmission capacity allotted",
+      "basis": [
+       "p14.8",
+       "p55.1"
+      ],
+      "detail": "Developer furnishes a bank guarantee at Rs. 10 lakh per MW"
+     },
+     {
+      "label": "Evacuation line, bays and metering complete",
+      "basis": [
+       "p15.4",
+       "p15.5",
+       "p54.1"
+      ],
+      "detail": "Within 1.5 years of the date of allotment, for capacity up to 100 MW",
+      "otherwise": "GETCO encashes the bank guarantee. If the delay is due to unforeseen reasons, the developer may ask the Commission for more time"
+     },
+     {
+      "label": "10% of allotted capacity commissioned",
+      "basis": [
+       "p15.5",
+       "p54.1"
+      ],
+      "detail": "Within one month of charging the evacuation line",
+      "otherwise": "Long-term transmission charges on 10% of capacity until it is commissioned"
+     },
+     {
+      "label": "Balance 90% commissioned",
+      "basis": [
+       "p15.5",
+       "p54.1"
+      ],
+      "detail": "Within one year of charging the evacuation line",
+      "otherwise": "STU cancels connectivity and open access for capacity not commissioned; relinquishment charges are payable"
+     },
+     {
+      "label": "Cancelled capacity released",
+      "basis": [
+       "p15.5",
+       "p58.2"
+      ],
+      "detail": "Listed as spare capacity for other prospective applicants"
+     }
+    ],
+    "note": "Clause as reproduced by PGVCL and read by the Commission, with the timeframe as modified by the general Order of 21.01.2026"
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "L-Tile Granito LLP sought extension of the scheduled commissioning date (06.09.2026) for the evacuation infrastructure of its 4 MW captive solar plant at Village Liya, Surendranagar, under Clause 3.9 of GERC Order No. 6 of 2024 as modified by the general Order of 21.01.2026. It argued that an uncertified mutation entry for the project land, with a Collector's proposal of 06.08.2025 pending before the State Government, had held up Non-Agricultural permission and was an unforeseen reason. PGVCL opposed the petition. The Commission held that it cannot decide the land questions, and that the confirmation requirement under Section 6 of the Saurashtra Estates Acquisition Act, 1952, in the statute for over seventy years, cannot be called unforeseen. It found that the land issue has no bearing on building the evacuation line, and that the petitioner showed no step towards it, such as procurement of material or route survey. An extension tied to an undated future decision of land authorities would hold allotted capacity indefinitely. The petition and the consequential reliefs on the bank guarantee and connectivity were rejected, without any opinion on the land documents.",
+  "headline": "GERC refuses SCOD extension for 4 MW captive solar plant's evacuation line over land delay",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "54fad0eb3b8d56101c6a76334b1bbff43ce1d1eccfc71b7e3a34e1463944963c",
+  "path": "/orders/gerc/2026/2717-2026-54fad0",
+  "commission": "gerc",
+  "doc_type": "order",
+  "title": "M/s Vivanta Ceramic Pvt. Limited v. PGVCL & Others",
+  "case_number": "Petition No. 2717/2026",
+  "date": "2026-11-18",
+  "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MTFfMTgtMTEtMjAyNl82NzM1MDc3",
+  "source_listing": false,
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MTFfMTgtMTEtMjAyNl82NzM1MDc3",
+  "draft": true,
+  "topics": [
+   "connectivity-gna"
+  ],
+  "significance": 3,
+  "parties": [
+   {
+    "name": "M/s Vivanta Ceramic Pvt. Limited",
+    "role": "petitioner"
+   },
+   {
+    "name": "Paschim Gujarat Vij Company Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Gujarat Energy Transmission Corp. Limited",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Whether the petitioner showed that the delay in completing the evacuation infrastructure for its 1 MW captive solar plant was due to unforeseen circumstances under Clause 3.9 of GERC Order No. 06 of 2024, as modified by the order dated 21.01.2026, so as to justify extending the SCOD and granting the consequential reliefs.",
+  "outcome": "The Commission held that the petitioner had not shown grounds for an extension under Clause 3.9. It rejected the petition, and with it the consequential reliefs on the bank guarantee and on continued connectivity.",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "timeline",
+    "title": "Connectivity, deadlines and hearing dates for Vivanta Ceramic's 1 MW evacuation line",
+    "items": [
+     {
+      "label": "Bank guarantee of Rs 10 lakh furnished",
+      "basis": [
+       "p5.9"
+      ],
+      "start": "2024-12-24"
+     },
+     {
+      "label": "Stage-I connectivity granted",
+      "basis": [
+       "p5.5",
+       "p5.6"
+      ],
+      "start": "2025-01-23"
+     },
+     {
+      "label": "Stage-II connectivity granted (1 MW)",
+      "basis": [
+       "p5.6",
+       "p7.1"
+      ],
+      "start": "2025-04-05"
+     },
+     {
+      "label": "Original 12-month deadline",
+      "basis": [
+       "p7.1"
+      ],
+      "start": "2026-04-05"
+     },
+     {
+      "label": "General order extends period to 18 months",
+      "basis": [
+       "p7.2"
+      ],
+      "start": "2026-01-21"
+     },
+     {
+      "label": "Extended SCOD of evacuation infrastructure",
+      "basis": [
+       "p7.3",
+       "p15.2"
+      ],
+      "start": "2026-10-05"
+     },
+     {
+      "label": "Final hearing",
+      "basis": [
+       "p46.5",
+       "p46.6"
+      ],
+      "start": "2026-10-15"
+     },
+     {
+      "label": "Order dismissing the petition",
+      "basis": [
+       "p2.2",
+       "p58.4"
+      ],
+      "start": "2026-11-18"
+     }
+    ],
+    "note": "The 05.04.2026 date is the petitioner's reading of the original 12-month period; the general order of 21.01.2026 extended it to 18 months."
+   },
+   {
+    "type": "flow",
+    "title": "Two separate obligations under Clause 3.9 as read by the Commission",
+    "items": [
+     {
+      "label": "Bank guarantee on allotment",
+      "basis": [
+       "p15.3"
+      ],
+      "detail": "Developer gives a bank guarantee of Rs 10 lakh per MW based on allotment of transmission capacity"
+     },
+     {
+      "label": "Evacuation line completed",
+      "basis": [
+       "p53.5",
+       "p15.3"
+      ],
+      "detail": "Entire evacuation line with bays and metering completed within 1.5 years of allotment of transmission capacity",
+      "otherwise": "GETCO encashes the bank guarantee"
+     },
+     {
+      "label": "First capacity after charging",
+      "basis": [
+       "p53.5"
+      ],
+      "detail": "At least 10% of allotted capacity commissioned within one month of charging the line"
+     },
+     {
+      "label": "Balance capacity",
+      "basis": [
+       "p53.5"
+      ],
+      "detail": "Balance generation capacity commissioned within one year of charging the line"
+     }
+    ]
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "Vivanta Ceramic, a Morbi tile maker and HT consumer of PGVCL, is setting up a 1 MW captive solar plant at Village Liya, Surendranagar, with connectivity at GETCO's 66 kV Ratanpar sub-station. Under Clause 3.9 of GERC Order No. 6 of 2024, as modified by the general order of 21.01.2026, its evacuation infrastructure was due by 05.10.2026. It asked for an extension, protection of its Rs 10 lakh bank guarantee and continued connectivity. It argued that the State's pending decision on the mutation entry for the land sale, which holds up Non-Agricultural permission, was an unforeseen reason beyond its control. PGVCL argued that the land issue was foreseeable and that the petitioner had shown no physical progress. The Commission held that the requirement for confirmation under Section 6 of the Saurashtra Estates Acquisition Act, 1952 could not be called unforeseen. It also held that the land issue had no bearing on building the evacuation line, and that the petitioner had not shown a single step towards the line. It refused an extension tied to an uncertain future land decision, holding that Clause 3.9 contemplates a definite period. The petition was dismissed and the consequential reliefs fell with it.",
+  "headline": "GERC refuses extension for 1 MW captive solar evacuation line delayed by land mutation",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "f83aedf006bca7434e1d2664720aaa1257a669d2922d8562fcc1ed0c699b71cc",
+  "path": "/orders/gerc/2026/2723-2026-f83aed",
+  "commission": "gerc",
+  "doc_type": "order",
+  "title": "M/s Lemon Tiles LLP v. PGVCL & Others",
+  "case_number": "Petition No. 2723/2026",
+  "date": "2026-11-18",
+  "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MTJfMTgtMTEtMjAyNl85NjA5MTEz",
+  "source_listing": false,
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MTJfMTgtMTEtMjAyNl85NjA5MTEz",
+  "draft": true,
+  "topics": [
+   "connectivity-gna",
+   "green-energy-oa"
+  ],
+  "significance": 3,
+  "parties": [
+   {
+    "name": "M/s Lemon Tiles LLP",
+    "role": "petitioner"
+   },
+   {
+    "name": "Paschim Gujarat Vij Company Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Gujarat Energy Transmission Corp. Limited",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Whether the Petitioner showed that the delay in completing the evacuation infrastructure for its 2 MW captive solar project was caused by unforeseen circumstances under Clause 3.9 of GERC Order No. 06 of 2024, as modified by the order of 21.01.2026, so that the SCOD should be extended and the consequential reliefs granted.",
+  "outcome": "The Commission held that the Petitioner had not established grounds for extending the time to complete the evacuation infrastructure under Clause 3.9. It refused the consequential reliefs, including protection of the bank guarantee and of connectivity, and dismissed the petition.",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "timeline",
+    "title": "Land, connectivity and commissioning dates for the 2 MW captive project",
+    "items": [
+     {
+      "label": "Lease deed executed",
+      "basis": [
+       "p7.5",
+       "p53.1"
+      ],
+      "start": "2025-01-08"
+     },
+     {
+      "label": "Sale deed by which the lessors acquired the land",
+      "basis": [
+       "p54.1"
+      ],
+      "start": "2025-01-15"
+     },
+     {
+      "label": "Stage-I connectivity granted by PGVCL",
+      "basis": [
+       "p5.5",
+       "p5.6"
+      ],
+      "start": "2025-01-23"
+     },
+     {
+      "label": "Stage-II connectivity (capacity allotted)",
+      "basis": [
+       "p5.6",
+       "p7.1"
+      ],
+      "start": "2025-03-06"
+     },
+     {
+      "label": "Collector's proposal sent to State Government",
+      "basis": [
+       "p9.2"
+      ],
+      "start": "2025-08-06"
+     },
+     {
+      "label": "Original 12-month deadline",
+      "basis": [
+       "p7.1"
+      ],
+      "start": "2026-03-06"
+     },
+     {
+      "label": "SCOD after 21.01.2026 general order (18 months)",
+      "basis": [
+       "p7.2",
+       "p7.3"
+      ],
+      "start": "2026-09-06"
+     },
+     {
+      "label": "Extended SCOD sought (petitioner's request)",
+      "basis": [
+       "p3.3",
+       "p58.3"
+      ],
+      "start": "2027-09-06"
+     }
+    ],
+    "note": "Dates as pleaded by the petitioner. The extension to 06.09.2027 is what it asked for, and the Commission refused it."
+   },
+   {
+    "type": "flow",
+    "title": "Two separate obligations under Clause 3.9 as read by the Commission",
+    "items": [
+     {
+      "label": "Capacity allotted",
+      "basis": [
+       "p6.5",
+       "p55.5"
+      ],
+      "detail": "Developer gives a bank guarantee of Rs. 10 lakh per MW based on the transmission capacity allotted"
+     },
+     {
+      "label": "Evacuation line completed",
+      "basis": [
+       "p54.5",
+       "p50.2",
+       "p58.4"
+      ],
+      "detail": "Entire evacuation line with bays and metering completed within one and a half years of allotment",
+      "otherwise": "Extension only if the developer proves unforeseen reasons; any extension must be for a definite period"
+     },
+     {
+      "label": "Line charged, first 10%",
+      "basis": [
+       "p54.5",
+       "p55.2"
+      ],
+      "detail": "At least 10% of the allotted capacity commissioned within one month of charging"
+     },
+     {
+      "label": "Balance capacity",
+      "basis": [
+       "p54.5"
+      ],
+      "detail": "Remaining generation capacity commissioned within one year of charging the evacuation infrastructure"
+     }
+    ],
+    "note": "The petition asked for more time only for the first step, the evacuation infrastructure."
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "M/s Lemon Tiles LLP asked for the scheduled commissioning date (SCOD) of the evacuation infrastructure for its 2 MW captive solar plant at Village Liya, Surendranagar, to be extended from 06.09.2026 to 06.09.2027. It relied on Clause 3.9 of GERC Order No. 6 of 2024, as modified by the general order of 21.01.2026. Its case was that the mutation entry for the project land had not been certified and Non-Agricultural permission was held up while a Collector's proposal of 06.08.2025 stayed pending with the State Government. PGVCL opposed the petition. GETCO said that connectivity at 11 kV is PGVCL's responsibility. The Commission held that Clause 3.9 gives no automatic right to an extension and that the burden of proof lies on the petitioner. Land-revenue formalities were the developer's responsibility. The confirmation requirement in Section 6 of the Saurashtra Estates Acquisition Act, 1952 could not be called unforeseen. No documents showed any attempt to build the evacuation line, and the land issue did not stop that work. An extension tied to a future decision by the land authorities would hold the capacity indefinitely. The petition and its consequential reliefs were dismissed. The Commission gave no opinion on the land proceedings.",
+  "headline": "GERC refuses SCOD extension for 2 MW captive solar evacuation line delayed by land mutation",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "bf58ee6f527c4c4b712f3002fdcd4815367e9947e631387c77219922a9db3409",
+  "path": "/orders/gerc/2026/2757-2026-bf58ee",
+  "commission": "gerc",
+  "doc_type": "order",
+  "title": "GUVNL v. Powerica Limited & Ors.",
+  "case_number": "Petition No. 2757/2026",
+  "date": "2026-11-19",
+  "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MTVfMTktMTEtMjAyNl85NjQ3NTMz",
+  "source_listing": false,
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MTVfMTktMTEtMjAyNl85NjQ3NTMz",
+  "draft": true,
+  "topics": [
+   "ppa-adoption",
+   "generation-tariff"
+  ],
+  "significance": 2,
+  "parties": [
+   {
+    "name": "Gujarat Urja Vikas Nigam Limited (GUVNL)",
+    "role": "Petitioner"
+   },
+   {
+    "name": "Powerica Limited",
+    "role": "Respondent"
+   },
+   {
+    "name": "NLC India Renewables Limited",
+    "role": "Respondent"
+   },
+   {
+    "name": "Juniper Green Energy Limited",
+    "role": "Respondent"
+   },
+   {
+    "name": "CU-Built Renewable Energy Private Limited",
+    "role": "Respondent"
+   }
+  ],
+  "issue": "Whether to adopt, under Section 63, the tariffs GUVNL discovered in its 250 MW Wind (Phase XI) tender, including the additional capacity allotted under the tender's greenshoe option.",
+  "outcome": "Adopted for 500 MW: 250 MW of base capacity and 250 MW of greenshoe capacity. GUVNL must file the signed PPAs with an affidavit that they contain no deviations beyond those approved, and publish the successful bidders and their tariffs on its website for 30 days.",
+  "impact": null,
+  "rating": null,
+  "figures": [],
+  "checked": {
+   "reviewers": 0,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "GERC has adopted the tariffs from GUVNL's Wind (Phase XI) tender for grid-connected wind projects in Gujarat. Four bidders won 250 MW of base capacity in the e-reverse auction: Powerica Limited (50 MW), NLC India Renewables Limited (100 MW) and Juniper Green Energy Limited (50 MW) at Rs 3.51 per unit, and CU-Built Renewable Energy Private Limited (50 MW) at 3.52. Under Clause No. 3.3.5 of the tender, GUVNL offered the successful bidders additional capacity under a greenshoe option at the L1 tariff of Rs 3.51 per unit. NLC India Renewables took a further 200 MW and CU-Built a further 50 MW, bringing the total to 500 MW. The lowest initial price bid had been 3.61, from Kintech Synergy Private Limited. GUVNL told the Commission the tariffs are fixed for the period of 25 years. The Commission directed GUVNL to file the executed PPAs with an affidavit that there are no deviations other than those already approved, and to disclose the successful bidders and tariffs on its website for 30 days.",
+  "headline": "GERC adopts Rs 3.51-3.52 per unit for 500 MW of wind power in GUVNL's Phase XI auction",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "3d8af5db8af7b442dd206932ab90fe913905a9597808316635165b83651305c3",
+  "path": "/orders/rerc/2026/2290-2025-3d8af5",
+  "commission": "rerc",
+  "doc_type": "order",
+  "title": "Shri Om Agro Products",
+  "case_number": "Petition No. 2290/2025",
+  "date": "2026-11-17",
+  "source_url": "https://rerc.rajasthan.gov.in/rerc-user-files/office-orders",
+  "source_listing": true,
+  "pdf": null,
+  "draft": true,
+  "topics": [
+   "banking",
+   "wheeling",
+   "open-access",
+   "ppa-adoption"
+  ],
+  "significance": 3,
+  "parties": [
+   {
+    "name": "Shri Om Agro Products",
+    "role": "petitioner"
+   },
+   {
+    "name": "Rajasthan Urja Vikas & IT Services Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Jodhpur Vidyut Vitran Nigam Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Ajmer Vidyut Vitran Nigam Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Rajasthan Renewable Energy Corporation Limited",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Whether the Discoms must pay a 1.5 MW wind generator for energy it injected into the grid from its 50% captive share, which it did not consume, from 2015 until the supplementary PPA of 15.07.2024.",
+  "outcome": "The Commission rejected the petition. No PPA covered the captive share during the claim period and the respondents had declined to buy it, so no compensation was payable under the Electricity Act or the Contract Act. The Commission refused to consider the banking claim raised for the first time in written submissions.",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "timeline",
+    "title": "Shri Om Agro: from the 2013 PPA-cum-WBA to the supplementary PPA and the order",
+    "items": [
+     {
+      "label": "PPA-cum-WBA signed (50% sale, 50% captive)",
+      "basis": [
+       "p2.8",
+       "p3.2"
+      ],
+      "start": "2013-03-28"
+     },
+     {
+      "label": "First request to revise sharing to 95:5",
+      "basis": [
+       "p3.3"
+      ],
+      "start": "2015-02-24"
+     },
+     {
+      "label": "RUVITL rejects 100% sale proposal",
+      "basis": [
+       "p14.1",
+       "p30.1"
+      ],
+      "start": "2018-11-05"
+     },
+     {
+      "label": "Request renewed (captive share at Rs 2.44)",
+      "basis": [
+       "p23.3"
+      ],
+      "start": "2022-05-25"
+     },
+     {
+      "label": "RUVITL Board grants conditional approval",
+      "basis": [
+       "p15.5",
+       "p22.8"
+      ],
+      "start": "2023-08-17"
+     },
+     {
+      "label": "Outstanding dues cleared",
+      "basis": [
+       "p16.1"
+      ],
+      "start": "2023-12-29"
+     },
+     {
+      "label": "Commission approves supplementary PPA",
+      "basis": [
+       "p22.8"
+      ],
+      "start": "2024-06-27"
+     },
+     {
+      "label": "Supplementary PPA executed",
+      "basis": [
+       "p30.1"
+      ],
+      "start": "2024-07-15"
+     }
+    ]
+   },
+   {
+    "type": "bars",
+    "title": "Rates in the case: PPA tariffs and the two rates the petition sought",
+    "items": [
+     {
+      "label": "Original PPA tariff (50% sale share)",
+      "basis": [
+       "p28.2"
+      ],
+      "value": 4.89,
+      "tag": "existing tariff",
+      "context": true
+     },
+     {
+      "label": "Supplementary PPA tariff (captive share)",
+      "basis": [
+       "p28.2",
+       "p6.5"
+      ],
+      "value": 2.44,
+      "tag": "approved tariff",
+      "context": true
+     },
+     {
+      "label": "Rate sought in petition body",
+      "basis": [
+       "p29.1",
+       "p7.5"
+      ],
+      "value": 2.44,
+      "tag": "petitioner's claim"
+     },
+     {
+      "label": "Rate sought in prayer clause",
+      "basis": [
+       "p29.1",
+       "p11.6"
+      ],
+      "value": 4.89,
+      "tag": "petitioner's claim"
+     }
+    ],
+    "unit": "Rs/unit",
+    "note": "The two rates sought are the petitioner's claims, taken from the petition's body and its prayer clause (p29.1)"
+   },
+   {
+    "type": "flow",
+    "title": "How the Commission dealt with the claim for the injected captive share",
+    "items": [
+     {
+      "label": "Was the captive share covered by a PPA?",
+      "basis": [
+       "p27.5",
+       "p23.4"
+      ],
+      "detail": "No PPA covered purchase of the 50% captive share from inception until the supplementary PPA"
+     },
+     {
+      "label": "What did the agreement permit?",
+      "basis": [
+       "p27.6",
+       "p28.1"
+      ],
+      "detail": "Injection of the captive share for drawal at the petitioner's consumption end only, not supply to the Discom for payment"
+     },
+     {
+      "label": "Did the respondents agree to buy it?",
+      "basis": [
+       "p28.1"
+      ],
+      "detail": "No: they expressly declined to procure it by letter dated 05.11.2018"
+     },
+     {
+      "label": "Section 70 Contract Act claim",
+      "basis": [
+       "p28.1"
+      ],
+      "detail": "Not sustained, because the respondents had expressly rejected the proposal to procure the energy"
+     },
+     {
+      "label": "Banking-settlement claim",
+      "basis": [
+       "p29.3"
+      ],
+      "detail": "Not considered: first raised in written submissions after the order was reserved"
+     },
+     {
+      "label": "Result",
+      "basis": [
+       "p30.1"
+      ],
+      "detail": "Claim for 2015 to 15.07.2024 not accepted; petition rejected"
+     }
+    ]
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "Shri Om Agro Products runs a 1.5 MW wind plant in Jaisalmer under a 2013 PPA-cum-wheeling and banking agreement. Under it, 50% of generation was sold to the Discom at Rs 4.89 per unit and 50% was kept for the firm's own captive use. After its factory consumption fell to almost nothing, the firm asked from 2015 onwards to sell more of its power to the Discom. RUVITL rejected the request on 05.11.2018. A later offer to sell the captive share at Rs 2.44 per unit was approved by the Board in 2023, and a supplementary PPA followed on 15.07.2024. The firm asked to be paid for the unconsumed captive energy it had injected between 2015 and July 2024. The Commission found that no PPA covered that share during this period. The agreement allowed injection only for captive drawal, and the respondents had expressly declined to buy the energy, so no claim arose under Section 70 of the Contract Act. The Commission did not blame the respondents for the delay, since the petitioner's proposals kept changing. It also noted that the petition sought two different rates. It refused to consider the banking-settlement claim because it was first raised after the order had been reserved.",
+  "headline": "Rajasthan wind generator denied payment for unused captive energy injected from 2015 to 2024",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "ff779e3e8ce7333d856b3f14c2e39738f2638ac84e078f9b18cb8080f14e40fb",
+  "path": "/orders/rerc/2026/2345-2025-ff779e",
+  "commission": "rerc",
+  "doc_type": "order",
+  "title": "Shri. Om Agro Products",
+  "case_number": "Petition No. 2345/2025",
+  "date": "2026-11-17",
+  "source_url": "https://rerc.rajasthan.gov.in/rerc-user-files/office-orders",
+  "source_listing": true,
+  "pdf": null,
+  "draft": true,
+  "topics": [
+   "open-access",
+   "wheeling"
+  ],
+  "significance": 4,
+  "parties": [
+   {
+    "name": "Shri. Om Agro Products",
+    "role": "petitioner"
+   },
+   {
+    "name": "Rajasthan Urja Vikas and IT Services Limited (RUVITL)",
+    "role": "respondent"
+   },
+   {
+    "name": "Jodhpur Vidyut Vitran Nigam Limited (JDVVNL)",
+    "role": "respondent"
+   },
+   {
+    "name": "Rajasthan Rajya Vidyut Prasaran Nigam Limited (RVPN)",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Whether a wind generator that switched 0.75 MW of long-term open access capacity from captive use to sale to the discom, through an amended PPA, must pay surrender (relinquishment) charges under Regulation 14 of the RERC Open Access Regulations, 2016, when it argued that no transmission capacity was left stranded.",
+  "outcome": "The Commission held that the relinquishment charges under Regulation 14(2) are normative, so they do not depend on actual stranded capacity, and that the petitioner is liable to pay them. It directed the petitioner to deposit the balance with RVPN, beyond the 25% already required under the interim order of 30.07.2025.",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "timeline",
+    "title": "Om Agro Products: from wheeling agreement to final order",
+    "items": [
+     {
+      "label": "Tripartite wheeling agreement for 0.75 MW captive use",
+      "basis": [
+       "p14.7",
+       "p17.2"
+      ],
+      "start": "2013-03-28"
+     },
+     {
+      "label": "Amended PPA: 0.75 MW sold to discom at Rs 2.44/kWh",
+      "basis": [
+       "p5.2",
+       "p14.7"
+      ],
+      "start": "2024-07-15"
+     },
+     {
+      "label": "RVPN demands Rs 15,86,864 surrender charges",
+      "basis": [
+       "p5.4"
+      ],
+      "start": "2025-04-24"
+     },
+     {
+      "label": "Wind plant disconnected from pooling station",
+      "basis": [
+       "p6.3",
+       "p12.6"
+      ],
+      "start": "2025-05-28"
+     },
+     {
+      "label": "Petition filed",
+      "basis": [
+       "p2.2"
+      ],
+      "start": "2025-07-07"
+     },
+     {
+      "label": "Interim order: reconnect on deposit of 25% of charges",
+      "basis": [
+       "p2.10",
+       "p19.6"
+      ],
+      "start": "2025-07-30"
+     },
+     {
+      "label": "Final order: pay balance of relinquishment charges",
+      "basis": [
+       "p1.17",
+       "p20.2"
+      ],
+      "start": "2026-11-17"
+     }
+    ]
+   },
+   {
+    "type": "flow",
+    "title": "How Regulation 14(2) relinquishment charges apply, as read by the Commission",
+    "items": [
+     {
+      "label": "Long-term open access relinquished early",
+      "basis": [
+       "p16.3",
+       "p17.2"
+      ],
+      "detail": "Customer has not availed open access rights for at least 12 years"
+     },
+     {
+      "label": "Base charge",
+      "basis": [
+       "p16.3",
+       "p18.2"
+      ],
+      "detail": "66% of transmission and wheeling charges for the period short of 12 years, subject to a maximum of three years"
+     },
+     {
+      "label": "Notice of at least one year to the Nodal Agency",
+      "basis": [
+       "p16.4",
+       "p16.5"
+      ],
+      "detail": "Application must be made at least one year before relinquishment",
+      "otherwise": "Also pays 66% of transmission and wheeling charges for the period short of the one-year notice"
+     },
+     {
+      "label": "Charges are normative",
+      "basis": [
+       "p18.6",
+       "p19.1",
+       "p19.5"
+      ],
+      "detail": "Actual stranded capacity need not be shown; stranded capacity means relinquished capacity"
+     },
+     {
+      "label": "Sale to discom is no waiver",
+      "basis": [
+       "p17.4",
+       "p20.2"
+      ],
+      "detail": "Petitioner remains liable and must deposit the balance to RVPN"
+     }
+    ]
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "Shri Om Agro Products owns a 1.5 MW wind plant. In 2013 it signed a tripartite wheeling agreement with RVPN and Suzlon Energy covering 0.75 MW for captive use. An amended PPA dated 15.07.2024 moved that 0.75 MW to sale to the discom at Rs 2.44/kWh. RVPN then demanded Rs 15,86,864 in surrender charges under Regulation 14 of the RERC Open Access Regulations, 2016. When the petitioner did not pay, RVPN had the plant disconnected on 28.05.2025. The petitioner argued that these charges compensate only for stranded capacity, and that none existed because the discom now used the same transmission system. The Commission held that Regulation 14(2) sets the charges on a normative basis: 66% of transmission and wheeling charges, for at most three years. Actual stranded capacity therefore need not be shown, and the Commission added that it cannot be assessed with certainty in a meshed network. It read stranded capacity as relinquished capacity and held that the sale to the discom did not waive the liability. It had earlier ordered reconnection on deposit of 25% of the charges, and it now directed the petitioner to pay the balance. The order does not separately rule on the disconnection or the compensation claim.",
+  "headline": "Wind generator moving captive power to discom sale must pay RVPN relinquishment charges",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "c8191ed3ce9981e2612ab6fb07461f484245c7821b6d9dd328865f36cee4623c",
+  "path": "/orders/rerc/2026/2392-2026-c8191e",
+  "commission": "rerc",
+  "doc_type": "order",
+  "title": "M/s Agrawal Metal Works Private Limited",
+  "case_number": "Petition No. 2392/2026",
+  "date": "2026-11-17",
+  "source_url": "https://rerc.rajasthan.gov.in/rerc-user-files/office-orders",
+  "source_listing": true,
+  "pdf": null,
+  "draft": true,
+  "topics": [
+   "css",
+   "additional-surcharge",
+   "open-access"
+  ],
+  "significance": 3,
+  "parties": [
+   {
+    "name": "M/s Agrawal Metal Works Private Limited",
+    "role": "petitioner"
+   },
+   {
+    "name": "Jaipur Vidyut Vitran Nigam Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Rajasthan Urja Vikas and IT Services Limited",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Whether fixed charges, cross subsidy surcharge, additional surcharge, electricity duty and water conservation cess, demanded by JVVNL in its notice of 30.10.2025, apply to the petitioner's rooftop solar plant. The plant is owned by a third party and runs under RESCO mode behind the petitioner's meter. The question was decided with reference to the Rajasthan Solar Energy Policy, 2019 and the RERC GID RE Regulations, 2021.",
+  "outcome": "The plant was installed before the 2019 Policy took effect, so the petitioner cannot claim the Policy's concessions retrospectively. Fixed-charge liability for non-intimation is limited to the period up to 30.06.2023 or 08.02.2024, and the genuineness of the intimation letter is left to the CGRF or a competent forum. Cross subsidy surcharge and additional surcharge are leviable. Electricity duty and water conservation cess fall outside the Commission's purview.",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "timeline",
+    "title": "Rooftop plant dates against the Solar Policy, the 2021 Regulations and the demand",
+    "items": [
+     {
+      "label": "PPA with Sun Source Energy executed",
+      "basis": [
+       "p21.5"
+      ],
+      "start": "2018-05-15"
+     },
+     {
+      "label": "Plant inspected by Electrical Inspector",
+      "basis": [
+       "p21.5"
+      ],
+      "start": "2019-02-12"
+     },
+     {
+      "label": "Permission for energisation issued",
+      "basis": [
+       "p21.5"
+      ],
+      "start": "2019-02-13"
+     },
+     {
+      "label": "Rajasthan Solar Energy Policy, 2019 in force",
+      "basis": [
+       "p21.5",
+       "p22.2"
+      ],
+      "start": "2019-12-18"
+     },
+     {
+      "label": "GID RE Regulations, 2021 in force",
+      "basis": [
+       "p22.4"
+      ],
+      "start": "2021-04-08"
+     },
+     {
+      "label": "Intimation letter (petitioner's claim, disputed)",
+      "basis": [
+       "p24.1",
+       "p25.2"
+      ],
+      "start": "2021-06-30"
+     },
+     {
+      "label": "JVVNL letter seeking plant documents",
+      "basis": [
+       "p24.3",
+       "p26.3"
+      ],
+      "start": "2023-06-30"
+     },
+     {
+      "label": "JVVNL first demand letter (ED)",
+      "basis": [
+       "p24.5",
+       "p26.3"
+      ],
+      "start": "2024-02-08"
+     }
+    ],
+    "note": "The 30.06.2021 intimation is the petitioner's claim. JVVNL disputes it, and the Commission left the question to the CGRF or a competent forum."
+   },
+   {
+    "type": "flow",
+    "title": "How the order treats fixed charges for a behind-the-meter plant",
+    "items": [
+     {
+      "label": "Prior intimation to the Discom?",
+      "basis": [
+       "p23.2",
+       "p23.3"
+      ],
+      "detail": "Fixed-charge liability arises only where the consumer installs the system without prior intimation to the Distribution Licensee",
+      "otherwise": "If intimation was given, the additional liability at the fixed-charge rate is not attracted"
+     },
+     {
+      "label": "Was the 30.06.2021 letter genuinely received?",
+      "basis": [
+       "p26.1",
+       "p26.2",
+       "p28.9"
+      ],
+      "detail": "A disputed question of fact, not decided in these proceedings",
+      "otherwise": "Petitioner may go to the CGRF or a competent forum to decide it"
+     },
+     {
+      "label": "Period of liability",
+      "basis": [
+       "p23.2"
+      ],
+      "detail": "Levied from installation until the system comes to the Discom's notice"
+     },
+     {
+      "label": "Cap set by the Commission",
+      "basis": [
+       "p26.3",
+       "p29.2"
+      ],
+      "detail": "Liability limited to the period up to 30.06.2023 or 08.02.2024, when JVVNL admittedly became aware of the plant"
+     }
+    ]
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "Agrawal Metal Works has a 1,784.9 kW (DC) rooftop solar plant behind its meter. M/s Sun Source Energy owns the plant under a PPA dated 15.05.2018, and it was energised in February 2019. The company challenged a JVVNL demand notice of 30.10.2025 for Rs 5,68,47,990, covering fixed charges, cross subsidy surcharge, additional surcharge, electricity duty and water conservation cess. The Commission held that the plant was installed before the Rajasthan Solar Energy Policy, 2019 took effect on 18.12.2019. Because the Policy has no provision for retrospective effect, the petitioner cannot claim the concessions under its Clause 10.4.1. The petitioner says it sent an intimation letter dated 30.06.2021 under the 2021 GID RE Regulations, and JVVNL's enquiry report says the letter is forged. Whether it was genuinely received is a disputed question of fact, which the Commission left to the CGRF or a competent forum. However, liability for fixed charges for non-intimation is restricted to the period up to 30.06.2023 or 08.02.2024, the dates when JVVNL admittedly became aware of the plant. Because the petitioner receives electricity from a person other than the distribution licensee, cross subsidy surcharge and additional surcharge are leviable at the applicable rates. Electricity duty and water conservation cess fall outside the Commission's purview.",
+  "headline": "Third-party rooftop solar installed before 2019 policy owes cross subsidy and additional surcharge in Rajasthan",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "86b5c6677041d3d6b4ee8b4d1eeb00c0ec7fd4530f0b4a4dad5ea1198d5a3b85",
+  "path": "/orders/rerc/2026/2448-2026-86b5c6",
+  "commission": "rerc",
+  "doc_type": "order",
+  "title": "Rajasthan Urja Vikas and IT Services Limited",
+  "case_number": "Petition No. 2448/2026",
+  "date": "2026-11-17",
+  "source_url": "https://rerc.rajasthan.gov.in/rerc-user-files/office-orders",
+  "source_listing": true,
+  "pdf": null,
+  "draft": true,
+  "topics": [
+   "ppa-adoption",
+   "generation-tariff"
+  ],
+  "significance": 2,
+  "parties": [
+   {
+    "name": "Rajasthan Urja Vikas and IT Services Limited (RUVITL)",
+    "role": "Petitioner"
+   },
+   {
+    "name": "Beyyond Rocks Private Limited",
+    "role": "Respondent"
+   },
+   {
+    "name": "Zaveri & Co. Exports",
+    "role": "Respondent"
+   }
+  ],
+  "issue": "Whether the power purchase agreements of two wind generators, which had expired, can be extended for five years under Regulation 10 of the RERC renewable energy tariff regulations, 2020, and at what tariff.",
+  "outcome": "Extended by five years from expiry, or to 25 years from commissioning, whichever is earlier, at Rs 2.44/kWh as agreed by the parties. RUVITL was told to start future extensions well before the agreements expire.",
+  "impact": null,
+  "rating": null,
+  "figures": [],
+  "checked": {
+   "reviewers": 0,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "RERC has allowed RUVITL to extend the power purchase agreements of two wind generators, Beyyond Rocks Private Limited and Zaveri & Co. Exports, each with a 1.25 MW plant. The agreements are extended by five (5) years from the date their initial terms expired, or for a total of twenty five (25) years from commissioning, whichever is earlier. The tariff for the extended period is Rs 2.44/kWh, as agreed between RUVITL and the generators, and they may sign supplementary agreements. The Commission noted that the agreements had expired on 28.12.2024 and 23.03.2025, that RUVITL's Board approved the extensions only on 30.03.2026, and that the petition was filed on 23.09.2026. It called these delays avoidable and directed RUVITL to begin the process for future extensions well in advance of expiry.",
+  "headline": "RERC extends two expired 1.25 MW wind PPAs by five years at Rs 2.44/kWh",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "1046511af636c416d31b5a46179a9df8210e276c06ec59f6e841f89b524c8936",
+  "path": "/orders/uperc/2026/2127-of-2024-104651",
+  "commission": "uperc",
+  "doc_type": "order",
+  "title": "2127 of 2024 - Ghatampur Transmission Limited vs Neyveli Uttar Pradesh Power Ltd - Seeking payment of late...",
+  "case_number": "Petition No. 2127 of 2024",
+  "date": "2026-11-19",
+  "source_url": "https://www.uperc.org/App_File/Orderdated19-11-2026(2127of2024)-PDF1119202663817PM.pdf",
+  "source_listing": false,
+  "pdf": "https://www.uperc.org/App_File/Orderdated19-11-2026(2127of2024)-PDF1119202663817PM.pdf",
+  "draft": true,
+  "topics": [
+   "transmission-tariff"
+  ],
+  "significance": 3,
+  "parties": [
+   {
+    "name": "Ghatampur Transmission Limited",
+    "role": "petitioner"
+   },
+   {
+    "name": "Neyveli Uttar Pradesh Power Limited",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Whether NUPPL must pay late payment surcharge under Article 10.8.1 of the Transmission Service Agreement for paying late the transmission charges it was directed to pay by the Commission's Order dated 14.02.2023, and whether the claim is barred by res judicata, constructive res judicata or Section 34(2) of the Code of Civil Procedure, 1908.",
+  "outcome": "The Commission held the claim was not barred and that NUPPL is liable to pay LPS under Article 10.8.1 of the TSA, calculated on a simple rate basis until actual payment. No LPS is payable on the Rs 39.39 crore withheld as liquidated damages for 23.06.2023 to 24.06.2024. The parties must reconcile the amount payable invoice by invoice.",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "timeline",
+    "title": "Payment, appeals and the LD retention period",
+    "items": [
+     {
+      "label": "Commission's order in Petition 1850 of 2022",
+      "basis": [
+       "p33.4",
+       "p34.8"
+      ],
+      "start": "2023-02-14"
+     },
+     {
+      "label": "GTL raises fresh invoices",
+      "basis": [
+       "p3.2"
+      ],
+      "start": "2023-02-15"
+     },
+     {
+      "label": "Corrected invoice",
+      "basis": [
+       "p38.5"
+      ],
+      "start": "2023-03-20"
+     },
+     {
+      "label": "Due date (on corrected invoice)",
+      "basis": [
+       "p38.6"
+      ],
+      "start": "2023-05-04"
+     },
+     {
+      "label": "APTEL refuses interim relief",
+      "basis": [
+       "p38.7"
+      ],
+      "start": "2023-07-06"
+     },
+     {
+      "label": "Supreme Court dismisses civil appeal",
+      "basis": [
+       "p4.9"
+      ],
+      "start": "2023-09-11"
+     },
+     {
+      "label": "NUPPL pays Rs 211.84 crore",
+      "basis": [
+       "p38.4"
+      ],
+      "start": "2023-09-15"
+     },
+     {
+      "label": "No LPS on Rs 39.39 crore retained as LD",
+      "basis": [
+       "p41.3"
+      ],
+      "start": "2023-06-23",
+      "end": "2024-06-24"
+     }
+    ],
+    "note": "The 04.05.2023 due date is the Commission's, worked from the corrected invoice of 20.03.2023"
+   },
+   {
+    "type": "bars",
+    "title": "LPS claimed by GTL, and the part claimed on the amount retained as LD",
+    "items": [
+     {
+      "label": "Total LPS claimed up to 30.06.2024",
+      "basis": [
+       "p40.2",
+       "p33.3"
+      ],
+      "value": 22.31,
+      "tag": "petitioner's claim"
+     },
+     {
+      "label": "Part on the Rs 39.39 crore retained as LD",
+      "basis": [
+       "p40.2"
+      ],
+      "value": 7.42,
+      "tag": "petitioner's claim"
+     }
+    ],
+    "unit": "Rs crore",
+    "note": "Both are GTL's figures. The Commission fixed no amount and ordered the parties to reconcile invoice by invoice"
+   },
+   {
+    "type": "flow",
+    "title": "How LPS applies under Article 10.8.1 as the Commission held",
+    "items": [
+     {
+      "label": "Amount due",
+      "basis": [
+       "p33.6",
+       "p37.8"
+      ],
+      "detail": "Transmission charges under the order of 14.02.2023, payable within 45 days of the fresh invoice"
+     },
+     {
+      "label": "Unpaid 30 days after the due date?",
+      "basis": [
+       "p37.6"
+      ],
+      "detail": "LPS is not attracted merely because an amount becomes payable",
+      "otherwise": "LPS not attracted"
+     },
+     {
+      "label": "Appeal without a stay",
+      "basis": [
+       "p38.10"
+      ],
+      "detail": "No stay or extension of time, so pursuing appeals does not enlarge the payment period"
+     },
+     {
+      "label": "LPS accrues",
+      "basis": [
+       "p37.5",
+       "p40.1"
+      ],
+      "detail": "1.25% per month, simple rate basis, from the due date until the amount is actually received"
+     },
+     {
+      "label": "LD retention excluded",
+      "basis": [
+       "p41.3"
+      ],
+      "detail": "No LPS on Rs 39.39 crore from 23.06.2023 to 24.06.2024, when its retention was protected"
+     },
+     {
+      "label": "No LPS on LPS",
+      "basis": [
+       "p39.9"
+      ],
+      "detail": "Payments are appropriated under Article 10.6.4; LPS only on principal still unpaid"
+     },
+     {
+      "label": "Reconciliation",
+      "basis": [
+       "p41.9",
+       "p42.1"
+      ],
+      "detail": "GTL and NUPPL reconcile LPS invoice by invoice, including the difference in the withheld amount"
+     }
+    ]
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "Ghatampur Transmission Limited (GTL) sought late payment surcharge (LPS) from Neyveli Uttar Pradesh Power Limited (NUPPL) under Article 10.8.1 of their Transmission Service Agreement, which charges 1.25% per month on a simple rate basis. In an Order dated 14.02.2023, the Commission had held NUPPL liable for GTL's transmission charges and allowed 45 days to pay fresh invoices. NUPPL paid Rs 211.84 crore only on 15.09.2023, after APTEL refused interim relief and the Supreme Court declined to interfere. GTL claimed Rs 22.31 crore up to 30.06.2024. The Commission held the claim was not barred by res judicata or Section 34(2) of the Code of Civil Procedure, because the default occurred after the earlier order. Applying the defaulter liability principle did not take the charges outside the agreement, and an appeal without a stay did not suspend the obligation to pay. Even taking the corrected invoice, the due date was 04.05.2023. LPS runs until actual payment, with no LPS charged on accumulated LPS. No LPS applies to the Rs 39.39 crore withheld as liquidated damages from 23.06.2023 to 24.06.2024, when the Commission had permitted that retention. The parties must reconcile the amount invoice by invoice.",
+  "headline": "NUPPL must pay Ghatampur Transmission late payment surcharge on transmission charges paid late",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "0051a2c7c103765ac7c7888cabd426f27bec3a4266b4c3df6fb98b6630084f74",
+  "path": "/orders/uperc/2026/2135-of-2024-0051a2",
+  "commission": "uperc",
+  "doc_type": "order",
+  "title": "2135 of 2024 - Obra-C Badaun Transmission Limited vs UPPCL and ors - Seeking Payment of Late Payment Surcha...",
+  "case_number": "Petition No. 2135 of 2024",
+  "date": "2026-11-19",
+  "source_url": "https://www.uperc.org/App_File/Orderdated19-11-2026(2135of2024)-pdf1120202610820PM.pdf",
+  "source_listing": false,
+  "pdf": "https://www.uperc.org/App_File/Orderdated19-11-2026(2135of2024)-pdf1120202610820PM.pdf",
+  "draft": true,
+  "topics": [
+   "transmission-tariff"
+  ],
+  "significance": 3,
+  "parties": [
+   {
+    "name": "Obra-C Badaun Transmission Limited",
+    "role": "petitioner"
+   },
+   {
+    "name": "Uttar Pradesh Power Corporation Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Paschimanchal Vidyut Vitran Nigam Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Madhyanchal Vidyut Vitran Nigam Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Purvanchal Vidyut Vitran Nigam Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Dakshinanchal Vidyut Vitran Nigam Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Kanpur Electricity Supply Company Limited",
+    "role": "respondent"
+   },
+   {
+    "name": "Uttar Pradesh State Load Despatch Centre",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Whether late payment surcharge under Article 10.8.1 of the Transmission Service Agreement is payable on monthly transmission charges for Elements 2 to 8 of Lot-1 for April to November 2021 that were paid late. UPPCL said the invoices were not complete without UPSLDC-certified availability. The Commission also had to decide whether the claim for April to July 2021 was time-barred and whether UPPCL must refund the rebate it took.",
+  "outcome": "The Commission held that late payment surcharge under Article 10.8.1 is payable on the transmission charges for April to November 2021 until actual payment, and rejected the limitation plea. It held that rebate taken on invoices not paid in full, after first applying payments to the surcharge, must be reversed. It did not consider the Letter of Credit prayer because it had become infructuous.",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "timeline",
+    "title": "Elements 2 to 8 of Lot-1: COD, certification and petition dates",
+    "items": [
+     {
+      "label": "COD of Elements 2 to 8 (as fixed by Commission)",
+      "basis": [
+       "p4.3",
+       "p42.4"
+      ],
+      "start": "2021-04-16"
+     },
+     {
+      "label": "PVVNL intimates COD",
+      "basis": [
+       "p48.2"
+      ],
+      "start": "2021-12-01"
+     },
+     {
+      "label": "UPPCL accepts COD for LTTCs",
+      "basis": [
+       "p48.2"
+      ],
+      "start": "2021-12-07"
+     },
+     {
+      "label": "UPSLDC certifies monthly Availability",
+      "basis": [
+       "p47.9"
+      ],
+      "start": "2021-12-30"
+     },
+     {
+      "label": "UPSLDC certifies cumulative Availability",
+      "basis": [
+       "p47.9",
+       "p37.9"
+      ],
+      "start": "2022-01-11"
+     },
+     {
+      "label": "Invoices verified (per UPPCL)",
+      "basis": [
+       "p11.5"
+      ],
+      "start": "2022-01-28"
+     },
+     {
+      "label": "UPPCL's limitation expiry, Apr-Jul 2021 bills (rejected)",
+      "basis": [
+       "p40.5",
+       "p41.3"
+      ],
+      "start": "2024-07-04",
+      "end": "2024-10-04"
+     },
+     {
+      "label": "Petition filed",
+      "basis": [
+       "p41.2"
+      ],
+      "start": "2024-10-05"
+     }
+    ],
+    "note": "Invoice verification date is from UPPCL's submission. The limitation window is UPPCL's computation, which the Commission rejected."
+   },
+   {
+    "type": "flow",
+    "title": "How the Commission applied the TSA payment, LPS and rebate terms",
+    "items": [
+     {
+      "label": "Element achieves COD",
+      "basis": [
+       "p41.9",
+       "p42.4"
+      ],
+      "detail": "MTC is payable every month from COD. It does not depend on LTTC acceptance of COD or on a third-party certificate."
+     },
+     {
+      "label": "Invoice received and acknowledged",
+      "basis": [
+       "p42.7",
+       "p44.8"
+      ],
+      "detail": "Due Date is the 30th day after receipt and acknowledgement. Verification and UPSLDC certification are not needed for it."
+     },
+     {
+      "label": "LTTC questions invoice within 30 days?",
+      "basis": [
+       "p46.3",
+       "p47.3",
+       "p47.4"
+      ],
+      "detail": "An objection, including one about completeness, goes through an Invoice Dispute Notice",
+      "otherwise": "The invoice is considered correct, complete and conclusive"
+     },
+     {
+      "label": "Unpaid 30 days after Due Date",
+      "basis": [
+       "p14.4",
+       "p48.8"
+      ],
+      "detail": "LPS at 1.25% per month on the unpaid amount, until actual payment"
+     },
+     {
+      "label": "Payment received",
+      "basis": [
+       "p6.9",
+       "p49.3"
+      ],
+      "detail": "Applied first to LPS, then to earlier unpaid MTC invoices, then to the current invoice"
+     },
+     {
+      "label": "Invoice paid in full within Due Date?",
+      "basis": [
+       "p48.12",
+       "p48.14",
+       "p49.4",
+       "p49.6"
+      ],
+      "detail": "Rebate allowed: 2% if paid within one Business Day, 1% if paid later but by the Due Date",
+      "otherwise": "No rebate. Rebate already taken is reversed and refunded or adjusted to the Petitioner"
+     }
+    ]
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "Obra-C Badaun Transmission Limited sought late payment surcharge (LPS) from UPPCL under Article 10.8.1 of its Transmission Service Agreement (TSA). Monthly transmission charges for Elements 2 to 8 of Lot-1 for April to November 2021 were paid only in February and March 2022. UPPCL argued the invoices were incomplete until UPSLDC certified availability on 11.01.2022. The Commission held that the COD of 16.04.2021, fixed in its 2022 order and upheld by APTEL, is final, and that the duty to pay arises from COD. The Due Date runs from receipt of an invoice, not from its verification. UPSLDC certification is part of finally determining availability, not a condition for payment. UPPCL had not used the TSA's invoice dispute mechanism, and the delay came from the long-term transmission customers insisting on accepting COD first. LPS at 1.25% per month is therefore payable until actual payment. UPPCL's limitation plea for April to July 2021 failed because the dispute arose in February 2022 and the petition was filed on 05.10.2024. Rebate taken on invoices not paid in full, after payments are applied first to LPS, must be reversed. The Letter of Credit prayer had become infructuous.",
+  "headline": "Late payment surcharge applies to delayed 2021 transmission charges owed to Obra-C Badaun Transmission",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "0c706a392522289cafb4db3ccbd82297047d39e0edc7cacb48cf75ef636c26e7",
+  "path": "/orders/uperc/2026/2400-of-2026-0c706a",
+  "commission": "uperc",
+  "doc_type": "order",
+  "title": "2400 of 2026 - UPPCL. - Seeking approval of procurement of 600 MW of wind power in term of the PSA dated 30...",
+  "case_number": "Petition No. 2400 of 2026",
+  "date": "2026-11-16",
+  "source_url": "https://www.uperc.org/App_File/Pt-no-2400of2026-UPPCL-16-11-2026-PDF1117202654704PM.pdf",
+  "source_listing": false,
+  "pdf": "https://www.uperc.org/App_File/Pt-no-2400of2026-UPPCL-16-11-2026-PDF1117202654704PM.pdf",
+  "draft": true,
+  "topics": [
+   "ppa-adoption",
+   "generation-tariff"
+  ],
+  "significance": 2,
+  "parties": [
+   {
+    "name": "Uttar Pradesh Power Corporation Limited (UPPCL)",
+    "role": "Petitioner"
+   },
+   {
+    "name": "Solar Energy Corporation of India Limited (SECI)",
+    "role": "Respondent"
+   }
+  ],
+  "issue": "Whether to approve UPPCL's long-term purchase of 600 MW of wind power through SECI under the ISTS Tranche-XIX scheme, and the Power Sale Agreement dated 30.03.2026 with its supplementary agreement dated 01.10.2026.",
+  "outcome": "Approved, at the individual tariffs CERC adopted on 14.10.2026 in Petition No. 179/AT/2026. Both agreements are approved. If SECI does not give the wind developers an escrow arrangement or an irrevocable, unconditional revolving letter of credit, its trading margin is limited to Rs. 0.02/kWh.",
+  "impact": null,
+  "rating": null,
+  "figures": [],
+  "checked": {
+   "reviewers": 0,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "UPERC has approved UPPCL's purchase of 600 MW of wind power from SECI under the ISTS Tranche-XIX scheme, together with the Power Sale Agreement dated 30.03.2026 and the Supplementary Power Sale Agreement dated 01.10.2026. UPPCL said the purchase goes towards its non-solar renewable purchase obligation. Under the agreement SECI receives the tariff plus a trading margin of Rs. 0.07/kWh. The Commission declined to decide until CERC had adopted the tariffs, which CERC did on 14.10.2026 for the 1200 MW tranche; GRIDCO has the other power sale agreement. UPERC then approved the purchase at those individual tariffs. The supplementary agreement records revised capacity utilisation factors: for K.P. Energy Limited the declared 22% was revised to 24.20% when its power purchase agreement was signed, as the tender allowed a revision of up to 10%. The trading margin is limited to Rs. 0.02/kWh if SECI does not provide the developers an escrow arrangement or a revolving letter of credit.",
+  "headline": "UPERC approves UPPCL's purchase of 600 MW of wind power from SECI's Tranche-XIX auction",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "c2b279ffed032b761c25f03b4bb1209c5a407bb26874adc7605f5e455d7b3e1e",
+  "path": "/orders/uperc/2026/2403-of-2026-c2b279",
+  "commission": "uperc",
+  "doc_type": "order",
+  "title": "2403 of 2026 - UPPCL - Adoption of tariff discovered through a transparent competitive bidding process for...",
+  "case_number": "Petition No. 2403 of 2026",
+  "date": "2026-11-19",
+  "source_url": "https://www.uperc.org/App_File/Pt-no-2403of2026UPPCL-19-11-2026-PDF1120202653045PM.pdf",
+  "source_listing": false,
+  "pdf": "https://www.uperc.org/App_File/Pt-no-2403of2026UPPCL-19-11-2026-PDF1120202653045PM.pdf",
+  "draft": true,
+  "topics": [
+   "ppa-adoption",
+   "generation-tariff"
+  ],
+  "significance": 2,
+  "parties": [
+   {
+    "name": "Uttar Pradesh Power Corporation Limited (UPPCL)",
+    "role": "Petitioner"
+   },
+   {
+    "name": "MKC Kashivisvanath Ji Energy Private Limited",
+    "role": "Respondent"
+   }
+  ],
+  "issue": "Whether to adopt, under Section 63, the tariff discovered in UPPCL's 375 MW/1500 MWh standalone battery storage tender for the 125 MW/500 MWh awarded to MKC Green Energy Limited, and to approve the Battery Energy Discharge Purchase Agreement.",
+  "outcome": "Adopted. The tariff is Rs 6.46/kWh for MKC Kashivisvanath Ji Energy Private Limited, and the agreement dated 03.06.2026 is approved for 15 years from commercial operation. The parties must act for timely completion; the scheduled commissioning date is 07.12.2027.",
+  "impact": null,
+  "rating": null,
+  "figures": [],
+  "checked": {
+   "reviewers": 0,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "UPERC has adopted the tariff of Rs 6.46/kWh for 125 MW/500 MWh of standalone battery storage that MKC Kashivisvanath Ji Energy Private Limited, the project company of MKC Green Energy Limited, will build in Uttar Pradesh, and approved its Battery Energy Discharge Purchase Agreement with UPPCL dated 03.06.2026 for 15 years. The capacity is part of UPPCL's 375 MW/1500 MWh tender, which has viability gap funding from the Power System Development Fund. UPPCL told the Commission that 13 bidders took part, that bidders within L1 + 2% were declared successful, and that this tariff was discovered with support of Rs. 18 lakh/MWh, against Rs. 6.64/kWh and Rs. 6.65/kWh in its earlier storage procurement through NVVN. The Commission found the bidding transparent and in line with the approved documents. MKC Green Energy had quoted 187.5 MW and was allotted 125 MW as the last successful bidder.",
+  "headline": "UPERC adopts Rs 6.46/kWh for 125 MW/500 MWh standalone battery storage for UPPCL",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "fb3a6b9a53c8614f947d92594ba9d41f67aed2195a642722dc842938b5a39216",
+  "path": "/orders/uperc/2026/2404-of-2026-fb3a6b",
+  "commission": "uperc",
+  "doc_type": "order",
+  "title": "2404 of 2026 - UPPCL - Adoption of tariff discovered for the capacity of 187.5 MW/750 MWh out of total bid...",
+  "case_number": "Petition No. 2404 of 2026",
+  "date": "2026-11-19",
+  "source_url": "https://www.uperc.org/App_File/Pt-no-2404of2026UPPCL-19-11-2026-PDF1120202653338PM.pdf",
+  "source_listing": false,
+  "pdf": "https://www.uperc.org/App_File/Pt-no-2404of2026UPPCL-19-11-2026-PDF1120202653338PM.pdf",
+  "draft": true,
+  "topics": [
+   "ppa-adoption",
+   "generation-tariff"
+  ],
+  "significance": 2,
+  "parties": [
+   {
+    "name": "Uttar Pradesh Power Corporation Limited (UPPCL)",
+    "role": "Petitioner"
+   },
+   {
+    "name": "KCC BESS Private Limited",
+    "role": "Respondent"
+   }
+  ],
+  "issue": "Whether to adopt, under Section 63, the tariff discovered in UPPCL's 375 MW/1500 MWh standalone battery storage tender for the 187.5 MW/750 MWh awarded to KCC Buildcon Private Limited, and to approve the Battery Energy Discharge Purchase Agreement.",
+  "outcome": "Adopted. The tariff is Rs 6.45/kWh for KCC BESS Private Limited, and the agreement dated 01.06.2026 is approved for 15 years from commercial operation.",
+  "impact": null,
+  "rating": null,
+  "figures": [],
+  "checked": {
+   "reviewers": 0,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "UPERC has adopted the tariff of Rs 6.45/kWh for 187.5 MW/750 MWh of standalone battery storage that KCC BESS Private Limited, the project company of KCC Buildcon Private Limited, will build in Uttar Pradesh, and approved its Battery Energy Discharge Purchase Agreement with UPPCL dated 01.06.2026 for 15 years. The capacity is part of UPPCL's 375 MW/1500 MWh tender, which has viability gap funding from the Power System Development Fund. UPPCL told the Commission that 13 bidders took part, that bidders within L1 + 2% were declared successful, and that this tariff was discovered with support of Rs. 18 lakh/MWh, against Rs. 6.64/kWh and Rs. 6.65/kWh in its earlier storage procurement through NVVN. The Commission found the bidding transparent and in line with the approved documents. At an earlier hearing the Commission expressed its displeasure that UPPCL had not filed the complete bidding documents with the petition.",
+  "headline": "UPERC adopts Rs 6.45/kWh for 187.5 MW/750 MWh standalone battery storage for UPPCL",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "f6db0d73693a0da7dbe4ae90d90705c359e6f06532a498e163e0cfc58f404652",
+  "path": "/orders/uperc/2026/2405-of-2026-f6db0d",
+  "commission": "uperc",
+  "doc_type": "order",
+  "title": "2405 of 2026 -UPPCL - Adoption of tariff discovered through a transparent competitive bidding process for t...",
+  "case_number": "Petition No. 2405 of 2026",
+  "date": "2026-11-19",
+  "source_url": "https://www.uperc.org/App_File/Pt-no-2405of2026UPPCL-19-11-2026-PDF1120202653445PM.pdf",
+  "source_listing": false,
+  "pdf": "https://www.uperc.org/App_File/Pt-no-2405of2026UPPCL-19-11-2026-PDF1120202653445PM.pdf",
+  "draft": true,
+  "topics": [
+   "ppa-adoption",
+   "generation-tariff"
+  ],
+  "significance": 2,
+  "parties": [
+   {
+    "name": "Uttar Pradesh Power Corporation Limited (UPPCL)",
+    "role": "Petitioner"
+   },
+   {
+    "name": "Agastya Solar UP1 Private Limited",
+    "role": "Respondent"
+   }
+  ],
+  "issue": "Whether to adopt, under Section 63, the tariff discovered in UPPCL's 375 MW/1500 MWh standalone battery storage tender for the 62.50 MW/250 MWh awarded to Agastya Green Energy Limited, and to approve the Battery Energy Discharge Purchase Agreement.",
+  "outcome": "Adopted. The tariff is Rs 6.45/kWh for Agastya Solar UP1 Private Limited, and the agreement dated 08.06.2026 is approved for 15 years from commercial operation.",
+  "impact": null,
+  "rating": null,
+  "figures": [],
+  "checked": {
+   "reviewers": 0,
+   "numbers": true
+  },
+  "commercial": null,
+  "summary": "UPERC has adopted the tariff of Rs 6.45/kWh for 62.50 MW/250 MWh of standalone battery storage that Agastya Solar UP1 Private Limited, the project company of Agastya Green Energy Limited, will build in Uttar Pradesh, and approved its Battery Energy Discharge Purchase Agreement with UPPCL dated 08.06.2026 for 15 years. The capacity is part of UPPCL's 375 MW/1500 MWh tender, which has viability gap funding from the Power System Development Fund. UPPCL told the Commission that 13 bidders took part, that bidders within L1 + 2% were declared successful, and that this tariff was discovered with support of Rs. 18 lakh/MWh, against Rs. 6.64/kWh and Rs. 6.65/kWh in its earlier storage procurement through NVVN. The Commission found the bidding transparent and in line with the approved documents. At the hearing on 01.10.2026 the Commission expressed its displeasure that UPPCL had not filed the complete bidding documents.",
+  "headline": "UPERC adopts Rs 6.45/kWh for 62.50 MW/250 MWh standalone battery storage for UPPCL",
+  "reviewed_by": null,
+  "approved_at": null,
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": []
  }
 ]
