@@ -131,6 +131,11 @@ def main(argv: list[str] | None = None) -> None:
     rv = sub.add_parser("review", help="start the legal review screen")
     rv.add_argument("--host", default="127.0.0.1")
     rv.add_argument("--port", type=int, default=8765)
+    pp = sub.add_parser("publish-pending", help="show orders on the public site before legal review, marked 'pending legal review'")
+    pp.add_argument("ids", nargs="*", help="document ids (or their first characters)")
+    pp.add_argument("--file", help="a file with one id per line")
+    pp.add_argument("--as", dest="who", required=True, help="the person making this decision, for the record")
+    pp.add_argument("--off", action="store_true", help="take them off the public site again (until approved)")
     sy = sub.add_parser("sync", help="apply what reviewers submitted on the review site and push the review pages to it")
     sy.add_argument("--loop", action="store_true", help="keep running (the background job)")
     sy.add_argument("--every", type=int, default=20, help="seconds between checks with --loop")
@@ -194,6 +199,20 @@ def main(argv: list[str] | None = None) -> None:
         db.init()
         for s in args.stages:
             print(s, json.dumps(_run_stage(s, args.limit, args.doc, args.personas)))
+    elif args.cmd == "publish-pending":
+        ids = list(args.ids) + ([l.strip() for l in open(args.file) if l.strip() and not l.startswith("#")] if args.file else [])
+        done, skipped = [], []
+        with db.session() as conn:
+            for prefix in ids:
+                rows = conn.execute("""SELECT d.id, o.summary_status, o.summary FROM documents d JOIN orders o ON o.doc_id = d.id
+                                       WHERE d.id LIKE ?""", (prefix + "%",)).fetchall()
+                if len(rows) != 1 or not rows[0]["summary"] or rows[0]["summary_status"] not in ("proposed", "approved"):
+                    skipped.append(prefix[:12])
+                    continue
+                conn.execute("UPDATE orders SET pending_public = ? WHERE doc_id = ?", (0 if args.off else 1, rows[0]["id"]))
+                db.audit(conn, args.who, "publish.pending.off" if args.off else "publish.pending", rows[0]["id"])
+                done.append(rows[0]["id"][:12])
+        print(json.dumps({"off" if args.off else "pending_public": done, "skipped (no summary yet, rejected, or not one match)": skipped}))
     elif args.cmd == "sync":
         from . import mirror
         try:

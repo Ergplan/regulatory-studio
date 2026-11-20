@@ -658,3 +658,26 @@ def test_hub_has_a_tab_for_each_team(server):
     assert "Review hub" in page and 'href="/urja-praxis"' in page and 'href="/jouleWise"' in page and "rgstudio.joulewise.tech" in page
     assert "Review queue" in server.get("/urja-praxis")
     assert "commercial illustrations" in server.get("/jouleWise")
+
+
+def test_pending_order_is_published_as_a_draft_never_as_reviewed(server):
+    import subprocess, sys
+    from regstudio import config, publish
+    doc, _, _ = _ids()
+
+    def published():
+        publish.run()
+        return {o["id"]: o for o in json.loads((config.SNAPSHOT / "orders.json").read_text())}
+    assert doc not in published()                                   # proposed and not flagged: not public
+    out = subprocess.run([sys.executable, "-m", "regstudio.cli", "publish-pending", doc[:10], "--as", "Site Owner"], capture_output=True, text=True)
+    assert doc[:12] in out.stdout, out.stderr
+    o = published()[doc]
+    assert o["draft"] is True and o["reviewed_by"] is None and o["approved_at"] is None and o["commercial"] is None
+    assert _db().execute("SELECT actor FROM audit WHERE action = 'publish.pending'").fetchone()[0] == "Site Owner"
+    server("/whoami", {"name": "Test Reviewer"})
+    server(f"/order/{doc}/summary", {"action": "approve", "summary": "Reviewed.", "issue": "i", "outcome": "o"})
+    o = published()[doc]
+    assert o["draft"] is False and o["reviewed_by"] == "Test Reviewer"
+    subprocess.run([sys.executable, "-m", "regstudio.cli", "publish-pending", doc[:10], "--as", "Site Owner", "--off"], check=True, capture_output=True)
+    server(f"/order/{doc}/summary", {"action": "reject", "summary": "x", "issue": "i", "outcome": "o"})
+    assert doc not in published()                                   # rejected: off the site

@@ -76,7 +76,9 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
                       o.reviewer, o.approved_at, o.revised_at, o.summary_status, o.impact, o.rating, o.figures, o.checks, o.headline,
                       o.commercial, o.commercial_status, o.commercial_by
                FROM documents d JOIN orders o ON o.doc_id = d.id
-               WHERE o.summary_status IN (%s)""" % marks, ok).fetchall()
+               WHERE o.summary_status IN (%s) OR (o.summary_status = 'proposed' AND o.pending_public = 1)""" % marks, ok).fetchall()
+        # The second branch: orders a named person chose to show before legal review. They are published as drafts
+        # ("pending legal review") and never carry a reviewer's name or an approval date.
         docs = [d for d in docs if not (clean and SAMPLE_MARK in d["source_url"])]
         published_docs = {d["id"]: d for d in docs}
 
@@ -128,15 +130,17 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
                 shutil.copyfile(src, out / "pdf" / pdf_name)
             orders.append({
                 "id": d["id"], "path": order_path(d), "commission": d["commission"], "doc_type": d["doc_type"],
-                "title": _preview_title(d["title"]) if preview else d["title"], "case_number": d["case_number"], "date": d["doc_date"],
+                "title": _preview_title(d["title"]) if (preview or d["summary_status"] != "approved") else d["title"], "case_number": d["case_number"], "date": d["doc_date"],
                 "source_url": d["source_url"], "source_listing": listing,
                 "pdf": f"/pdf/{pdf_name}" if local else (None if listing else d["source_url"]),
-                "draft": preview and d["summary_status"] != "approved",
+                "draft": d["summary_status"] != "approved",
                 "topics": json.loads(d["topics"] or "[]"), "significance": d["significance"],
                 "parties": json.loads(d["parties"] or "[]"), "issue": d["issue"], "outcome": d["outcome"],
                 "impact": impact_load(d["impact"]), "rating": d["rating"], "figures": figures_load(d["figures"]), "checked": checks_public(d["checks"]),
                 "commercial": commercial_public(d, preview),
-                "summary": d["summary"], "headline": d["headline"], "reviewed_by": d["reviewer"], "approved_at": d["approved_at"],
+                "summary": d["summary"], "headline": d["headline"],
+                "reviewed_by": d["reviewer"] if d["summary_status"] == "approved" else None,
+                "approved_at": d["approved_at"] if d["summary_status"] == "approved" else None,
                 "revised_at": d["revised_at"], "language": d["language"],
                 "sample": SAMPLE_MARK in d["source_url"], "links": links,
             })

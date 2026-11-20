@@ -6,7 +6,10 @@ Regulatory Studio publishes legal summaries under jouleWise's name. Accuracy bea
 
 1. **The model never writes truth.** Anything Claude produces (triage verdict, summary,
    link, registry entry) lands in the working DB with status `proposed`. Only the review
-   app, acting for a named reviewer, sets `approved`. Publish reads `approved` rows only.
+   app, acting for a named reviewer, sets `approved`. Publish reads `approved` rows, plus
+   orders a named person flagged with `regstudio publish-pending`: those go out as drafts
+   marked "awaiting legal review", with no reviewer name or approval date. Never present
+   an unreviewed item as reviewed.
 2. **Every link cites a paragraph.** A reference without a paragraph id from the
    extracted text is dropped, not guessed.
 3. **Unresolved stays unresolved.** If a cited regulation or clause is not in the registry,

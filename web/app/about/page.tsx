@@ -18,7 +18,7 @@ export default function About() {
       proposal whose comment period has closed, a notified regulation in force, or an order that binds the parties to a case.{" "}
       <b>Analysis status</b> says where our own work stands: prepared with AI and awaiting legal review, or reviewed, with the date.</p>
     <h2>Preview edition and reviewed edition</h2>
-    <p>{site.preview ? "You are reading the preview edition. " : ""}The reviewed edition publishes only what the legal team has approved. A preview edition, used to check the
+    <p>{site.preview ? "You are reading the preview edition. " : ""}The reviewed edition publishes what the legal team has approved. New orders may appear before that, each clearly marked as awaiting legal review and without a reviewer's name. A preview edition, used to check the
       site before launch, also shows analysis that is still awaiting review; it carries a banner on every page and each item is marked.
       Do not rely on analysis marked as awaiting review.</p>
     <h2>Evidence</h2>

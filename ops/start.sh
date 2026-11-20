@@ -48,6 +48,13 @@ for stage in intake extract registry amend consult triage read headlines check i
   run regstudio run $stage
 done
 
+# Orders the owner chose to show on the public site before legal review, marked "pending legal review".
+if [ -f data/reader_outputs/publish_pending.txt ]; then
+  WHO="$(sed -n 's/^# as: //p' data/reader_outputs/publish_pending.txt | head -1)"
+  regstudio publish-pending --file data/reader_outputs/publish_pending.txt --as "${WHO:-the studio owner}" >> "$LOG" 2>&1 || PROBLEMS+=("publish-pending")
+  mv data/reader_outputs/publish_pending.txt "data/reader_outputs/publish_pending-done-$(date +%Y%m%d-%H%M).txt"
+fi
+
 say "4/7  Building this week's edition"
 regstudio run draft 2>>"$LOG" | tee -a "$LOG" | tail -1
 
