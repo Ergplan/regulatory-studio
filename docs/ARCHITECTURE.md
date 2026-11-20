@@ -62,6 +62,26 @@ flowchart LR
    reads the findings, edits and approves.
 6. Within 10 minutes the publisher pushes the approved text to `main`. Vercel rebuilds the public site.
 
+## Where reviewers work (current design)
+
+```
+reviewer's browser ──sign in──> review.joulewise.tech (Vercel + Postgres)
+                                   │  copies of the review pages; submitted forms saved as events
+                                   ▲
+        Mac mini: sync job ────────┘  every ~20 s, outward only, each call signed with the Mac's key
+          1. collect new events in order, replay each on the local review screen as that reviewer
+          2. push the pages that changed (and PDFs up to 4 MB)
+        Mac mini: review screen (127.0.0.1) ── the only place a decision is applied ── working database
+        Mac mini: deploy job ── approved items ──> rgstudio.joulewise.tech (public site)
+```
+
+- Nothing connects into the Mac. If the Mac is off, reviewers can still read and submit; decisions wait in the
+  queue and are applied, in order, when it is back. An event is applied at most once.
+- Reviewers are invited by a one-time link and choose their own password. The site stores only hashes.
+  Teams: Urja Praxis decides the law, jouleWise decides commercial illustrations, everyone may comment.
+- The Mac's database is the source of truth; the review site can be rebuilt from it with `regstudio sync --force`.
+- This replaces the Cloudflare Tunnel route described further down, which is kept only as a fallback.
+
 ## How the studio learns
 
 ```

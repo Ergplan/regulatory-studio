@@ -28,6 +28,7 @@ SCHEMAS = PIPELINE / "schemas"
 READER = os.environ.get("REGSTUDIO_READER", "claude")
 READER_OUTPUTS = Path(os.environ.get("REGSTUDIO_READER_OUTPUTS", DATA / "reader_outputs"))
 PUBLIC_SITE = os.environ.get("REGSTUDIO_PUBLIC_SITE", "https://rgstudio.joulewise.tech")   # where approved items are read
+REVIEW_SITE = os.environ.get("REGSTUDIO_REVIEW_SITE", "https://review.joulewise.tech")   # reviewers sign in here (Vercel)
 MEMORY = Path(os.environ.get("REGSTUDIO_MEMORY", DATA / "memory"))   # approved house notes as Markdown
 COMMENTS = Path(os.environ.get("REGSTUDIO_COMMENTS", DATA / "comments"))  # Studio comment drafts as Markdown files
 CLAUDE_BIN = os.environ.get("REGSTUDIO_CLAUDE_BIN", "claude")

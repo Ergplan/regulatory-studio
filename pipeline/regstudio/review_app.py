@@ -7,6 +7,7 @@ With reviewers added (regstudio add-reviewer), every page needs a signed-in revi
 from __future__ import annotations
 
 import datetime as dt
+import hmac
 import json
 import re
 import urllib.parse
@@ -29,6 +30,15 @@ templates.env.filters["inr"] = lambda v: commercial.fmt(float(v), 0 if float(v) 
 async def require_sign_in(request: Request, call_next):
     # A request that came through the Cloudflare Tunnel must carry a valid Access token for a registered
     # reviewer. Nothing arriving from the internet is ever let in on a typed name or a missing check.
+    # The sync job on this Mac (mirror.py) acts for a reviewer who signed in on the review site. It proves itself
+    # with a token that exists only in a file on this Mac.
+    sent = request.headers.get("x-studio-mirror")
+    if sent and not access.through_cloudflare(request.headers):
+        from . import mirror
+        if not hmac.compare_digest(sent, mirror.local_token()):
+            return HTMLResponse(REFUSED.format(why="The sync token is wrong."), status_code=403)
+        request.state.reviewer = urllib.parse.unquote(request.headers.get("x-studio-reviewer", ""))[:80] or None
+        return await call_next(request)
     if access.through_cloudflare(request.headers):
         try:
             email = access.verify(request.headers.get(access.HEADER))

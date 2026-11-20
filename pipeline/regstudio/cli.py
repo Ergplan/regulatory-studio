@@ -131,6 +131,16 @@ def main(argv: list[str] | None = None) -> None:
     rv = sub.add_parser("review", help="start the legal review screen")
     rv.add_argument("--host", default="127.0.0.1")
     rv.add_argument("--port", type=int, default=8765)
+    sy = sub.add_parser("sync", help="apply what reviewers submitted on the review site and push the review pages to it")
+    sy.add_argument("--loop", action="store_true", help="keep running (the background job)")
+    sy.add_argument("--every", type=int, default=20, help="seconds between checks with --loop")
+    sy.add_argument("--force", action="store_true", help="push every page again")
+    sub.add_parser("sync-key", help="show this Mac's public key for the review site (creates the key pair on first use)")
+    iv = sub.add_parser("invite", help="invite a reviewer to the review site; prints a one-time link where they set their own password")
+    iv.add_argument("name")
+    iv.add_argument("email")
+    iv.add_argument("--team", choices=["urja", "joulewise", "admin"], default="urja")
+    iv.add_argument("--open", action="store_true", help="open the link in this Mac's browser")
     ar = sub.add_parser("add-reviewer", help="add or reset a reviewer's password (turns on sign-in)")
     ar.add_argument("name")
     ar.add_argument("--email", help="the email this reviewer proves to Cloudflare Access; with it no password is needed")
@@ -184,6 +194,25 @@ def main(argv: list[str] | None = None) -> None:
         db.init()
         for s in args.stages:
             print(s, json.dumps(_run_stage(s, args.limit, args.doc, args.personas)))
+    elif args.cmd == "sync":
+        from . import mirror
+        try:
+            mirror.loop(args.every) if args.loop else print(json.dumps(mirror.once(args.force)))
+        except mirror.SyncError as e:
+            raise SystemExit(f"sync: {e}")
+    elif args.cmd == "sync-key":
+        from . import mirror
+        print(mirror.public_key())
+    elif args.cmd == "invite":
+        from . import mirror
+        try:
+            link = mirror.invite(args.name, args.email, args.team)
+        except mirror.SyncError as e:
+            raise SystemExit(f"invite: {e}")
+        print(f"One-time link for {args.name} (valid 7 days). Send it to them; they choose their own password:\n{link}")
+        if args.open:
+            import subprocess
+            subprocess.run(["open", link], check=False)
     elif args.cmd == "add-reviewer":
         import getpass
         from . import auth

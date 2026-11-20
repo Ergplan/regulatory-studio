@@ -1,5 +1,6 @@
 #!/bin/zsh
-# One command for the Mac mini: update, fetch, read, build this week's edition, publish, open the review screen.
+# One command for the Mac mini: update, fetch, read, build this week's edition, publish, start the background jobs
+# and connect to the review site.
 #   ~/Downloads/regulatory-studio/ops/start.sh
 # Safe to run again at any time: every step carries on from where the last run stopped.
 set -u
@@ -10,41 +11,56 @@ LOG="data/store/logs/start-$(date +%Y-%m-%d-%H%M).log"
 PROBLEMS=()
 run() { "$@" >> "$LOG" 2>&1 || PROBLEMS+=("$*"); }
 
-say "1/6  Getting the latest version"
+say "1/7  Getting the latest version"
 git pull --quiet >> "$LOG" 2>&1 || PROBLEMS+=("git pull")
 [ -d .venv ] || python3 -m venv .venv
 source .venv/bin/activate
-pip install --quiet -e 'pipeline[access]' >> "$LOG" 2>&1 || PROBLEMS+=("pip install")
+pip install --quiet -e pipeline >> "$LOG" 2>&1 || PROBLEMS+=("pip install")
 [ -f ops/studio.env ] && { set -a; source ops/studio.env; set +a; }
 sqlite3 data/store/working.db ".backup 'data/store/backups/working-$(date +%Y%m%d-%H%M).db'" 2>/dev/null
 
-say "2/6  Fetching new orders from the commission websites (a few minutes)"
+say "2/7  Fetching new orders from the commission websites (a few minutes)"
 run regstudio download --limit 80
 
-say "3/6  Reading and checking them (this is the long step; scanned PDFs are slow)"
+say "3/7  Reading and checking them (this is the long step; scanned PDFs are slow)"
 for stage in intake extract registry amend consult triage read headlines check impact figures commercial revise learn; do
   echo "     $stage"
   run regstudio run $stage
 done
 
-say "4/6  Building this week's edition"
+say "4/7  Building this week's edition"
 regstudio run draft 2>>"$LOG" | tee -a "$LOG" | tail -1
 
-say "5/6  Publishing: approved items to the public site, everything else to the preview"
+say "5/7  Publishing: approved items to the public site, everything else to the preview"
 run regstudio deploy
 
-say "6/6  Opening the review screen"
-lsof -ti tcp:8765 2>/dev/null | xargs kill 2>/dev/null
-sleep 1
-nohup regstudio review >> data/store/logs/review.log 2>&1 &
-sleep 3
-open "http://127.0.0.1:8765"
+say "6/7  Starting the background jobs (scan, review screen, sync, publishing)"
+if ops/install_mac.sh >> "$LOG" 2>&1; then echo "     running"; else PROBLEMS+=("background jobs: $(grep 'NOT INSTALLED' "$LOG" | tail -1)"); fi
+sleep 4
+
+say "7/7  Connecting to the review site ($(python -c 'from regstudio import config; print(config.REVIEW_SITE)'))"
+regstudio sync-key > /dev/null 2>>"$LOG"
+if regstudio sync >> "$LOG" 2>&1; then
+  echo "     connected; the review pages are up to date"
+  if [ ! -f data/store/first_admin_invited ]; then
+    echo
+    echo "     Set up your own sign-in (asked once). You will choose a password in the browser."
+    printf "     Your full name: "; read NAME
+    printf "     Your work email: "; read EMAIL
+    if [ -n "$NAME" ] && [ -n "$EMAIL" ] && regstudio invite "$NAME" "$EMAIL" --team admin --open >> "$LOG" 2>&1; then
+      touch data/store/first_admin_invited; echo "     Your invitation opened in the browser. Invite the others from the Admin page there."
+    else PROBLEMS+=("could not create your invitation"); fi
+  fi
+else
+  echo "     not connected yet: the review site does not know this Mac's key."
+  echo "     Tell Claude: \"the key is ready\". It is in data/store/sync_public_key.txt (a public key, safe to share)."
+fi
 
 echo
 regstudio status 2>/dev/null | head -20
 echo
 if [ ${#PROBLEMS[@]} -eq 0 ]; then
-  echo "✅ Done. The review screen is open in your browser: http://127.0.0.1:8765"
+  echo "✅ Done. Reviewers sign in at $(python -c 'from regstudio import config; print(config.REVIEW_SITE)')"
 else
   echo "⚠️  Finished with ${#PROBLEMS[@]} problem(s):"
   for p in "${PROBLEMS[@]}"; do echo "   - $p"; done

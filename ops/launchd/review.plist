@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<!-- The review screen: always running, on this machine only (127.0.0.1:8765). The tunnel is the only way in from outside.
+<!-- The review screen: always running, on this machine only (127.0.0.1:8765). Reviewers use the review site; the sync job replays what they submit there.
      Installed by ops/install_mac.sh, which replaces REPO_PATH. Do not load this file as it is. -->
 <plist version="1.0"><dict>
   <key>Label</key><string>in.joulewise.regstudio.review</string>

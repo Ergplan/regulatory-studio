@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- The link to the review site (review.joulewise.tech on Vercel): applies what reviewers submit there and pushes the review pages to it.
+     Only outward connections, signed with this Mac's key. Installed by ops/install_mac.sh, which replaces REPO_PATH. -->
+<plist version="1.0"><dict>
+  <key>Label</key><string>in.joulewise.regstudio.sync</string>
+  <key>ProgramArguments</key><array><string>/bin/zsh</string><string>-lc</string><string>cd REPO_PATH &amp;&amp; source .venv/bin/activate &amp;&amp; { [ -f ops/studio.env ] &amp;&amp; set -a &amp;&amp; source ops/studio.env; set +a; }; exec regstudio sync --loop</string></array>
+  <key>RunAtLoad</key><true/>
+  <key>KeepAlive</key><true/>
+  <key>ThrottleInterval</key><integer>20</integer>
+  <key>StandardOutPath</key><string>REPO_PATH/data/store/logs/sync.out</string>
+  <key>StandardErrorPath</key><string>REPO_PATH/data/store/logs/sync.err</string>
+</dict></plist>

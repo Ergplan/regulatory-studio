@@ -119,3 +119,43 @@ def test_a_failed_push_is_reported_and_retried_later(site_repo):
     assert "last push failed" in server.get("/urja-praxis")
     _git(clone, "remote", "set-url", "origin", str(remote))
     assert deploy.run()["preview"]["pushed"] is True
+
+
+# ---------- the link to the review site (mirror.py) ----------
+
+def test_sync_replays_only_allowed_forms_once_and_as_the_reviewer(server, monkeypatch):
+    import base64, hashlib
+    from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
+    from regstudio import mirror
+    doc, _, _ = _ids()
+    monkeypatch.setattr(mirror, "LOCAL", server.url)
+    sent = []
+    queue = [[{"id": 7, "path": f"/notes/{doc}", "body": "target=summary&body=From+the+review+site", "user_name": "Leela Legal"},
+              {"id": 8, "path": "/whoami", "body": "name=Mallory", "user_name": "Mallory"},
+              {"id": 9, "path": "/order/../login", "body": "", "user_name": "Mallory"}], []]
+
+    def fake_call(op, **body):
+        sent.append((op, body))
+        return {"events": queue.pop(0) if queue else []} if op == "events" else {"pages": {}, "files": []}
+    monkeypatch.setattr(mirror, "call", fake_call)
+    assert mirror.pull() == {"applied": 1, "failed": 2}
+    acks = {r["id"]: r["status"] for op, b in sent if op == "ack" for r in b["results"]}
+    assert acks == {7: "applied", 8: "refused", 9: "refused"}
+    row = _db().execute("SELECT author, body FROM review_comments").fetchall()
+    assert [tuple(r) for r in row] == [("Leela Legal", "From the review site")]
+    # The same event delivered again (a lost acknowledgement) is acknowledged, not applied twice.
+    queue[:] = [[{"id": 7, "path": f"/notes/{doc}", "body": "target=summary&body=From+the+review+site", "user_name": "Leela Legal"}], []]
+    assert mirror.pull() == {"applied": 0, "failed": 0}
+    assert _db().execute("SELECT count(*) FROM review_comments").fetchone()[0] == 1
+    # Pages are crawled as a placeholder reviewer; a wrong local token is refused.
+    pages, _files = mirror.crawl()
+    assert "/urja-praxis" in pages and f"/order/{doc}" in pages and mirror.NAME_SLOT in pages["/"]
+    try:
+        urllib.request.urlopen(urllib.request.Request(server.url + "/", headers={"X-Studio-Mirror": "wrong"}))
+        raise AssertionError("a wrong sync token was accepted")
+    except urllib.error.HTTPError as e:
+        assert e.code == 403
+    # Calls to the review site are signed with this Mac's key.
+    pub = Ed25519PublicKey.from_public_bytes(base64.b64decode(mirror.public_key()))
+    pub.verify(base64.b64decode(mirror._sign(b"123\n" + hashlib.sha256(b"{}").hexdigest().encode())), b"123\n" + hashlib.sha256(b"{}").hexdigest().encode())
+    assert oct((mirror._key_path()).stat().st_mode)[-3:] == "600"

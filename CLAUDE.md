@@ -30,22 +30,29 @@ Regulatory Studio publishes legal summaries under jouleWise's name. Accuracy bea
 - The site in `web/` builds only from `data/snapshot/*.json`. Pages must be fully readable
   without JavaScript; the spider map sits on top of a plain list of links.
 
-## The Mac mini is the server
+## The Mac mini is the server; reviewers work on Vercel
 
-See `docs/ARCHITECTURE.md` and `docs/MAC_MINI_SERVER.md`. Four launchd jobs (`ops/launchd/`, installed by
-`ops/install_mac.sh`):
+See `docs/ARCHITECTURE.md`. Four launchd jobs (`ops/launchd/`, installed by `ops/install_mac.sh`; `ops/start.sh`
+does everything in one command):
 
 - **scan** (`ops/scan.sh`, Tuesday and Friday 06:00): download, intake, extract, registry, amend, consult,
-  triage, read, check, impact, figures, comments, the Friday digest draft, then `regstudio deploy --refresh`.
-  Every stage has a `--limit`; a run that hits a usage limit stops cleanly and the next scan resumes.
-- **review**: `regstudio review` on 127.0.0.1:8765, reached from outside only through the Cloudflare Tunnel.
-  Tunnelled requests must carry a valid Cloudflare Access token for a registered reviewer (`access.py`).
+  triage, read, check, impact, figures, comments, revise, learn, commercial, the Friday digest draft, then
+  `regstudio deploy --refresh`. Every stage has a `--limit`; a run that hits a usage limit stops cleanly and the
+  next scan resumes.
+- **review**: `regstudio review` on 127.0.0.1:8765. It is the only place a decision is applied.
+- **sync** (`regstudio sync --loop`, `mirror.py`): the link to the review site, `review.joulewise.tech`
+  (`web/app/r`, `web/app/review-api/sync`, `web/lib/review`, Postgres). It pushes copies of the review pages
+  there and replays, in order and at most once, the forms signed-in reviewers submit there, as that reviewer.
+  Only outward calls, signed with this Mac's Ed25519 key; the site holds the public half
+  (`STUDIO_SYNC_PUBLIC_KEY`). The form allowlist is in `mirror.ALLOWED` and again in the route (`FORMS`):
+  change both together.
 - **deploy** (every 10 minutes): `regstudio deploy` pushes approved items to `main` (public site) and the
   unreviewed preview to `preview` (preview site), each from its own git worktree in `data/store/deploy/`.
-- **tunnel**: `cloudflared`.
 
-Never weaken these: production data comes only from `approved` rows; a request through Cloudflare without a
-valid token is refused; the review screen binds to 127.0.0.1; no credentials or tokens in the repo.
+Never weaken these: production data comes only from `approved` rows; the review screen binds to 127.0.0.1;
+the review site accepts nothing from the Mac without a valid signature and nothing from a browser without a
+session; passwords, sessions and invitations are stored only as hashes; no credentials, keys or tokens in the
+repo (`data/store/sync_key.pem` and `mirror.token` never leave the Mac).
 
 ## Prepared files and the weekly digest
 
