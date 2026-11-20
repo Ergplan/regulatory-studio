@@ -1,1 +1,323 @@
-[]
+[
+ {
+  "id": "f36d5dc4d09d199719553d0d7a4edec081c13b1898fe33f8d10403e386d2d04c",
+  "path": "/orders/cerc/2026/13-sm-2026-f36d5d",
+  "commission": "cerc",
+  "doc_type": "order",
+  "title": null,
+  "case_number": "Petition No. 13/SM/2026",
+  "date": "2026-10-28",
+  "source_url": "https://cercind.gov.in/2026/Orders/13-SM-2026.pdf",
+  "source_listing": false,
+  "pdf": "/pdf/f36d5dc4d09d1997.pdf",
+  "draft": false,
+  "topics": [
+   "power-market"
+  ],
+  "significance": 4,
+  "parties": [],
+  "issue": "Whether pumped storage plants (PSPs) should be added to the categories of generating stations eligible to participate in the High Price Day Ahead Market (HP-DAM) on the power exchanges.",
+  "outcome": "The Commission formed a prima facie view in favour and proposed including PSPs as an eligible HP-DAM category. It initiated suo motu proceedings under Regulation 56 of the Conduct of Business Regulations, 2023, issued a public notice, and directed parties to file written submissions within 15 days. No final decision has been taken.",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "bars",
+    "title": "Average DAM clearing price: solar hours vs evening peak, Apr 2025 to Jul 2026",
+    "items": [
+     {
+      "label": "Solar hours (average)",
+      "basis": [
+       "p6.6"
+      ],
+      "value": 2.2,
+      "tag": "NLDC analysis"
+     },
+     {
+      "label": "Evening peak hours (average)",
+      "basis": [
+       "p6.6"
+      ],
+      "value": 6.57,
+      "tag": "NLDC analysis"
+     }
+    ],
+    "unit": "₹/unit",
+    "note": "NLDC's analysis of unconstrained DAM prices; spread of about ₹4.37 per unit"
+   },
+   {
+    "type": "timeline",
+    "title": "Steps towards PSP access to HP-DAM",
+    "items": [
+     {
+      "label": "MoP PSP guidelines allow PSPs in HP-DAM",
+      "basis": [
+       "p2.3",
+       "p2.4"
+      ],
+      "start": "2023-04-10"
+     },
+     {
+      "label": "NLDC first letter recommending PSP inclusion",
+      "basis": [
+       "p2.5"
+      ],
+      "start": "2026-07-02"
+     },
+     {
+      "label": "NLDC second letter recommending PSP inclusion",
+      "basis": [
+       "p2.5"
+      ],
+      "start": "2026-07-24"
+     },
+     {
+      "label": "MoP letter asking CERC to consider PSPs",
+      "basis": [
+       "p2.5"
+      ],
+      "start": "2026-07-30"
+     },
+     {
+      "label": "CERC order; submissions due within 15 days",
+      "basis": [
+       "p1.6",
+       "p7.6"
+      ],
+      "start": "2026-10-28"
+     }
+    ]
+   }
+  ],
+  "checked": null,
+  "commercial": null,
+  "summary": "CERC has proposed that pumped storage plants (PSPs) be allowed to sell in the High Price Day Ahead Market (HP-DAM), which is currently open only to gas stations using imported RLNG or naphtha, imported-coal stations and battery storage. The proposal follows NLDC recommendations of July 2026 and a Ministry of Power letter of 30.07.2026. NLDC's analysis noted that operational PSP capacity (7,425.6 MW) is largely tied up, and that HP-DAM cleared on only 47 days between April 2025 and July 2026. It also found a solar-hour to evening-peak price spread in the DAM of about ₹4.37 per unit. The Commission took the prima facie view that the DAM alone may not give PSPs enough opportunity and that HP-DAM access could improve their viability and support grid flexibility. This is a proposal, not a final order: CERC has started suo motu proceedings, issued a public notice, and asked parties to file written submissions within 15 days of the order dated 28.10.2026.",
+  "headline": "CERC proposes letting pumped storage plants sell in the high-price day-ahead market",
+  "reviewed_by": "mahak",
+  "approved_at": "2026-11-12 09:43:34",
+  "revised_at": "2026-11-12 09:43:34",
+  "language": "en",
+  "sample": false,
+  "links": []
+ },
+ {
+  "id": "5e7d1a2d457deaf42685c115e63a398f5b702c1b9c831fc6c495e346fd2ad550",
+  "path": "/orders/cerc/2026/979-mp-2025-5e7d1a",
+  "commission": "cerc",
+  "doc_type": "order",
+  "title": null,
+  "case_number": "Petition No. 979/MP/2025",
+  "date": "2026-11-02",
+  "source_url": "https://cercind.gov.in/2026/Orders/979-MP-2025.pdf",
+  "source_listing": false,
+  "pdf": "/pdf/5e7d1a2d457deaf4.pdf",
+  "draft": false,
+  "topics": [
+   "dsm"
+  ],
+  "significance": 4,
+  "parties": [
+   {
+    "name": "Vena Energy Vidyuth Private Limited",
+    "role": "petitioner"
+   },
+   {
+    "name": "Southern Regional Power Committee",
+    "role": "respondent"
+   },
+   {
+    "name": "Southern Regional Load Despatch Centre",
+    "role": "respondent"
+   },
+   {
+    "name": "Ministry of New and Renewable Energy",
+    "role": "respondent"
+   },
+   {
+    "name": "Solar Energy Corporation of India Limited",
+    "role": "respondent"
+   }
+  ],
+  "issue": "Whether a 160 MW blended wind project (81% wind, 19% solar, single injection point) built under the 2020 Blended Wind Guidelines can be treated as a generating station based on wind resource for deviation charges under Regulation 8(4) of the DSM Regulations, 2024, using the power to relax (Regulation 11) or remove difficulty (Regulation 12).",
+  "outcome": "Petition rejected. The project is treated as a wind-solar hybrid under Regulation 8(4). The Commission held that Regulations 11 and 12 cannot be used to create a new category or classification of generating station, and that setting a threshold for predominantly wind projects would be akin to amending the Regulations.",
+  "impact": {
+   "headline": "Building wind with some solar behind one injection point? Check which deviation band the project falls in.",
+   "checks": [
+    "Does any solar capacity share the injection point with the wind capacity?",
+    "What deviation band did your bid tariff assume?",
+    "How accurate is your forecasting against available capacity?",
+    "Has the project reached COD, and under which deviation regulations?"
+   ],
+   "market_note": "CERC refuses to treat an 81% wind, 19% solar blended project as a wind station for deviation settlement. A wind project with any solar behind the same injection point settles in the solar and hybrid bands, 5% from 01.04.2026 against 10% for wind.",
+   "key_points": [
+    {
+     "text": "Holding: the 160 MW project cannot be treated as wind for Regulation 8(4) of the DSM Regulations, 2024; prayers rejected",
+     "basis": [
+      "p15.5",
+      "p16.1"
+     ]
+    },
+    {
+     "text": "Relaxation and removal-of-difficulty powers cannot be used to create a new category of generating station",
+     "basis": [
+      "p15.3",
+      "p15.4"
+     ]
+    },
+    {
+     "text": "Qualifying under the 2020 Blended Wind Guidelines, or the 33% hybrid threshold in other guidelines, does not decide DSM treatment",
+     "basis": [
+      "p14.10",
+      "p14.12"
+     ]
+    },
+    {
+     "text": "Petitioner's figures (a claim, not a finding): DSM about Rs 4.73 crore (5.3% of revenue) as hybrid against about Rs 2.68 crore (3.0%) as wind, Nov 2024 to Sep 2025",
+     "basis": [
+      "p11.1",
+      "p9.5"
+     ]
+    },
+    {
+     "text": "Configuration was the developer's choice: the other awardee built its 810 MW as wind only",
+     "basis": [
+      "p15.2"
+     ]
+    }
+   ],
+   "procurement": [
+    {
+     "text": "In blended or hybrid tenders, DSM category follows the physical mix at the injection point, not the tender label; price deviation exposure accordingly",
+     "basis": [
+      "p14.10",
+      "p15.5"
+     ]
+    },
+    {
+     "text": "Raise classification concerns before COD: the 2024 Regulations were notified before this project's COD",
+     "basis": [
+      "p15.1"
+     ]
+    }
+   ],
+   "stakeholders": {
+    "re_developers": {
+     "effect": "cost",
+     "comment": "Projects with wind and solar at one injection point settle as hybrid: 5% inner band from 01.04.2026 against 10% for wind. The petitioner put its cost at 5.3% of revenue as hybrid against 3.0% as wind (Nov 2024 to Sep 2025).",
+     "basis": [
+      "p14.2",
+      "p14.5",
+      "p11.1",
+      "p15.5"
+     ]
+    },
+    "transmission": {
+     "effect": "mixed",
+     "comment": "SRPC and SRLDC classification upheld: load despatch centres apply Regulation 8(4) as written, and only the Commission can relax it.",
+     "basis": [
+      "p8.3",
+      "p15.5"
+     ]
+    }
+   },
+   "open_questions": [
+    "The order binds the parties, but its reasoning (relaxation cannot create a category) will apply to similar petitions.",
+    "A different treatment would need an amendment to Regulation 8(4); the order notes this but does not propose one."
+   ]
+  },
+  "rating": null,
+  "figures": [
+   {
+    "type": "bars",
+    "title": "Deviation charges as a share of revenue, by how the project is classed",
+    "items": [
+     {
+      "label": "Classed as solar or hybrid (10% band)",
+      "basis": [
+       "p11.1"
+      ],
+      "value": 5.3,
+      "tag": "petitioner's claim"
+     },
+     {
+      "label": "If classed as wind (15% band)",
+      "basis": [
+       "p11.1"
+      ],
+      "value": 3.0,
+      "tag": "petitioner's claim",
+      "context": true
+     }
+    ],
+    "unit": "% of revenue",
+    "note": "The petitioner's own figures, not a finding of the Commission."
+   },
+   {
+    "type": "flow",
+    "title": "How the Commission reached 'not a wind station'",
+    "items": [
+     {
+      "label": "Wind and solar in one project",
+      "basis": [
+       "p12.3"
+      ],
+      "detail": "129.6 MW wind and 30.4 MW solar (81% and 19%), connected at Gadag pooling station"
+     },
+     {
+      "label": "It qualifies under the 2020 Blended Wind Guidelines",
+      "basis": [
+       "p14.10"
+      ],
+      "detail": "That does not, by itself, decide its treatment under the DSM Regulations"
+     },
+     {
+      "label": "The 33% test for hybrids in other guidelines",
+      "basis": [
+       "p14.11",
+       "p14.12"
+      ],
+      "detail": "Cannot be relied on to decide the category under the DSM Regulations"
+     },
+     {
+      "label": "Power to relax or remove difficulty",
+      "basis": [
+       "p15.3",
+       "p15.4"
+      ],
+      "detail": "Cannot be used to create a new category of generating station"
+     },
+     {
+      "label": "Result: prayers rejected",
+      "basis": [
+       "p15.5",
+       "p16.1",
+       "p13.15",
+       "p14.2"
+      ],
+      "detail": "The first band for solar and hybrid applies: 10% to 31.03.2026, then 5%"
+     }
+    ]
+   }
+  ],
+  "checked": null,
+  "commercial": null,
+  "summary": "CERC has rejected Vena Energy's plea to treat its 160 MW blended wind project in Koppal, Karnataka (129.6 MW wind, 30.4 MW solar) as a wind generator for deviation settlement. The project was bid under MNRE's 2020 Blended Wind Guidelines and commissioned on 29.10.2024. SRPC treats it as a hybrid because it has wind and solar behind one injection point, which puts it in the tighter deviation band for solar and hybrid sellers under Regulation 8(4) of the DSM Regulations, 2024. Vena said this raised its DSM liability to about 5.3% of revenue, against about 3.0% if treated as wind. The Commission held that qualifying under the Blended Wind Guidelines does not decide treatment under the DSM Regulations. The 33% hybrid threshold in other guidelines is not relevant either, and the developer could have built a wind-only project, as another bidder in the same tranche did. Crucially, the Commission said its powers to relax and remove difficulty under Regulations 11 and 12 cannot be used to create a new category of generating station.",
+  "headline": "Vena's blended wind project stays in the tighter hybrid deviation band",
+  "reviewed_by": "mahak",
+  "approved_at": "2026-11-12 09:34:49",
+  "revised_at": null,
+  "language": "en",
+  "sample": false,
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s79",
+    "cited_as": "Section 79 of the Electricity Act",
+    "pid": "p3.10",
+    "excerpt": "The Petitioner has filed the present petition under Section 79 of the Electricity Act read with Regulations 11 and 12 of the Central Electricity Regulatory Commission (Deviation Settlement Mechanism and Related Matters) Regulations, 2024",
+    "page": 3
+   }
+  ]
+ }
+]
