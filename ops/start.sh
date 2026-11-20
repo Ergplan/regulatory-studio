@@ -6,6 +6,20 @@
 set -u
 cd "$(dirname "$0")/.."
 say() { echo; echo "▶ $*"; }
+# macOS does not let background jobs read Downloads, Desktop or Documents. If the project is there, move it to the
+# home folder once and carry on from the new place.
+case "$PWD" in
+  "$HOME/Downloads/"*|"$HOME/Desktop/"*|"$HOME/Documents/"*)
+    NEW="$HOME/regulatory-studio"
+    if [ -e "$NEW" ]; then echo "The project is in $PWD, where background jobs cannot run, and $NEW already exists. Run: $NEW/ops/start.sh"; exit 1; fi
+    say "Moving the project to $NEW (background jobs cannot run from $(basename "$(dirname "$PWD")"))"
+    ops/install_mac.sh --remove >/dev/null 2>&1
+    lsof -ti tcp:8765 2>/dev/null | xargs kill 2>/dev/null
+    OLD="$PWD"; cd "$HOME" && mv "$OLD" "$NEW" && cd "$NEW" || { echo "Could not move the project. Nothing was changed."; exit 1; }
+    rm -rf .venv                                   # it remembers the old location; it is rebuilt below
+    git worktree repair data/store/deploy/* >/dev/null 2>&1
+    exec ops/start.sh ;;
+esac
 mkdir -p data/store/logs data/store/backups
 LOG="data/store/logs/start-$(date +%Y-%m-%d-%H%M).log"
 PROBLEMS=()
@@ -13,7 +27,7 @@ run() { "$@" >> "$LOG" 2>&1 || PROBLEMS+=("$*"); }
 
 say "1/7  Getting the latest version"
 git pull --quiet >> "$LOG" 2>&1 || PROBLEMS+=("git pull")
-[ -d .venv ] || python3 -m venv .venv
+[ -x .venv/bin/python ] || python3 -m venv .venv
 source .venv/bin/activate
 pip install --quiet -e pipeline >> "$LOG" 2>&1 || PROBLEMS+=("pip install")
 [ -f ops/studio.env ] && { set -a; source ops/studio.env; set +a; }
