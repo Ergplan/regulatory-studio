@@ -19,6 +19,11 @@ const SCHEMA = [
      created_at timestamptz NOT NULL DEFAULT now(), applied_at timestamptz, status text, note text)`,
   `CREATE INDEX IF NOT EXISTS rs_events_pending ON rs_events (id) WHERE applied_at IS NULL`,
   `CREATE TABLE IF NOT EXISTS rs_attempts (id bigserial PRIMARY KEY, email text NOT NULL, ip text NOT NULL, at timestamptz NOT NULL DEFAULT now())`,
+  `CREATE TABLE IF NOT EXISTS rs_chats (id text PRIMARY KEY, started_at timestamptz NOT NULL, updated_at timestamptz NOT NULL DEFAULT now(),
+     page text, ref text, name text, company text, reach text, messages jsonb NOT NULL DEFAULT '[]', ip_hash text, handled_by text, handled_at timestamptz)`,
+  `CREATE TABLE IF NOT EXISTS rs_leads (id bigserial PRIMARY KEY, at timestamptz NOT NULL DEFAULT now(), name text NOT NULL, email text NOT NULL,
+     org text, business text, state text, asked text, reading text, page text, message text, emailed boolean NOT NULL DEFAULT false, ip_hash text,
+     handled_by text, handled_at timestamptz)`,
   `CREATE TABLE IF NOT EXISTS rs_meta (key text PRIMARY KEY, value jsonb NOT NULL, updated_at timestamptz NOT NULL DEFAULT now())`,
 ];
 

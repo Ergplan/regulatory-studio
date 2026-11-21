@@ -1,3 +1,4 @@
+import { SALES_EMAIL } from "@/lib/contact";
 import type { Metadata } from "next";
 import Link from "next/link";
 import GroupIcon from "@/components/GroupIcon";
@@ -27,7 +28,7 @@ export default function Studio() {
     <h1 className="hero">Cues for your comments.</h1>
     <p className="lede">Say who you are and pick a draft regulation that is open for comment. The Studio shows the points worth
       commenting on, each tied to its provision and paragraph. It does not write your submission. For a full analysis, leave a request with the team.</p>
-    <StudioDesk drafts={drafts} groups={GROUPS} contact={process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? null} />
+    <StudioDesk drafts={drafts} groups={GROUPS} contact={SALES_EMAIL} />
     {prepared.length > 0 && (
       <section className="prepared">
         <h2>All cues</h2>

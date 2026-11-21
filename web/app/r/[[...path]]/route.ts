@@ -59,7 +59,7 @@ function banner(c: Ctx, user: User, mac: any, events: Row[], queued: string | nu
     if (!e.applied_at) bits.push(`<div class="flash" role="status" data-pending="${e.id}">Saved. Applying your change on the studio's server, usually within a minute. This page refreshes by itself.</div>`);
     else if (e.status !== "applied") bits.push(`<div class="flash" role="alert" style="border-color:#b3261e;background:#fdecea"><b>A change you submitted was not applied.</b> ${esc(e.note || "")} Please check the page and try again.</div>`);
   }
-  const admin = user.team === "admin" ? ` · <a href="${c.base}/_/admin">Admin</a>` : "";
+  const admin = (user.team === "urja" ? "" : ` · <a href="${c.base}/_/inbox">Inbox</a>`) + (user.team === "admin" ? ` · <a href="${c.base}/_/admin">Admin</a>` : "");
   const who = `<div class="muted" style="font-size:12px;margin:0 0 10px">${esc(TEAM_NAME[user.team])} · ${esc(user.email)}${admin}</div>`;
   const script = `<script>(function(){var p=document.querySelector('[data-pending]');if(!p)return;var id=p.getAttribute('data-pending'),n=0;
 function t(){n++;fetch(${JSON.stringify(c.base)}+'/_/event/'+id+'?page='+encodeURIComponent(${JSON.stringify(c.path)}),{credentials:'same-origin',cache:'no-store'}).then(function(r){return r.json()}).then(function(s){
@@ -188,6 +188,37 @@ ${events.map((e) => `<tr><td>${esc(when(e.created_at))}</td><td>${esc(e.user_nam
   return html(shell("Administration", body));
 }
 
+// Messages from the public site: the chat box and "Discuss my project". Readable by the jouleWise team and administrators.
+async function inbox(c: Ctx, user: User, method: string): Promise<Response> {
+  if (user.team === "urja") return html(messagePage("jouleWise team only", "Messages from the public site are handled by the jouleWise team.", { href: c.base || "/", label: "Back to the review hub" }), 403);
+  if (method === "POST") {
+    const f = await form(c.req);
+    if (!f || !sameOrigin(c)) return html(messagePage("Not accepted", "Please go back and try again."), 400);
+    const kind = f.data.get("kind"), id = f.data.get("id") || "", done = f.data.get("done") === "1";
+    if (kind === "chat") await q("UPDATE rs_chats SET handled_by = $2, handled_at = CASE WHEN $3 THEN now() END WHERE id = $1", [id, done ? user.name : null, done]);
+    if (kind === "lead") await q("UPDATE rs_leads SET handled_by = $2, handled_at = CASE WHEN $3 THEN now() END WHERE id = $1", [Number(id), done ? user.name : null, done]);
+    return go(`${c.base}/_/inbox`);
+  }
+  const [chats, leads] = await Promise.all([
+    q("SELECT * FROM rs_chats ORDER BY (handled_at IS NOT NULL), updated_at DESC LIMIT 100"),
+    q("SELECT * FROM rs_leads ORDER BY (handled_at IS NOT NULL), at DESC LIMIT 100")]);
+  const when = (d: any) => (d ? new Date(d).toLocaleString("en-IN", { timeZone: "Asia/Kolkata", dateStyle: "medium", timeStyle: "short" }) : "");
+  const act = `${c.base}/_/inbox`;
+  const mark = (kind: string, id: any, done: boolean) => `<form method="post" action="${act}" class="inline"><input type="hidden" name="kind" value="${kind}"><input type="hidden" name="id" value="${esc(id)}"><input type="hidden" name="done" value="${done ? 1 : 0}"><button>${done ? "Mark handled" : "Reopen"}</button></form>`;
+  const open = chats.filter((x) => !x.handled_at).length + leads.filter((x) => !x.handled_at).length;
+  const body = `${brand}<h1>Inbox</h1><p><a href="${c.base || "/"}">Back to the review hub</a> · ${open} waiting for a reply</p>
+<h2>Project review requests</h2><table><tr><th>When</th><th>From</th><th>About</th><th>Message</th><th></th></tr>
+${leads.map((l) => `<tr${l.handled_at ? ' class="muted"' : ""}><td>${esc(when(l.at))}</td><td><b>${esc(l.name)}</b><br><a href="mailto:${esc(l.email)}">${esc(l.email)}</a><br>${esc(l.org || "")}${l.business ? `<br><span class="muted">${esc(l.business)}${l.state ? `, ${esc(l.state)}` : ""}</span>` : ""}</td>
+<td>${esc(l.asked || l.reading || "-")}${l.page ? `<br><a href="${esc(l.page)}" target="_blank" rel="noopener">page</a>` : ""}</td><td style="white-space:pre-wrap">${esc(l.message || "")}</td>
+<td>${l.handled_at ? `<span class="muted">handled by ${esc(l.handled_by)}</span><br>${mark("lead", l.id, false)}` : mark("lead", l.id, true)}</td></tr>`).join("") || `<tr><td colspan="5" class="muted">None yet.</td></tr>`}</table>
+<h2>Chat conversations</h2><table><tr><th>Last message</th><th>Visitor</th><th>Conversation</th><th></th></tr>
+${chats.map((x) => `<tr${x.handled_at ? ' class="muted"' : ""}><td>${esc(when(x.updated_at))}<br><span class="muted">on ${esc(x.page || "/")}</span></td>
+<td>${x.reach ? `<b>${esc(x.name || "")}</b>${x.company ? `<br>${esc(x.company)}` : ""}<br>${esc(x.reach)}` : `<span class="muted">no contact left</span>`}</td>
+<td>${(x.messages || []).map((m: any) => `<p style="margin:0 0 6px">${esc(m.text)}</p>`).join("")}</td>
+<td>${x.handled_at ? `<span class="muted">handled by ${esc(x.handled_by)}</span><br>${mark("chat", x.id, false)}` : mark("chat", x.id, true)}</td></tr>`).join("") || `<tr><td colspan="4" class="muted">None yet.</td></tr>`}</table>`;
+  return html(shell("Inbox", body));
+}
+
 async function submit(c: Ctx, user: User): Promise<Response> {
   if (!sameOrigin(c)) return html(messagePage("Not accepted", "This form did not come from the review site. Go back, reload the page and try again."), 403);
   if (!FORMS.test(c.path) || c.path.includes("..")) return html(messagePage("Not accepted", "The review site does not accept this form."), 404);
@@ -235,6 +266,7 @@ async function handle(req: Request, parts: string[] | undefined, method: "GET" |
     const user = await currentUser(req);
     if (!user) return method === "GET" ? go(c.base + "/_/login") : html(loginPage(c.base, "Your session has ended. Sign in and submit the form again."), 401);
     if (c.path === "/_/admin") return admin(c, user, method);
+    if (c.path === "/_/inbox") return inbox(c, user, method);
     if (method === "POST") return submit(c, user);
     if (c.path.startsWith("/_/event/")) return eventStatus(c, user);
     if (c.path.startsWith("/file/")) return file(c);
