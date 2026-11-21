@@ -681,3 +681,17 @@ def test_pending_order_is_published_as_a_draft_never_as_reviewed(server):
     subprocess.run([sys.executable, "-m", "regstudio.cli", "publish-pending", doc[:10], "--as", "Site Owner", "--off"], check=True, capture_output=True)
     server(f"/order/{doc}/summary", {"action": "reject", "summary": "x", "issue": "i", "outcome": "o"})
     assert doc not in published()                                   # rejected: off the site
+
+
+def test_publish_pending_all_covers_drafts_and_editions_without_claiming_review(server):
+    import subprocess, sys
+    from regstudio import config, publish
+    _, _, cons = _ids() if len(_ids()) > 2 else (None, None, None)
+    subprocess.run([sys.executable, "-m", "regstudio.cli", "publish-pending", "--all", "--as", "Site Owner"], check=True, capture_output=True)
+    publish.run()
+    snap = {f: json.loads((config.SNAPSHOT / f).read_text()) for f in ("orders.json", "consultations.json", "digests.json")}
+    every = snap["orders.json"] + snap["consultations.json"] + snap["digests.json"]
+    assert snap["orders.json"]
+    for item in every:
+        if item["draft"]:
+            assert item["reviewed_by"] is None and item["approved_at"] is None

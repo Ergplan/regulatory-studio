@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import os
 import sys
 
@@ -132,7 +133,8 @@ def main(argv: list[str] | None = None) -> None:
     rv.add_argument("--host", default="127.0.0.1")
     rv.add_argument("--port", type=int, default=8765)
     pp = sub.add_parser("publish-pending", help="show orders on the public site before legal review, marked 'pending legal review'")
-    pp.add_argument("ids", nargs="*", help="document ids (or their first characters)")
+    pp.add_argument("ids", nargs="*", help="document ids (or their first characters), or edition ids such as 2026-W47")
+    pp.add_argument("--all", action="store_true", help="every order, draft regulation and edition that has a summary and is not rejected")
     pp.add_argument("--file", help="a file with one id per line")
     pp.add_argument("--as", dest="who", required=True, help="the person making this decision, for the record")
     pp.add_argument("--off", action="store_true", help="take them off the public site again (until approved)")
@@ -201,17 +203,33 @@ def main(argv: list[str] | None = None) -> None:
             print(s, json.dumps(_run_stage(s, args.limit, args.doc, args.personas)))
     elif args.cmd == "publish-pending":
         ids = list(args.ids) + ([l.strip() for l in open(args.file) if l.strip() and not l.startswith("#")] if args.file else [])
+        db.init()  # apply any pending migrations first
+        flag = 0 if args.off else 1
         done, skipped = [], []
         with db.session() as conn:
-            for prefix in ids:
-                rows = conn.execute("""SELECT d.id, o.summary_status, o.summary FROM documents d JOIN orders o ON o.doc_id = d.id
-                                       WHERE d.id LIKE ?""", (prefix + "%",)).fetchall()
-                if len(rows) != 1 or not rows[0]["summary"] or rows[0]["summary_status"] not in ("proposed", "approved"):
-                    skipped.append(prefix[:12])
+            if args.all:
+                ids += [r[0] for r in conn.execute("SELECT doc_id FROM orders WHERE summary IS NOT NULL AND summary_status = 'proposed'")]
+                ids += [r[0] for r in conn.execute("SELECT doc_id FROM consultations WHERE summary IS NOT NULL AND summary_status = 'proposed'")]
+                ids += [r[0] for r in conn.execute("SELECT id FROM digests WHERE status = 'proposed'")]
+            for ref in dict.fromkeys(ids):
+                if re.fullmatch(r"\d{4}-[Ww]\d{2}", ref):
+                    n = conn.execute("UPDATE digests SET pending_public = ? WHERE id = ? AND status IN ('proposed', 'approved')", (flag, ref.upper())).rowcount
+                    (done if n else skipped).append(ref.upper())
+                    if n:
+                        db.audit(conn, args.who, "publish.pending.off" if args.off else "publish.pending", ref.upper())
                     continue
-                conn.execute("UPDATE orders SET pending_public = ? WHERE doc_id = ?", (0 if args.off else 1, rows[0]["id"]))
-                db.audit(conn, args.who, "publish.pending.off" if args.off else "publish.pending", rows[0]["id"])
-                done.append(rows[0]["id"][:12])
+                hit = None
+                for table in ("orders", "consultations"):
+                    rows = conn.execute(f"""SELECT t.doc_id, t.summary_status, t.summary FROM {table} t WHERE t.doc_id LIKE ?""", (ref + "%",)).fetchall()
+                    if len(rows) == 1 and rows[0]["summary"] and rows[0]["summary_status"] in ("proposed", "approved"):
+                        hit = (table, rows[0]["doc_id"])
+                        break
+                if not hit:
+                    skipped.append(ref[:12])
+                    continue
+                conn.execute(f"UPDATE {hit[0]} SET pending_public = ? WHERE doc_id = ?", (flag, hit[1]))
+                db.audit(conn, args.who, "publish.pending.off" if args.off else "publish.pending", hit[1])
+                done.append(hit[1][:12])
         print(json.dumps({"off" if args.off else "pending_public": done, "skipped (no summary yet, rejected, or not one match)": skipped}))
     elif args.cmd == "sync":
         from . import mirror

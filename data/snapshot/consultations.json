@@ -1,1 +1,2320 @@
-[]
+[
+ {
+  "id": "2efc99923a7df73c32615f5c201230f17974ef1a2b73ed1b3d20b1d917f5952e",
+  "path": "/consultations/cerc/sharing-of-inter-state-transmission-charges-and-losses-fifth-amendment-regulations-2026-2efc99",
+  "commission": "cerc",
+  "title": "Draft Central Electricity Regulatory Commission (Sharing of inter-State Transmission Charges and Losses) (Fifth Amendment) Regulations, 2026",
+  "kind": "draft_amendment",
+  "issued": null,
+  "comment_deadline": "2026-11-27",
+  "hearing_date": null,
+  "summary": "CERC proposes a further change to its draft Fifth Amendment of the Sharing Regulations (first published on 31.07.2026). The supplementary draft would add a new waiver of inter-State transmission charges for wind, solar and wind-solar hybrid projects that have a PPA or PSA of at least seven years with a drawee DIC signed on or before 31.03.2027, but whose commissioning is held up because the transmission system is not ready. If such a project achieves COD within two months of its GNA becoming effective, it would get a waiver tied to the later of its connectivity start date and SCOD, for up to the contract tenure and at most 25 years from COD. Projects qualifying under both the existing trajectory and this route would have to choose one, within 30 days of COD, and the choice would be binding. This is a proposal; comments are invited until 27 November 2026.",
+  "proposes": [
+   "New Regulation 13(2)(h-i): ISTS waiver for wind, solar and wind-solar hybrid projects delayed by non-availability of transmission",
+   "Eligibility: PPA or PSA of at least 7 years with a drawee DIC (directly, via a trader or REIA) signed on or before 31.03.2027",
+   "Project must achieve COD within two months of its GNA becoming effective",
+   "PPA and PSA copies to be filed with CTUIL and NLDC by 30.04.2027",
+   "Waiver lapses if the contract is terminated early or COD is missed; the Table 1 trajectory then applies",
+   "New Regulation 13(2)(h-ii): one-time binding choice between the existing waiver and the new route, within 30 days of COD",
+   "Projects already commissioned may opt in within one month of the amendment taking effect"
+  ],
+  "amends": "CERC (Sharing of Inter-State Transmission Charges and Losses) Regulations, 2020",
+  "impact": {
+   "headline": "Renewable project delayed by transmission? A proposed ISTS charge waiver depends on a contract signed by 31.03.2027.",
+   "checks": [
+    "Is your delay due to non-availability of the transmission system, beyond your connectivity start date or SCOD?",
+    "Do you have, or can you sign, a PPA or PSA of at least seven years with a drawee DIC by 31.03.2027?",
+    "Can you reach COD within two months of your GNA becoming effective?",
+    "Is your contract direct, or through a trader or REIA (both legs must then be signed and filed)?"
+   ],
+   "market_note": "If adopted, wind, solar and wind-solar projects whose COD slipped because ISTS was not ready keep the transmission-charge waiver for the whole contract term, up to 25 years from COD. Eligibility turns on a contract: a PPA or PSA of at least seven years with a drawee DIC, signed by 31.03.2027.",
+   "key_points": [
+    {
+     "text": "Eligible: wind, solar or wind-solar hybrid projects delayed by non-availability of transmission beyond the later of the connectivity start date or SCOD, that reach COD within two months of their GNA becoming effective",
+     "basis": [
+      "p1.7",
+      "p1.8",
+      "p1.10",
+      "p2.1"
+     ]
+    },
+    {
+     "text": "The draft table ties the waiver to the later of those dates (cut-off 30.06.2025, with steps to 30.06.2028) and allows it for the contract tenure, capped at 25 years from COD",
+     "basis": [
+      "p2.6",
+      "p2.8"
+     ]
+    },
+    {
+     "text": "The waiver falls back to the Table 1 trajectory if COD is not reached within two months of GNA, or if the filed PPA or PSA is terminated early",
+     "basis": [
+      "p2.15",
+      "p2.17",
+      "p3.1"
+     ]
+    },
+    {
+     "text": "One-time, binding choice between the existing waiver under sub-clause (a) and the new route, declared within 30 days of COD",
+     "basis": [
+      "p3.2",
+      "p3.3",
+      "p3.5"
+     ]
+    },
+    {
+     "text": "Projects already commissioned can opt in within one month of the amendment; the waiver then runs from the day power is scheduled under the eligible contract",
+     "basis": [
+      "p3.6"
+     ]
+    }
+   ],
+   "procurement": [
+    {
+     "text": "Sign a PPA or PSA of at least 7 years with a drawee DIC, directly or through a trader or REIA, on or before 31.03.2027",
+     "basis": [
+      "p1.7"
+     ]
+    },
+    {
+     "text": "Through a trader or REIA: both legs (PPA with the generator, PSA with the drawee DIC) must be signed by 31.03.2027 and filed",
+     "basis": [
+      "p2.11",
+      "p2.12"
+     ]
+    },
+    {
+     "text": "File copies of the PPA and PSA with CTUIL and NLDC by 30.04.2027; contracts signed later or filed late are not eligible",
+     "basis": [
+      "p2.10",
+      "p2.14"
+     ]
+    },
+    {
+     "text": "Extensions of a filed contract keep the waiver, up to 25 years from COD",
+     "basis": [
+      "p2.13"
+     ]
+    }
+   ],
+   "stakeholders": {
+    "discoms": {
+     "effect": "opportunity",
+     "comment": "If adopted, drawee DICs buying under eligible contracts would see ISTS charges waived on that drawal for the contract tenure, which favours signing such contracts before 31.03.2027.",
+     "basis": [
+      "p1.7",
+      "p2.8"
+     ]
+    },
+    "re_developers": {
+     "effect": "opportunity",
+     "comment": "If adopted, a project stranded by late transmission keeps ISTS charge waiver for its contract term (up to 25 years from COD), but only with a 7-year-plus PPA or PSA signed by 31.03.2027 and COD within two months of GNA.",
+     "basis": [
+      "p1.7",
+      "p1.10",
+      "p2.1",
+      "p2.8"
+     ]
+    },
+    "transmission": {
+     "effect": "cost",
+     "comment": "If adopted, CTUIL and NLDC hold the record: PPA and PSA copies by 30.04.2027 and each project's binding undertaking within 30 days of COD.",
+     "basis": [
+      "p2.10",
+      "p3.2",
+      "p3.3"
+     ]
+    },
+    "traders": {
+     "effect": "opportunity",
+     "comment": "If adopted, trader- and REIA-intermediated contracts qualify, provided both the PPA and the PSA are signed by 31.03.2027 and filed with CTUIL and NLDC.",
+     "basis": [
+      "p1.7",
+      "p2.11",
+      "p2.12"
+     ]
+    }
+   },
+   "open_questions": [
+    "This supplementary draft does not say how the waived charges are recovered from other ISTS users; check the main draft of 31.07.2026.",
+    "The waiver table in the PDF is laid out as a grid that extracts poorly; confirm each date step against the PDF before relying on it.",
+    "Comments are due 27.11.2026 (from CERC's listing, not this notice)."
+   ]
+  },
+  "rating": null,
+  "figures": [
+   {
+    "type": "timeline",
+    "title": "Dates in the proposal",
+    "items": [
+     {
+      "label": "Draft regulations published",
+      "basis": [
+       "p1.5"
+      ],
+      "start": "2026-07-31"
+     },
+     {
+      "label": "Supplementary draft",
+      "basis": [
+       "p1.3"
+      ],
+      "start": "2026-10-26"
+     },
+     {
+      "label": "PPA or PSA to be signed by",
+      "basis": [
+       "p1.7"
+      ],
+      "start": "2027-03-31"
+     },
+     {
+      "label": "Copies to CTUIL and NLDC by",
+      "basis": [
+       "p2.10"
+      ],
+      "start": "2027-04-30"
+     }
+    ]
+   },
+   {
+    "type": "flow",
+    "title": "Who would get the proposed ISTS charge waiver",
+    "items": [
+     {
+      "label": "Wind, solar or hybrid project delayed by transmission",
+      "basis": [
+       "p1.7",
+       "p1.8",
+       "p1.10"
+      ],
+      "detail": "Transmission not available beyond the later of the connectivity start date or the SCOD"
+     },
+     {
+      "label": "PPA or PSA of at least 7 years signed by 31.03.2027",
+      "basis": [
+       "p1.7",
+       "p2.14"
+      ],
+      "detail": "With a drawee DIC, directly or through a trader or REIA",
+      "otherwise": "A contract signed later is not eligible"
+     },
+     {
+      "label": "Copies filed with CTUIL and NLDC by 30.04.2027",
+      "basis": [
+       "p2.10",
+       "p2.14"
+      ],
+      "otherwise": "Not filed in time: not eligible"
+     },
+     {
+      "label": "COD within two months of GNA becoming effective",
+      "basis": [
+       "p1.10",
+       "p2.1",
+       "p2.17",
+       "p3.1"
+      ],
+      "otherwise": "Waiver follows the Table 1 trajectory instead"
+     },
+     {
+      "label": "Choice declared within 30 days of COD",
+      "basis": [
+       "p3.2",
+       "p3.3"
+      ],
+      "detail": "If the project also qualifies under sub-clause (a), it states which route it claims"
+     },
+     {
+      "label": "Waiver for the tenure of the contract",
+      "basis": [
+       "p2.8",
+       "p2.17",
+       "p3.1"
+      ],
+      "detail": "Up to 25 years from COD; back to the Table 1 trajectory if the filed contract is terminated early"
+     }
+    ],
+    "note": "A proposal, not in force. Steps as set out in the draft sub-clause (h-i)."
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "comments": {},
+  "source_url": "https://cercind.gov.in/2026/draft_reg/Supplementary-Draft-Notification2026.pdf",
+  "related": [
+   {
+    "label": "Public Notice inviting comments/ suggestion (Last date:- 27th November, 2026)",
+    "url": "https://cercind.gov.in/2026/draft_reg/PN-supplementary-notification-sharing-5th.pdf"
+   },
+   {
+    "label": "Explanatory memorandum to supplementary draft notification.",
+    "url": "https://cercind.gov.in/2026/draft_reg/EM-supplementry-sharing-5th.pdf"
+   },
+   {
+    "label": "Public Notice extension (Last date extended of submission of comments and suggestions:- 15.09.2026)",
+    "url": "https://cercind.gov.in/2026/draft_reg/PN-Ext.SIST-5rd-Amend.pdf"
+   },
+   {
+    "label": "Public Notice",
+    "url": "https://cercind.gov.in/2026/draft_reg/PN-SIST-5rd-Amend.pdf"
+   },
+   {
+    "label": "Draft Amendment",
+    "url": "https://cercind.gov.in/2026/draft_reg/DN-SIST-5rd_Amend.pdf"
+   },
+   {
+    "label": "Explanatory Memorandum",
+    "url": "https://cercind.gov.in/2026/draft_reg/EM_SIST-5rdAmend.pdf"
+   },
+   {
+    "label": "Public Hearing will be held on 28.09.2026 at 10:30 AM.",
+    "url": "https://cercind.gov.in/2026/hearing_schedule/PH-Notice-28.09.2026.pdf"
+   }
+  ],
+  "reviewed_by": null,
+  "approved_at": null,
+  "draft": true,
+  "sample": false
+ },
+ {
+  "id": "00bb0b39fbca29ee0cd0ef3934dc7479f6081b642f1c67b9e34ae2f5eebeb01e",
+  "path": "/consultations/cerc/sharing-of-inter-state-transmission-charges-and-losses-fifth-amendment-regulations-2026-00bb0b",
+  "commission": "cerc",
+  "title": "Draft Central Electricity Regulatory Commission (Sharing of inter-State Transmission Charges and Losses) (Fifth Amendment) Regulations, 2026",
+  "kind": "draft_amendment",
+  "issued": null,
+  "comment_deadline": "2026-11-27",
+  "hearing_date": null,
+  "summary": "CERC proposes a Fifth Amendment to its 2020 Regulations on sharing inter-State transmission charges and losses. This is a draft, not a decision. The main proposal is a new waiver of inter-State transmission charges. It would cover wind, solar and wind-solar hybrid projects that signed a contract of at least seven years by 31.12.2026 and were delayed past their firm start date of connectivity because the transmission system was not ready. To qualify, a project must reach COD within two months of its GNA taking effect. The waiver would depend on the firm start date of connectivity and would fall to zero after 30.06.2028. The draft would also set out how waivers apply to battery storage built into RE projects, to storage that charges partly from co-located RE, and to storage buying in the Green Day Ahead Market against the 51% RE requirement. It would change how transmission deviation is calculated for States whose intra-State entities hold GNARE or T-GNARE, and for entities connected to both the STU and CTU networks. It would bring definitions into line with the GNA Regulations. RE developers, storage developers, hydro pumped storage, distribution companies and other drawee entities, STUs, NLDC and CTUIL would be affected.",
+  "proposes": [
+   "New waiver (Reg 13(2)(h-i)) for wind, solar or wind-solar hybrid projects with a contract of at least 7 years signed by 31.12.2026 and delayed past their firm start date of connectivity by missing transmission, if COD is within two months of GNA taking effect.",
+   "Table 6 waiver by firm start date of connectivity: 100% for the contract tenure if on or before 30.06.2025; 75% (1.7.2025 to 30.6.2026); 50% (to 30.6.2027); 25% (to 30.6.2028); 0% after.",
+   "Contracts must reach CTUIL and NLDC by 31.01.2027; no extension or substitute contract counts. Projects eligible under both (a) and (h-i) must choose one within 15 days of COD, binding for the waiver period.",
+   "BESS built into an RE or hybrid project and scheduled with it as one entity gets the Table 1 waiver, up to 25 years from COD. Other BESS is counted per charging cycle under S.No.1 or S.No.2 of Table 2.",
+   "ESS buying in the Green Day Ahead Market may count that energy towards the 51% requirement with a power exchange certificate. A hydro PSP that falls short would have its waiver calculated contract-wise.",
+   "New transmission deviation rules for States whose intra-State entities hold GNARE or T-GNARE, and for entities with dual STU and CTU connectivity. STU to share Access details with NLDC and CTU.",
+   "Implementing Agency to publish revised detailed procedures within 60 days of notification, after stakeholder consultation. NLDC to issue data and accounting procedures for BESS and ESS.",
+   "REIA, GNARE and T-GNARE would take their meanings from the GNA Regulations. A new Regulation 29 would let CERC issue suo motu orders and practice directions."
+  ],
+  "amends": "Central Electricity Regulatory Commission (Sharing of Inter-State Transmission Charges and Losses) Regulations, 2020",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "series",
+    "title": "Proposed waiver by firm start date of connectivity (draft Table 6)",
+    "items": [
+     {
+      "label": "On or before 30.06.2025",
+      "basis": [
+       "p4.18"
+      ],
+      "value": 100
+     },
+     {
+      "label": "1.7.2025 to 30.6.2026",
+      "basis": [
+       "p4.18"
+      ],
+      "value": 75
+     },
+     {
+      "label": "1.7.2026 to 30.6.2027",
+      "basis": [
+       "p4.18"
+      ],
+      "value": 50
+     },
+     {
+      "label": "1.7.2027 to 30.6.2028",
+      "basis": [
+       "p4.18"
+      ],
+      "value": 25
+     },
+     {
+      "label": "After 30.06.2028",
+      "basis": [
+       "p4.18"
+      ],
+      "value": 0
+     }
+    ],
+    "unit": "%",
+    "note": "Share of drawal schedule considered under Annexure-III. This is a draft proposal for wind, solar and wind-solar hybrid projects under new sub-clause (h-i)."
+   },
+   {
+    "type": "flow",
+    "title": "Who would qualify for the proposed Table 6 waiver",
+    "items": [
+     {
+      "label": "Wind, solar or wind-solar hybrid",
+      "basis": [
+       "p4.7"
+      ],
+      "detail": "REGS based on wind or solar, or RHGS combining wind and solar"
+     },
+     {
+      "label": "Contract of at least 7 years",
+      "basis": [
+       "p4.7",
+       "p5.1"
+      ],
+      "detail": "Signed with a buyer, directly or through a trader or REIA, on or before 31.12.2026. Extensions or substitute contracts do not count."
+     },
+     {
+      "label": "Delayed by transmission",
+      "basis": [
+       "p4.7"
+      ],
+      "detail": "Delayed beyond the firm start date of connectivity granted by CTUIL because the transmission system was not available"
+     },
+     {
+      "label": "COD within two months of GNA",
+      "basis": [
+       "p4.7",
+       "p5.4"
+      ],
+      "detail": "Project reaches COD within two months of its GNA taking effect",
+      "otherwise": "Waiver follows the Table 1 trajectory read with Regulation 13(2)(h)"
+     },
+     {
+      "label": "Contracts filed by 31.1.2027",
+      "basis": [
+       "p5.1",
+       "p5.3"
+      ],
+      "detail": "Copies of the contracts go to CTUIL and NLDC. Both contracts are needed if a trader or REIA is involved."
+     },
+     {
+      "label": "Waiver as per Table 6 slab",
+      "basis": [
+       "p4.7",
+       "p5.5",
+       "p5.6",
+       "p5.7"
+      ],
+      "detail": "Waiver slab set by the firm start date of connectivity. If the project also qualifies under (a), it chooses one within 15 days of COD and the choice is binding."
+     }
+    ]
+   },
+   {
+    "type": "timeline",
+    "title": "Proposed cut-off dates for the new waiver",
+    "items": [
+     {
+      "label": "Contracts signed by",
+      "basis": [
+       "p4.7",
+       "p5.3"
+      ],
+      "start": "2026-12-31"
+     },
+     {
+      "label": "Contract copies to CTUIL and NLDC by",
+      "basis": [
+       "p5.1"
+      ],
+      "start": "2027-01-31"
+     }
+    ],
+    "note": "Dates from the draft. They would apply only if the amendment is notified."
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "comments": {},
+  "source_url": "https://cercind.gov.in/2026/draft_reg/DN-SIST-5rd_Amend.pdf",
+  "related": [
+   {
+    "label": "Public Notice extension (Last date extended of submission of comments and suggestions:- 15.09.2026)",
+    "url": "https://cercind.gov.in/2026/draft_reg/PN-Ext.SIST-5rd-Amend.pdf"
+   },
+   {
+    "label": "Public Notice",
+    "url": "https://cercind.gov.in/2026/draft_reg/PN-SIST-5rd-Amend.pdf"
+   },
+   {
+    "label": "Explanatory Memorandum",
+    "url": "https://cercind.gov.in/2026/draft_reg/EM_SIST-5rdAmend.pdf"
+   },
+   {
+    "label": "Public Hearing will be held on 28.09.2026 at 10:30 AM.",
+    "url": "https://cercind.gov.in/2026/hearing_schedule/PH-Notice-28.09.2026.pdf"
+   },
+   {
+    "label": "Public Notice inviting comments/ suggestion (Last date:- 27th November, 2026)",
+    "url": "https://cercind.gov.in/2026/draft_reg/PN-supplementary-notification-sharing-5th.pdf"
+   },
+   {
+    "label": "Supplementary Draft Notification",
+    "url": "https://cercind.gov.in/2026/draft_reg/Supplementary-Draft-Notification2026.pdf"
+   },
+   {
+    "label": "Explanatory memorandum to supplementary draft notification.",
+    "url": "https://cercind.gov.in/2026/draft_reg/EM-supplementry-sharing-5th.pdf"
+   },
+   {
+    "label": "Public Hearing will be held on 02.12.2026 at 10:30 AM.",
+    "url": "https://cercind.gov.in/2026/hearing_schedule/Supplementary-PH-021226.pdf"
+   }
+  ],
+  "reviewed_by": null,
+  "approved_at": null,
+  "draft": true,
+  "sample": false
+ },
+ {
+  "id": "58d4e12b570d990859edfe5c10ab995fdd72ebb5232ef4e71fb98b14cc84aa22",
+  "path": "/consultations/tnerc/deviation-settlement-mechanism-and-related-matters-regulations-2026-58d4e1",
+  "commission": "tnerc",
+  "title": "DRAFT TNERC (Deviation settlement mechanism and related matters) Regulations, 2026",
+  "kind": "draft_regulation",
+  "issued": "2026-05-29",
+  "comment_deadline": "2026-11-16",
+  "hearing_date": null,
+  "summary": "TNERC proposes new Deviation Settlement Mechanism Regulations that would replace its 2019 regulations for generators (other than wind, solar and hybrid) and buyers connected to the intra-State transmission or distribution system. The draft adopts a market-linked DSM framework, in which deviation charges are linked to power exchange prices, and sets state-specific frequency discipline provisions to keep entities to their schedules in the interest of grid security. This is a proposal; TNERC has extended the last date for comments on this and eight other draft regulations to 16 November 2026.",
+  "proposes": [
+   "Replaces the TNERC DSM Regulations, 2019",
+   "Applies to generators other than wind, solar and hybrid, and to buyers on the intra-State system",
+   "Market-linked DSM framework, with deviation charges referenced to power exchange prices (ACP)",
+   "State-specific frequency discipline provisions"
+  ],
+  "amends": "Replaces TNERC (Deviation Settlement Mechanism and Related Matters) Regulations, 2019",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "series",
+    "title": "Over-injection charge receivable by seller, by grid frequency, within VLS(1)",
+    "items": [
+     {
+      "label": "50.04–50.05 Hz",
+      "basis": [
+       "p28.18",
+       "p28.2"
+      ],
+      "value": 50
+     },
+     {
+      "label": "50.03–50.04 Hz",
+      "basis": [
+       "p28.19"
+      ],
+      "value": 75
+     },
+     {
+      "label": "49.97–50.03 Hz",
+      "basis": [
+       "p28.20"
+      ],
+      "value": 100
+     },
+     {
+      "label": "49.96–49.97 Hz",
+      "basis": [
+       "p28.21"
+      ],
+      "value": 102.15
+     },
+     {
+      "label": "49.95–49.96 Hz",
+      "basis": [
+       "p28.22"
+      ],
+      "value": 104.3
+     },
+     {
+      "label": "49.94–49.95 Hz",
+      "basis": [
+       "p28.23"
+      ],
+      "value": 106.45
+     },
+     {
+      "label": "49.93–49.94 Hz",
+      "basis": [
+       "p28.24"
+      ],
+      "value": 108.6
+     },
+     {
+      "label": "49.92–49.93 Hz",
+      "basis": [
+       "p28.25"
+      ],
+      "value": 110.75
+     },
+     {
+      "label": "49.91–49.92 Hz",
+      "basis": [
+       "p29.9"
+      ],
+      "value": 112.9
+     },
+     {
+      "label": "49.90–49.91 Hz",
+      "basis": [
+       "p29.10"
+      ],
+      "value": 115
+     }
+    ],
+    "unit": "% of RR",
+    "note": "Annexure I illustration: generating stations other than RoR, deviation ≤ 10% of DGS or 100 MW, whichever is less. RR = seller's Reference Charge Rate."
+   },
+   {
+    "type": "series",
+    "title": "Under-injection charge payable by seller, by grid frequency, within VLS(1)",
+    "items": [
+     {
+      "label": "50.04–50.05 Hz",
+      "basis": [
+       "p28.18",
+       "p28.2"
+      ],
+      "value": 85
+     },
+     {
+      "label": "50.03–50.04 Hz",
+      "basis": [
+       "p28.19"
+      ],
+      "value": 92.5
+     },
+     {
+      "label": "49.97–50.03 Hz",
+      "basis": [
+       "p28.20"
+      ],
+      "value": 100
+     },
+     {
+      "label": "49.96–49.97 Hz",
+      "basis": [
+       "p28.21"
+      ],
+      "value": 107.15
+     },
+     {
+      "label": "49.95–49.96 Hz",
+      "basis": [
+       "p28.22"
+      ],
+      "value": 114.3
+     },
+     {
+      "label": "49.94–49.95 Hz",
+      "basis": [
+       "p28.23"
+      ],
+      "value": 121.45
+     },
+     {
+      "label": "49.93–49.94 Hz",
+      "basis": [
+       "p28.24"
+      ],
+      "value": 128.6
+     },
+     {
+      "label": "49.92–49.93 Hz",
+      "basis": [
+       "p28.25"
+      ],
+      "value": 135.75
+     },
+     {
+      "label": "49.91–49.92 Hz",
+      "basis": [
+       "p29.9"
+      ],
+      "value": 142.9
+     },
+     {
+      "label": "49.90–49.91 Hz",
+      "basis": [
+       "p29.10"
+      ],
+      "value": 150
+     }
+    ],
+    "unit": "% of RR",
+    "note": "Annexure I illustration: generating stations other than RoR, deviation ≤ 10% of DGS or 100 MW, whichever is less. RR = seller's Reference Charge Rate."
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "comments": {},
+  "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-290520262212Eng.pdf",
+  "related": [],
+  "reviewed_by": null,
+  "approved_at": null,
+  "draft": true,
+  "sample": false
+ },
+ {
+  "id": "487b5c7b1411ca10d66c4bb30148a62a0c2811363d774b6a5a40dc1ea1616886",
+  "path": "/consultations/tnerc/battery-energy-storage-systems-regulations-2026-487b5c",
+  "commission": "tnerc",
+  "title": "Draft TNERC (Battery Energy Storage Systems) Regulations, 2026",
+  "kind": "draft_regulation",
+  "issued": "2026-05-15",
+  "comment_deadline": "2026-11-16",
+  "hearing_date": null,
+  "summary": "TNERC proposes a complete framework for battery energy storage in Tamil Nadu. The draft classifies BESS as standalone, co-located with renewable or conventional plants, embedded, behind-the-meter, hybrid RE-BESS and multi-location systems, and recognises captive, utility-owned, third-party, merchant and hybrid ownership models. It sets planning and installation rules, including a minimum project size and grid-forming power conversion requirements, procurement routes (Section 63 bidding, Section 62 tariffs, self-owned EPC, central or state agencies and developer-led procurement), a two-part tariff of storage capacity charge and storage energy charge, normative cost parameters, tariffs for BESS co-located with solar, wind and conventional plants, third-party settlement, and technical and safety standards. This is a proposal; TNERC has extended the last date for comments on this and eight other draft regulations to 16 November 2026.",
+  "proposes": [
+   "BESS classes: standalone, co-located, embedded, behind-the-meter, hybrid RE-BESS, multi-location",
+   "Ownership models: captive, utility-owned, third-party, merchant, hybrid",
+   "Minimum project size and grid-forming (GFM) PCS requirement",
+   "Procurement: Section 63 bidding, Section 62, EPC, central/state agencies, developer-led procurement",
+   "Two-part tariff: storage capacity charge and storage energy charge rate",
+   "Tariff rules for BESS co-located with solar, wind and conventional generators",
+   "Third-party commercial agreements, settlement timelines and technical standards"
+  ],
+  "amends": null,
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "flow",
+    "title": "Minimum project size for a BESS under the draft",
+    "items": [
+     {
+      "label": "Behind-the-meter BESS?",
+      "basis": [
+       "p134.6"
+      ],
+      "detail": "BTM BESS is kept outside the minimum project size requirement, subject to the Supply Code and safety and connectivity requirements",
+      "otherwise": "Grid-connected BESS: go to the next step"
+     },
+     {
+      "label": "Grid-connected BESS (other than BTM)",
+      "basis": [
+       "p134.3"
+      ],
+      "detail": "Ordinarily a minimum rated power capacity of 1 MW",
+      "otherwise": "Below 1 MW: check the sub-MW window"
+     },
+     {
+      "label": "Sub-MW window: 125 kW to 1 MW",
+      "basis": [
+       "p134.4"
+      ],
+      "detail": "For distribution-level uses (feeder, distribution transformer or section support, community or campus, pilot or demonstration), subject to Commission approval",
+      "otherwise": "Check the scheme-based carve-out"
+     },
+     {
+      "label": "Scheme-based projects",
+      "basis": [
+       "p134.5"
+      ],
+      "detail": "Feeder solarisation, agricultural demand management, PM-KUSUM or successor schemes: 125 kW and above; below 125 kW needs specific approval"
+     }
+    ],
+    "note": "As set out in the Explanatory Statement; Regulation 8.2 itself is in the omitted middle of the text."
+   },
+   {
+    "type": "timeline",
+    "title": "Post-2030 review of BESS concessions",
+    "items": [
+     {
+      "label": "Commission to finish its review of concessions",
+      "basis": [
+       "p130.8",
+       "p139.10"
+      ],
+      "start": "2029-11-30"
+     },
+     {
+      "label": "Regime applicable from this date",
+      "basis": [
+       "p130.8",
+       "p139.10"
+      ],
+      "start": "2031-01-01"
+     }
+    ]
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "comments": {},
+  "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-150520262110Eng.pdf",
+  "related": [],
+  "reviewed_by": null,
+  "approved_at": null,
+  "draft": true,
+  "sample": false
+ },
+ {
+  "id": "d52f886e93d2de531a62f4add030d21e8b49d1064b0831b2d4b9a316b77a761e",
+  "path": "/consultations/tnerc/determination-of-state-load-despatch-centre-fees-and-charges-regulations-2026-d52f88",
+  "commission": "tnerc",
+  "title": "Draft TNERC (Determination of State Load Despatch Centre Fees and Charges) Regulations, 2026",
+  "kind": "draft_regulation",
+  "issued": "2026-05-14",
+  "comment_deadline": "2026-11-16",
+  "hearing_date": null,
+  "summary": "TNERC proposes regulations to determine the fees and charges of the State Load Despatch Centre under a multi-year tariff framework. The draft sets a business plan and capital expenditure plan for SLDC, separate accounts, the components of SLDC's annual revenue requirement (capital cost, debt-equity, return on equity, interest, depreciation, O&M, working capital, RLDC fees, SRPC charges and BESS-related expenditure, non-tariff income), registration with SLDC, the determination of system operation charges and scheduling charges, billing, late payment surcharge and default, and the public consultation process for SLDC tariff petitions, with a transition for true-up of FY 2022-23 to FY 2026-27. This is a proposal; TNERC has extended the last date for comments on this and eight other draft regulations to 16 November 2026.",
+  "proposes": [
+   "MYT framework for SLDC with business plan and capital expenditure plan",
+   "SLDC ARR components, including RLDC fees, SRPC charges and BESS-related expenditure",
+   "Registration with SLDC",
+   "System operation charges and scheduling charges",
+   "Billing, late payment surcharge and default",
+   "True-up of FY 2022-23 to FY 2026-27 as a transitional provision"
+  ],
+  "amends": null,
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "bars",
+    "title": "Net ARR split between scheduling charges and system operation charges",
+    "items": [
+     {
+      "label": "Scheduling charges",
+      "basis": [
+       "p70.5"
+      ],
+      "value": 30
+     },
+     {
+      "label": "System operation charges",
+      "basis": [
+       "p71.1",
+       "p71.3"
+      ],
+      "value": 70
+     }
+    ],
+    "unit": "%",
+    "note": "Shares of net ARR as given in the draft formats in Forms 15A and 15B"
+   },
+   {
+    "type": "bars",
+    "title": "Share of system operation charges recovered from each user group",
+    "items": [
+     {
+      "label": "Intra-State transmission licensees",
+      "basis": [
+       "p71.4",
+       "p71.5"
+      ],
+      "value": 10
+     },
+     {
+      "label": "Generating stations, sellers, captive users",
+      "basis": [
+       "p71.8",
+       "p71.9"
+      ],
+      "value": 45
+     },
+     {
+      "label": "Distribution licensees, buyers, captive users",
+      "basis": [
+       "p72.5",
+       "p72.6"
+      ],
+      "value": 45
+     }
+    ],
+    "unit": "%",
+    "note": "Percentages of the 70% of net ARR set for system operation, from the draft Form 15B"
+   },
+   {
+    "type": "timeline",
+    "title": "Transition, control period and review filing dates",
+    "items": [
+     {
+      "label": "Transition: existing fees and charges continue",
+      "basis": [
+       "p4.8",
+       "p6.7"
+      ],
+      "start": "2026-04-01",
+      "end": "2027-03-31"
+     },
+     {
+      "label": "Control period FY 2027-28 to FY 2031-32",
+      "basis": [
+       "p4.4",
+       "p6.7"
+      ],
+      "start": "2027-04-01",
+      "end": "2032-03-31"
+     },
+     {
+      "label": "True-up of FY 2026-27 with APR of FY 2027-28 due",
+      "basis": [
+       "p12.10"
+      ],
+      "start": "2027-11-30"
+     },
+     {
+      "label": "Mid-term review petition due on or before",
+      "basis": [
+       "p12.1"
+      ],
+      "start": "2029-11-30"
+     }
+    ],
+    "note": "Financial year runs 1 April to 31 March (definition xv)"
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "comments": {},
+  "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-140520261750Eng.pdf",
+  "related": [],
+  "reviewed_by": null,
+  "approved_at": null,
+  "draft": true,
+  "sample": false
+ },
+ {
+  "id": "bc954def5974e71e960093b2e2f525a45e73da69cffb5e909ff56ef6bc68f3e7",
+  "path": "/consultations/tnerc/forecasting-scheduling-and-deviation-settlement-and-related-matters-for-wind-solar-and-hyb-bc954d",
+  "commission": "tnerc",
+  "title": "Draft TNERC Forecasting, Scheduling and Deviation Settlement and Related Matters for Wind, Solar and Hybrid Generations (with or without ESS) Regulations, 2026",
+  "kind": "draft_amendment",
+  "issued": "2026-05-27",
+  "comment_deadline": "2026-11-16",
+  "hearing_date": null,
+  "summary": "TNERC proposes to revise its forecasting, scheduling and deviation settlement framework for wind and solar generators and extend it to wind-solar hybrid projects, with or without energy storage. The draft covers the forecasting and scheduling code, treatment of gaming, appointment of Qualified Coordinating Agencies (QCAs), deviation settlement for intra-State and inter-State transactions, metering, deviation accounting, payment security, de-pooling of deviation charges and intimation of curtailment. TNERC notes that it is acting suo motu, partly on prayers made in M.P. No. 57 of 2025, including stronger penalties for not appointing a QCA. This is a proposal; TNERC has extended the last date for comments on this and eight other draft regulations to 16 November 2026.",
+  "proposes": [
+   "Extends the framework to wind-solar hybrid projects, with or without ESS",
+   "Forecasting and scheduling code, with provisions against gaming",
+   "Principles for appointing QCAs; stronger consequences for not appointing one",
+   "Deviation settlement for intra-State and inter-State transactions",
+   "Metering, deviation accounting, payment security and de-pooling of charges",
+   "Intimation of curtailment and energy accounting"
+  ],
+  "amends": "TNERC (Forecasting, Scheduling and Deviation Settlement and Related Matters for Wind and Solar Generation) Regulations, 2024",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "bars",
+    "title": "Free deviation band for wind and solar: 2024 Regulations and the 2026 draft",
+    "items": [
+     {
+      "label": "Wind, 2024 Regulations",
+      "basis": [
+       "p40.4"
+      ],
+      "value": 15,
+      "tag": "existing",
+      "context": true
+     },
+     {
+      "label": "Wind, 2026 draft",
+      "basis": [
+       "p40.4"
+      ],
+      "value": 10,
+      "tag": "proposed"
+     },
+     {
+      "label": "Solar, 2024 Regulations",
+      "basis": [
+       "p40.4"
+      ],
+      "value": 10,
+      "tag": "existing",
+      "context": true
+     },
+     {
+      "label": "Solar, 2026 draft",
+      "basis": [
+       "p40.4"
+      ],
+      "value": 5,
+      "tag": "proposed"
+     }
+    ],
+    "unit": "%",
+    "note": "Proposed in the draft; the Commission says the solar band follows the CERC Regulations"
+   },
+   {
+    "type": "flow",
+    "title": "Graduated penalties for a generator that does not appoint a QCA",
+    "items": [
+     {
+      "label": "Appoint or opt for a QCA",
+      "basis": [
+       "p10.6"
+      ],
+      "detail": "Within 30 days of commissioning or of notification of the Regulations and procedures, whichever is later",
+      "otherwise": "Graduated penalties apply"
+     },
+     {
+      "label": "First 30 days beyond the compliance period",
+      "basis": [
+       "p10.7"
+      ],
+      "detail": "Deviation charges at 150% of the applicable rate"
+     },
+     {
+      "label": "Next 30 days beyond the compliance period",
+      "basis": [
+       "p10.8"
+      ],
+      "detail": "Deviation charges at 200% of the applicable rate; 10% of energy generated excluded from despatch and DSM after sufficient notice"
+     },
+     {
+      "label": "Beyond 120 days",
+      "basis": [
+       "p10.9",
+       "p11.1"
+      ],
+      "detail": "Regulatory action as directed by the SLDC, including suspension of scheduling and dispatch or disconnection, until a QCA is appointed"
+     },
+     {
+      "label": "Before any such action",
+      "basis": [
+       "p11.2"
+      ],
+      "detail": "Notice to the generator and an opportunity of being heard"
+     }
+    ],
+    "note": "The draft does not say what applies between day 60 and day 120 after the compliance period"
+   },
+   {
+    "type": "bars",
+    "title": "Ceiling cap on deviation charges: existing and proposed",
+    "items": [
+     {
+      "label": "Existing ceiling cap",
+      "basis": [
+       "p40.5",
+       "p41.1"
+      ],
+      "value": 3,
+      "tag": "existing",
+      "context": true
+     },
+     {
+      "label": "Proposed ceiling cap",
+      "basis": [
+       "p41.1"
+      ],
+      "value": 7,
+      "tag": "proposed"
+     }
+    ],
+    "unit": "paise/unit",
+    "note": "The SLDC asked for the cap to be removed. The Commission proposes to raise it instead, as an interim measure until AMR data retrieval is complete"
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "comments": {},
+  "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-270520261445Eng.pdf",
+  "related": [],
+  "reviewed_by": null,
+  "approved_at": null,
+  "draft": true,
+  "sample": false
+ },
+ {
+  "id": "5cc8099c95773e8378351f9c2e2b41f95f29c6145174864dc57f4755726a20c7",
+  "path": "/consultations/tnerc/multi-year-tariff-for-distribution-regulations-2026-5cc809",
+  "commission": "tnerc",
+  "title": "Draft TNERC (Multi Year Tariff for Distribution) Regulations, 2026",
+  "kind": "draft_regulation",
+  "issued": "2026-05-12",
+  "comment_deadline": "2026-11-16",
+  "hearing_date": null,
+  "summary": "TNERC proposes new Multi Year Tariff Regulations for distribution licensees in Tamil Nadu, setting how the distribution company's annual revenue requirement and retail tariffs will be determined for the next control period. The draft covers the MYT petition and mid-term review, controllable and uncontrollable factors and how gains and losses are shared, power procurement planning and a Fuel and Power Purchase Adjustment Surcharge (FPPAS), financial principles (capital cost, debt-equity, depreciation, return on equity, interest), components of ARR including sales forecast, distribution losses and O&M expenses, and the cross-subsidy surcharge and additional surcharge that open access consumers pay. This is a proposal; TNERC has extended the last date for comments on this and eight other draft regulations to 16 November 2026.",
+  "proposes": [
+   "MYT framework, petitions, mid-term review and true-up for distribution licensees",
+   "Controllable and uncontrollable factors, with pass-through of gains and losses",
+   "Power procurement plan, additional procurement, treatment of surplus power",
+   "Fuel and Power Purchase Adjustment Surcharge (FPPAS)",
+   "Financial norms: capital cost, debt-equity, depreciation, RoE, interest on loans and working capital",
+   "ARR components: sales forecast, distribution losses, capital investment plan, O&M, bad debts, non-tariff income",
+   "Cross-subsidy surcharge and additional surcharge for open access consumers"
+  ],
+  "amends": "Replaces the TNERC multi-year tariff framework for distribution licensees",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "flow",
+    "title": "How true-up gains and losses are shared under the draft",
+    "items": [
+     {
+      "label": "Is the factor listed as uncontrollable?",
+      "basis": [
+       "p115.7"
+      ],
+      "detail": "Uncontrollable includes Force Majeure, Change in Law, fuel and power-purchase price variation, transmission charges and losses, and market interest rates",
+      "otherwise": "Presumed controllable, unless the Commission records reasons to classify it otherwise"
+     },
+     {
+      "label": "Uncontrollable: full pass-through",
+      "basis": [
+       "p115.8"
+      ],
+      "detail": "The gain or loss is passed through entirely in tariff, over a period the Commission specifies, with carrying cost"
+     },
+     {
+      "label": "Controllable gain",
+      "basis": [
+       "p115.8"
+      ],
+      "detail": "Two-thirds goes to consumers and the Licensee keeps one-third"
+     },
+     {
+      "label": "Controllable loss",
+      "basis": [
+       "p115.8"
+      ],
+      "detail": "The Licensee absorbs two-thirds and only one-third is allowed as pass-through"
+     }
+    ],
+    "note": "Taken from the Explanatory Statement's account of Regulations 8 to 10. The regulation text itself governs."
+   },
+   {
+    "type": "timeline",
+    "title": "Control period and petition filing dates in the draft",
+    "items": [
+     {
+      "label": "Earlier 2005/2009 Regulations govern up to",
+      "basis": [
+       "p5.6",
+       "p5.8"
+      ],
+      "start": "2027-03-31"
+     },
+     {
+      "label": "MYT Petition due (30 Nov of base year FY 2026-27)",
+      "basis": [
+       "p13.4",
+       "p7.6"
+      ],
+      "start": "2026-11-30"
+     },
+     {
+      "label": "Control Period FY 2027-28 to FY 2031-32",
+      "basis": [
+       "p8.8",
+       "p5.5",
+       "p9.3"
+      ],
+      "start": "2027-04-01",
+      "end": "2032-03-31"
+     },
+     {
+      "label": "True-up Petition for years 3 and 4 due",
+      "basis": [
+       "p15.1"
+      ],
+      "start": "2031-11-30"
+     },
+     {
+      "label": "Final True-up Petition for year 5 due",
+      "basis": [
+       "p15.4"
+      ],
+      "start": "2032-11-30"
+     }
+    ],
+    "note": "Dates as the draft sets them. The comment deadline was later extended to 16 November 2026."
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "comments": {},
+  "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-120520262047Eng.pdf",
+  "related": [],
+  "reviewed_by": null,
+  "approved_at": null,
+  "draft": true,
+  "sample": false
+ },
+ {
+  "id": "a6cf192e7d37f6bfab5a6d3e65c78bb54a5cf6d279ebfc38b6347cbf423b6c31",
+  "path": "/consultations/tnerc/recovery-of-expenses-and-charges-by-licensees-and-system-operator-regulations-2026-a6cf19",
+  "commission": "tnerc",
+  "title": "Draft TNERC(Recovery of Expenses and Charges by Licensees and System Operator) Regulations, 2026",
+  "kind": "draft_regulation",
+  "issued": "2026-06-03",
+  "comment_deadline": "2026-11-16",
+  "hearing_date": null,
+  "summary": "TNERC proposes regulations on the expenses, charges and fees that distribution licensees, transmission licensees and the SLDC may recover from applicants and users. For distribution, the draft covers the scope of charges for new connections, execution of works by applicants, estimates and adjustment, withdrawal of applications, restoration after permanent disconnection and charges for prosumers. For transmission, it covers deposit contribution works, connectivity and evacuation infrastructure, system study and processing charges and withdrawal of connectivity applications. It also sets SLDC system operation, study and registration charges, provisions for open access users, an aggregation framework with common evacuation, a schedule of charges, and transparency and grievance provisions. This is a proposal; TNERC has extended the last date for comments on this and eight other draft regulations to 16 November 2026.",
+  "proposes": [
+   "Distribution: charges for new connections, applicant-executed works, estimates, restoration of supply, prosumer charges",
+   "Transmission: deposit works, connectivity and evacuation infrastructure, system study and processing charges",
+   "SLDC: system operation, studies, communication and grid support, registration charges",
+   "Provisions for open access users and an aggregation framework with common evacuation",
+   "Enabling provision for a policy facilitation fee by a government-designated agency",
+   "Schedule of charges, transparency and grievance redressal"
+  ],
+  "amends": null,
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "flow",
+    "title": "How evacuation charges apply to existing and incremental wind capacity on repowering",
+    "items": [
+     {
+      "label": "Existing infrastructure reused unchanged",
+      "basis": [
+       "p110.5"
+      ],
+      "detail": "Existing evacuation infrastructure still used without substantial modification and within approved technical limits",
+      "otherwise": "Go to the next step: existing assets reused with augmentation"
+     },
+     {
+      "label": "No routine fresh charges on Existing Capacity",
+      "basis": [
+       "p110.5"
+      ],
+      "detail": "Existing Capacity is protected from being routinely subjected to fresh connectivity, evacuation or augmentation charges"
+     },
+     {
+      "label": "Existing feeders, pooling stations, bays reused",
+      "basis": [
+       "p110.5"
+      ],
+      "detail": "Charges are confined, as far as feasible, to proportionate expenses for incremental augmentation, coordination, telemetry and studies for added capacity",
+      "otherwise": "Go to the next step: new or augmented infrastructure serves both"
+     },
+     {
+      "label": "New or augmented infrastructure serves both",
+      "basis": [
+       "p110.4",
+       "p110.5"
+      ],
+      "detail": "Cost is allocated between Existing and Incremental Capacity by proportionality, utilisation, incremental requirement and system impact"
+     },
+     {
+      "label": "Commission approves the method",
+      "basis": [
+       "p110.4",
+       "p110.5"
+      ],
+      "detail": "Commission approves the allocation method and may allow sharing or socialisation, phased augmentation, and refund or credit if other users later benefit"
+     }
+    ],
+    "note": "Drawn from the Statement of Reasons describing Chapter 6; the operative regulation text is subject to Commission approval of any allocation method."
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "comments": {},
+  "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-030620262218Eng.pdf",
+  "related": [],
+  "reviewed_by": null,
+  "approved_at": null,
+  "draft": true,
+  "sample": false
+ },
+ {
+  "id": "ad2dde5dc3d5b2222a7be2551b16af77e9f3e3eb0a928d3b715504035105b9ed",
+  "path": "/consultations/tnerc/terms-and-conditions-for-determination-of-conventional-generation-tariff-regulations-2026-ad2dde",
+  "commission": "tnerc",
+  "title": "Draft TNERC (Terms and Conditions for Determination of Conventional Generation Tariff) Regulations, 2026",
+  "kind": "draft_regulation",
+  "issued": "2026-06-02",
+  "comment_deadline": "2026-11-16",
+  "hearing_date": null,
+  "summary": "TNERC proposes new tariff regulations for conventional generating stations (thermal and hydro, including pumped hydro storage). The draft covers applications for tariff and in-principle approval, the true-up methodology for FY 2022-23 to FY 2026-27, capital investment plans and capital cost, IDC and IEDC, sale of infirm power, debt-equity, return on equity, interest on working capital, capacity and energy charges including supplementary energy charges, recovery of tariff and incentives, operational norms for thermal and hydro stations, tariff determination for pumped hydro storage, compensation for part-load operation, sharing of gains from better-than-norm performance, refinancing and non-tariff income, and late payment surcharge. This is a proposal; TNERC has extended the last date for comments on this and eight other draft regulations to 16 November 2026.",
+  "proposes": [
+   "Tariff framework, applications and in-principle approval for conventional generators",
+   "True-up methodology for FY 2022-23 to FY 2026-27",
+   "Capital cost, IDC/IEDC, sale of infirm power, debt-equity, RoE",
+   "Capacity charges and energy charges, including supplementary energy charges",
+   "Operational norms for thermal and hydro stations; compensation for part-load operation",
+   "Tariff determination for pumped hydro storage plants",
+   "Sharing of gains from operational norms, loan refinancing and non-tariff income"
+  ],
+  "amends": null,
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "flow",
+    "title": "Tariff steps for a new generating station under the draft",
+    "items": [
+     {
+      "label": "Apply for provisional tariff",
+      "basis": [
+       "p20.3",
+       "p20.4"
+      ],
+      "detail": "Petition filed within 90 days prior to the anticipated date of commercial operation"
+     },
+     {
+      "label": "Provisional tariff granted",
+      "basis": [
+       "p20.7",
+       "p20.8"
+      ],
+      "detail": "Commission may grant provisional tariff up to 90% of the Annual Fixed Cost claimed, subject to later adjustment"
+     },
+     {
+      "label": "Petition for final tariff",
+      "basis": [
+       "p20.9",
+       "p21.1"
+      ],
+      "detail": "Filed within six months from COD, on audited capital expenditure and capitalisation as on COD; for several units, filed per unit at its COD"
+     },
+     {
+      "label": "Final tariff after prudence check",
+      "basis": [
+       "p21.3"
+      ],
+      "detail": "Commission determines final tariff on prudence check of audited capital expenditure as on COD"
+     },
+     {
+      "label": "True-up of provisional tariff",
+      "basis": [
+       "p21.4",
+       "p21.5"
+      ],
+      "detail": "Over or under recovery billed within six months of final tariff, with simple interest at Bank Rate plus 200 basis points"
+     }
+    ],
+    "note": "Steps for new projects as set out in draft Regulation 4.1"
+   },
+   {
+    "type": "timeline",
+    "title": "Draft notification, earlier regulations and the new Control Period",
+    "items": [
+     {
+      "label": "Draft notified",
+      "basis": [
+       "p1.3"
+      ],
+      "start": "2026-06-01"
+     },
+     {
+      "label": "Last day governed by 2005 Regulations",
+      "basis": [
+       "p5.2",
+       "p5.3"
+      ],
+      "start": "2027-03-31"
+     },
+     {
+      "label": "Control Period FY 2027-28 to FY 2031-32",
+      "basis": [
+       "p4.6",
+       "p5.1"
+      ],
+      "start": "2027-04-01",
+      "end": "2032-03-31"
+     }
+    ],
+    "note": "Dates as given in the draft; the comment deadline was later extended and is not shown"
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "comments": {},
+  "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-030620262110Eng.pdf",
+  "related": [],
+  "reviewed_by": null,
+  "approved_at": null,
+  "draft": true,
+  "sample": false
+ },
+ {
+  "id": "39d1fee3a5f1638c46c9d02ce91dc6485e0ff753cdd75335477c42e237c52e6d",
+  "path": "/consultations/tnerc/terms-and-conditions-for-determination-of-tariff-from-non-conventional-energy-generation-s-39d1fe",
+  "commission": "tnerc",
+  "title": "Draft TNERC (Terms and Conditions for Determination of Tariff from Non-Conventional Energy Generation Sources) Regulations, 2026",
+  "kind": "draft_regulation",
+  "issued": "2026-06-01",
+  "comment_deadline": "2026-11-16",
+  "hearing_date": null,
+  "summary": "TNERC proposes new regulations for tariffs from non-conventional (renewable) energy sources. The draft makes competitive bidding the route for procuring power from grid-connected renewable projects, while providing for generic and project-specific tariffs, and sets financial principles (capital cost, debt-equity, loan tenure, depreciation, return on equity, working capital, O&M, rebate and late payment surcharge, sharing of carbon credits). It then sets technology-specific parameters for solar (including module degradation), wind (including repowering, refurbishment and life extension), biomass, small hydro, waste-to-energy and battery energy storage. This is a proposal; TNERC has extended the last date for comments on this and eight other draft regulations to 16 November 2026.",
+  "proposes": [
+   "Competitive bidding for procurement from grid-connected renewable projects",
+   "Generic and project-specific tariffs; petition process",
+   "Financial norms: capital cost, debt-equity, depreciation, RoE, O&M, working capital",
+   "Sharing of carbon credit and environmental attribute benefits",
+   "Technology parameters for solar, wind (including repowering), biomass, small hydro, waste-to-energy",
+   "Tariff determination for battery energy storage"
+  ],
+  "amends": null,
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "bars",
+    "title": "Useful life (tariff period) by technology in the draft",
+    "items": [
+     {
+      "label": "Solar PV – utility scale",
+      "basis": [
+       "p18.1"
+      ],
+      "value": 25
+     },
+     {
+      "label": "Wind – onshore",
+      "basis": [
+       "p18.1"
+      ],
+      "value": 25
+     },
+     {
+      "label": "Wind – offshore",
+      "basis": [
+       "p18.1"
+      ],
+      "value": 30
+     },
+     {
+      "label": "Biomass – direct combustion",
+      "basis": [
+       "p18.1"
+      ],
+      "value": 25
+     },
+     {
+      "label": "Small hydro – run-of-river",
+      "basis": [
+       "p18.1"
+      ],
+      "value": 40
+     },
+     {
+      "label": "MSW – incineration",
+      "basis": [
+       "p18.1"
+      ],
+      "value": 20
+     },
+     {
+      "label": "Standalone BESS",
+      "basis": [
+       "p18.1"
+      ],
+      "value": 15
+     },
+     {
+      "label": "Pumped hydro storage",
+      "basis": [
+       "p18.1"
+      ],
+      "value": 50
+     }
+    ],
+    "unit": "years",
+    "note": "Selected categories from the draft's list of useful lives; the tariff period equals useful life"
+   },
+   {
+    "type": "series",
+    "title": "Bagasse co-generation total tariff: earlier TNERC orders and the 2026 draft",
+    "items": [
+     {
+      "label": "Order of 2009",
+      "basis": [
+       "p121.20"
+      ],
+      "value": 4.38
+     },
+     {
+      "label": "Order of 2012",
+      "basis": [
+       "p121.20"
+      ],
+      "value": 3.97
+     },
+     {
+      "label": "Order of 2016",
+      "basis": [
+       "p121.20"
+      ],
+      "value": 5.58
+     },
+     {
+      "label": "Order of 2018",
+      "basis": [
+       "p121.20"
+      ],
+      "value": 5.36
+     },
+     {
+      "label": "Order of 2023",
+      "basis": [
+       "p121.20"
+      ],
+      "value": 5.9
+     },
+     {
+      "label": "Order of 2025",
+      "basis": [
+       "p121.20"
+      ],
+      "value": 7.13
+     },
+     {
+      "label": "Draft Regulation 2026",
+      "basis": [
+       "p121.20"
+      ],
+      "value": 7.47
+     }
+    ],
+    "unit": "Rs/kWh",
+    "note": "From the Commission's Statement of Reasons table of bagasse co-generation parameters"
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "comments": {},
+  "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-010620262127Eng.pdf",
+  "related": [],
+  "reviewed_by": null,
+  "approved_at": null,
+  "draft": true,
+  "sample": false
+ },
+ {
+  "id": "fef139898c6211de7cddde58e9e1b0be11267089746e95a491608fa8adc84407",
+  "path": "/consultations/tnerc/terms-and-conditions-for-determination-of-tariff-for-intra-state-transmission-system-regul-fef139",
+  "commission": "tnerc",
+  "title": "Draft TNERC (Terms and Conditions for Determination of Tariff for Intra-State Transmission System) Regulations, 2026",
+  "kind": "draft_regulation",
+  "issued": "2026-05-31",
+  "comment_deadline": "2026-11-16",
+  "hearing_date": null,
+  "summary": "TNERC proposes new tariff regulations for the intra-State transmission system under a multi-year tariff framework. The draft sets out the MYT petition process and the true-up methodology for FY 2022-23 to FY 2026-27, components of the transmission licensee's ARR (capital investment plan, capital base and asset register, return on equity, interest, depreciation, O&M and other costs), treatment of projects won through tariff-based competitive bidding, determination of Total Transmission Capacity, sharing of transmission charges with special provisions for open access customers, cost pools, exemptions and waivers, billing and recovery, and operational norms. This is a proposal; TNERC has extended the last date for comments on this and eight other draft regulations to 16 November 2026.",
+  "proposes": [
+   "MYT framework and petitions for transmission licensees; true-up of FY 2022-23 to FY 2026-27",
+   "ARR components: capital investment plan, capital base, RoE, interest, depreciation, O&M",
+   "Treatment of TBCB transmission projects under the MYT framework",
+   "Determination and revision of Total Transmission Capacity",
+   "Sharing of transmission charges, special provisions for open access customers, cost pools",
+   "Exemptions, waivers and rebates; billing and recovery; operational norms"
+  ],
+  "amends": null,
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "bars",
+    "title": "Useful life of transmission assets from date of commercial operation",
+    "items": [
+     {
+      "label": "AC and DC sub-station",
+      "basis": [
+       "p14.11",
+       "p14.12"
+      ],
+      "value": 25
+     },
+     {
+      "label": "Gas Insulated Substation (GIS)",
+      "basis": [
+       "p14.11",
+       "p14.13"
+      ],
+      "value": 25
+     },
+     {
+      "label": "Transmission line (HVAC & HVDC)",
+      "basis": [
+       "p14.14",
+       "p14.15"
+      ],
+      "value": 25
+     },
+     {
+      "label": "Optical Ground Wire (OPGW)",
+      "basis": [
+       "p14.16"
+      ],
+      "value": 15
+     },
+     {
+      "label": "IT, SCADA, communication (excl. OPGW)",
+      "basis": [
+       "p15.1",
+       "p15.2",
+       "p15.3"
+      ],
+      "value": 7
+     }
+    ],
+    "unit": "years"
+   },
+   {
+    "type": "flow",
+    "title": "How variations from approved figures are treated at true-up",
+    "items": [
+     {
+      "label": "Variation found",
+      "basis": [
+       "p17.13"
+      ],
+      "detail": "At true-up or APR, the Commission compares actual performance with the approved forecast and sorts each variation as controllable or uncontrollable"
+     },
+     {
+      "label": "Controllable factor?",
+      "basis": [
+       "p163.7"
+      ],
+      "detail": "E.g. O&M efficiency, time and cost overruns attributable to the Licensee, transmission availability",
+      "otherwise": "Uncontrollable (change in law, force majeure, statutory pay revisions, levies): fully passed through to the ARR"
+     },
+     {
+      "label": "Controllable gain",
+      "basis": [
+       "p163.7"
+      ],
+      "detail": "Two-thirds passed on to consumers; the balance is retained by the Licensee"
+     },
+     {
+      "label": "Controllable loss",
+      "basis": [
+       "p163.7"
+      ],
+      "detail": "One-third absorbed by consumers; the balance is borne by the Licensee"
+     }
+    ],
+    "note": "Draft proposal; sharing shares are as stated in the Statement of Reasons"
+   },
+   {
+    "type": "timeline",
+    "title": "Periods covered by the old regulations and the new Control Period",
+    "items": [
+     {
+      "label": "True-up FY 2022-23 to FY 2025-26, APR FY 2026-27",
+      "basis": [
+       "p18.7",
+       "p11.4"
+      ],
+      "start": "2022-04-01",
+      "end": "2027-03-31"
+     },
+     {
+      "label": "2005 and 2009 Regulations govern matters up to",
+      "basis": [
+       "p5.8",
+       "p6.2"
+      ],
+      "start": "2027-03-31"
+     },
+     {
+      "label": "Control Period FY 2027-28 to FY 2031-32",
+      "basis": [
+       "p10.3"
+      ],
+      "start": "2027-04-01",
+      "end": "2032-03-31"
+     }
+    ]
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "comments": {},
+  "source_url": "https://tnerc.tn.gov.in/PressRelease/files/PR-310520262022Eng.pdf",
+  "related": [],
+  "reviewed_by": null,
+  "approved_at": null,
+  "draft": true,
+  "sample": false
+ },
+ {
+  "id": "623ba689094bd273a9d03943336419eb3a11c7cfa81a6f6519645ee7eb8f87bf",
+  "path": "/consultations/kerc/procurement-of-energy-from-renewable-sources-regulations-2026-623ba6",
+  "commission": "kerc",
+  "title": "Draft KERC Procurement of Energy from Renewable Sources Regulations, 2026.",
+  "kind": "draft_regulation",
+  "issued": "2026-10-12",
+  "comment_deadline": "2026-11-11",
+  "hearing_date": null,
+  "summary": "KERC proposes new regulations on renewable purchase obligations to replace its 2011 regulations, aligning Karnataka with the Government of India's revised Renewable Consumption Obligation notification of 27.09.2025. Distribution licensees, open access consumers above 1 MW and captive users with plants of 1 MW and above would have to meet a total RPO rising from 35.95% in 2026-27 to 43.33% in 2029-30, split into wind, hydro, distributed RE and other RE components. Obligations could be met through renewable power, RECs or the CERC buyout price, with SLDC monitoring compliance and possible action under Section 142. Tariffs for wind, solar MW-scale, mini-hydel, co-generation and biomass would be discovered through bidding. KERC's website lists 11.11.2026 as the last date for suggestions; the gazette notice of 22.10.2026 allows 30 days from publication. This is a proposal.",
+  "proposes": [
+   "Total RPO: 35.95% (2026-27), 38.81% (2027-28), 41.36% (2028-29), 43.33% (2029-30)",
+   "Components: wind RE, hydro RE (projects after 31.03.2024), distributed RE (under 10 MW) and other RE",
+   "Obligated: discoms, open access consumers above 1 MW and captive users with plants of 1 MW and above",
+   "Compliance through RE purchase, RECs or the CERC buyout price; open access and captive users may meet the total from any RE source",
+   "SLDC to monitor and report by 31 August each year; non-compliance may lead to Section 142 proceedings",
+   "Tariffs for wind, solar MW-scale, mini-hydel, co-generation and biomass through Section 63 bidding",
+   "REC-route generators to sell to ESCOMs at the lower of pooled power purchase cost or 75% of generic tariff"
+  ],
+  "amends": "Replaces KERC (Power Procurement from Renewable Sources by Distribution Licensee) Regulations, 2011",
+  "impact": {
+   "headline": "Open access above 1 MW or a captive plant in Karnataka? Check whether the proposed renewable obligation would cover you.",
+   "checks": [
+    "Is your contract demand 1 MW or more, and do you draw more than 1 MW through open access?",
+    "Do you have a grid-connected captive plant of 1 MW or more, and on what fuel?",
+    "What share of your consumption is already renewable, and from which sources?",
+    "Do you have several sites in Karnataka under one legal entity?"
+   ],
+   "market_note": "If adopted, Karnataka's RPO rises from 35.95% of consumption in 2026-27 to 43.33% in 2029-30. It binds open access consumers above 1 MW and captive users with plants of 1 MW and above, not only ESCOMs. ESCOMs face separate wind, hydro and distributed-RE sub-targets; OA and captive users can meet the total from any RE.",
+   "key_points": [
+    {
+     "text": "Total RPO: 35.95% (2026-27), 38.81%, 41.36%, 43.33% (2029-30); distributed RE rises from 2.70% to 4.50% and wind from 1.97% to 3.48%",
+     "basis": [
+      "p5.8"
+     ]
+    },
+    {
+     "text": "Obligated: ESCOMs, OA consumers with contract demand of 1 MW and above drawing over 1 MW through OA, and captive users with grid-connected plants of 1 MW and above",
+     "basis": [
+      "p3.9",
+      "p3.10"
+     ]
+    },
+    {
+     "text": "Wind and hydro components count only from projects commissioned after 31.03.2024; distributed RE only from projects under 10 MW, and its shortfall cannot be covered by other RE",
+     "basis": [
+      "p6.3",
+      "p6.4",
+      "p6.8",
+      "p6.13"
+     ]
+    },
+    {
+     "text": "Compliance routes: RE from captive or any source (including traders, the market or storage), RECs including VPPA-linked RECs, or the CERC buyout price",
+     "basis": [
+      "p7.5",
+      "p7.7",
+      "p7.8",
+      "p7.9"
+     ]
+    },
+    {
+     "text": "Non-compliance or not furnishing data can lead to Section 142 proceedings",
+     "basis": [
+      "p8.9",
+      "p8.12"
+     ]
+    }
+   ],
+   "procurement": [
+    {
+     "text": "ESCOMs to source wind and hydro from projects commissioned after 31.03.2024 and distributed RE from projects under 10 MW, to meet sub-targets",
+     "basis": [
+      "p6.3",
+      "p6.4",
+      "p6.8"
+     ]
+    },
+    {
+     "text": "Mini-hydel, MW-scale solar, wind, co-generation and biomass tariffs through Section 63 bidding",
+     "basis": [
+      "p11.5"
+     ]
+    },
+    {
+     "text": "Captive RE plants counted for compliance must be at least 250 kW",
+     "basis": [
+      "p7.6"
+     ]
+    },
+    {
+     "text": "A legal entity with several sites in Karnataka complies on a combined basis",
+     "basis": [
+      "p7.11"
+     ]
+    },
+    {
+     "text": "Obligated entities report consumption and RE by 31 July; SLDC files the compliance report by 31 August",
+     "basis": [
+      "p8.6",
+      "p8.11"
+     ]
+    }
+   ],
+   "stakeholders": {
+    "discoms": {
+     "effect": "cost",
+     "comment": "If adopted, ESCOMs must meet the rising total plus wind, hydro and distributed-RE sub-targets, and a distributed-RE shortfall cannot be offset. Their base excludes OA, captive and green-tariff sales.",
+     "basis": [
+      "p4.10",
+      "p5.8",
+      "p6.13"
+     ]
+    },
+    "ci_consumers": {
+     "effect": "cost",
+     "comment": "If adopted, OA consumers with contract demand of 1 MW and above drawing over 1 MW via OA carry an RPO on their OA consumption, and may meet it from any RE, RECs or the buyout price.",
+     "basis": [
+      "p3.9",
+      "p5.2",
+      "p7.2"
+     ]
+    },
+    "captive": {
+     "effect": "cost",
+     "comment": "If adopted, captive users with grid-connected plants of 1 MW and above are obligated on self-consumption net of auxiliary use, excluding waste-heat generation and 50% of fossil co-generation.",
+     "basis": [
+      "p3.10",
+      "p5.2",
+      "p5.4"
+     ]
+    },
+    "re_developers": {
+     "effect": "opportunity",
+     "comment": "If adopted, sub-targets create demand reserved for wind and hydro commissioned after 31.03.2024 and for RE projects under 10 MW. Generators taking RECs must sell to ESCOMs at the lower of pooled cost or 75% of generic tariff.",
+     "basis": [
+      "p5.8",
+      "p6.3",
+      "p6.8",
+      "p10.6"
+     ]
+    },
+    "storage": {
+     "effect": "opportunity",
+     "comment": "If adopted, RE bought through an energy storage system counts towards RPO compliance.",
+     "basis": [
+      "p7.5"
+     ]
+    },
+    "transmission": {
+     "effect": "cost",
+     "comment": "If adopted, SLDC as State Agency verifies compliance for all obligated entities, frames accreditation procedures within three months, and reports by 31 August.",
+     "basis": [
+      "p4.4",
+      "p8.11",
+      "p9.6"
+     ]
+    },
+    "traders": {
+     "effect": "opportunity",
+     "comment": "If adopted, RE bought from traders or the market counts, and RECs (including VPPA-linked) remain a compliance route for all obligated entities.",
+     "basis": [
+      "p7.5",
+      "p7.7",
+      "p7.8"
+     ]
+    }
+   },
+   "open_questions": [
+    "The notice allows 30 days from publication in the Gazette (22.10.2026); KERC's listing showed 11.11.2026. Confirm the date with KERC.",
+    "Designated consumers under the Energy Conservation Act report through BEE; how the two compliance tracks reconcile is not spelt out."
+   ]
+  },
+  "rating": null,
+  "figures": [
+   {
+    "type": "series",
+    "title": "Proposed total renewable purchase obligation",
+    "items": [
+     {
+      "label": "2026-27",
+      "basis": [
+       "p5.8"
+      ],
+      "value": 35.95
+     },
+     {
+      "label": "2027-28",
+      "basis": [
+       "p5.8"
+      ],
+      "value": 38.81
+     },
+     {
+      "label": "2028-29",
+      "basis": [
+       "p5.8"
+      ],
+      "value": 41.36
+     },
+     {
+      "label": "2029-30",
+      "basis": [
+       "p5.8"
+      ],
+      "value": 43.33
+     }
+    ],
+    "unit": "% of consumption"
+   },
+   {
+    "type": "series",
+    "title": "Of which, distributed renewable energy",
+    "items": [
+     {
+      "label": "2026-27",
+      "basis": [
+       "p5.8"
+      ],
+      "value": 2.7
+     },
+     {
+      "label": "2027-28",
+      "basis": [
+       "p5.8"
+      ],
+      "value": 3.3
+     },
+     {
+      "label": "2028-29",
+      "basis": [
+       "p5.8"
+      ],
+      "value": 3.9
+     },
+     {
+      "label": "2029-30",
+      "basis": [
+       "p5.8"
+      ],
+      "value": 4.5
+     }
+    ],
+    "unit": "% of consumption"
+   },
+   {
+    "type": "flow",
+    "title": "Would the proposed obligation apply, and how could it be met",
+    "items": [
+     {
+      "label": "Are you an obligated entity?",
+      "basis": [
+       "p3.9",
+       "p3.10"
+      ],
+      "detail": "A distribution licensee; an open access consumer of 1 MW and above drawing over 1 MW; a captive consumer with a grid-connected plant of 1 MW and above"
+     },
+     {
+      "label": "Meet the yearly percentage",
+      "basis": [
+       "p5.8"
+      ],
+      "detail": "35.95% of consumption in 2026-27, rising to 43.33% in 2029-30"
+     },
+     {
+      "label": "Route 1: use renewable power",
+      "basis": [
+       "p7.5",
+       "p7.6"
+      ],
+      "detail": "From a captive source of at least 250 kW, or bought from any source, including traders, the market or storage"
+     },
+     {
+      "label": "Route 2: renewable energy certificates",
+      "basis": [
+       "p7.7",
+       "p7.8"
+      ],
+      "detail": "Bought or self-generated, including those acquired under virtual PPAs"
+     },
+     {
+      "label": "Route 3: pay the buyout price",
+      "basis": [
+       "p7.9"
+      ],
+      "detail": "At the price specified by CERC"
+     },
+     {
+      "label": "Report to the State Agency by 31 July",
+      "basis": [
+       "p8.6",
+       "p8.9",
+       "p8.11",
+       "p8.12"
+      ],
+      "detail": "The State Agency reports on every obligated entity to the Commission by 31 August",
+      "otherwise": "Non-compliance or not giving information can lead to Section 142 proceedings"
+     }
+    ],
+    "note": "A proposal, not in force. Steps as set out in the draft regulations."
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "comments": {},
+  "source_url": "https://kerc.karnataka.gov.in/uploads/media_to_upload1793079162.pdf",
+  "related": [],
+  "reviewed_by": null,
+  "approved_at": null,
+  "draft": true,
+  "sample": false
+ },
+ {
+  "id": "94f2c131d8b6839167af1f4051369e439ba1e85d17e65fd88cb774d77141a9c0",
+  "path": "/consultations/cerc/indian-electricity-grid-code-second-amendment-regulations-2026-94f2c1",
+  "commission": "cerc",
+  "title": "Draft Central Electricity Regulatory Commission (Indian Electricity Grid Code) (Second Amendment) Regulations, 2026",
+  "kind": "draft_amendment",
+  "issued": null,
+  "comment_deadline": "2026-11-02",
+  "hearing_date": "2026-11-04",
+  "summary": "CERC proposes a broad second amendment to the Indian Electricity Grid Code. It would introduce a congestion charge on regional entities whose deviations push flows on inter- or intra-regional links beyond Total Transfer Capability, payable on top of deviation charges at a rate CERC sets by order. It sets rules for scheduling infirm power after a successful trial run, offering it first to contracted buyers with seven days' notice. It brings pumped storage plants and energy storage systems more fully into scheduling, despatch and ancillary service provisions, revises the timelines and treatment for units under reserve shutdown, and shortens the gap between schedule revisions in two phases, the second from 1 April 2027. Comments closed on 2 November 2026 and the public hearing was held on 4 November 2026; the final amendment is awaited.",
+  "proposes": [
+   "New Regulation 30A: congestion charge on regional entities causing flows beyond TTC, in addition to deviation charges",
+   "New Regulation 25A: infirm power scheduled only after a successful trial run, offered first to contracted buyers with 7 days' notice",
+   "Pumped storage plants and ESS brought into scheduling, despatch and reserve provisions",
+   "Reserve shutdown: new D-1 timelines (1430/1530/1600/1800 hrs) and rules for on-bar and off-bar declared capacity",
+   "NLDC may run SCUC at any time of day to commit or decommit units for grid security",
+   "Shorter revision timelines in two phases, the second from 01.04.2027",
+   "New definitions including congestion charge, default trigger date (75 days after RPC accounts) and REIA"
+  ],
+  "amends": "CERC (Indian Electricity Grid Code) Regulations, 2023",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "flow",
+    "title": "How the proposed congestion charge would be applied and withdrawn",
+    "items": [
+     {
+      "label": "Flow crosses ATC",
+      "basis": [
+       "p9.6"
+      ],
+      "detail": "When flow on an inter- or intra-regional corridor crosses the ATC, NLDC or RLDC issues a warning notice to the defaulting entities."
+     },
+     {
+      "label": "Flow exceeds TTC",
+      "basis": [
+       "p9.6",
+       "p9.7"
+      ],
+      "detail": "NLDC or RLDC may decide to apply the congestion charge after notice by e-mail or voice message, on its website and on the common EMS screen."
+     },
+     {
+      "label": "Notice before the charge applies",
+      "basis": [
+       "p9.8",
+       "p9.9"
+      ],
+      "detail": "At least two clear time blocks of notice, not counting the block in which the notice is issued."
+     },
+     {
+      "label": "Who pays and who receives",
+      "basis": [
+       "p8.11",
+       "p8.12",
+       "p9.2"
+      ],
+      "detail": "Entities causing congestion pay, on top of DSM deviation charges; entities relieving it receive."
+     },
+     {
+      "label": "Flow back down to ATC",
+      "basis": [
+       "p9.11",
+       "p10.1",
+       "p10.2"
+      ],
+      "detail": "The charge is withdrawn after one time block of notice, not counting the block in which the notice is issued."
+     },
+     {
+      "label": "Statement and payment",
+      "basis": [
+       "p10.4",
+       "p10.6",
+       "p10.7"
+      ],
+      "detail": "RPC Secretariat issues a weekly statement; the payer deposits into the Pool Account within 10 days.",
+      "otherwise": "Late payment carries interest at 0.04% per day."
+     },
+     {
+      "label": "Release to recipients",
+      "basis": [
+       "p10.9"
+      ],
+      "detail": "RLDCs release the amount within two working days of receiving it, with any interest for delay."
+     }
+    ],
+    "note": "Proposed Regulation 30A of the draft amendment; CERC would set the rate later by order."
+   },
+   {
+    "type": "timeline",
+    "title": "Draft issue date and start of the second-phase revision timelines",
+    "items": [
+     {
+      "label": "Draft notification issued",
+      "basis": [
+       "p1.3"
+      ],
+      "start": "2026-09-21"
+     },
+     {
+      "label": "Para 16(B) second-phase revision timelines take effect",
+      "basis": [
+       "p1.8"
+      ],
+      "start": "2027-04-01"
+     }
+    ]
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "comments": {},
+  "source_url": "https://cercind.gov.in/2026/draft_reg/DR_IEGC-2ndAmnd.pdf",
+  "related": [
+   {
+    "label": "Public Notice extension",
+    "url": "https://cercind.gov.in/2026/draft_reg/PN_IEGC-2ndAmnd-Ext-letr.pdf"
+   },
+   {
+    "label": "Public Notice",
+    "url": "https://cercind.gov.in/2026/draft_reg/PN_IEGC-2ndAmnd.pdf"
+   },
+   {
+    "label": "Explanatory Memorandum",
+    "url": "https://cercind.gov.in/2026/draft_reg/EM_IEGC-2ndAmnd.pdf"
+   },
+   {
+    "label": "Public Hearing will be held on 04.11.2026 at 10:30 AM.",
+    "url": "https://cercind.gov.in/2026/draft_reg/PH-Notice231026.pdf"
+   }
+  ],
+  "reviewed_by": null,
+  "approved_at": null,
+  "draft": true,
+  "sample": false
+ },
+ {
+  "id": "beed98beb689fd356700330a2944bd076e1789fba99e76115290cede30b0d37d",
+  "path": "/consultations/gerc/electricity-supply-code-and-related-matters-fifth-amendment-regulations-2026-beed98",
+  "commission": "gerc",
+  "title": "Draft GERC (Electricity Supply Code and Related Matters) (Fifth Amendment) Regulations, 2026",
+  "kind": "draft_amendment",
+  "issued": "2026-10-17",
+  "comment_deadline": null,
+  "hearing_date": null,
+  "summary": "GERC proposes a wide update of Gujarat's Electricity Supply Code. All new connections would get smart meters with prepayment functionality or prepayment meters, unless the Commission allows an exception. LT connections up to 150 kW could be released on the applicant's declaration, with the test report filed online within 45 days, following a state government order of July 2026. Applicants doing their own extension work would pay only supervision charges, but would face demand and minimum charges if they do not finish within the standard time and a further 60 days after notice. Bills above Rs 10,000 would have to be paid electronically, with a small rebate for prompt e-payment. Temporary connections for construction could run up to three years, and safety references move to the CEA's 2023 regulations. This is a proposal; GERC's listing gives no last date for comments, so check the public notice.",
+  "proposes": [
+   "Smart prepaid or prepayment meters for all new connections, subject to exemption by the Commission",
+   "LT connections up to 150 kW released on declaration; test report online within 45 days",
+   "Self-executed extension work: supervision charges only; charges apply if not completed within standard time plus 60 days after notice",
+   "Mandatory e-payment for bills above Rs 10,000; rebate of 0.01% or Rs 50 (whichever is less) for timely e-payment",
+   "Temporary connections up to 12 months, or up to 3 years for construction",
+   "Smart meters read remotely at least monthly; consumption data via website, app or SMS",
+   "Notices may be served by registered e-mail",
+   "Safety, wiring and protection requirements aligned with CEA safety regulations, 2023"
+  ],
+  "amends": "GERC (Electricity Supply Code and Related Matters) Regulations, 2015",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "flow",
+    "title": "Releasing LT connections up to 150 kW on the applicant's declaration",
+    "items": [
+     {
+      "label": "LT applicant, load up to 150 kW",
+      "basis": [
+       "p4.7"
+      ],
+      "detail": "New connection, additional load or load reduction; total connected load, including the added or reduced load, up to 150 kW"
+     },
+     {
+      "label": "Other requirements met",
+      "basis": [
+       "p5.1"
+      ],
+      "detail": "All other requirements of the Electricity Act, 2003 and the CEA safety regulations, 2023 are fulfilled"
+     },
+     {
+      "label": "Connection released on declaration",
+      "basis": [
+       "p4.6",
+       "p5.1"
+      ],
+      "detail": "The licensee releases the connection on the applicant's declaration as set out in the Order, with no test report needed first"
+     },
+     {
+      "label": "Test report filed online",
+      "basis": [
+       "p5.1"
+      ],
+      "detail": "Through the licensee's online portal within 45 days of release, or another period set in the Order",
+      "otherwise": "Licensee may disconnect after due notice and an opportunity of representation"
+     },
+     {
+      "label": "Supply restored",
+      "basis": [
+       "p5.1"
+      ],
+      "detail": "If supply was disconnected, the licensee restores it as soon as it receives the test report"
+     }
+    ],
+    "note": "Proposed second proviso to Regulation 4.39, following the Government of Gujarat order of 29.07.2026 as modified by the corrigendum of 23.09.2026"
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "comments": {},
+  "source_url": "https://gercin.org/viewdocument/cmVndWxhdGlvbl9lbmdfMTc5MjI0NzU1Nl8yMzg4",
+  "related": [
+   {
+    "label": "Explanatory Memorandum",
+    "url": "https://gercin.org/viewdocument/cmVndWxhdGlvbl9lbmdfMTc5MjI0NzY5NF80MjI0"
+   }
+  ],
+  "reviewed_by": null,
+  "approved_at": null,
+  "draft": true,
+  "sample": false
+ },
+ {
+  "id": "b84e59ee7b997820f89700ab29a7b17dc1f069a75c8b82844640ef59a8032cf5",
+  "path": "/consultations/gerc/standards-of-performance-of-distribution-licensees-first-amendment-regulations-2026-b84e59",
+  "commission": "gerc",
+  "title": "Draft GERC (Standards of Performance of Distribution Licensees) (First Amendment) Regulations, 2026",
+  "kind": "draft_amendment",
+  "issued": "2026-10-17",
+  "comment_deadline": null,
+  "hearing_date": null,
+  "summary": "GERC proposes tighter standards for Gujarat's distribution licensees. New connections, load enhancements, shifting and conversion of service that need no network work would have to be energised within 3 days in metropolitan areas, 7 days in other urban areas and 10 days in rural areas, with automatic compensation of Rs 50 a day for delay. Longer timelines would apply where the network has to be extended, from 15 days for an LT line up to 150 metres to 180 days for EHT lines or sub-stations. Reliability would be measured under IEEE Standard 1366-2022, adding a new index (CAIFI) reported quarterly and annually, and safety and earthing would follow the CEA's 2023 safety regulations. This is a proposal; GERC's listing gives no last date for comments, so check the public notice.",
+  "proposes": [
+   "Connection time limits without network work: 3 days (metropolitan), 7 days (other urban), 10 days (rural)",
+   "Network extensions: 15 days (LT up to 150 m) up to 180 days (EHT line or sub-station)",
+   "Automatic compensation of Rs 50 per day of delay in energisation",
+   "Licensee must tell applicants the expected energisation date",
+   "Reliability indices under IEEE 1366-2022, adding CAIFI, reported quarterly and annually",
+   "Construction, maintenance and earthing testing under CEA safety regulations, 2023"
+  ],
+  "amends": "GERC (Standards of Performance of Distribution Licensees) Regulations, 2023",
+  "impact": null,
+  "rating": null,
+  "figures": [
+   {
+    "type": "bars",
+    "title": "Proposed time to energise a connection from the existing network, by area",
+    "items": [
+     {
+      "label": "Metropolitan areas",
+      "basis": [
+       "p2.10"
+      ],
+      "value": 3
+     },
+     {
+      "label": "Urban areas (other than metropolitan)",
+      "basis": [
+       "p2.10"
+      ],
+      "value": 7
+     },
+     {
+      "label": "Rural areas",
+      "basis": [
+       "p2.10"
+      ],
+      "value": 10
+     }
+    ],
+    "unit": "days",
+    "note": "Applies to new connections, load enhancements, shifting and conversion of service, counted from a complete application. Rs 50 a day automatic compensation for delay."
+   },
+   {
+    "type": "bars",
+    "title": "Proposed time limits where the network must be modified, by type of work",
+    "items": [
+     {
+      "label": "Extension of LT line up to 150 m",
+      "basis": [
+       "p2.12"
+      ],
+      "value": 15
+     },
+     {
+      "label": "LT line over 150 m and/or transformer augmentation",
+      "basis": [
+       "p2.13",
+       "p2.14"
+      ],
+      "value": 21
+     },
+     {
+      "label": "New distribution transformer",
+      "basis": [
+       "p3.1"
+      ],
+      "value": 30
+     },
+     {
+      "label": "New HT line and transformer and/or HT augmentation",
+      "basis": [
+       "p3.2",
+       "p3.3"
+      ],
+      "value": 90
+     },
+     {
+      "label": "EHT line and/or sub-station",
+      "basis": [
+       "p3.3",
+       "p3.4"
+      ],
+      "value": 180
+     }
+    ],
+    "unit": "days",
+    "note": "Same limits for urban and rural areas. Read from the draft's table, whose layout is split in the extracted text."
+   }
+  ],
+  "checked": {
+   "reviewers": 2,
+   "numbers": true
+  },
+  "commercial": null,
+  "comments": {},
+  "source_url": "https://gercin.org/viewdocument/cmVndWxhdGlvbl9lbmdfMTc5MjI0NzgyM18yNzg4",
+  "related": [
+   {
+    "label": "Explanatory Memorandum",
+    "url": "https://gercin.org/viewdocument/cmVndWxhdGlvbl9lbmdfMTc5MjI0Nzg0OF8zMTM4"
+   }
+  ],
+  "reviewed_by": null,
+  "approved_at": null,
+  "draft": true,
+  "sample": false
+ }
+]

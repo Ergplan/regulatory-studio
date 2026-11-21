@@ -175,7 +175,7 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
         for c in conn.execute(
                 f"""SELECT d.id, d.commission, d.title, d.source_url, d.doc_type, c.*
                     FROM consultations c JOIN documents d ON d.id = c.doc_id
-                    WHERE c.summary_status IN ({marks})
+                    WHERE c.summary_status IN ({marks}) OR (c.summary_status = 'proposed' AND c.pending_public = 1)
                     ORDER BY coalesce(c.comment_deadline, c.hearing_date, c.issued_date, '') DESC""", ok):
             if clean and SAMPLE_MARK in c["source_url"]:
                 continue
@@ -190,8 +190,9 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
                     f"SELECT persona, body, status FROM comment_drafts WHERE doc_id = ? AND body IS NOT NULL AND status IN ({marks})",
                     (c["id"], *ok))},
                 "source_url": c["source_url"], "related": json.loads(c["related"] or "[]"),
-                "reviewed_by": c["reviewer"], "approved_at": c["approved_at"],
-                "draft": preview and c["summary_status"] != "approved",
+                "reviewed_by": c["reviewer"] if c["summary_status"] == "approved" else None,
+                "approved_at": c["approved_at"] if c["summary_status"] == "approved" else None,
+                "draft": c["summary_status"] != "approved",
                 "sample": SAMPLE_MARK in c["source_url"]})
 
         # Digest editions, built after orders and drafts so an edition can carry both.
@@ -200,7 +201,7 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
             d = shown[doc]
             return {"href": d["path"], "src": d.get("pdf") or d.get("source_url"), "code": d["commission"]}
         digests = []
-        for g in conn.execute(f"SELECT * FROM digests WHERE status IN ({marks}) ORDER BY id DESC", ok):
+        for g in conn.execute(f"SELECT * FROM digests WHERE status IN ({marks}) OR (status = 'proposed' AND pending_public = 1) ORDER BY id DESC", ok):
             items = [i for i in json.loads(g["items"] or "[]") if i in shown]
             if not items:
                 continue
@@ -217,10 +218,11 @@ def run(clean: bool = False, preview: bool = False, out=None) -> dict:
                      if not w.get("doc") or w["doc"] in shown]
             digests.append({"id": g["id"], "from": g["from_date"], "to": g["to_date"], "edition": g["edition_date"] or g["to_date"],
                             "intro": g["intro"], "items": items, "key_points": points, "numbers": numbers, "charts": charts,
-                            "watch": watch, "approved_at": g["approved_at"], "reviewed_by": g["reviewer"],
-                            "draft": preview and g["status"] != "approved",
+                            "watch": watch, "approved_at": g["approved_at"] if g["status"] == "approved" else None,
+                            "reviewed_by": g["reviewer"] if g["status"] == "approved" else None,
+                            "draft": g["status"] != "approved",
                             "path": f"/digest/{g['id'].lower()}"})
-            if g["published_at"] is None and not preview:
+            if g["published_at"] is None and not preview and g["status"] == "approved":
                 conn.execute("UPDATE digests SET published_at = datetime('now') WHERE id = ?", (g["id"],))
 
     files = {
