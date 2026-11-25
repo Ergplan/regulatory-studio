@@ -76,6 +76,13 @@ def _call(prompt: str) -> str:
     return str(envelope.get("result", ""))
 
 
+def _explain(e) -> str:
+    # jsonschema says only "'<the whole text>' is too long"; give the limit so the retry can meet it.
+    if e.validator == "maxLength" and isinstance(e.instance, str):
+        return f"{len(e.instance)} characters, the limit is {e.validator_value}; shorten it"
+    return e.message
+
+
 def ask_json(prompt: str, schema: dict, retries: int = 1) -> dict:
     """Send the prompt; parse and validate the JSON reply; retry once with the errors."""
     validator = jsonschema.validators.validator_for(schema)(schema)
@@ -90,7 +97,7 @@ def ask_json(prompt: str, schema: dict, retries: int = 1) -> dict:
             errors = sorted(validator.iter_errors(data), key=lambda e: list(e.path))
             if not errors:
                 return data
-            last_error = "; ".join(f"{list(e.path)}: {e.message}" for e in errors[:5])
+            last_error = "; ".join(f"{list(e.path)}: {_explain(e)}" for e in errors[:5])
         except (ClaudeError, json.JSONDecodeError) as e:
             last_error = str(e)
         attempt_prompt = (prompt + "\n\nYour previous reply was not valid: " + last_error

@@ -123,7 +123,8 @@ def run(limit: int | None = None) -> dict:
                         body, _ = order_text(conn, d["id"], budget=120_000)
                         out = ask_json(fill(load_prompt(prompt), schema=json.dumps(schema), kind=d["kind"], title=d["title"] or "(none)",
                                             commission=config.COMMISSIONS[d["commission"]], summary=d["summary"], issue=d["issue"] or "(not stated)",
-                                            outcome=d["outcome"] or "(not stated)", text=body), schema)
+                                            outcome=d["outcome"] or "(not stated)", text=body), schema,
+                                       retries=2)   # long documents often need a second pass to fit the 400-character fields
                     checks[agent] = clean(out, pids)
             except UsageLimitReached as e:
                 stopped = f"usage limit: {e}"[:300]

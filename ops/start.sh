@@ -34,7 +34,12 @@ pip install --quiet -e pipeline >> "$LOG" 2>&1 || PROBLEMS+=("pip install")
 sqlite3 data/store/working.db ".backup 'data/store/backups/working-$(date +%Y%m%d-%H%M).db'" 2>/dev/null
 
 say "2/7  Fetching new orders from the commission websites (a few minutes)"
-run regstudio download --limit 80
+regstudio download --limit 80 2>>"$LOG" | tee -a "$LOG" | python3 -c '
+import json, sys
+t = sys.stdin.read()
+for site, r in json.loads(t[t.index("{"):]).items():
+    for e in r.get("errors", []): print(f"download {site}: {e[:120]}")' 2>/dev/null > "$LOG.dl"
+while IFS= read -r line; do PROBLEMS+=("$line"); done < "$LOG.dl"; rm -f "$LOG.dl"
 
 # Documents the first sort left out but which should be read after all (one id per line).
 if [ -f data/reader_outputs/promote.txt ]; then
@@ -79,8 +84,9 @@ if regstudio sync >> "$LOG" 2>&1; then
     else PROBLEMS+=("could not create your invitation"); fi
   fi
 else
-  echo "     not connected yet: the review site does not know this Mac's key."
-  echo "     Tell Claude: \"the key is ready\". It is in data/store/sync_public_key.txt (a public key, safe to share)."
+  echo "     not connected yet: $(grep '^sync: ' "$LOG" | tail -1 | cut -c7-200)"
+  echo "     If it is about the key: tell Claude \"the key is ready\". It is in data/store/sync_public_key.txt (a public key, safe to share)."
+  PROBLEMS+=("review site: $(grep '^sync: ' "$LOG" | tail -1 | cut -c7-200)")
 fi
 
 echo

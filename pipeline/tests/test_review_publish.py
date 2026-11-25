@@ -470,7 +470,7 @@ def test_digest_edition_keeps_only_cited_points_and_publishes_with_approved_item
     page = server.get("/digest/2026-W47")
     assert "Cited point." in page and "Invented paragraph." not in page and "Numbers to know" in page
     publish.run(preview=True)
-    pre = json.loads((config.PREVIEW / "digests.json").read_text())
+    pre = [g for g in json.loads((config.PREVIEW / "digests.json").read_text()) if g["id"] == "2026-W47"]   # other tests may draft the current week
     assert pre[0]["draft"] and pre[0]["key_points"][0]["basis"][0]["href"].startswith("/orders/")
     assert server("/digest/2026-W47", {"intro": "Reviewed lead.", "action": "approve"}) == 303
     publish.run()

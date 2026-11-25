@@ -3,7 +3,8 @@ the summary. A second reviewer checks the figures separately; do not repeat that
 whether the summary says what the document actually decides.
 
 First read the document and write `own_reading`: the question before the Commission and what it held or
-proposes, in your own words. Only then read the summary below and test it:
+proposes, in your own words, in at most 400 characters (two or three short sentences; the main point, not
+a list of every provision). Only then read the summary below and test it:
 - Does it state the holding, or does it mistake a party's submission, a recital or an earlier order for it?
 - Is the outcome right, including conditions, exceptions and what was refused?
 - Does it claim more than the document does: a wider scope, a general rule from a case on its facts,
