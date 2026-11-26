@@ -2,8 +2,8 @@
 {% block body %}
 <style>.excerpt{font-style:italic;color:var(--quiet);margin:4px 0;font-size:14px}table.mini{border-collapse:collapse;width:100%;font-size:14px}table.mini td,table.mini th{border-top:1px solid #e3e6eb;padding:4px 8px 4px 0;text-align:left}</style>
 <h1>Weekly digest {{ dg.id }}</h1>
-<p class="muted">Edition of {{ dg.edition_date or dg.to_date }} · covers items read since the last approved edition · <span class="pill {{ dg.status }}">{{ dg.status }}</span></p>
-<div class="card"><form method="post" action="/digest/{{ dg.id }}"><label>Lead</label><textarea name="intro" style="min-height:140px">{{ dg.intro }}</textarea>
+<p class="muted">Edition of {{ dg.edition_date or dg.to_date }} · covers items read since the last approved edition · <span class="pill {{ dg.status }}">{{ dg.status }}</span>{% if dg.reviewer and dg.status == 'approved' %} <span class="by">by {{ dg.reviewer }}</span>{% endif %}</p>
+<div class="card">{% include "_hold.html" %}<form method="post" action="/digest/{{ dg.id }}"><label>Lead</label><textarea name="intro" style="min-height:140px">{{ dg.intro }}</textarea>
 <p class="row"><button name="action" value="save">Save</button><button class="primary" name="action" value="approve">Approve digest</button></p></form>
 <p class="muted">Approving the digest does not approve its items. Only items whose own summary is approved are published and emailed, and a key point, number or chart item is shown only if every document it cites is approved.</p></div>
 
@@ -35,4 +35,5 @@
 <form method="post" action="/comment/{{ c.id }}" class="row">{% if c.status == 'open' %}<button name="action" value="resolved">Mark resolved</button>{% else %}<button name="action" value="open">Reopen</button>{% endif %}</form></div>{% endfor %}
 <form method="post" action="/digest/{{ dg.id }}/note"><label>Words in question (optional)</label><input name="quote" maxlength="600">
 <label>Comment</label><textarea name="body" required style="min-height:60px"></textarea><p><button class="primary">Add comment</button></p></form></div>
+{% include "_decisions.html" %}
 {% endblock %}

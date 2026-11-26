@@ -17,7 +17,7 @@ from fastapi import BackgroundTasks, FastAPI, Form, HTTPException, Request
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
-from . import access, amend, auth, commercial, config, db, deploy, learning, priority, registry
+from . import access, amend, auth, commercial, config, db, deploy, hierarchy, learning, priority, registry
 
 app = FastAPI(title="Regulatory Studio review")
 templates = Jinja2Templates(directory=str(Path(__file__).parent / "templates"))
@@ -38,6 +38,7 @@ async def require_sign_in(request: Request, call_next):
         if not hmac.compare_digest(sent, mirror.local_token()):
             return HTMLResponse(REFUSED.format(why="The sync token is wrong."), status_code=403)
         request.state.reviewer = urllib.parse.unquote(request.headers.get("x-studio-reviewer", ""))[:80] or None
+        request.state.reviewer_email = urllib.parse.unquote(request.headers.get("x-studio-reviewer-email", ""))[:200] or None
         return await call_next(request)
     if access.through_cloudflare(request.headers):
         try:
@@ -49,6 +50,7 @@ async def require_sign_in(request: Request, call_next):
             return HTMLResponse(REFUSED.format(why=f"{email} is signed in but is not registered as a reviewer. "
                                                   "Ask the administrator to run: regstudio add-reviewer \"Your Name\" --email " + email), status_code=403)
         request.state.reviewer = name
+        request.state.reviewer_email = email
         return await call_next(request)
     if auth.enabled() and request.url.path not in ("/login",) and not reviewer(request):
         return RedirectResponse("/login", status_code=303)
@@ -117,6 +119,17 @@ def back(url: str) -> RedirectResponse:
     return RedirectResponse(url, status_code=303)
 
 
+def decisions_context(kind: str, obj: str, doc_id: str | None = None) -> dict:
+    """The senior reviewer's standing decision on the item (if any) and its decision record."""
+    with db.session() as conn:
+        h = hierarchy.held_by(conn, kind, obj)
+        rows = hierarchy.history(conn, doc_id=doc_id) if doc_id else hierarchy.history(conn, kind=kind, obj=obj)
+    hold = None
+    if h:
+        hold = {"reviewer": h["reviewer"], "verb": hierarchy.PAST.get(h["action"], h["action"]), "when": hierarchy._when(h["at"])}
+    return {"hold": hold, "decisions": rows}
+
+
 @app.get("/", response_class=HTMLResponse)
 def hub(request: Request):
     """The review hub: one tab per team. Urja Praxis reviews the law; jouleWise reviews the commercial illustrations."""
@@ -155,7 +168,7 @@ def queue(request: Request):
         orders = conn.execute(
             """SELECT d.id, d.commission, d.title, d.case_number, d.doc_date, d.ocr, d.language,
                       o.significance, o.summary_status, o.summary, o.issue, o.outcome, o.headline, o.topics, o.impact, o.parties,
-                      (SELECT count(*) FROM links l WHERE l.from_doc = d.id AND l.status = 'proposed') AS open_links
+                      o.reviewer, (SELECT count(*) FROM links l WHERE l.from_doc = d.id AND l.status = 'proposed') AS open_links
                FROM documents d JOIN orders o ON o.doc_id = d.id
                WHERE o.summary_status IN ('proposed', 'approved') AND d.stage IN ('read', 'drafted')
                ORDER BY o.summary_status = 'approved', o.significance DESC, d.doc_date DESC""").fetchall()
@@ -172,12 +185,13 @@ def queue(request: Request):
                WHERE a.status = 'proposed' GROUP BY d.id ORDER BY d.doc_date DESC""").fetchall()
         consultations = conn.execute(
             """SELECT d.id, d.commission, d.title, c.kind, c.comment_deadline, c.hearing_date, c.summary_status,
-                      c.summary, c.proposes, c.amends, c.impact
+                      c.summary, c.proposes, c.amends, c.impact, c.reviewer
                FROM documents d JOIN consultations c ON c.doc_id = d.id
                WHERE c.summary_status IN ('proposed', 'approved')
                ORDER BY c.summary_status = 'approved', coalesce(c.comment_deadline, '9999') ASC""").fetchall()
         listed = conn.execute("SELECT count(*) FROM documents WHERE stage = 'listed'").fetchone()[0]
         errors = conn.execute("SELECT id, commission, title, error FROM documents WHERE stage = 'error'").fetchall()
+        holds = hierarchy.holds_for(conn, [("order", o["id"]) for o in orders] + [("consultation", c["id"]) for c in consultations])
     orders = sorted((dict(o) | {"priority": priority.for_order(o)} for o in orders),
                     key=lambda o: (o["summary_status"] == "approved", -o["priority"]["score"]))
     consultations = sorted((dict(c) | {"priority": priority.for_consultation(c)} for c in consultations),
@@ -188,7 +202,7 @@ def queue(request: Request):
     return templates.TemplateResponse(request, "queue.html", {
         "reviewer": reviewer(request), "orders": orders, "first": first, "regs": regs, "digests": digests, "amendments": amendments,
         "listed": listed, "errors": errors, "sources": _download_health(), "deploy": deploy.last(), "scan": _last_scan(),
-        "consultations": consultations})
+        "consultations": consultations, "holds": holds})
 
 
 def _last_scan() -> dict | None:
@@ -261,7 +275,8 @@ def order(request: Request, doc_id: str):
     return templates.TemplateResponse(request, "order.html", {
         "reviewer": reviewer(request), "d": d, "o": o, "links": links, "paras": paras,
         "parties": json.loads(o["parties"] or "[]"), "topics": json.loads(o["topics"] or "[]"),
-        "targets": targets, "suggest": suggest, **impact_context(o), **notes_context(doc_id, o, True)})
+        "targets": targets, "suggest": suggest, **impact_context(o), **notes_context(doc_id, o, True),
+        **decisions_context("order", doc_id, doc_id)})
 
 
 @app.post("/order/{doc_id}/summary")
@@ -269,11 +284,14 @@ def save_summary(request: Request, doc_id: str, action: str = Form(...), summary
                  issue: str = Form(""), outcome: str = Form(""), topics: list[str] = Form([]),
                  title: str = Form(""), headline: str = Form("")):
     name = need_reviewer(request)
+    who = hierarchy.actor(request, name)
+    hierarchy.guard(who, "order", doc_id, action)
     topics = [t for t in topics if t in config.TOPICS]
     with db.session() as conn:
         prev = conn.execute("SELECT summary_status FROM orders WHERE doc_id = ?", (doc_id,)).fetchone()
         if not prev:
             raise HTTPException(404)
+        before = hierarchy.state(conn, "order", doc_id)
         if title.strip():
             conn.execute("UPDATE documents SET title = ? WHERE id = ?", (title.strip()[:200], doc_id))
         conn.execute("UPDATE orders SET headline = ? WHERE doc_id = ?", (headline.strip()[:120] or None, doc_id))
@@ -295,17 +313,21 @@ def save_summary(request: Request, doc_id: str, action: str = Form(...), summary
                          (name, doc_id))
             db.set_stage(conn, doc_id, "listed")
         db.audit(conn, name, f"summary.{action}", doc_id)
-    return back(f"/order/{doc_id}" if action != "reject" else "/")
+        hierarchy.record(conn, who, "order", doc_id, action, before)
+    return back(f"/order/{doc_id}")
 
 
 @app.post("/link/{link_id}")
 def decide_link(request: Request, link_id: int, action: str = Form(...), link_type: str = Form(None),
                 target: str = Form("")):
     name = need_reviewer(request)
+    who = hierarchy.actor(request, name)
+    hierarchy.guard(who, "link", str(link_id), action)
     with db.session() as conn:
         link = conn.execute("SELECT * FROM links WHERE id = ?", (link_id,)).fetchone()
         if not link:
             raise HTTPException(404)
+        before = hierarchy.state(conn, "link", str(link_id))
         if action == "approve":
             kind, tid = _parse_target(conn, target) if target else (link["target_kind"], link["target_id"])
             if not tid:
@@ -321,6 +343,7 @@ def decide_link(request: Request, link_id: int, action: str = Form(...), link_ty
             conn.execute("UPDATE links SET status = 'proposed', reviewer = NULL, approved_at = NULL WHERE id = ?",
                          (link_id,))
         db.audit(conn, name, f"link.{action}", str(link_id), {"target": target or link["target_id"]})
+        hierarchy.record(conn, who, "link", str(link_id), action, before)
     return back(f"/order/{link['from_doc']}#link-{link_id}")
 
 
@@ -349,6 +372,7 @@ def add_link(request: Request, doc_id: str, link_type: str = Form(...), target: 
                VALUES (?, ?, ?, ?, ?, 1, ?, ?, 'reviewer', 'approved', ?, datetime('now'))""",
             (doc_id, link_type, kind, tid, citation_text.strip(), pid, excerpt.strip(), name)).lastrowid
         db.audit(conn, name, "link.add", str(lid))
+        hierarchy.record(conn, hierarchy.actor(request, name), "link", str(lid), "add", {})
     return back(f"/order/{doc_id}#link-{lid}")
 
 
@@ -370,7 +394,10 @@ def regulation(request: Request, reg_id: str):
 def save_regulation(request: Request, reg_id: str, title: str = Form(...), short_title: str = Form(""),
                     notified_date: str = Form(""), action: str = Form("save")):
     name = need_reviewer(request)
+    who = hierarchy.actor(request, name)
+    hierarchy.guard(who, "regulation", reg_id, action)
     with db.session() as conn:
+        before = hierarchy.state(conn, "regulation", reg_id)
         conn.execute("UPDATE regulations SET title = ?, short_title = ?, notified_date = ? WHERE id = ?",
                      (title.strip(), short_title.strip() or None, notified_date or None, reg_id))
         if action == "approve":
@@ -379,6 +406,7 @@ def save_regulation(request: Request, reg_id: str, title: str = Form(...), short
             conn.execute("UPDATE clauses SET status = 'approved', reviewer = ?, approved_at = datetime('now') "
                          "WHERE regulation_id = ? AND status = 'proposed'", (name, reg_id))
         db.audit(conn, name, f"regulation.{action}", reg_id)
+        hierarchy.record(conn, who, "regulation", reg_id, action, before)
     return back(f"/regulation/{reg_id}")
 
 
@@ -386,10 +414,13 @@ def save_regulation(request: Request, reg_id: str, title: str = Form(...), short
 def save_clause(request: Request, clause_id: str, action: str = Form(...), heading: str = Form(""),
                 text: str = Form(""), in_force_from: str = Form(""), in_force_to: str = Form("")):
     name = need_reviewer(request)
+    who = hierarchy.actor(request, name)
+    hierarchy.guard(who, "clause", clause_id, action)
     with db.session() as conn:
         c = conn.execute("SELECT regulation_id FROM clauses WHERE id = ?", (clause_id,)).fetchone()
         if not c:
             raise HTTPException(404)
+        before = hierarchy.state(conn, "clause", clause_id)
         status = {"approve": "approved", "reject": "rejected"}.get(action)
         conn.execute(
             """UPDATE clauses SET heading = ?, text = ?, in_force_from = ?, in_force_to = ?,
@@ -399,6 +430,7 @@ def save_clause(request: Request, clause_id: str, action: str = Form(...), headi
             (heading.strip() or None, text.strip(), in_force_from or None, in_force_to or None,
              status, status, name, status, clause_id))
         db.audit(conn, name, f"clause.{action}", clause_id)
+        hierarchy.record(conn, who, "clause", clause_id, action, before)
     return back(f"/regulation/{c['regulation_id']}#c-{clause_id}")
 
 
@@ -428,18 +460,23 @@ def digest(request: Request, week: str):
     with db.session() as conn:
         dnotes = learning.comments_for(conn, digest_id=week)
     return templates.TemplateResponse(request, "digest.html", {"reviewer": reviewer(request), "dg": dg, "items": items, "dnotes": dnotes,
-                                                              "names": names, "texts": texts, **edition})
+                                                              "names": names, "texts": texts, **edition,
+                                                              **decisions_context("digest", week)})
 
 
 @app.post("/digest/{week}")
 def save_digest(request: Request, week: str, intro: str = Form(...), action: str = Form("save")):
     name = need_reviewer(request)
+    who = hierarchy.actor(request, name)
+    hierarchy.guard(who, "digest", week, action)
     with db.session() as conn:
+        before = hierarchy.state(conn, "digest", week)
         conn.execute("UPDATE digests SET intro = ? WHERE id = ?", (intro.strip(), week))
         if action == "approve":
             conn.execute("UPDATE digests SET status = 'approved', reviewer = ?, approved_at = datetime('now') "
                          "WHERE id = ?", (name, week))
         db.audit(conn, name, f"digest.{action}", week)
+        hierarchy.record(conn, who, "digest", week, action, before)
     return back(f"/digest/{week}")
 
 
@@ -482,10 +519,13 @@ def amendment_meta(request: Request, doc_id: str, regulation_id: str = Form(""),
 def amendment_change(request: Request, change_id: int, action: str = Form(...), new_text: str = Form(None),
                      clause_number: str = Form(None)):
     name = need_reviewer(request)
+    who = hierarchy.actor(request, name)
+    hierarchy.guard(who, "amendment_change", str(change_id), action)
     with db.session() as conn:
         ch = conn.execute("SELECT * FROM amendment_changes WHERE id = ?", (change_id,)).fetchone()
         if not ch:
             raise HTTPException(404)
+        before = hierarchy.state(conn, "amendment_change", str(change_id))
         if ch["status"] == "proposed" and (new_text is not None or clause_number):
             conn.execute("UPDATE amendment_changes SET new_text = coalesce(?, new_text), clause_number = coalesce(?, clause_number) WHERE id = ?",
                          (new_text.strip() if new_text is not None else None, (clause_number or "").strip() or None, change_id))
@@ -498,6 +538,7 @@ def amendment_change(request: Request, change_id: int, action: str = Form(...), 
         elif action == "reject":
             conn.execute("UPDATE amendment_changes SET status = 'rejected', reviewer = ? WHERE id = ?", (name, change_id))
             db.audit(conn, name, "amendment.reject", str(change_id))
+        hierarchy.record(conn, who, "amendment_change", str(change_id), action, before)
     return back(f"/amendment/{ch['amendment_doc']}#ch-{change_id}")
 
 
@@ -518,7 +559,8 @@ def consultation(request: Request, doc_id: str):
     return templates.TemplateResponse(request, "consultation.html", {
         "reviewer": reviewer(request), "d": d, "c": c, "paras": paras, "KINDS": KINDS,
         "proposes": json.loads(c["proposes"] or "[]"), "related": json.loads(c["related"] or "[]"), **impact_context(c),
-        "comment_drafts": comment_context(doc_id), **notes_context(doc_id, c, False)})
+        "comment_drafts": comment_context(doc_id), **notes_context(doc_id, c, False),
+        **decisions_context("consultation", doc_id, doc_id)})
 
 
 def _iso_or_none(value: str) -> str | None:
@@ -540,9 +582,12 @@ def save_consultation(request: Request, doc_id: str, action: str = Form(...), ti
         raise HTTPException(400, "Unknown kind.")
     lines = [l.strip(" -•\t") for l in proposes.splitlines() if l.strip(" -•\t")][:8]
     deadline, hearing = _iso_or_none(comment_deadline), _iso_or_none(hearing_date)
+    who = hierarchy.actor(request, name)
+    hierarchy.guard(who, "consultation", doc_id, action)
     with db.session() as conn:
         if not conn.execute("SELECT 1 FROM consultations WHERE doc_id = ?", (doc_id,)).fetchone():
             raise HTTPException(404)
+        before = hierarchy.state(conn, "consultation", doc_id)
         if title.strip():
             conn.execute("UPDATE documents SET title = ? WHERE id = ?", (title.strip()[:300], doc_id))
         fields = (kind, summary.strip(), json.dumps(lines, ensure_ascii=False), deadline, hearing,
@@ -564,7 +609,8 @@ def save_consultation(request: Request, doc_id: str, action: str = Form(...), ti
         else:
             raise HTTPException(400, "Unknown action.")
         db.audit(conn, name, f"consultation.{action}", doc_id)
-    return back(f"/consultation/{doc_id}" if action != "reject" else "/")
+        hierarchy.record(conn, who, "consultation", doc_id, action, before)
+    return back(f"/consultation/{doc_id}")
 
 
 # --- Market impact --------------------------------------------------------------------------------
@@ -596,12 +642,16 @@ def save_rating(request: Request, doc_id: str, rating: str = Form("")):
     name = need_reviewer(request)
     if rating and rating not in RATINGS:
         raise HTTPException(400, "rating must be high, medium, low or empty")
+    who = hierarchy.actor(request, name)
+    hierarchy.guard(who, "rating", doc_id, "set")
     with db.session() as conn:
         table = table_for(conn, doc_id)
         if not table:
             raise HTTPException(404)
+        before = hierarchy.state(conn, "rating", doc_id)
         conn.execute(f"UPDATE {table} SET rating = ? WHERE doc_id = ?", (rating or None, doc_id))
         db.audit(conn, name, "rating.set", doc_id, {"rating": rating or None})
+        hierarchy.record(conn, who, "rating", doc_id, "set", before)
         reg = conn.execute("SELECT id FROM regulations WHERE doc_id = ?", (doc_id,)).fetchone() if table == "regulations" else None
     back_to = {"orders": f"/order/{doc_id}", "consultations": f"/consultation/{doc_id}"}.get(table) or f"/regulation/{reg['id']}"
     return back(f"{back_to}#impact")
@@ -623,10 +673,13 @@ async def save_impact(request: Request, doc_id: str):
     name = need_reviewer(request)
     form = await request.form()
     action = str(form.get("action", "save"))
+    who = hierarchy.actor(request, name)
+    hierarchy.guard(who, "impact", doc_id, action)
     with db.session() as conn:
         table = table_for(conn, doc_id)
         if not table:
             raise HTTPException(404)
+        before = hierarchy.state(conn, "impact", doc_id)
         if action == "clear":
             conn.execute(f"UPDATE {table} SET impact = NULL WHERE doc_id = ?", (doc_id,))
         elif action == "request":
@@ -645,6 +698,7 @@ async def save_impact(request: Request, doc_id: str):
             conn.execute(f"UPDATE {table} SET impact = ? WHERE doc_id = ?",
                          (json.dumps(clean_impact(out, paragraph_ids(conn, doc_id)), ensure_ascii=False), doc_id))
         db.audit(conn, name, f"impact.{action}", doc_id)
+        hierarchy.record(conn, who, "impact", doc_id, action, before)
         reg = conn.execute("SELECT id FROM regulations WHERE doc_id = ?", (doc_id,)).fetchone() if table == "regulations" else None
     back_to = {"orders": f"/order/{doc_id}", "consultations": f"/consultation/{doc_id}"}.get(table) or f"/regulation/{reg['id']}"
     return back(f"{back_to}#impact")
@@ -668,7 +722,10 @@ async def save_comment(request: Request, doc_id: str):
     action, persona = str(form.get("action", "save")), str(form.get("persona", ""))
     if persona not in IMPACT_GROUPS:
         raise HTTPException(400, "unknown stakeholder group")
+    who = hierarchy.actor(request, name)
+    hierarchy.guard(who, "comment_draft", f"{doc_id}:{persona}", action)
     with db.session() as conn:
+        before = hierarchy.state(conn, "comment_draft", f"{doc_id}:{persona}")
         if not conn.execute("SELECT 1 FROM consultations WHERE doc_id = ?", (doc_id,)).fetchone():
             raise HTTPException(404)
         if action == "request":
@@ -689,6 +746,7 @@ async def save_comment(request: Request, doc_id: str):
                          (json.dumps(body, ensure_ascii=False), status, name if status != "proposed" else None, status, doc_id, persona))
             comment_stage.write_file(conn, doc_id, persona, body, f"reviewed by {name}" if status == "approved" else "draft, not reviewed")
         db.audit(conn, name, f"comments.{action}", f"{doc_id}:{persona}")
+        hierarchy.record(conn, who, "comment_draft", f"{doc_id}:{persona}", action, before)
     return back(f"/consultation/{doc_id}#comments-{persona}")
 
 
@@ -714,10 +772,14 @@ async def save_figures(request: Request, doc_id: str):
     """Reviewer edits the chart list as JSON, or removes charts. The same soundness rules apply as for the model."""
     name = need_reviewer(request)
     form = await request.form()
+    who = hierarchy.actor(request, name)
+    fig_action = str(form.get("action", "save"))
+    hierarchy.guard(who, "figures", doc_id, fig_action)
     with db.session() as conn:
         table = table_for(conn, doc_id)
         if not table:
             raise HTTPException(404)
+        before = hierarchy.state(conn, "figures", doc_id)
         if form.get("action") == "redo":
             conn.execute(f"UPDATE {table} SET figures = NULL WHERE doc_id = ?", (doc_id,))
         else:
@@ -730,6 +792,7 @@ async def save_figures(request: Request, doc_id: str):
             conn.execute(f"UPDATE {table} SET figures = ? WHERE doc_id = ?",
                          (json.dumps(figures_stage.clean({"charts": charts}, paragraph_ids(conn, doc_id)), ensure_ascii=False), doc_id))
         db.audit(conn, name, f"figures.{form.get('action', 'save')}", doc_id)
+        hierarchy.record(conn, who, "figures", doc_id, fig_action, before)
         reg = conn.execute("SELECT id FROM regulations WHERE doc_id = ?", (doc_id,)).fetchone() if table == "regulations" else None
     back_to = {"orders": f"/order/{doc_id}", "consultations": f"/consultation/{doc_id}"}.get(table) or f"/regulation/{reg['id']}"
     return back(f"{back_to}#figures")
@@ -816,11 +879,19 @@ def decide_revision(request: Request, revision_id: int, action: str = Form(...))
     who = need_reviewer(request)
     if action not in ("accept", "reject"):
         raise HTTPException(400)
+    actor = hierarchy.actor(request, who)
     with db.session() as conn:
+        rev = conn.execute("SELECT doc_id FROM revisions WHERE id = ?", (revision_id,)).fetchone()
+    if not rev:
+        raise HTTPException(404)
+    hierarchy.guard(actor, "order", rev["doc_id"], f"revision_{action}")   # a revision changes the summary
+    with db.session() as conn:
+        before = hierarchy.state(conn, "order", rev["doc_id"])
         try:
             doc_id = learning.decide_revision(conn, revision_id, who, action)
         except ValueError:
             raise HTTPException(409, "This revision has already been decided.")
+        hierarchy.record(conn, actor, "order", doc_id, f"revision_{action}", before, note=f"revision {revision_id}")
     return back(f"/order/{doc_id}#notes")
 
 
@@ -851,6 +922,7 @@ def add_memory(request: Request, kind: str = Form(...), text: str = Form(...), s
         if not lid:
             raise HTTPException(400, "Not saved: a fact needs its source document and paragraph, and the note must be new.")
         db.audit(conn, who, "lesson.add", str(lid))
+        hierarchy.record(conn, hierarchy.actor(request, who), "lesson", str(lid), "add", {})
         learning.export(conn)
     return back("/memory")
 
@@ -860,8 +932,12 @@ def decide_lesson(request: Request, lesson_id: int, action: str = Form(...), tex
     who = need_reviewer(request)
     if action not in ("approve", "retire", "save"):
         raise HTTPException(400)
+    actor = hierarchy.actor(request, who)
+    hierarchy.guard(actor, "lesson", str(lesson_id), action)
     with db.session() as conn:
+        before = hierarchy.state(conn, "lesson", str(lesson_id))
         learning.decide_lesson(conn, lesson_id, who, action, text, scope)
+        hierarchy.record(conn, actor, "lesson", str(lesson_id), action, before)
     ref = request.headers.get("referer") or "/memory"
     return back(urllib.parse.urlparse(ref).path or "/memory")
 

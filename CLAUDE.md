@@ -69,6 +69,26 @@ a lead, key points, numbers, up to three charts across documents and dates to wa
 early: `REGSTUDIO_EDITION_DAY=2026-11-20 regstudio run draft`. `regstudio promote <id>` sends a document
 that triage left out to be read.
 
+## Reviewer hierarchy and the decision record
+
+`hierarchy.py`. Two ranks: senior reviewers (`config.SENIOR_REVIEWERS`, env `REGSTUDIO_SENIOR_REVIEWERS`, default
+`shikha@urjapraxis.com=Shikha Ohri`) and reviewers (everyone else, e.g. Kartik). Seniority comes only from a verified
+sign-in email (review site account via the sync job's `X-Studio-Reviewer-Email`, Cloudflare Access, or the local
+sign-in's registered email), never from a typed name.
+
+- A reviewer reviews, edits and approves on their own; no second approval is needed.
+- A senior reviewer can change any decision; replacing another reviewer's decision is recorded as an override.
+- A senior reviewer's settling action (approve, reject, reopen, apply, retire, remove; saving impact, charts, rating)
+  holds that item: other reviewers get 409 and can still comment. Only a senior reviewer can change it.
+- Every decision endpoint calls `hierarchy.guard()` first and `hierarchy.record()` in the same transaction as the change.
+  `review_decisions` keeps who, rank, action, status and text before and after, the overridden decision, and refused
+  attempts. Rows are only added. Order, draft and edition pages show it as "Decision record".
+- Publishing is unchanged: the public site credits whoever approved last.
+
+Review screen forms are sent in the background (`templates/_actions.html`): the changed panel is replaced in place,
+scroll position and unsaved text are kept, and the button shows the result ("Approved", "Remembered"). Without
+JavaScript the forms work as before. Forms with `data-full` are always sent the ordinary way.
+
 ## Mail (Gmail API)
 
 `pipeline/regstudio/mailer.py` sends mail from the Mac through the Gmail API as the work account

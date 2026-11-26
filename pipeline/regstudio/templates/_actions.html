@@ -1,0 +1,172 @@
+<div id="rs-toasts" aria-live="polite"></div>
+<script>
+/* Review actions without a page reload: the form is sent in the background, the part of the page that changed is
+   replaced in place, the scroll position (page and side panel) and unsaved text in other forms are kept, and the
+   button says what happened ("Approved", "Remembered", ...). On the review site the change is applied by the
+   studio's server; the button says "Saved, applying..." until it has been, then shows the result. Without
+   JavaScript, or if anything here fails, the form is sent the ordinary way. */
+(function () {
+  if (!window.fetch || !window.FormData || !window.DOMParser || !window.URLSearchParams || !Element.prototype.closest) return;
+  var baseEl = document.querySelector('[data-rs-base]');
+  var siteBase = baseEl ? baseEl.getAttribute('data-rs-base') : null;      // set only on the review site
+  var SKIP = /\/(login|logout|whoami)(\/|$)|\/_\//;
+  var PAST = [[/^Remember/i, 'Remembered'], [/^Approve/i, 'Approved'], [/^Reject/i, 'Rejected'],
+    [/^Not for publication/i, 'Marked not for publication'], [/^Save/i, 'Saved'], [/^Accept/i, 'Accepted'],
+    [/^Add and ask/i, 'Comment added, Claude asked'], [/^Add comment/i, 'Comment added'], [/^Add/i, 'Added'],
+    [/^Apply/i, 'Applied'], [/^Mark resolved/i, 'Resolved'], [/^Dismiss/i, 'Dismissed'], [/^Reopen/i, 'Reopened'],
+    [/^Remove/i, 'Removed'], [/^Retire/i, 'Retired'], [/^Don.?t/i, 'Not remembered'], [/^Request/i, 'Requested'],
+    [/^Ask/i, 'Asked'], [/^Send/i, 'Sent'], [/^Cancel/i, 'Cancelled'], [/^Check again/i, 'Check requested'],
+    [/^Choose again/i, 'Will choose again'], [/^Push/i, 'Publishing started'], [/^Start/i, 'Started']];
+  function past(t) { t = (t || '').replace(/\s+/g, ' ').trim(); for (var i = 0; i < PAST.length; i++) if (PAST[i][0].test(t)) return PAST[i][1]; return 'Saved'; }
+
+  function toast(msg, bad) {
+    var box = document.getElementById('rs-toasts'); if (!box) return;
+    var t = document.createElement('div'); t.className = 'rs-toast' + (bad ? ' bad' : ''); t.setAttribute('role', bad ? 'alert' : 'status');
+    t.textContent = msg; box.appendChild(t);
+    setTimeout(function () { t.classList.add('out'); setTimeout(function () { t.remove(); }, 400); }, bad ? 9000 : 3500);
+  }
+  var lastClicked = null;
+  document.addEventListener('click', function (e) { var b = e.target.closest('button, input[type=submit]'); if (b && b.form) lastClicked = b; }, true);
+
+  function formsLike(root, action) { return Array.prototype.filter.call(root.querySelectorAll('form'), function (f) { return f.getAttribute('action') === action; }); }
+  function keyOf(f) { return Array.prototype.map.call(f.querySelectorAll('input[type=hidden]'), function (i) { return i.name + '=' + i.value; }).join('&'); }
+  function findForm(root, action, key, idx) {
+    var same = formsLike(root, action);
+    return same.filter(function (f) { return keyOf(f) === key; })[0] || same[idx] || same[0] || null;
+  }
+  function scroller(el) {
+    for (var p = el && el.parentElement; p && p !== document.body; p = p.parentElement) {
+      var s = getComputedStyle(p).overflowY; if ((s === 'auto' || s === 'scroll') && p.scrollHeight > p.clientHeight) return p;
+    }
+    return null;
+  }
+  function editable(el) {
+    if (!el.name) return false;
+    if (el.tagName === 'TEXTAREA' || el.tagName === 'SELECT') return true;
+    return el.tagName === 'INPUT' && !/^(hidden|submit|button|reset|image|file)$/.test(el.type);
+  }
+  function fieldKey(f, i) { return (f.getAttribute('action') || '') + '|' + keyOf(f) + '|' + i; }
+  function dirtyFields(region, except) {          // unsaved typing in other forms survives the update
+    var out = {};
+    Array.prototype.forEach.call(region.querySelectorAll('form'), function (f) {
+      if (f === except) return;
+      var k = fieldKey(f, formsLike(region, f.getAttribute('action')).indexOf(f));
+      Array.prototype.forEach.call(f.elements, function (el) {
+        if (!editable(el)) return;
+        if ((el.type === 'checkbox' || el.type === 'radio') ? el.checked !== el.defaultChecked
+            : el.tagName === 'SELECT' ? Array.prototype.some.call(el.options, function (o) { return o.selected !== o.defaultSelected; })
+            : el.value !== el.defaultValue) (out[k] = out[k] || []).push({ name: el.name, value: el.value, checked: el.checked, type: el.type });
+      });
+    });
+    return out;
+  }
+  function restoreDirty(region, saved) {
+    Array.prototype.forEach.call(region.querySelectorAll('form'), function (f) {
+      var list = saved[fieldKey(f, formsLike(region, f.getAttribute('action')).indexOf(f))]; if (!list) return;
+      list.forEach(function (s) {
+        Array.prototype.forEach.call(f.elements, function (el) {
+          if (!editable(el) || el.name !== s.name || el.type !== s.type) return;
+          if (el.type === 'checkbox' || el.type === 'radio') { if (el.value === s.value) el.checked = s.checked; }
+          else el.value = s.value;
+        });
+      });
+    });
+  }
+
+  function swap(html, form, sub, label, keepOwn) {
+    var doc = new DOMParser().parseFromString(html, 'text/html');
+    var oldR = document.querySelector('[data-swap]') || document.querySelector('main');
+    var newR = doc.querySelector('[data-swap]') || doc.querySelector('main');
+    if (!oldR || !newR) { location.reload(); return; }
+    var action = form.getAttribute('action'), key = keyOf(form), idx = formsLike(oldR, action).indexOf(form);
+    var anchor = form.getBoundingClientRect().top, inner = scroller(form);
+    var winY = window.scrollY, innerY = inner ? inner.scrollTop : 0;
+    var open = Array.prototype.map.call(oldR.querySelectorAll('details'), function (d) { return d.open; });
+    var dirty = dirtyFields(oldR, keepOwn ? null : form);
+    oldR.innerHTML = newR.innerHTML;
+    Array.prototype.forEach.call(oldR.querySelectorAll('details'), function (d, i) { if (i < open.length) d.open = open[i]; });
+    restoreDirty(oldR, dirty);
+    window.scrollTo(0, winY); if (inner) inner.scrollTop = innerY;
+    var nf = findForm(oldR, action, key, idx);
+    if (nf) {
+      var delta = nf.getBoundingClientRect().top - anchor, s = scroller(nf);
+      if (delta) { if (s) s.scrollTop += delta; else window.scrollBy(0, delta); }
+      if (label) mark(nf, sub, label);
+    }
+    var t = doc.querySelector('title'); if (t) document.title = t.textContent;
+  }
+  function mark(f, sub, label) {
+    var b = null;
+    if (sub) Array.prototype.forEach.call(f.querySelectorAll('button, input[type=submit]'), function (x) {
+      if (!b && x.name === sub.name && x.value === sub.value) b = x;
+    });
+    var chip = null, before = b ? b.innerHTML : null;
+    if (b) { b.textContent = '✓ ' + label; b.classList.add('rs-done'); }
+    else { chip = document.createElement('span'); chip.className = 'rs-chip'; chip.textContent = '✓ ' + label; f.appendChild(chip); }
+    f.addEventListener('input', function undo() {      // once the form is edited again, the button means what it says
+      if (b) { b.innerHTML = before; b.classList.remove('rs-done'); } if (chip) chip.remove(); f.removeEventListener('input', undo);
+    });
+  }
+  function problem(r, text) {
+    try { var j = JSON.parse(text); if (j && j.detail) return typeof j.detail === 'string' ? j.detail : 'Please check the form and try again.'; } catch (e) {}
+    try {
+      var d = new DOMParser().parseFromString(text, 'text/html'), h = d.querySelector('h1, b'), p = d.querySelector('main p, .box p, p');
+      return ((h ? h.textContent + '. ' : '') + (p ? p.textContent : '')).trim() || ('Not saved (' + r.status + ').');
+    } catch (e) { return 'Not saved (' + r.status + ').'; }
+  }
+  function sleep(ms) { return new Promise(function (ok) { setTimeout(ok, ms); }); }
+  function applied(id, pagePath, sub) {           // review site: wait until the studio's server has applied it
+    var n = 0, url = siteBase + '/_/event/' + id + '?page=' + encodeURIComponent(pagePath);
+    function poll() {
+      n++;
+      return fetch(url, { credentials: 'same-origin', cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (s) {
+        if (s.done && s.status && s.status !== 'applied') throw new Error(s.note || 'The studio\'s server did not apply this change.');
+        if (s.done && (s.fresh || s.waited > 25)) return true;
+        if (n > 70) return false;
+        return sleep(n < 12 ? 2500 : 5000).then(poll);
+      }, function () { return n > 70 ? false : sleep(5000).then(poll); });
+    }
+    return sleep(1500).then(poll);
+  }
+
+  document.addEventListener('submit', function (e) {
+    var form = e.target;
+    if (e.defaultPrevented || (form.getAttribute('method') || '').toLowerCase() !== 'post' || form.hasAttribute('data-full')) return;
+    var action = form.getAttribute('action') || '';
+    if (SKIP.test(action) || form.getAttribute('enctype') === 'multipart/form-data' || form.querySelector('input[type=file]')) return;
+    var sub = e.submitter || (lastClicked && lastClicked.form === form ? lastClicked : null);
+    e.preventDefault();
+    if (form.getAttribute('data-busy')) return;
+    form.setAttribute('data-busy', '1');
+    var fd = new FormData(form); if (sub && sub.name) fd.append(sub.name, sub.value);
+    var label = past(sub ? (sub.textContent || sub.value) : ''), was = sub ? sub.innerHTML : null;
+    if (sub) { sub.disabled = true; sub.textContent = 'Saving…'; }
+    var done = function () { form.removeAttribute('data-busy'); if (sub) sub.disabled = false; };
+    var restore = function () { if (sub) sub.innerHTML = was; };
+    fetch(new URL(action, location.href).href, { method: 'POST', body: new URLSearchParams(fd), credentials: 'same-origin', headers: { 'X-Requested-With': 'fetch' } })
+      .then(function (r) { return r.text().then(function (t) { return { r: r, t: t }; }); })
+      .then(function (x) {
+        if (!x.r.ok) throw new Error(problem(x.r, x.t));
+        var u = new URL(x.r.url), queued = u.searchParams.get('queued');
+        if (queued && siteBase !== null) {
+          if (sub) sub.textContent = 'Saved, applying…';
+          var pagePath = location.pathname.slice(siteBase.length) || '/';
+          return applied(queued, pagePath, sub).then(function (ok) {
+            if (!ok) { done(); if (sub) sub.textContent = 'Saved, waiting for the server'; toast('Saved. It will be applied as soon as the studio\'s server is back.'); return; }
+            return fetch(location.pathname, { credentials: 'same-origin', cache: 'no-store' }).then(function (r) { return r.text(); }).then(function (t) {
+              done(); restore(); swap(t, form, sub, label); toast('✓ ' + label);
+            });
+          });
+        }
+        if (u.pathname !== location.pathname) { location.href = x.r.url; return; }
+        done(); restore(); swap(x.t, form, sub, label); toast('✓ ' + label);
+      })
+      .catch(function (err) {
+        done(); restore(); toast(err && err.message ? err.message : 'Not saved. Please try again.', true);
+        // show the item as it now is (for example, a senior reviewer's decision), keeping what was typed
+        fetch(location.pathname, { credentials: 'same-origin', cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : null; })
+          .then(function (t) { if (t) swap(t, form, null, null, true); }).catch(function () {});
+      });
+  });
+})();
+</script>

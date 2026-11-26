@@ -112,9 +112,11 @@ class _NoRedirect(urllib.request.HTTPRedirectHandler):
 _opener = urllib.request.build_opener(_NoRedirect)
 
 
-def local(path: str, body: bytes | None = None, who: str = NAME_SLOT) -> tuple[int, bytes]:
+def local(path: str, body: bytes | None = None, who: str = NAME_SLOT, email: str | None = None) -> tuple[int, bytes]:
+    # The email is the one the reviewer signed in to the review site with; seniority is decided from it (hierarchy.py).
     req = urllib.request.Request(LOCAL + urllib.parse.quote(path, safe="/%"), data=body, method="POST" if body is not None else "GET", headers={
         "X-Studio-Mirror": local_token(), "X-Studio-Reviewer": urllib.parse.quote(who),
+        **({"X-Studio-Reviewer-Email": urllib.parse.quote(email)} if email else {}),
         **({"Content-Type": "application/x-www-form-urlencoded"} if body is not None else {})})
     try:
         with _opener.open(req, timeout=120) as r:
@@ -140,7 +142,8 @@ def replay(event: dict) -> tuple[str, str]:
     path = event.get("path") or ""
     if not ALLOWED.match(path) or ".." in path:
         return "refused", "This form is not one the review site may submit."
-    code, body = local(path, (event.get("body") or "").encode(), who=event.get("user_name") or "Reviewer")
+    code, body = local(path, (event.get("body") or "").encode(), who=event.get("user_name") or "Reviewer",
+                       email=event.get("user_email"))
     if code in (200, 303):
         return "applied", ""
     try:

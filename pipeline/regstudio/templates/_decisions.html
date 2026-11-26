@@ -1,0 +1,7 @@
+<div class="card" id="decisions"><b>Decision record</b>
+{% if decisions %}<table class="decisions" style="margin-top:6px;font-size:13px"><tr><th>When (UTC)</th><th>Reviewer</th><th>Decision</th></tr>
+{% for d in decisions %}<tr{% if d.refused %} class="refused"{% endif %}><td style="white-space:nowrap">{{ d.at[:16] }}</td>
+<td>{{ d.reviewer }}{% if d.senior %} <span class="pill senior">senior</span>{% endif %}</td>
+<td>{{ d.what }}{% if d.overrode %} <span class="pill override">overrode {{ d.overrode }}</span>{% endif %}</td></tr>{% endfor %}</table>
+<p class="muted" style="margin:6px 0 0;font-size:12px">Every decision is kept, with the text before and after it. Nothing here is ever deleted.</p>
+{% else %}<p class="muted" style="margin:6px 0 0">No decisions yet.</p>{% endif %}</div>

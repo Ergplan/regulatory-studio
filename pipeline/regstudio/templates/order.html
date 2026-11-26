@@ -15,11 +15,11 @@
 <div class="split">
 <div class="pdf"><iframe id="pdf" src="/file/{{ d.id }}#page=1" title="Order PDF"></iframe>
 <div class="para" id="para"><span class="muted">Click a link's paragraph id to see the passage it rests on.</span></div></div>
-<div class="side">
+<div class="side" data-swap>
 {% include "_priority.html" %}
 {% include "_checks.html" %}
 {% include "_review_notes.html" %}
-<div class="card"><form method="post" action="/order/{{ d.id }}/summary">
+<div class="card">{% include "_hold.html" %}<form method="post" action="/order/{{ d.id }}/summary">
 <label>Title on the website (plain English, e.g. "NPCL's 300 MW round-the-clock RE tender approved")</label><input name="title" value="{{ d.title or '' }}" maxlength="200">
 <label>Headline (what it decides, for a business reader)</label><input name="headline" value="{{ o.headline or '' }}" maxlength="120">
 <label>Issue</label><textarea name="issue" style="min-height:50px">{{ o.issue or '' }}</textarea>
@@ -28,11 +28,12 @@
 <label>Topics</label><div class="row">{% for slug, name in TOPICS.items() %}
 <label style="margin:0;color:var(--ink)"><input type="checkbox" name="topics" value="{{ slug }}" style="width:auto" {% if slug in topics %}checked{% endif %}> {{ name }}</label>{% endfor %}</div>
 <p class="muted">Parties: {% for p in parties %}{{ p.name }} ({{ p.role }}){% if not loop.last %}; {% endif %}{% endfor %}</p>
-<div class="row"><span class="pill {{ o.summary_status }}">{{ o.summary_status }}</span>
+<div class="row"><span class="pill {{ o.summary_status }}">{{ o.summary_status }}</span>{% if o.reviewer and o.summary_status != 'proposed' %}<span class="by">by {{ o.reviewer }}</span>{% endif %}
 <button name="action" value="save">Save draft</button><button class="primary" name="action" value="approve">Approve summary</button>
 <button class="bad" name="action" value="reject" onclick="return confirm('Drop this order from the digest?')">Not for publication</button></div>
 </form></div>
 {% include "_impact.html" %}
+{% include "_decisions.html" %}
 {% include "_commercial.html" %}
 <h2>Links ({{ links|length }})</h2><p class="muted">Each link is published only if approved. Approving requires a target.</p>
 {% for l in links %}<div class="link {{ l.status }}" id="link-{{ l.id }}">

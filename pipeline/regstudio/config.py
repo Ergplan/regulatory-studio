@@ -30,6 +30,12 @@ READER_OUTPUTS = Path(os.environ.get("REGSTUDIO_READER_OUTPUTS", DATA / "reader_
 PUBLIC_SITE = os.environ.get("REGSTUDIO_PUBLIC_SITE", "https://rgstudio.joulewise.tech")   # where approved items are read
 REVIEW_SITE = os.environ.get("REGSTUDIO_REVIEW_SITE", "https://review.joulewise.tech")   # reviewers sign in here (Vercel)
 MEMORY = Path(os.environ.get("REGSTUDIO_MEMORY", DATA / "memory"))   # approved house notes as Markdown
+
+# Senior reviewers: their decisions take precedence and other reviewers cannot change them (hierarchy.py).
+# Identified by the email they sign in with, never by a typed name. "email=Display name", comma-separated.
+SENIOR_REVIEWERS = {
+    e.split("=", 1)[0].strip().lower(): (e.split("=", 1)[1].strip() if "=" in e else e.split("@")[0])
+    for e in os.environ.get("REGSTUDIO_SENIOR_REVIEWERS", "shikha@urjapraxis.com=Shikha Ohri").split(",") if "@" in e}
 COMMENTS = Path(os.environ.get("REGSTUDIO_COMMENTS", DATA / "comments"))  # Studio comment drafts as Markdown files
 CLAUDE_BIN = os.environ.get("REGSTUDIO_CLAUDE_BIN", "claude")
 CLAUDE_MODEL = os.environ.get("REGSTUDIO_CLAUDE_MODEL", "")

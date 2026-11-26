@@ -60,7 +60,7 @@ function banner(c: Ctx, user: User, mac: any, events: Row[], queued: string | nu
     else if (e.status !== "applied") bits.push(`<div class="flash" role="alert" style="border-color:#b3261e;background:#fdecea"><b>A change you submitted was not applied.</b> ${esc(e.note || "")} Please check the page and try again.</div>`);
   }
   const admin = (user.team === "urja" ? "" : ` · <a href="${c.base}/_/inbox">Inbox</a>`) + (user.team === "admin" ? ` · <a href="${c.base}/_/admin">Admin</a>` : "");
-  const who = `<div class="muted" style="font-size:12px;margin:0 0 10px">${esc(TEAM_NAME[user.team])} · ${esc(user.email)}${admin}</div>`;
+  const who = `<div class="muted" data-rs-base="${esc(c.base)}" style="font-size:12px;margin:0 0 10px">${esc(TEAM_NAME[user.team])} · ${esc(user.email)}${admin}</div>`;
   const script = `<script>(function(){var p=document.querySelector('[data-pending]');if(!p)return;var id=p.getAttribute('data-pending'),n=0;
 function t(){n++;fetch(${JSON.stringify(c.base)}+'/_/event/'+id+'?page='+encodeURIComponent(${JSON.stringify(c.path)}),{credentials:'same-origin',cache:'no-store'}).then(function(r){return r.json()}).then(function(s){
 if(s.done&&(s.fresh||s.waited>25)){location.replace(location.pathname+location.hash)}else if(n<90){setTimeout(t,n<10?3000:6000)}}).catch(function(){if(n<90)setTimeout(t,6000)})}setTimeout(t,2500)})();</script>`;
@@ -255,7 +255,7 @@ async function eventStatus(c: Ctx, user: User): Promise<Response> {
   const pagePath = new URL(c.req.url).searchParams.get("page") || "/";
   const p = (await q("SELECT updated_at FROM rs_pages WHERE path = $1", [pagePath]))[0];
   const done = !!e.applied_at;
-  return Response.json({ done, status: e.status, fresh: done && (e.status !== "applied" || !p || new Date(p.updated_at) >= new Date(e.applied_at)),
+  return Response.json({ done, status: e.status, note: e.status && e.status !== "applied" ? e.note : undefined, fresh: done && (e.status !== "applied" || !p || new Date(p.updated_at) >= new Date(e.applied_at)),
     waited: done ? (Date.now() - new Date(e.applied_at).getTime()) / 1000 : 0 }, { headers: SECURITY });
 }
 

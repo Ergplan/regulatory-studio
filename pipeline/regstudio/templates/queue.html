@@ -28,7 +28,7 @@
 {% if o.title and o.case_number %}<div class="muted small">{{ o.title|truncate(140) }}{% if o.title|length > 120 %} <span class="pill">needs a short title</span>{% endif %}</div>{% endif %}
 {% if o.ocr %} <span class="pill proposed">OCR</span>{% endif %}{% if o.language == 'hi' %} <span class="pill">Hindi</span>{% endif %}</td>
 <td>{{ o.doc_date or '' }}</td><td><b>{{ o.priority.score }}</b></td><td>{{ o.significance }}</td><td>{{ o.open_links }}</td>
-<td><span class="pill {{ o.summary_status }}">{{ o.summary_status }}</span></td></tr>
+<td><span class="pill {{ o.summary_status }}">{{ o.summary_status }}</span>{% if o.reviewer and o.summary_status == 'approved' %} <span class="by">by {{ o.reviewer }}</span>{% endif %}{% if holds.get(o.id) %} <span class="pill senior">final · {{ holds[o.id].reviewer }}</span>{% endif %}</td></tr>
 {% else %}<tr><td colspan="7" class="muted">Nothing waiting.</td></tr>{% endfor %}</table>
 <h2>Regulation registry</h2>
 <table><tr><th>Commission</th><th>Regulation</th><th>Clauses to check</th></tr>
@@ -38,7 +38,7 @@
 {% if consultations %}<h2>Draft regulations and consultations</h2>
 <table><tr><th>Commission</th><th>Draft</th><th>Priority</th><th>Comments due</th><th>Hearing</th><th>Status</th></tr>
 {% for c in consultations %}<tr><td>{{ c.commission|upper }}</td><td><a href="/consultation/{{ c.id }}">{{ (c.title or c.id[:12])|truncate(120) }}</a></td><td><b>{{ c.priority.score }}</b></td>
-<td>{{ c.comment_deadline or 'not stated' }}</td><td>{{ c.hearing_date or '' }}</td><td><span class="pill {{ c.summary_status }}">{{ c.summary_status }}</span></td></tr>{% endfor %}</table>{% endif %}
+<td>{{ c.comment_deadline or 'not stated' }}</td><td>{{ c.hearing_date or '' }}</td><td><span class="pill {{ c.summary_status }}">{{ c.summary_status }}</span>{% if c.reviewer and c.summary_status == 'approved' %} <span class="by">by {{ c.reviewer }}</span>{% endif %}{% if holds.get(c.id) %} <span class="pill senior">final · {{ holds[c.id].reviewer }}</span>{% endif %}</td></tr>{% endfor %}</table>{% endif %}
 {% if amendments %}<h2>Amendments to apply</h2>
 <table><tr><th>Commission</th><th>Amendment</th><th>Changes to check</th></tr>
 {% for a in amendments %}<tr><td>{{ a.commission|upper }}</td><td><a href="/amendment/{{ a.id }}">{{ a.title or a.id[:12] }}</a></td><td>{{ a.open_changes }}</td></tr>{% endfor %}</table>{% endif %}

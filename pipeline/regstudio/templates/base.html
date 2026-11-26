@@ -20,7 +20,15 @@ input,select,textarea{font:inherit;padding:6px;border:1px solid var(--line);bord
 textarea{min-height:90px}label{display:block;font-size:12px;color:var(--quiet);margin:8px 0 3px}
 .inline{display:inline}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .flash{padding:10px;border-radius:6px;background:#fff4e5;border:1px solid #f0c36d;margin-bottom:12px}
+.held{padding:10px 12px;border-radius:6px;background:#eef4ff;border:1px solid #9db8e8;margin:0 0 10px}
+.pill.senior{color:#1f4f9f;border-color:#9db8e8;background:#eef4ff}.pill.override{color:#7a3e00;border-color:#e3b77a;background:#fff6ea}
+tr.refused td{color:var(--quiet)}.by{color:var(--quiet);font-size:12px}
+#rs-toasts{position:fixed;right:16px;bottom:16px;display:flex;flex-direction:column;gap:8px;z-index:50;max-width:min(420px,calc(100vw - 32px))}
+.rs-toast{background:#1d7a46;color:#fff;padding:10px 14px;border-radius:8px;box-shadow:0 4px 14px rgba(0,0,0,.18);transition:opacity .4s}
+.rs-toast.bad{background:#b3261e}.rs-toast.out{opacity:0}
+button.rs-done{color:var(--good);border-color:var(--good);background:#eef8f1}button.primary.rs-done{background:var(--good);color:#fff}
+.rs-chip{display:inline-block;margin-left:8px;color:var(--good);font-weight:600}
 </style>{% block head %}{% endblock %}</head>
 <body><header><a href="/">Regulatory Studio · Review hub</a><a href="/urja-praxis" style="font-weight:400">Urja Praxis</a><a href="/jouleWise" style="font-weight:400">jouleWise</a><a href="/memory" style="font-weight:400">Memory</a><span class="muted">Nothing is published until approved here</span>
 <span class="who">{% if reviewer %}Reviewing as <b>{{ reviewer }}</b> · <a href="/logout">sign out</a>{% else %}No reviewer set{% endif %}</span></header>
-<main>{% block body %}{% endblock %}</main></body></html>
+<main>{% block body %}{% endblock %}</main>{% include "_actions.html" %}</body></html>
