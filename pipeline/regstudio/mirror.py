@@ -230,6 +230,8 @@ def _status() -> dict:
             out[name.split("_")[0]] = json.loads(f.read_text()) if f.exists() else None
         except ValueError:
             pass
+    from . import mailer
+    out["mail"] = mailer.FROM if mailer.ready() else None   # the admin page shows whether invitations can be emailed
     return out
 
 
@@ -242,16 +244,53 @@ def _fingerprint() -> float:
     return newest
 
 
+def _mail() -> dict:
+    """Mails new project requests and chat contacts to sales (Gmail, mailer.py). Never stops the sync."""
+    from . import mailer
+    if not mailer.ready():
+        return {}
+    try:
+        out = mailer.relay()
+        invited = invite_requests()
+    except (mailer.MailError, SyncError) as e:
+        return {"mail_error": str(e)[:200]}
+    got = {"mailed": out["mailed"]} if out.get("mailed") else ({"mail_error": out["errors"][0]} if out.get("errors") else {})
+    return {**got, **({"invited": invited} if invited else {})}
+
+
+def invite_requests() -> int:
+    """Invitations an administrator asked for on the review site's Admin page with "Email the invitation".
+    The token is made here, so the site never holds a usable link; the Mac emails it to the reviewer."""
+    from . import mailer
+    done = []
+    for r in call("invite_requests").get("requests") or []:
+        try:
+            link = invite(r["name"], r["email"], r["team"])
+            status = mailer.invitation(r["name"], r["email"], r["team"], link)
+            done.append({"id": r["id"], "status": "emailed" if status in ("sent", "written") else status, "note": ""})
+        except (mailer.MailError, SyncError, KeyError) as e:
+            done.append({"id": r.get("id"), "status": "failed", "note": str(e)[:200]})
+    if done:
+        call("invite_requests_done", results=done)
+    return sum(d["status"] == "emailed" for d in done)
+
+
 def once(force: bool = False) -> dict:
     got = pull()
-    return {**got, **push(force)}
+    return {**got, **push(force), **_mail()}
 
 
 def loop(every: int = 20) -> None:
-    """Runs for ever: decisions are applied within `every` seconds, and pages are pushed when something changed."""
-    seen, last_full = -1.0, 0.0
+    """Runs for ever: decisions are applied within `every` seconds, and pages are pushed when something changed.
+    New requests from the public site are mailed to sales about once a minute."""
+    seen, last_full, last_mail = -1.0, 0.0, 0.0
     while True:
         try:
+            if time.time() - last_mail > 60:
+                last_mail = time.time()
+                mailed = _mail()
+                if mailed:
+                    print(time.strftime("%Y-%m-%d %H:%M:%S"), json.dumps(mailed), flush=True)
             got = pull()
             mark = _fingerprint()
             if got["applied"] or got["failed"] or mark != seen or time.time() - last_full > 600:

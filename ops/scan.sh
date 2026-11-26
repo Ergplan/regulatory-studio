@@ -35,6 +35,7 @@ step() { echo "--- $*"; "$@" || { STATUS="problems: see $LOG"; echo "FAILED: $*"
   regstudio memory                             # refresh data/memory/house_notes.md
   [ "$(date +%u)" = "5" ] && step regstudio run draft   # Friday: assemble the week's digest
   step regstudio deploy --refresh               # preview site shows the new proposals; public site only what is approved
+  [ -n "${REGSTUDIO_MAIL_REVIEW:-}" ] && [ -f data/store/gmail_token.json ] && step regstudio mail-review   # tell reviewers what waits
   regstudio status
   echo "=== scan finished $(date): $STATUS ==="
 } >> "$LOG" 2>&1

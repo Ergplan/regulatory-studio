@@ -80,6 +80,31 @@ export async function POST(req: Request) {
                  ON CONFLICT (token_hash) DO NOTHING`, [m.token_hash, email, String(m.name).trim().slice(0, 80), m.team, String(days)]);
         return json({ ok: true });
       }
+      case "leads": {
+        // New project requests, and chats where the visitor left contact details, for the Mac to mail to sales.
+        const leads = await q(`SELECT id, at, name, email, org, business, state, asked, reading, page, message
+                               FROM rs_leads WHERE NOT emailed ORDER BY id LIMIT 20`);
+        const chats = await q(`SELECT id, started_at, updated_at, page, name, company, reach, messages FROM rs_chats
+                               WHERE mailed_at IS NULL AND coalesce(reach, '') <> '' ORDER BY updated_at LIMIT 20`);
+        return json({ leads: leads.map((l) => ({ ...l, id: Number(l.id) })), chats });
+      }
+      case "leads_mailed": {
+        const leads = ((m.leads ?? []) as unknown[]).map(Number).filter((n) => Number.isInteger(n) && n > 0);
+        const chats = ((m.chats ?? []) as unknown[]).map(String).filter((c) => /^[0-9a-f]{32}$/.test(c));
+        if (leads.length) await q("UPDATE rs_leads SET emailed = true WHERE id = ANY($1::bigint[])", [leads]);
+        if (chats.length) await q("UPDATE rs_chats SET mailed_at = now() WHERE id = ANY($1::text[])", [chats]);
+        return json({ ok: true });
+      }
+      case "invite_requests": {
+        const requests = await q(`SELECT id, name, email, team FROM rs_invite_requests WHERE done_at IS NULL AND at > now() - interval '7 days' ORDER BY id LIMIT 20`);
+        return json({ requests: requests.map((r) => ({ ...r, id: Number(r.id) })) });
+      }
+      case "invite_requests_done": {
+        for (const r of (m.results ?? []) as { id: number; status: string; note?: string }[])
+          await q("UPDATE rs_invite_requests SET done_at = now(), status = $2, note = $3 WHERE id = $1 AND done_at IS NULL",
+            [Number(r.id), String(r.status).slice(0, 20), String(r.note ?? "").slice(0, 300)]);
+        return json({ ok: true });
+      }
       default:
         return json({ error: "unknown op" }, 400);
     }

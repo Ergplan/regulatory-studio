@@ -24,6 +24,9 @@ const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS rs_leads (id bigserial PRIMARY KEY, at timestamptz NOT NULL DEFAULT now(), name text NOT NULL, email text NOT NULL,
      org text, business text, state text, asked text, reading text, page text, message text, emailed boolean NOT NULL DEFAULT false, ip_hash text,
      handled_by text, handled_at timestamptz)`,
+  `ALTER TABLE rs_chats ADD COLUMN IF NOT EXISTS mailed_at timestamptz`,   // set when the studio Mac has mailed it to sales
+  `CREATE TABLE IF NOT EXISTS rs_invite_requests (id bigserial PRIMARY KEY, at timestamptz NOT NULL DEFAULT now(), name text NOT NULL, email text NOT NULL,
+     team text NOT NULL, requested_by text NOT NULL, done_at timestamptz, status text, note text)`,
   `CREATE TABLE IF NOT EXISTS rs_meta (key text PRIMARY KEY, value jsonb NOT NULL, updated_at timestamptz NOT NULL DEFAULT now())`,
 ];
 

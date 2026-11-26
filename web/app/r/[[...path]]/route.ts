@@ -143,10 +143,13 @@ async function admin(c: Ctx, user: User, method: string): Promise<Response> {
     const f = await form(c.req);
     if (!f || !sameOrigin(c)) return html(messagePage("Not accepted", "Please go back and try again."), 400);
     const d = f.data, action = d.get("action");
-    if (action === "invite") {
+    if (action === "invite" || action === "invite_email") {
       const email = (d.get("email") || "").trim().toLowerCase(), name = (d.get("name") || "").trim().slice(0, 80), team = d.get("team") as Team;
       if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || !name || !TEAMS.includes(team)) note = `<p class="err">Enter a name, a valid email and a team.</p>`;
-      else {
+      else if (action === "invite_email") {
+        await q(`INSERT INTO rs_invite_requests(name, email, team, requested_by) VALUES ($1, $2, $3, $4)`, [name, email, team, user.email]);
+        note = `<div class="box" style="margin:12px 0"><b>Invitation for ${esc(name)} will be emailed</b><p class="muted">The studio's server creates the link and emails it to ${esc(email)} within a minute or two. The result shows below under "Emailed invitations".</p></div>`;
+      } else {
         const t = token();
         await q(`INSERT INTO rs_invites(token_hash, email, name, team, expires_at, created_by) VALUES ($1, $2, $3, $4, now() + interval '7 days', $5)`, [sha(t), email, name, team, user.email]);
         const origin = `${c.secure ? "https" : "http"}://${c.host}`;
@@ -161,21 +164,25 @@ async function admin(c: Ctx, user: User, method: string): Promise<Response> {
       } else if (TEAMS.includes(d.get("value") as Team)) await q("UPDATE rs_users SET team = $2 WHERE id = $1", [id, d.get("value")]);
     } else if (action === "revoke") await q("DELETE FROM rs_invites WHERE token_hash = $1", [d.get("id")]);
   }
-  const [users, invites, events, mac, pages] = await Promise.all([
+  const [users, invites, events, mac, pages, asked] = await Promise.all([
     q("SELECT id, email, name, team, active, last_login FROM rs_users ORDER BY active DESC, name"),
     q("SELECT token_hash, email, name, team, expires_at FROM rs_invites WHERE used_at IS NULL AND expires_at > now() ORDER BY created_at DESC"),
     q("SELECT id, path, user_name, created_at, applied_at, status, note FROM rs_events ORDER BY id DESC LIMIT 40"),
-    meta("mac"), q("SELECT count(*) AS n, max(updated_at) AS at FROM rs_pages")]);
+    meta("mac"), q("SELECT count(*) AS n, max(updated_at) AS at FROM rs_pages"),
+    q("SELECT name, email, team, at, done_at, status, note FROM rs_invite_requests ORDER BY id DESC LIMIT 10")]);
+  const mailFrom: string | null = mac?.status?.mail ?? null;
   const when = (d: any) => (d ? new Date(d).toISOString().slice(0, 16).replace("T", " ") + " UTC" : "never");
   const act = `${c.base}/_/admin`;
   const seen = mac?.at ? Math.round((Date.now() - Date.parse(mac.at)) / 1000) : null;
   const body = `${brand}<h1>Review site administration</h1><p><a href="${c.base || "/"}">Back to the review hub</a></p>${note}
 <h2>The studio's server</h2><div class="box"><p>${seen === null ? `<span class="err">It has never connected.</span>` : seen < 180 ? `<span class="ok">Connected.</span> Last check-in ${seen} seconds ago.` : `<span class="err">Not connected.</span> Last heard from ${esc(when(mac.at))}.`}
  ${Number(pages[0].n)} review pages here, last updated ${esc(when(pages[0].at))}. Last scan: ${esc(mac?.status?.scan?.finished ? when(mac.status.scan.finished) : "not recorded")}.</p></div>
-<h2>Invite a reviewer</h2><form method="post" action="${act}" class="box"><input type="hidden" name="action" value="invite"><div class="row">
+<h2>Invite a reviewer</h2><form method="post" action="${act}" class="box"><div class="row">
 <div><label for="name">Full name</label><input id="name" name="name" required maxlength="80"></div><div><label for="email">Work email</label><input id="email" name="email" type="email" required></div>
 <div><label for="team">Team</label><select id="team" name="team"><option value="urja">Urja Praxis (legal review)</option><option value="joulewise">jouleWise (commercial review)</option><option value="admin">Administrator</option></select></div>
-<div style="flex:0"><button>Create invitation</button></div></div></form>
+<div style="flex:0;display:flex;gap:8px;flex-wrap:wrap">${mailFrom ? `<button name="action" value="invite_email" style="white-space:nowrap">Email the invitation</button>` : ""}<button name="action" value="invite" style="white-space:nowrap">Show the link</button></div></div>
+<p class="muted" style="margin:8px 0 0">${mailFrom ? `"Email the invitation" sends it from ${esc(mailFrom)}. "Show the link" lets you send it yourself.` : `Emailing invitations is not set up on the studio's server yet, so send the link yourself.`}</p></form>
+${asked.length ? `<h2>Emailed invitations</h2><table><tr><th>Name</th><th>Email</th><th>Asked</th><th>Result</th></tr>${asked.map((a) => `<tr><td>${esc(a.name)}</td><td>${esc(a.email)}</td><td>${esc(when(a.at))}</td><td>${a.done_at ? (a.status === "emailed" ? `<span class="ok">emailed</span>` : `<span class="err">${esc(a.status)}</span> ${esc(a.note)}`) : "waiting for the studio's server"}</td></tr>`).join("")}</table>` : ""}
 <h2>Reviewers</h2><table><tr><th>Name</th><th>Email</th><th>Team</th><th>Last sign-in</th><th></th></tr>
 ${users.map((u) => `<tr><td>${esc(u.name)}${u.active ? "" : ` <span class="pill">switched off</span>`}</td><td>${esc(u.email)}</td>
 <td><form method="post" action="${act}" class="inline"><input type="hidden" name="action" value="team"><input type="hidden" name="id" value="${u.id}"><select name="value" onchange="this.form.submit()" style="width:auto" ${Number(u.id) === user.id ? "disabled" : ""}>${TEAMS.map((t) => `<option value="${t}" ${t === u.team ? "selected" : ""}>${TEAM_NAME[t]}</option>`).join("")}</select></form></td>

@@ -148,6 +148,15 @@ def main(argv: list[str] | None = None) -> None:
     iv.add_argument("email")
     iv.add_argument("--team", choices=["urja", "joulewise", "admin"], default="urja")
     iv.add_argument("--open", action="store_true", help="open the link in this Mac's browser")
+    iv.add_argument("--no-email", action="store_true", help="do not email the link (it is emailed when mail is set up)")
+    ms = sub.add_parser("mail-setup", help="connect Gmail: sign in as the work account once, so the studio can send mail")
+    ms.add_argument("--client", help="the Desktop OAuth client JSON downloaded from Google Cloud (e.g. ~/Downloads/credentials.json)")
+    mt = sub.add_parser("mail-test", help="send a test email (default: to the sending account itself)")
+    mt.add_argument("--to")
+    sub.add_parser("mail-relay", help="mail new project requests and chat contacts to sales now (the sync job does this every minute)")
+    mr = sub.add_parser("mail-review", help="email reviewers what is waiting, highest priority first (REGSTUDIO_MAIL_REVIEW)")
+    mr.add_argument("--to", help="comma-separated addresses; default REGSTUDIO_MAIL_REVIEW")
+    sub.add_parser("mail-log", help="show the last 20 emails the studio sent")
     ar = sub.add_parser("add-reviewer", help="add or reset a reviewer's password (turns on sign-in)")
     ar.add_argument("name")
     ar.add_argument("--email", help="the email this reviewer proves to Cloudflare Access; with it no password is needed")
@@ -246,10 +255,47 @@ def main(argv: list[str] | None = None) -> None:
             link = mirror.invite(args.name, args.email, args.team)
         except mirror.SyncError as e:
             raise SystemExit(f"invite: {e}")
-        print(f"One-time link for {args.name} (valid 7 days). Send it to them; they choose their own password:\n{link}")
+        from . import mailer
+        sent = None
+        if not args.no_email and mailer.ready():
+            try:
+                sent = mailer.invitation(args.name, args.email, args.team, link)
+            except mailer.MailError as e:
+                print(f"Could not email the invitation ({e}).")
+        if sent in ("sent", "written"):
+            print(f"Invitation emailed to {args.email} from {mailer.FROM} (valid 7 days). They choose their own password.")
+            if args.open:
+                print(link)
+        else:
+            print(f"One-time link for {args.name} (valid 7 days). Send it to them; they choose their own password:\n{link}")
         if args.open:
             import subprocess
             subprocess.run(["open", link], check=False)
+    elif args.cmd in ("mail-setup", "mail-test", "mail-relay", "mail-review", "mail-log"):
+        from . import mailer
+        try:
+            if args.cmd == "mail-setup":
+                mailer.setup(args.client)
+                print(f"Gmail connected: the studio sends as {mailer.FROM}. Try:  regstudio mail-test")
+            elif args.cmd == "mail-test":
+                print(f"{mailer.test(args.to)}: test email to {args.to or mailer.FROM}")
+            elif args.cmd == "mail-relay":
+                print(json.dumps(mailer.relay()))
+            elif args.cmd == "mail-review":
+                print(mailer.review_notice([a.strip() for a in args.to.split(",")] if args.to else None))
+            else:
+                db.init()
+                with db.session() as conn:
+                    for r in conn.execute("SELECT at, kind, status, to_addr, subject, error FROM mail_log ORDER BY at DESC LIMIT 20"):
+                        print(f"{r['at']}  {r['kind']:<7} {r['status']:<7} {r['to_addr'][:40]:<40} {r['subject'][:60]}"
+                              + (f"  ({r['error'][:80]})" if r["error"] else ""))
+        except mailer.MailError as e:
+            raise SystemExit(f"{args.cmd}: {e}")
+        except Exception as e:
+            from . import mirror
+            if isinstance(e, mirror.SyncError):
+                raise SystemExit(f"{args.cmd}: {e}")
+            raise
     elif args.cmd == "add-reviewer":
         import getpass
         from . import auth

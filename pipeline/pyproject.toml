@@ -11,6 +11,9 @@ dependencies = [
   "jinja2>=3.1",
   "python-multipart>=0.0.9",
   "cryptography>=42",   # signs this Mac's calls to the review site
+  "google-auth>=2.29",          # Gmail API mail (mailer.py), send-only scope
+  "google-auth-oauthlib>=1.2",  # one-time sign-in in the Mac's browser
+  "requests>=2.31",
 ]
 
 [project.optional-dependencies]

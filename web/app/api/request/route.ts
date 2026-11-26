@@ -1,5 +1,6 @@
-// "Discuss my project": a reader's request is saved for the jouleWise team (they read it on the review site,
-// Admin page) and, when email sending is set up (RESEND_API_KEY, RESEND_FROM), also emailed to sales@joulewise.com.
+// "Discuss my project": a reader's request is saved for the jouleWise team (they read it in the review site's Inbox).
+// The studio Mac then mails it to sales@joulewise.com through Gmail (pipeline/regstudio/mailer.py, run by the sync job).
+// If RESEND_API_KEY and RESEND_FROM are set here, it is emailed at once instead and the Mac skips it.
 import { createHash } from "node:crypto";
 import { resend } from "@/lib/subscribe";
 import { q } from "@/lib/review/db";

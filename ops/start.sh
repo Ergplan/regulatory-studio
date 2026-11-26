@@ -89,6 +89,12 @@ else
   PROBLEMS+=("review site: $(grep '^sync: ' "$LOG" | tail -1 | cut -c7-200)")
 fi
 
+if [ -f data/store/gmail_token.json ]; then
+  echo "     mail: sending as $(python -c 'from regstudio import mailer; print(mailer.FROM)') (project requests go to sales, invitations to reviewers)"
+else
+  echo "     mail: not connected yet. Once, run:  regstudio mail-setup --client ~/Downloads/credentials.json"
+fi
+
 echo
 regstudio status 2>/dev/null | head -20
 echo

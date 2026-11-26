@@ -69,6 +69,24 @@ a lead, key points, numbers, up to three charts across documents and dates to wa
 early: `REGSTUDIO_EDITION_DAY=2026-11-20 regstudio run draft`. `regstudio promote <id>` sends a document
 that triage left out to be read.
 
+## Mail (Gmail API)
+
+`pipeline/regstudio/mailer.py` sends mail from the Mac through the Gmail API as the work account
+(`REGSTUDIO_MAIL_FROM`, default mahak.mittal@joulewise.com), with the `gmail.send` scope only. One-time setup on the Mac:
+`regstudio mail-setup --client ~/Downloads/credentials.json` (the Desktop OAuth client; it is copied to
+`data/store/gmail_client.json` and the refresh token kept in `data/store/gmail_token.json`, both 0600 and never committed
+or sent anywhere). Then `regstudio mail-test`.
+
+- The sync job mails new project requests and chat contacts to `REGSTUDIO_MAIL_SALES` (sales@joulewise.com) about once a
+  minute, Reply-To the visitor (sync ops `leads` / `leads_mailed`).
+- `regstudio invite` emails the link when mail is set up (`--no-email` to only print it). The Admin page's "Email the
+  invitation" queues a request (`rs_invite_requests`); the Mac makes the token itself and mails it, so the site never
+  holds a usable link (ops `invite_requests` / `invite_requests_done`).
+- After each scan, `regstudio mail-review` sends the waiting queue, by priority, to `REGSTUDIO_MAIL_REVIEW` (once a day).
+- Every message is logged in `mail_log` under (kind, ref) and never sent twice; `regstudio mail-log` shows the last 20.
+  Tests use `REGSTUDIO_MAIL=outbox`, which writes .eml files instead of sending. Never send real mail from tests.
+- The subscriber newsletter (`send-digest`) stays on Resend; Gmail is not for bulk mail.
+
 ## Comments, memory and commercial illustrations
 
 - **Comments.** On the review screen the legal team comments on a summary, headline, impact note, chart, illustration

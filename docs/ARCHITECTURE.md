@@ -82,6 +82,13 @@ reviewer's browser ──sign in──> review.joulewise.tech (Vercel + Postgres
 - The Mac's database is the source of truth; the review site can be rebuilt from it with `regstudio sync --force`.
 - This replaces the Cloudflare Tunnel route described further down, which is kept only as a fallback.
 
+## Mail
+
+The Mac sends mail through the Gmail API as the jouleWise work account (send-only scope; token kept on the Mac).
+It mails project requests and chat contacts from the public site to sales@joulewise.com, reviewer invitations, and a
+"waiting for review" note after each scan. The review site never sends mail and never holds the Gmail token: it only
+lists what is waiting, and the Mac collects it over the same signed sync calls. See `pipeline/regstudio/mailer.py`.
+
 ## How the studio learns
 
 ```
