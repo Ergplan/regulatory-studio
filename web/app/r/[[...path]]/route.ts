@@ -163,7 +163,9 @@ async function admin(c: Ctx, user: User, method: string): Promise<Response> {
       const role: Role = d.get("role") === "senior" ? "senior" : "reviewer";
       if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || !name || !TEAMS.includes(team)) note = `<p class="err">Enter a name, a valid email and a team.</p>`;
       else if (action === "invite_email") {
-        await q(`INSERT INTO rs_invite_requests(name, email, team, role, requested_by) VALUES ($1, $2, $3, $4, $5)`, [name, email, team, role, user.email]);
+        // a second press, or a repeat while the first is still being sent, does not queue another email
+        const pending = (await q(`SELECT 1 FROM rs_invite_requests WHERE email = $1 AND done_at IS NULL AND at > now() - interval '1 day'`, [email]))[0];
+        if (!pending) await q(`INSERT INTO rs_invite_requests(name, email, team, role, requested_by) VALUES ($1, $2, $3, $4, $5)`, [name, email, team, role, user.email]);
         note = `<div class="box" style="margin:12px 0"><b>Invitation for ${esc(name)} will be emailed</b><p class="muted">The link is created and emailed to ${esc(email)} within a minute or two. The result shows below under "Emailed invitations".</p></div>`;
       } else {
         const t = token();
@@ -201,7 +203,7 @@ async function admin(c: Ctx, user: User, method: string): Promise<Response> {
 <div><label for="role">Review role</label><select id="role" name="role"><option value="reviewer">Reviewer</option><option value="senior">Senior reviewer (decisions take precedence)</option></select></div>
 <div style="flex:0;display:flex;gap:8px;flex-wrap:wrap">${mailFrom ? `<button name="action" value="invite_email" style="white-space:nowrap">Email the invitation</button>` : ""}<button name="action" value="invite" style="white-space:nowrap">Show the link</button></div></div>
 <p class="muted" style="margin:8px 0 0">${mailFrom ? `"Email the invitation" sends it from ${esc(mailFrom)}. "Show the link" lets you send it yourself.` : `Emailing invitations is not switched on yet, so send the link yourself.`}</p></form>
-${asked.length ? `<h2>Emailed invitations</h2><table><tr><th>Name</th><th>Email</th><th>Asked</th><th>Result</th></tr>${asked.map((a) => `<tr><td>${esc(a.name)}</td><td>${esc(a.email)}</td><td>${esc(when(a.at))}</td><td>${a.done_at ? (a.status === "emailed" ? `<span class="ok">emailed</span>` : `<span class="err">${esc(a.status)}</span> ${esc(a.note)}`) : "waiting to be applied"}</td></tr>`).join("")}</table>` : ""}
+${asked.length ? `<h2>Emailed invitations</h2><table><tr><th>Name</th><th>Email</th><th>Asked</th><th>Result</th></tr>${asked.map((a) => `<tr><td>${esc(a.name)}</td><td>${esc(a.email)}</td><td>${esc(when(a.at))}</td><td>${a.done_at ? (a.status === "emailed" ? `<span class="ok">emailed</span>` : `<span class="err">${esc(a.status)}</span> ${esc(a.note)}`) : "being sent, usually within a minute"}</td></tr>`).join("")}</table>` : ""}
 <h2>Reviewers</h2><table><tr><th>Name</th><th>Email</th><th>Team</th><th>Review role</th><th>Last sign-in</th><th></th></tr>
 ${users.map((u) => `<tr><td>${esc(u.name)}${u.active ? "" : ` <span class="pill">switched off</span>`}</td><td>${esc(u.email)}</td>
 <td><form method="post" action="${act}" class="inline"><input type="hidden" name="action" value="team"><input type="hidden" name="id" value="${u.id}"><select name="value" onchange="this.form.submit()" style="width:auto" ${Number(u.id) === user.id ? "disabled" : ""}>${TEAMS.map((t) => `<option value="${t}" ${t === u.team ? "selected" : ""}>${TEAM_NAME[t]}</option>`).join("")}</select></form></td>
