@@ -54,9 +54,9 @@ async function form(req: Request): Promise<{ raw: string; data: URLSearchParams 
 function banner(c: Ctx, user: User, mac: any, events: Row[], queued: string | null): string {
   const seen = mac?.at ? (Date.now() - Date.parse(mac.at)) / 1000 : Infinity;
   const bits: string[] = [];
-  if (seen > 180) bits.push(`<div class="flash" role="status"><b>The studio's server is not connected right now</b>${mac?.at ? ` (last heard from ${esc(new Date(mac.at).toISOString().slice(0, 16).replace("T", " "))} UTC)` : ""}. You can keep working: what you submit is saved here and applied as soon as it is back.</div>`);
+  if (seen > 180) bits.push(`<div class="flash" role="status"><b>Changes are not being applied right now</b>${mac?.at ? ` (since ${esc(new Date(mac.at).toISOString().slice(0, 16).replace("T", " "))} UTC)` : ""}. You can keep working: what you submit is saved here and applied as soon as the platform resumes.</div>`);
   for (const e of events) {
-    if (!e.applied_at) bits.push(`<div class="flash" role="status" data-pending="${e.id}">Saved. Applying your change on the studio's server, usually within a minute. This page refreshes by itself.</div>`);
+    if (!e.applied_at) bits.push(`<div class="flash" role="status" data-pending="${e.id}">Saved. Applying your change, usually within a minute. This page refreshes by itself.</div>`);
     else if (e.status !== "applied") bits.push(`<div class="flash" role="alert" style="border-color:#b3261e;background:#fdecea"><b>A change you submitted was not applied.</b> ${esc(e.note || "")} Please check the page and try again.</div>`);
   }
   const admin = (user.team === "urja" ? "" : ` · <a href="${c.base}/_/inbox">Inbox</a>`) + (user.team === "admin" ? ` · <a href="${c.base}/_/admin">Admin</a>` : "");
@@ -87,7 +87,7 @@ async function page(c: Ctx, user: User): Promise<Response> {
   if (!row) {
     const any = Number((await q("SELECT count(*) AS n FROM rs_pages"))[0].n);
     return html(messagePage(any ? "Page not found" : "Nothing to review yet",
-      any ? "This item is not on the review site. It may have been removed from the queue." : "The studio's server has not sent its review pages yet. They appear here a minute or so after it connects.",
+      any ? "This item is not on the review site. It may have been removed from the queue." : "The review pages are not available yet. They appear here a minute or so after it connects.",
       { href: c.base || "/", label: "Go to the review hub" }), any ? 404 : 200);
   }
   const events = await q(
@@ -109,7 +109,7 @@ async function file(c: Ctx): Promise<Response> {
   if (!parts.length || !parts[0].total || parts.length < parts[0].total) {
     return html(shell("PDF", `<p class="muted" style="padding:24px">${parts.length && !parts[0].total
       ? "This order's PDF is too large to show here. Use the Source link above the summary to open it on the commission's website. The passages cited on this page are shown below when you click a paragraph number."
-      : "The PDF is still being copied from the studio's server. It should appear within a few minutes."}</p>`));
+      : "The PDF is still being prepared. It should appear within a few minutes."}</p>`));
   }
   return new Response(Buffer.concat(parts.map((p) => p.data as Buffer)), { headers: { "Content-Type": "application/pdf", "Content-Disposition": "inline", ...SECURITY,
     "Content-Security-Policy": "default-src 'none'; object-src 'self'; plugin-types application/pdf; frame-ancestors 'self'" } });
@@ -164,7 +164,7 @@ async function admin(c: Ctx, user: User, method: string): Promise<Response> {
       if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || !name || !TEAMS.includes(team)) note = `<p class="err">Enter a name, a valid email and a team.</p>`;
       else if (action === "invite_email") {
         await q(`INSERT INTO rs_invite_requests(name, email, team, role, requested_by) VALUES ($1, $2, $3, $4, $5)`, [name, email, team, role, user.email]);
-        note = `<div class="box" style="margin:12px 0"><b>Invitation for ${esc(name)} will be emailed</b><p class="muted">The studio's server creates the link and emails it to ${esc(email)} within a minute or two. The result shows below under "Emailed invitations".</p></div>`;
+        note = `<div class="box" style="margin:12px 0"><b>Invitation for ${esc(name)} will be emailed</b><p class="muted">The link is created and emailed to ${esc(email)} within a minute or two. The result shows below under "Emailed invitations".</p></div>`;
       } else {
         const t = token();
         await q(`INSERT INTO rs_invites(token_hash, email, name, team, role, expires_at, created_by) VALUES ($1, $2, $3, $4, $5, now() + interval '7 days', $6)`, [sha(t), email, name, team, role, user.email]);
@@ -193,15 +193,15 @@ async function admin(c: Ctx, user: User, method: string): Promise<Response> {
   const act = `${c.base}/_/admin`;
   const seen = mac?.at ? Math.round((Date.now() - Date.parse(mac.at)) / 1000) : null;
   const body = `${brand}<h1>Review site administration</h1><p><a href="${c.base || "/"}">Back to the review hub</a></p>${note}
-<h2>The studio's server</h2><div class="box"><p>${seen === null ? `<span class="err">It has never connected.</span>` : seen < 180 ? `<span class="ok">Connected.</span> Last check-in ${seen} seconds ago.` : `<span class="err">Not connected.</span> Last heard from ${esc(when(mac.at))}.`}
- ${Number(pages[0].n)} review pages here, last updated ${esc(when(pages[0].at))}. Last scan: ${esc(mac?.status?.scan?.finished ? when(mac.status.scan.finished) : "not recorded")}.</p></div>
+<h2>Status</h2><div class="box"><p>${seen === null ? `<span class="err">Not running yet.</span>` : seen < 180 ? `<span class="ok">Changes are being applied.</span> Last checked ${seen} seconds ago.` : `<span class="err">Changes are paused.</span> Since ${esc(when(mac.at))}.`}
+ ${Number(pages[0].n)} review pages available, last updated ${esc(when(pages[0].at))}. New documents last collected: ${esc(mac?.status?.scan?.finished ? when(mac.status.scan.finished) : "not recorded")}.</p></div>
 <h2>Invite a reviewer</h2><form method="post" action="${act}" class="box"><div class="row">
 <div><label for="name">Full name</label><input id="name" name="name" required maxlength="80"></div><div><label for="email">Work email</label><input id="email" name="email" type="email" required></div>
 <div><label for="team">Team</label><select id="team" name="team"><option value="urja">Urja Praxis (legal review)</option><option value="joulewise">jouleWise (commercial review)</option><option value="admin">Administrator</option></select></div>
 <div><label for="role">Review role</label><select id="role" name="role"><option value="reviewer">Reviewer</option><option value="senior">Senior reviewer (decisions take precedence)</option></select></div>
 <div style="flex:0;display:flex;gap:8px;flex-wrap:wrap">${mailFrom ? `<button name="action" value="invite_email" style="white-space:nowrap">Email the invitation</button>` : ""}<button name="action" value="invite" style="white-space:nowrap">Show the link</button></div></div>
-<p class="muted" style="margin:8px 0 0">${mailFrom ? `"Email the invitation" sends it from ${esc(mailFrom)}. "Show the link" lets you send it yourself.` : `Emailing invitations is not set up on the studio's server yet, so send the link yourself.`}</p></form>
-${asked.length ? `<h2>Emailed invitations</h2><table><tr><th>Name</th><th>Email</th><th>Asked</th><th>Result</th></tr>${asked.map((a) => `<tr><td>${esc(a.name)}</td><td>${esc(a.email)}</td><td>${esc(when(a.at))}</td><td>${a.done_at ? (a.status === "emailed" ? `<span class="ok">emailed</span>` : `<span class="err">${esc(a.status)}</span> ${esc(a.note)}`) : "waiting for the studio's server"}</td></tr>`).join("")}</table>` : ""}
+<p class="muted" style="margin:8px 0 0">${mailFrom ? `"Email the invitation" sends it from ${esc(mailFrom)}. "Show the link" lets you send it yourself.` : `Emailing invitations is not switched on yet, so send the link yourself.`}</p></form>
+${asked.length ? `<h2>Emailed invitations</h2><table><tr><th>Name</th><th>Email</th><th>Asked</th><th>Result</th></tr>${asked.map((a) => `<tr><td>${esc(a.name)}</td><td>${esc(a.email)}</td><td>${esc(when(a.at))}</td><td>${a.done_at ? (a.status === "emailed" ? `<span class="ok">emailed</span>` : `<span class="err">${esc(a.status)}</span> ${esc(a.note)}`) : "waiting to be applied"}</td></tr>`).join("")}</table>` : ""}
 <h2>Reviewers</h2><table><tr><th>Name</th><th>Email</th><th>Team</th><th>Review role</th><th>Last sign-in</th><th></th></tr>
 ${users.map((u) => `<tr><td>${esc(u.name)}${u.active ? "" : ` <span class="pill">switched off</span>`}</td><td>${esc(u.email)}</td>
 <td><form method="post" action="${act}" class="inline"><input type="hidden" name="action" value="team"><input type="hidden" name="id" value="${u.id}"><select name="value" onchange="this.form.submit()" style="width:auto" ${Number(u.id) === user.id ? "disabled" : ""}>${TEAMS.map((t) => `<option value="${t}" ${t === u.team ? "selected" : ""}>${TEAM_NAME[t]}</option>`).join("")}</select></form></td>
@@ -211,7 +211,7 @@ ${users.map((u) => `<tr><td>${esc(u.name)}${u.active ? "" : ` <span class="pill"
 <h2>Invitations not yet used</h2><table><tr><th>Name</th><th>Email</th><th>Team</th><th>Expires</th><th></th></tr>
 ${invites.map((i) => `<tr><td>${esc(i.name)}</td><td>${esc(i.email)}</td><td>${esc(TEAM_NAME[i.team])}${i.role === "senior" ? " · Senior reviewer" : ""}</td><td>${esc(when(i.expires_at))}</td><td><form method="post" action="${act}" class="inline"><input type="hidden" name="action" value="revoke"><input type="hidden" name="id" value="${esc(i.token_hash)}"><button>Cancel</button></form></td></tr>`).join("") || `<tr><td colspan="5" class="muted">None.</td></tr>`}</table>
 <h2>Recent activity</h2><table><tr><th>When</th><th>Who</th><th>What</th><th>Result</th></tr>
-${events.map((e) => `<tr><td>${esc(when(e.created_at))}</td><td>${esc(e.user_name)}</td><td>${esc(e.path)}</td><td>${e.applied_at ? (e.status === "applied" ? `<span class="ok">applied</span>` : `<span class="err">${esc(e.status)}</span> ${esc(e.note)}`) : "waiting for the studio's server"}</td></tr>`).join("") || `<tr><td colspan="4" class="muted">Nothing yet.</td></tr>`}</table>`;
+${events.map((e) => `<tr><td>${esc(when(e.created_at))}</td><td>${esc(e.user_name)}</td><td>${esc(e.path)}</td><td>${e.applied_at ? (e.status === "applied" ? `<span class="ok">applied</span>` : `<span class="err">${esc(e.status)}</span> ${esc(e.note)}`) : "waiting to be applied"}</td></tr>`).join("") || `<tr><td colspan="4" class="muted">Nothing yet.</td></tr>`}</table>`;
   return html(shell("Administration", body));
 }
 
