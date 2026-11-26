@@ -2221,7 +2221,7 @@
   ],
   "amends": "GERC (Standards of Performance of Distribution Licensees) Regulations, 2023",
   "impact": null,
-  "rating": null,
+  "rating": "low",
   "figures": [
    {
     "type": "bars",
@@ -2312,9 +2312,9 @@
     "url": "https://gercin.org/viewdocument/cmVndWxhdGlvbl9lbmdfMTc5MjI0Nzg0OF8zMTM4"
    }
   ],
-  "reviewed_by": null,
-  "approved_at": null,
-  "draft": true,
+  "reviewed_by": "mahak mittal",
+  "approved_at": "2026-11-26 11:04:41",
+  "draft": false,
   "sample": false
  }
 ]
