@@ -148,6 +148,8 @@ def main(argv: list[str] | None = None) -> None:
     iv.add_argument("email")
     iv.add_argument("--team", choices=["urja", "joulewise", "admin"], default="urja")
     iv.add_argument("--open", action="store_true", help="open the link in this Mac's browser")
+    iv.add_argument("--role", choices=["reviewer", "senior"], default="reviewer",
+                    help="senior: their decisions take precedence and other reviewers cannot change them")
     iv.add_argument("--no-email", action="store_true", help="do not email the link (it is emailed when mail is set up)")
     ms = sub.add_parser("mail-setup", help="connect Gmail: sign in as the work account once, so the studio can send mail")
     ms.add_argument("--client", help="the Desktop OAuth client JSON downloaded from Google Cloud (e.g. ~/Downloads/credentials.json)")
@@ -252,14 +254,14 @@ def main(argv: list[str] | None = None) -> None:
     elif args.cmd == "invite":
         from . import mirror
         try:
-            link = mirror.invite(args.name, args.email, args.team)
+            link = mirror.invite(args.name, args.email, args.team, role=args.role)
         except mirror.SyncError as e:
             raise SystemExit(f"invite: {e}")
         from . import mailer
         sent = None
         if not args.no_email and mailer.ready():
             try:
-                sent = mailer.invitation(args.name, args.email, args.team, link)
+                sent = mailer.invitation(args.name, args.email, args.team, link, role=args.role)
             except mailer.MailError as e:
                 print(f"Could not email the invitation ({e}).")
         if sent in ("sent", "written"):

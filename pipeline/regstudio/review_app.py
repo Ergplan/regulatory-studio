@@ -39,6 +39,7 @@ async def require_sign_in(request: Request, call_next):
             return HTMLResponse(REFUSED.format(why="The sync token is wrong."), status_code=403)
         request.state.reviewer = urllib.parse.unquote(request.headers.get("x-studio-reviewer", ""))[:80] or None
         request.state.reviewer_email = urllib.parse.unquote(request.headers.get("x-studio-reviewer-email", ""))[:200] or None
+        request.state.reviewer_role = request.headers.get("x-studio-reviewer-role", "reviewer")[:20]   # assigned on the review site
         return await call_next(request)
     if access.through_cloudflare(request.headers):
         try:

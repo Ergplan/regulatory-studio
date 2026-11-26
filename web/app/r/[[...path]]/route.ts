@@ -3,7 +3,7 @@
 // on the real review screen as that reviewer, and pushes the refreshed pages back. See pipeline/regstudio/mirror.py.
 import { q, meta, NoDatabase, type Row } from "@/lib/review/db";
 import { allowed, checkPassword, cookieOf, COOKIE, currentUser, hashPassword, ipOf, lockedOut, passwordProblem, recordFailure,
-  sessionCookie, sha, startSession, TEAMS, token, type Team, type User } from "@/lib/review/auth";
+  sessionCookie, sha, startSession, TEAMS, token, ROLES, ROLE_NAME, type Role, type Team, type User } from "@/lib/review/auth";
 import { esc, invitePage, loginPage, messagePage, shell, brand } from "@/lib/review/ui";
 
 export const runtime = "nodejs";
@@ -60,7 +60,7 @@ function banner(c: Ctx, user: User, mac: any, events: Row[], queued: string | nu
     else if (e.status !== "applied") bits.push(`<div class="flash" role="alert" style="border-color:#b3261e;background:#fdecea"><b>A change you submitted was not applied.</b> ${esc(e.note || "")} Please check the page and try again.</div>`);
   }
   const admin = (user.team === "urja" ? "" : ` · <a href="${c.base}/_/inbox">Inbox</a>`) + (user.team === "admin" ? ` · <a href="${c.base}/_/admin">Admin</a>` : "");
-  const who = `<div class="muted" data-rs-base="${esc(c.base)}" style="font-size:12px;margin:0 0 10px">${esc(TEAM_NAME[user.team])} · ${esc(user.email)}${admin}</div>`;
+  const who = `<div class="muted" data-rs-base="${esc(c.base)}" style="font-size:12px;margin:0 0 10px">${esc(TEAM_NAME[user.team])}${user.role === "senior" ? " · Senior reviewer" : ""} · ${esc(user.email)}${admin}</div>`;
   const script = `<script>(function(){var p=document.querySelector('[data-pending]');if(!p)return;var id=p.getAttribute('data-pending'),n=0;
 function t(){n++;fetch(${JSON.stringify(c.base)}+'/_/event/'+id+'?page='+encodeURIComponent(${JSON.stringify(c.path)}),{credentials:'same-origin',cache:'no-store'}).then(function(r){return r.json()}).then(function(s){
 if(s.done&&(s.fresh||s.waited>25)){location.replace(location.pathname+location.hash)}else if(n<90){setTimeout(t,n<10?3000:6000)}}).catch(function(){if(n<90)setTimeout(t,6000)})}setTimeout(t,2500)})();</script>`;
@@ -119,7 +119,7 @@ async function login(c: Ctx): Promise<Response> {
 async function invitation(c: Ctx, method: string): Promise<Response> {
   const t = c.path.slice("/_/invite/".length);
   const inv = /^[A-Za-z0-9_-]{20,80}$/.test(t)
-    ? (await q("SELECT email, name, team FROM rs_invites WHERE token_hash = $1 AND used_at IS NULL AND expires_at > now()", [sha(t)]))[0] : null;
+    ? (await q("SELECT email, name, team, role FROM rs_invites WHERE token_hash = $1 AND used_at IS NULL AND expires_at > now()", [sha(t)]))[0] : null;
   if (method === "GET" || !inv) return html(invitePage(c.base, t, (inv as any) ?? null), inv ? 200 : 410);
   const f = await form(c.req);
   if (!f || !sameOrigin(c)) return html(invitePage(c.base, t, inv as any, "Please try again."), 400);
@@ -129,9 +129,9 @@ async function invitation(c: Ctx, method: string): Promise<Response> {
   const used = await q("UPDATE rs_invites SET used_at = now() WHERE token_hash = $1 AND used_at IS NULL RETURNING email", [sha(t)]);
   if (!used.length) return html(invitePage(c.base, t, null), 410);
   const u = (await q(
-    `INSERT INTO rs_users(email, name, team, pw_hash) VALUES ($1, $2, $3, $4)
-     ON CONFLICT (email) DO UPDATE SET name = excluded.name, team = excluded.team, pw_hash = excluded.pw_hash, active = true RETURNING id`,
-    [inv.email, inv.name, inv.team, await hashPassword(pw)]))[0];
+    `INSERT INTO rs_users(email, name, team, role, pw_hash) VALUES ($1, $2, $3, $4, $5)
+     ON CONFLICT (email) DO UPDATE SET name = excluded.name, team = excluded.team, role = excluded.role, pw_hash = excluded.pw_hash, active = true RETURNING id`,
+    [inv.email, inv.name, inv.team, ROLES.includes(inv.role) ? inv.role : "reviewer", await hashPassword(pw)]))[0];
   await q("DELETE FROM rs_sessions WHERE user_id = $1", [u.id]);            // a new password signs out old sessions
   return go(c.base || "/", { "Set-Cookie": sessionCookie(await startSession(Number(u.id)), c.secure) });
 }
@@ -145,28 +145,31 @@ async function admin(c: Ctx, user: User, method: string): Promise<Response> {
     const d = f.data, action = d.get("action");
     if (action === "invite" || action === "invite_email") {
       const email = (d.get("email") || "").trim().toLowerCase(), name = (d.get("name") || "").trim().slice(0, 80), team = d.get("team") as Team;
+      const role: Role = d.get("role") === "senior" ? "senior" : "reviewer";
       if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || !name || !TEAMS.includes(team)) note = `<p class="err">Enter a name, a valid email and a team.</p>`;
       else if (action === "invite_email") {
-        await q(`INSERT INTO rs_invite_requests(name, email, team, requested_by) VALUES ($1, $2, $3, $4)`, [name, email, team, user.email]);
+        await q(`INSERT INTO rs_invite_requests(name, email, team, role, requested_by) VALUES ($1, $2, $3, $4, $5)`, [name, email, team, role, user.email]);
         note = `<div class="box" style="margin:12px 0"><b>Invitation for ${esc(name)} will be emailed</b><p class="muted">The studio's server creates the link and emails it to ${esc(email)} within a minute or two. The result shows below under "Emailed invitations".</p></div>`;
       } else {
         const t = token();
-        await q(`INSERT INTO rs_invites(token_hash, email, name, team, expires_at, created_by) VALUES ($1, $2, $3, $4, now() + interval '7 days', $5)`, [sha(t), email, name, team, user.email]);
+        await q(`INSERT INTO rs_invites(token_hash, email, name, team, role, expires_at, created_by) VALUES ($1, $2, $3, $4, $5, now() + interval '7 days', $6)`, [sha(t), email, name, team, role, user.email]);
         const origin = `${c.secure ? "https" : "http"}://${c.host}`;
         note = `<div class="box" style="margin:12px 0"><b>Invitation for ${esc(name)}</b><p class="muted">Send them this link. It works once, for 7 days, and is not shown again. They choose their own password.</p><div class="link">${esc(origin + c.base + "/_/invite/" + t)}</div></div>`;
       }
-    } else if (action === "active" || action === "team") {
+    } else if (action === "active" || action === "team" || action === "role") {
       const id = Number(d.get("id"));
       if (id === user.id) note = `<p class="err">You cannot change your own account here.</p>`;
       else if (action === "active") {
         await q("UPDATE rs_users SET active = $2 WHERE id = $1", [id, d.get("value") === "1"]);
         await q("DELETE FROM rs_sessions WHERE user_id = $1", [id]);
+      } else if (action === "role") {
+        if (ROLES.includes(d.get("value") as Role)) await q("UPDATE rs_users SET role = $2 WHERE id = $1", [id, d.get("value")]);
       } else if (TEAMS.includes(d.get("value") as Team)) await q("UPDATE rs_users SET team = $2 WHERE id = $1", [id, d.get("value")]);
     } else if (action === "revoke") await q("DELETE FROM rs_invites WHERE token_hash = $1", [d.get("id")]);
   }
   const [users, invites, events, mac, pages, asked] = await Promise.all([
-    q("SELECT id, email, name, team, active, last_login FROM rs_users ORDER BY active DESC, name"),
-    q("SELECT token_hash, email, name, team, expires_at FROM rs_invites WHERE used_at IS NULL AND expires_at > now() ORDER BY created_at DESC"),
+    q("SELECT id, email, name, team, role, active, last_login FROM rs_users ORDER BY active DESC, name"),
+    q("SELECT token_hash, email, name, team, role, expires_at FROM rs_invites WHERE used_at IS NULL AND expires_at > now() ORDER BY created_at DESC"),
     q("SELECT id, path, user_name, created_at, applied_at, status, note FROM rs_events ORDER BY id DESC LIMIT 40"),
     meta("mac"), q("SELECT count(*) AS n, max(updated_at) AS at FROM rs_pages"),
     q("SELECT name, email, team, at, done_at, status, note FROM rs_invite_requests ORDER BY id DESC LIMIT 10")]);
@@ -180,16 +183,18 @@ async function admin(c: Ctx, user: User, method: string): Promise<Response> {
 <h2>Invite a reviewer</h2><form method="post" action="${act}" class="box"><div class="row">
 <div><label for="name">Full name</label><input id="name" name="name" required maxlength="80"></div><div><label for="email">Work email</label><input id="email" name="email" type="email" required></div>
 <div><label for="team">Team</label><select id="team" name="team"><option value="urja">Urja Praxis (legal review)</option><option value="joulewise">jouleWise (commercial review)</option><option value="admin">Administrator</option></select></div>
+<div><label for="role">Review role</label><select id="role" name="role"><option value="reviewer">Reviewer</option><option value="senior">Senior reviewer (decisions take precedence)</option></select></div>
 <div style="flex:0;display:flex;gap:8px;flex-wrap:wrap">${mailFrom ? `<button name="action" value="invite_email" style="white-space:nowrap">Email the invitation</button>` : ""}<button name="action" value="invite" style="white-space:nowrap">Show the link</button></div></div>
 <p class="muted" style="margin:8px 0 0">${mailFrom ? `"Email the invitation" sends it from ${esc(mailFrom)}. "Show the link" lets you send it yourself.` : `Emailing invitations is not set up on the studio's server yet, so send the link yourself.`}</p></form>
 ${asked.length ? `<h2>Emailed invitations</h2><table><tr><th>Name</th><th>Email</th><th>Asked</th><th>Result</th></tr>${asked.map((a) => `<tr><td>${esc(a.name)}</td><td>${esc(a.email)}</td><td>${esc(when(a.at))}</td><td>${a.done_at ? (a.status === "emailed" ? `<span class="ok">emailed</span>` : `<span class="err">${esc(a.status)}</span> ${esc(a.note)}`) : "waiting for the studio's server"}</td></tr>`).join("")}</table>` : ""}
-<h2>Reviewers</h2><table><tr><th>Name</th><th>Email</th><th>Team</th><th>Last sign-in</th><th></th></tr>
+<h2>Reviewers</h2><table><tr><th>Name</th><th>Email</th><th>Team</th><th>Review role</th><th>Last sign-in</th><th></th></tr>
 ${users.map((u) => `<tr><td>${esc(u.name)}${u.active ? "" : ` <span class="pill">switched off</span>`}</td><td>${esc(u.email)}</td>
 <td><form method="post" action="${act}" class="inline"><input type="hidden" name="action" value="team"><input type="hidden" name="id" value="${u.id}"><select name="value" onchange="this.form.submit()" style="width:auto" ${Number(u.id) === user.id ? "disabled" : ""}>${TEAMS.map((t) => `<option value="${t}" ${t === u.team ? "selected" : ""}>${TEAM_NAME[t]}</option>`).join("")}</select></form></td>
-<td>${esc(when(u.last_login))}</td><td>${Number(u.id) === user.id ? "" : `<form method="post" action="${act}" class="inline"><input type="hidden" name="action" value="active"><input type="hidden" name="id" value="${u.id}"><input type="hidden" name="value" value="${u.active ? 0 : 1}"><button>${u.active ? "Switch off" : "Switch on"}</button></form>`}</td></tr>`).join("") || `<tr><td colspan="5" class="muted">Nobody yet.</td></tr>`}</table>
-<p class="muted">To reset someone's password, create a new invitation for the same email.</p>
+<td><form method="post" action="${act}" class="inline"><input type="hidden" name="action" value="role"><input type="hidden" name="id" value="${u.id}"><select name="value" onchange="this.form.submit()" style="width:auto" ${Number(u.id) === user.id ? "disabled" : ""}>${ROLES.map((r) => `<option value="${r}" ${r === u.role ? "selected" : ""}>${ROLE_NAME[r]}</option>`).join("")}</select></form></td>
+<td>${esc(when(u.last_login))}</td><td>${Number(u.id) === user.id ? "" : `<form method="post" action="${act}" class="inline"><input type="hidden" name="action" value="active"><input type="hidden" name="id" value="${u.id}"><input type="hidden" name="value" value="${u.active ? 0 : 1}"><button>${u.active ? "Switch off" : "Switch on"}</button></form>`}</td></tr>`).join("") || `<tr><td colspan="6" class="muted">Nobody yet.</td></tr>`}</table>
+<p class="muted">Review role: a senior reviewer's decisions take precedence, and other reviewers cannot change them (they can still comment). To reset someone's password, create a new invitation for the same email; it sets the team and role chosen there.</p>
 <h2>Invitations not yet used</h2><table><tr><th>Name</th><th>Email</th><th>Team</th><th>Expires</th><th></th></tr>
-${invites.map((i) => `<tr><td>${esc(i.name)}</td><td>${esc(i.email)}</td><td>${esc(TEAM_NAME[i.team])}</td><td>${esc(when(i.expires_at))}</td><td><form method="post" action="${act}" class="inline"><input type="hidden" name="action" value="revoke"><input type="hidden" name="id" value="${esc(i.token_hash)}"><button>Cancel</button></form></td></tr>`).join("") || `<tr><td colspan="5" class="muted">None.</td></tr>`}</table>
+${invites.map((i) => `<tr><td>${esc(i.name)}</td><td>${esc(i.email)}</td><td>${esc(TEAM_NAME[i.team])}${i.role === "senior" ? " · Senior reviewer" : ""}</td><td>${esc(when(i.expires_at))}</td><td><form method="post" action="${act}" class="inline"><input type="hidden" name="action" value="revoke"><input type="hidden" name="id" value="${esc(i.token_hash)}"><button>Cancel</button></form></td></tr>`).join("") || `<tr><td colspan="5" class="muted">None.</td></tr>`}</table>
 <h2>Recent activity</h2><table><tr><th>When</th><th>Who</th><th>What</th><th>Result</th></tr>
 ${events.map((e) => `<tr><td>${esc(when(e.created_at))}</td><td>${esc(e.user_name)}</td><td>${esc(e.path)}</td><td>${e.applied_at ? (e.status === "applied" ? `<span class="ok">applied</span>` : `<span class="err">${esc(e.status)}</span> ${esc(e.note)}`) : "waiting for the studio's server"}</td></tr>`).join("") || `<tr><td colspan="4" class="muted">Nothing yet.</td></tr>`}</table>`;
   return html(shell("Administration", body));
@@ -243,8 +248,8 @@ async function submit(c: Ctx, user: User): Promise<Response> {
   } catch { /* keep "/" */ }
   const dup = (await q(`SELECT id FROM rs_events WHERE user_id = $1 AND path = $2 AND body = $3 AND applied_at IS NULL AND created_at > now() - interval '15 seconds'`, [user.id, c.path, f.raw]))[0];
   const id = dup?.id ?? (await q(
-    `INSERT INTO rs_events(path, body, page, user_id, user_name, user_email, team) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
-    [c.path, f.raw, pagePath, user.id, user.name, user.email, user.team]))[0].id;
+    `INSERT INTO rs_events(path, body, page, user_id, user_name, user_email, team, role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`,
+    [c.path, f.raw, pagePath, user.id, user.name, user.email, user.team, user.role]))[0].id;
   return go(`${c.base}${encodeURI(pagePath)}?queued=${id}`);
 }
 

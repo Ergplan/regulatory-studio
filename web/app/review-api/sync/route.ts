@@ -61,7 +61,7 @@ export async function POST(req: Request) {
         return json({ ok: true });
       }
       case "events": {
-        const events = await q(`SELECT id, path, body, user_name, user_email, team, created_at FROM rs_events WHERE applied_at IS NULL ORDER BY id LIMIT 50`);
+        const events = await q(`SELECT id, path, body, user_name, user_email, team, role, created_at FROM rs_events WHERE applied_at IS NULL ORDER BY id LIMIT 50`);
         return json({ events: events.map((e) => ({ ...e, id: Number(e.id) })) });
       }
       case "ack": {
@@ -76,8 +76,9 @@ export async function POST(req: Request) {
         if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || !TEAMS.includes(m.team) || !/^[0-9a-f]{64}$/.test(m.token_hash ?? "") || !String(m.name ?? "").trim())
           return json({ error: "bad invitation" }, 400);
         const days = Math.min(30, Math.max(1, Number(m.days) || 7));
-        await q(`INSERT INTO rs_invites(token_hash, email, name, team, expires_at, created_by) VALUES ($1, $2, $3, $4, now() + ($5 || ' days')::interval, 'the studio Mac')
-                 ON CONFLICT (token_hash) DO NOTHING`, [m.token_hash, email, String(m.name).trim().slice(0, 80), m.team, String(days)]);
+        const role = m.role === "senior" ? "senior" : "reviewer";
+        await q(`INSERT INTO rs_invites(token_hash, email, name, team, role, expires_at, created_by) VALUES ($1, $2, $3, $4, $5, now() + ($6 || ' days')::interval, 'the studio Mac')
+                 ON CONFLICT (token_hash) DO NOTHING`, [m.token_hash, email, String(m.name).trim().slice(0, 80), m.team, role, String(days)]);
         return json({ ok: true });
       }
       case "leads": {
@@ -96,7 +97,7 @@ export async function POST(req: Request) {
         return json({ ok: true });
       }
       case "invite_requests": {
-        const requests = await q(`SELECT id, name, email, team FROM rs_invite_requests WHERE done_at IS NULL AND at > now() - interval '7 days' ORDER BY id LIMIT 20`);
+        const requests = await q(`SELECT id, name, email, team, role FROM rs_invite_requests WHERE done_at IS NULL AND at > now() - interval '7 days' ORDER BY id LIMIT 20`);
         return json({ requests: requests.map((r) => ({ ...r, id: Number(r.id) })) });
       }
       case "invite_requests_done": {

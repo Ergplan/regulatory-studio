@@ -71,10 +71,13 @@ that triage left out to be read.
 
 ## Reviewer hierarchy and the decision record
 
-`hierarchy.py`. Two ranks: senior reviewers (`config.SENIOR_REVIEWERS`, env `REGSTUDIO_SENIOR_REVIEWERS`, default
-`shikha@urjapraxis.com=Shikha Ohri`) and reviewers (everyone else, e.g. Kartik). Seniority comes only from a verified
-sign-in email (review site account via the sync job's `X-Studio-Reviewer-Email`, Cloudflare Access, or the local
-sign-in's registered email), never from a typed name.
+`hierarchy.py`. Two review roles, assigned to people, never written into the code: **senior reviewer** and **reviewer**.
+An administrator sets each person's role on the review site's Admin page (invite form, or the Review role column), or with
+`regstudio invite NAME EMAIL --team urja --role senior`. Nobody is senior by default. The role is stored with the account
+(`rs_users.role`), copied onto each submitted decision (`rs_events.role`) and sent to the Mac by the sync job
+(`X-Studio-Reviewer-Role`, accepted only with the mirror token). For people signing in on the Mac itself (local password
+or Cloudflare Access) the only source is `REGSTUDIO_SENIOR_REVIEWERS` (verified emails; empty by default). A typed name
+is never senior.
 
 - A reviewer reviews, edits and approves on their own; no second approval is needed.
 - A senior reviewer can change any decision; replacing another reviewer's decision is recorded as an override.

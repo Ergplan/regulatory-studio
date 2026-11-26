@@ -27,6 +27,11 @@ const SCHEMA = [
   `ALTER TABLE rs_chats ADD COLUMN IF NOT EXISTS mailed_at timestamptz`,   // set when the studio Mac has mailed it to sales
   `CREATE TABLE IF NOT EXISTS rs_invite_requests (id bigserial PRIMARY KEY, at timestamptz NOT NULL DEFAULT now(), name text NOT NULL, email text NOT NULL,
      team text NOT NULL, requested_by text NOT NULL, done_at timestamptz, status text, note text)`,
+  // Review role, separate from the team: a senior reviewer's decisions take precedence and others cannot change them.
+  `ALTER TABLE rs_users ADD COLUMN IF NOT EXISTS role text NOT NULL DEFAULT 'reviewer'`,
+  `ALTER TABLE rs_invites ADD COLUMN IF NOT EXISTS role text NOT NULL DEFAULT 'reviewer'`,
+  `ALTER TABLE rs_events ADD COLUMN IF NOT EXISTS role text NOT NULL DEFAULT 'reviewer'`,
+  `ALTER TABLE rs_invite_requests ADD COLUMN IF NOT EXISTS role text NOT NULL DEFAULT 'reviewer'`,
   `CREATE TABLE IF NOT EXISTS rs_meta (key text PRIMARY KEY, value jsonb NOT NULL, updated_at timestamptz NOT NULL DEFAULT now())`,
 ];
 

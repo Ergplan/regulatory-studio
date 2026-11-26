@@ -1,14 +1,17 @@
 """Reviewer precedence and the record of every review decision.
 
-Two ranks. A senior reviewer (config.SENIOR_REVIEWERS, e.g. Shikha Ohri) and everyone else (e.g. Kartik).
+Two review roles, assigned to people, not built into the code: senior reviewer and reviewer. An administrator sets each
+person's role on the review site's Admin page (or with `regstudio invite --role senior`); nobody is senior by default.
 - A reviewer reviews, edits and approves on their own; nobody's approval is needed on top of theirs.
 - A senior reviewer may change any decision, including another reviewer's. That is recorded as an override.
 - Once a senior reviewer has made a decision on something (approve, reject, reopen, ...), it is held: other
   reviewers can still read it and comment on it, but cannot change it. Only a senior reviewer can.
   An attempt to change it is refused and the refusal is recorded too.
 
-Seniority comes only from the email the reviewer signed in with (the review site's account, Cloudflare Access,
-or the local sign-in's registered email). A typed or unverified name is never senior.
+Where the role comes from: for decisions made on the review site, the role stored with that person's account there,
+carried to this Mac with the signed-in reviewer (sync job, mirror token). For reviewers signing in on this Mac itself
+(local password or Cloudflare Access), their verified email listed in config.SENIOR_REVIEWERS. A typed or unverified
+name is never senior.
 
 Every decision is a row in review_decisions: who, their rank, what they did, the status and reviewer before and
 after, the text before and after, and which earlier decision it overrode. Nothing is ever deleted from it.
@@ -46,17 +49,18 @@ class Actor:
         return self.rank >= SENIOR
 
 
-def rank_of(email: str | None) -> int:
-    return SENIOR if email and email.strip().lower() in config.SENIOR_REVIEWERS else REVIEWER
-
-
 def actor(request: Request, name: str) -> Actor:
-    """The reviewer behind this request, with the email that was verified for them, if any."""
+    """The reviewer behind this request, with their verified email (if any) and their review role."""
+    role = getattr(request.state, "reviewer_role", None)            # set only for the sync job (review site)
     email = getattr(request.state, "reviewer_email", None)
     if not email and auth.enabled():
-        email = (auth._load().get(name) or {}).get("email")   # local sign-in: the email registered for this name
+        email = (auth._load().get(name) or {}).get("email")       # local sign-in: the email registered for this name
     email = (email or "").strip().lower() or None
-    return Actor(name=name, email=email, rank=rank_of(email))
+    if role is not None:
+        rank = SENIOR if role == "senior" else REVIEWER
+    else:
+        rank = SENIOR if email and email in config.SENIOR_REVIEWERS else REVIEWER
+    return Actor(name=name, email=email, rank=rank)
 
 
 def decisive(kind: str, action: str) -> bool:

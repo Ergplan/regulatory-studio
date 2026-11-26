@@ -147,6 +147,15 @@ def test_sync_replays_only_allowed_forms_once_and_as_the_reviewer(server, monkey
     queue[:] = [[{"id": 7, "path": f"/notes/{doc}", "body": "target=summary&body=From+the+review+site", "user_name": "Leela Legal"}], []]
     assert mirror.pull() == {"applied": 0, "failed": 0}
     assert _db().execute("SELECT count(*) FROM review_comments").fetchone()[0] == 1
+    # If the site's database is reset, event numbers start again: a new event with an old number is still applied.
+    first = {"id": 20, "path": f"/notes/{doc}", "body": "target=summary&body=First", "user_name": "Leela Legal", "created_at": "2026-11-01T10:00:00Z"}
+    queue[:] = [[first], []]
+    assert mirror.pull() == {"applied": 1, "failed": 0}
+    queue[:] = [[first], []]
+    assert mirror.pull() == {"applied": 0, "failed": 0}                               # same event again: not twice
+    queue[:] = [[{**first, "body": "target=summary&body=After+a+reset", "created_at": "2026-12-01T09:00:00Z"}], []]
+    assert mirror.pull() == {"applied": 1, "failed": 0}
+    assert _db().execute("SELECT count(*) FROM review_comments").fetchone()[0] == 3
     # Pages are crawled as a placeholder reviewer; a wrong local token is refused.
     pages, _files = mirror.crawl()
     assert "/urja-praxis" in pages and f"/order/{doc}" in pages and mirror.NAME_SLOT in pages["/"]

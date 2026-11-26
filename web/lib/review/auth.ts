@@ -7,7 +7,11 @@ export const COOKIE = "rs_sid";
 export const SESSION_DAYS = 7;
 export const TEAMS = ["urja", "joulewise", "admin"] as const;
 export type Team = (typeof TEAMS)[number];
-export type User = { id: number; email: string; name: string; team: Team };
+export type User = { id: number; email: string; name: string; team: Team; role: Role };
+/** Review role, assigned by an administrator. A senior reviewer's decisions take precedence; others cannot change them. */
+export const ROLES = ["reviewer", "senior"] as const;
+export type Role = (typeof ROLES)[number];
+export const ROLE_NAME: Record<string, string> = { reviewer: "Reviewer", senior: "Senior reviewer" };
 
 export const sha = (s: string) => createHash("sha256").update(s).digest("hex");
 export const token = () => randomBytes(32).toString("base64url");
@@ -48,7 +52,7 @@ export async function currentUser(req: Request): Promise<User | null> {
   const sid = cookieOf(req, COOKIE);
   if (!sid || sid.length > 100) return null;
   const rows = await q(
-    `SELECT u.id, u.email, u.name, u.team FROM rs_sessions s JOIN rs_users u ON u.id = s.user_id
+    `SELECT u.id, u.email, u.name, u.team, u.role FROM rs_sessions s JOIN rs_users u ON u.id = s.user_id
      WHERE s.token_hash = $1 AND s.expires_at > now() AND u.active`, [sha(sid)]);
   return (rows[0] as User) ?? null;
 }

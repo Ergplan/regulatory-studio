@@ -112,11 +112,13 @@ class _NoRedirect(urllib.request.HTTPRedirectHandler):
 _opener = urllib.request.build_opener(_NoRedirect)
 
 
-def local(path: str, body: bytes | None = None, who: str = NAME_SLOT, email: str | None = None) -> tuple[int, bytes]:
-    # The email is the one the reviewer signed in to the review site with; seniority is decided from it (hierarchy.py).
+def local(path: str, body: bytes | None = None, who: str = NAME_SLOT, email: str | None = None,
+          role: str | None = None) -> tuple[int, bytes]:
+    # The reviewer's sign-in email and review role (reviewer or senior), as the review site's Admin page set them.
     req = urllib.request.Request(LOCAL + urllib.parse.quote(path, safe="/%"), data=body, method="POST" if body is not None else "GET", headers={
         "X-Studio-Mirror": local_token(), "X-Studio-Reviewer": urllib.parse.quote(who),
         **({"X-Studio-Reviewer-Email": urllib.parse.quote(email)} if email else {}),
+        **({"X-Studio-Reviewer-Role": "senior" if role == "senior" else "reviewer"} if body is not None else {}),
         **({"Content-Type": "application/x-www-form-urlencoded"} if body is not None else {})})
     try:
         with _opener.open(req, timeout=120) as r:
@@ -133,6 +135,10 @@ def _state() -> sqlite3.Connection:
     config.STORE.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(config.STORE / "sync_state.db", isolation_level=None)
     conn.execute("CREATE TABLE IF NOT EXISTS applied (id INTEGER PRIMARY KEY, status TEXT, note TEXT, at TEXT DEFAULT CURRENT_TIMESTAMP)")
+    try:   # when the event was made on the site: tells a new event from an old one with the same number (site database reset)
+        conn.execute("ALTER TABLE applied ADD COLUMN created TEXT")
+    except sqlite3.OperationalError:
+        pass
     return conn
 
 
@@ -143,7 +149,7 @@ def replay(event: dict) -> tuple[str, str]:
     if not ALLOWED.match(path) or ".." in path:
         return "refused", "This form is not one the review site may submit."
     code, body = local(path, (event.get("body") or "").encode(), who=event.get("user_name") or "Reviewer",
-                       email=event.get("user_email"))
+                       email=event.get("user_email"), role=event.get("role"))
     if code in (200, 303):
         return "applied", ""
     try:
@@ -162,10 +168,14 @@ def pull() -> dict:
             break
         results = []
         for e in sorted(events, key=lambda e: e["id"]):
-            row = state.execute("SELECT status, note FROM applied WHERE id = ?", (e["id"],)).fetchone()
+            created = str(e.get("created_at") or "")
+            row = state.execute("SELECT status, note, created FROM applied WHERE id = ?", (e["id"],)).fetchone()
+            if row is not None and row[2] and created and row[2] != created:
+                row = None                       # the same number, but a different event: the site's database was reset
             if row is None:
                 status, note = replay(e)
-                state.execute("INSERT INTO applied(id, status, note) VALUES (?, ?, ?)", (e["id"], status, note))
+                state.execute("INSERT OR REPLACE INTO applied(id, status, note, created) VALUES (?, ?, ?, ?)",
+                              (e["id"], status, note, created))
                 row = (status, note)
                 applied += status == "applied"
                 failed += status != "applied"
@@ -268,8 +278,9 @@ def invite_requests() -> int:
     done = []
     for r in call("invite_requests").get("requests") or []:
         try:
-            link = invite(r["name"], r["email"], r["team"])
-            status = mailer.invitation(r["name"], r["email"], r["team"], link)
+            role = "senior" if r.get("role") == "senior" else "reviewer"
+            link = invite(r["name"], r["email"], r["team"], role=role)
+            status = mailer.invitation(r["name"], r["email"], r["team"], link, role=role)
             done.append({"id": r["id"], "status": "emailed" if status in ("sent", "written") else status, "note": ""})
         except (mailer.MailError, SyncError, KeyError) as e:
             done.append({"id": r.get("id"), "status": "failed", "note": str(e)[:200]})
@@ -309,9 +320,9 @@ def loop(every: int = 20) -> None:
         time.sleep(every)
 
 
-def invite(name: str, email: str, team: str = "urja", days: int = 7) -> str:
+def invite(name: str, email: str, team: str = "urja", days: int = 7, role: str = "reviewer") -> str:
     """Creates a one-time invitation on the review site and returns its link. The reviewer sets their own password."""
     token = secrets.token_urlsafe(32)
-    call("invite", name=name.strip(), email=email.strip().lower(), team=team,
+    call("invite", name=name.strip(), email=email.strip().lower(), team=team, role="senior" if role == "senior" else "reviewer",
          token_hash=hashlib.sha256(token.encode()).hexdigest(), days=days)
     return f"{config.REVIEW_SITE.rstrip('/')}/_/invite/{token}"

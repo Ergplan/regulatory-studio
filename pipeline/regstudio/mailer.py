@@ -266,15 +266,16 @@ def relay() -> dict:
     return {"mailed": len(done_leads) + len(done_chats), **({"errors": errors} if errors else {})}
 
 
-def invitation(name: str, email: str, team: str, link: str, days: int = 7) -> str:
+def invitation(name: str, email: str, team: str, link: str, days: int = 7, role: str = "reviewer") -> str:
     teams = {"urja": "the Urja Praxis legal review", "joulewise": "the jouleWise team's review", "admin": "Regulatory Studio, as an administrator"}
-    text = (f"Dear {name},\n\nYou are invited to {teams.get(team, 'Regulatory Studio')} at {config.REVIEW_SITE.rstrip('/')}.\n\n"
+    as_role = " as a senior reviewer (your decisions take precedence)" if role == "senior" else ""
+    text = (f"Dear {name},\n\nYou are invited to {teams.get(team, 'Regulatory Studio')}{as_role} at {config.REVIEW_SITE.rstrip('/')}.\n\n"
             f"Open this link to choose your password (it works once and expires in {days} days):\n{link}\n\n"
             "After that, sign in at the same address with this email and your password.\n"
             "If you did not expect this, ignore this email; nothing happens unless the link is opened.\n\n"
             f"jouleWise Regulatory Studio\n")
     html = (f"<div style='font:15px/1.6 sans-serif;max-width:560px'><p>Dear {_esc(name)},</p>"
-            f"<p>You are invited to {_esc(teams.get(team, 'Regulatory Studio'))} at {_esc(config.REVIEW_SITE.rstrip('/'))}.</p>"
+            f"<p>You are invited to {_esc(teams.get(team, 'Regulatory Studio'))}{_esc(as_role)} at {_esc(config.REVIEW_SITE.rstrip('/'))}.</p>"
             f"<p><a href='{_esc(link)}' style='display:inline-block;background:#1f6f4a;color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none'>Choose your password</a></p>"
             f"<p style='color:#666;font-size:13px'>The link works once and expires in {days} days. After that, sign in at the same address "
             "with this email and your password. If you did not expect this, ignore this email.</p></div>")
