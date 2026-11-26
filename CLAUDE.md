@@ -54,7 +54,8 @@ does everything in one command):
 
 Never weaken these: production data comes only from `approved` rows; the review screen binds to 127.0.0.1;
 the review site accepts nothing from the Mac without a valid signature and nothing from a browser without a
-session; passwords, sessions and invitations are stored only as hashes; no credentials, keys or tokens in the
+session; passwords, sessions and invitations are stored only as hashes (accounts never expire; a sign-in renews on use and
+ends only on sign-out, a new password, or an administrator switching the account off); no credentials, keys or tokens in the
 repo (`data/store/sync_key.pem` and `mirror.token` never leave the Mac).
 
 ## Prepared files and the weekly digest

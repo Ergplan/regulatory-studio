@@ -4,10 +4,13 @@ import { createHash, randomBytes, scrypt as scryptCb, timingSafeEqual } from "no
 import { q, type Row } from "./db";
 
 export const COOKIE = "rs_sid";
-export const SESSION_DAYS = 7;
+// A sign-in lasts until the person signs out, an administrator switches the account off, or a new password is set.
+// Each visit renews it (at most once a day), so an account in use never times out. 400 days is the longest a browser
+// keeps a cookie; it only matters for someone who does not visit for over a year.
+export const SESSION_DAYS = 400;
 export const TEAMS = ["urja", "joulewise", "admin"] as const;
 export type Team = (typeof TEAMS)[number];
-export type User = { id: number; email: string; name: string; team: Team; role: Role };
+export type User = { id: number; email: string; name: string; team: Team; role: Role; renewed?: string };
 /** Review role, assigned by an administrator. A senior reviewer's decisions take precedence; others cannot change them. */
 export const ROLES = ["reviewer", "senior"] as const;
 export type Role = (typeof ROLES)[number];
@@ -52,9 +55,17 @@ export async function currentUser(req: Request): Promise<User | null> {
   const sid = cookieOf(req, COOKIE);
   if (!sid || sid.length > 100) return null;
   const rows = await q(
-    `SELECT u.id, u.email, u.name, u.team, u.role FROM rs_sessions s JOIN rs_users u ON u.id = s.user_id
-     WHERE s.token_hash = $1 AND s.expires_at > now() AND u.active`, [sha(sid)]);
-  return (rows[0] as User) ?? null;
+    `SELECT u.id, u.email, u.name, u.team, u.role, s.expires_at < now() + (($2::int - 1) || ' days')::interval AS stale
+     FROM rs_sessions s JOIN rs_users u ON u.id = s.user_id
+     WHERE s.token_hash = $1 AND s.expires_at > now() AND u.active`, [sha(sid), SESSION_DAYS]);
+  const u = rows[0] as (User & { stale?: boolean }) | undefined;
+  if (!u) return null;
+  if (u.stale) {          // renew: the sign-in keeps going for as long as the account is used
+    await q(`UPDATE rs_sessions SET expires_at = now() + ($2 || ' days')::interval WHERE token_hash = $1`, [sha(sid), String(SESSION_DAYS)]);
+    u.renewed = sid;
+  }
+  delete u.stale;
+  return u;
 }
 
 export async function startSession(userId: number): Promise<string> {

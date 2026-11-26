@@ -207,7 +207,7 @@ ${users.map((u) => `<tr><td>${esc(u.name)}${u.active ? "" : ` <span class="pill"
 <td><form method="post" action="${act}" class="inline"><input type="hidden" name="action" value="team"><input type="hidden" name="id" value="${u.id}"><select name="value" onchange="this.form.submit()" style="width:auto" ${Number(u.id) === user.id ? "disabled" : ""}>${TEAMS.map((t) => `<option value="${t}" ${t === u.team ? "selected" : ""}>${TEAM_NAME[t]}</option>`).join("")}</select></form></td>
 <td><form method="post" action="${act}" class="inline"><input type="hidden" name="action" value="role"><input type="hidden" name="id" value="${u.id}"><select name="value" onchange="this.form.submit()" style="width:auto" ${Number(u.id) === user.id ? "disabled" : ""}>${ROLES.map((r) => `<option value="${r}" ${r === u.role ? "selected" : ""}>${ROLE_NAME[r]}</option>`).join("")}</select></form></td>
 <td>${esc(when(u.last_login))}</td><td>${Number(u.id) === user.id ? "" : `<form method="post" action="${act}" class="inline"><input type="hidden" name="action" value="active"><input type="hidden" name="id" value="${u.id}"><input type="hidden" name="value" value="${u.active ? 0 : 1}"><button>${u.active ? "Switch off" : "Switch on"}</button></form>`}</td></tr>`).join("") || `<tr><td colspan="6" class="muted">Nobody yet.</td></tr>`}</table>
-<p class="muted">Review role: a senior reviewer's decisions take precedence, and other reviewers cannot change them (they can still comment). To reset someone's password, create a new invitation for the same email; it sets the team and role chosen there.</p>
+<p class="muted">Accounts do not expire. Once someone has set a password they stay signed in on that browser for as long as they use the site, until they sign out or you switch the account off here (that signs them out at once; switching it on again lets them sign in with the same password). Review role: a senior reviewer's decisions take precedence, and other reviewers cannot change them (they can still comment). To reset someone's password, create a new invitation for the same email; it sets the team and role chosen there.</p>
 <h2>Invitations not yet used</h2><table><tr><th>Name</th><th>Email</th><th>Team</th><th>Expires</th><th></th></tr>
 ${invites.map((i) => `<tr><td>${esc(i.name)}</td><td>${esc(i.email)}</td><td>${esc(TEAM_NAME[i.team])}${i.role === "senior" ? " · Senior reviewer" : ""}</td><td>${esc(when(i.expires_at))}</td><td><form method="post" action="${act}" class="inline"><input type="hidden" name="action" value="revoke"><input type="hidden" name="id" value="${esc(i.token_hash)}"><button>Cancel</button></form></td></tr>`).join("") || `<tr><td colspan="5" class="muted">None.</td></tr>`}</table>
 <h2>Recent activity</h2><table><tr><th>When</th><th>Who</th><th>What</th><th>Result</th></tr>
@@ -295,13 +295,19 @@ async function handle(req: Request, parts: string[] | undefined, method: "GET" |
     }
     const user = await currentUser(req);
     if (!user) return method === "GET" ? go(c.base + "/_/login") : html(loginPage(c.base, "Your session has ended. Sign in and submit the form again."), 401);
-    if (c.path === "/_/admin") return admin(c, user, method);
-    if (c.path === "/_/inbox") return inbox(c, user, method);
-    if (method === "POST") return submit(c, user);
-    if (c.path.startsWith("/_/event/")) return eventStatus(c, user);
-    if (c.path.startsWith("/file/")) return file(c);
-    if (c.path.startsWith("/_/")) return html(messagePage("Page not found", "There is nothing at this address.", { href: c.base || "/", label: "Go to the review hub" }), 404);
-    return page(c, user);
+    const res = await (async () => {
+      if (c.path === "/_/admin") return admin(c, user, method);
+      if (c.path === "/_/inbox") return inbox(c, user, method);
+      if (method === "POST") return submit(c, user);
+      if (c.path.startsWith("/_/event/")) return eventStatus(c, user);
+      if (c.path.startsWith("/file/")) return file(c);
+      if (c.path.startsWith("/_/")) return html(messagePage("Page not found", "There is nothing at this address.", { href: c.base || "/", label: "Go to the review hub" }), 404);
+      return page(c, user);
+    })();
+    if (!user.renewed) return res;
+    const headers = new Headers(res.headers);   // the renewed sign-in goes back to the browser with the same cookie
+    headers.append("Set-Cookie", sessionCookie(user.renewed, c.secure));
+    return new Response(res.body, { status: res.status, statusText: res.statusText, headers });
   } catch (e) {
     if (e instanceof NoDatabase) return html(messagePage("The review site is being set up", "Its database is not connected yet. Please try again later."), 503);
     console.error("review", c.path, e);
