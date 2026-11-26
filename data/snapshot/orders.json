@@ -2686,16 +2686,16 @@
   "path": "/orders/cerc/2026/94-at-2026-8d4c10",
   "commission": "cerc",
   "doc_type": "order",
-  "title": "NHPC Limited",
+  "title": "NHPC Limited: Petition under Section 63 of the Electricity Act, 2003 for Adoption of Tariff of additional capacity of 1150 MW Firm & Despatchable Power under “Greenshoe Option” from ISTS connected RE ",
   "case_number": "Petition No. 94/AT/2026",
   "date": "2026-11-19",
   "source_url": "https://cercind.gov.in/2026/Orders/94-AT-2026.pdf",
   "source_listing": false,
   "pdf": "/pdf/8d4c10cb7238f989.pdf",
-  "draft": true,
+  "draft": false,
   "topics": [
-   "ppa-adoption",
-   "generation-tariff"
+   "generation-tariff",
+   "ppa-adoption"
   ],
   "significance": 4,
   "parties": [
@@ -2868,8 +2868,8 @@
   "commercial": null,
   "summary": "NHPC Limited asked the Commission to adopt, under Section 63 of the Electricity Act, 2003, the tariff for 1,150 MW of additional firm and despatchable renewable power with energy storage. NHPC had allocated this capacity under a \"Greenshoe Option\" at the lowest auction tariff of Rs 4.48/kWh. The Commission adopted tariffs for the 1,200 MW base capacity on 19.06.2025 in Petition No. 87/AT/2025. When it later dismissed NHPC's review petition, it allowed a fresh petition for the Greenshoe quantity. The Commission noted that the Central Government's bidding guidelines do not define or expressly provide for a \"Greenshoe Option\". It said such allocation might raise concerns about transparency and equal treatment of bidders. It expects implementing agencies not to use the option in future without an express provision in the guidelines. Treating this as a legacy case, it adopted the tariffs. It restricted Juniper Green Energy's Greenshoe allocation to 200 MW instead of 300 MW, giving 1,050 MW at Rs 4.48/kWh, subject to PSAs being signed with distribution licensees. A trading margin of Rs 0.07/kWh is deemed consistent with the Trading Licence Regulations if distribution licensees agree. Where the escrow or letter of credit is not provided, it is capped at Rs 0.02/kWh.",
   "headline": "CERC adopts Rs 4.48/kWh tariff for 1,050 MW of NHPC greenshoe storage-backed RE power",
-  "reviewed_by": null,
-  "approved_at": null,
+  "reviewed_by": "mahak",
+  "approved_at": "2026-11-26 09:18:52",
   "revised_at": null,
   "language": "en",
   "sample": false,
