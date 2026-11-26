@@ -67,7 +67,11 @@ function load<T>(name: string, fallback: T): T {
 
 // Until the real domain is set, the site is not indexed (see robots.ts and layout.tsx).
 export const LAUNCHED = Boolean(process.env.NEXT_PUBLIC_SITE_URL);
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000")).replace(/\/$/, "");
+// The public address: the one set at launch (NEXT_PUBLIC_SITE_URL), else the public domain in production (never a
+// per-deployment URL, and not review.joulewise.tech, which this project also serves), else the deployment's own URL.
+const PUBLIC_HOST = "rgstudio.joulewise.tech";
+const VERCEL_HOST = process.env.VERCEL_ENV === "production" ? PUBLIC_HOST : process.env.VERCEL_URL;
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? (VERCEL_HOST ? `https://${VERCEL_HOST}` : "http://localhost:3000")).replace(/\/$/, "");
 // Coverage shown before the first publish; the published site.json replaces it.
 const DEFAULT_COMMISSIONS: Record<string, string> = {
   cerc: "Central Electricity Regulatory Commission", aptel: "Appellate Tribunal for Electricity",

@@ -128,3 +128,36 @@ def test_a_reviewers_own_decisions_stay_theirs_to_change(server):
     act(server, f"/order/{doc}/summary", {"action": "reject"}, KARTIK)
     assert act(server, f"/order/{doc}/summary", APPROVE("Changed my mind."), KARTIK)[0] == 303
     assert _order(doc)["summary_status"] == "approved"
+
+
+def test_held_parts_are_marked_on_the_page(server):
+    doc, _, links = _ids()
+    lid = links[0]["id"]
+    act(server, f"/order/{doc}/summary", APPROVE("Senior text."), SHIKHA)
+    act(server, f"/rating/{doc}", {"rating": "high"}, SHIKHA)
+    act(server, f"/link/{lid}", {"action": "reject"}, SHIKHA)
+    page = server.get(f"/order/{doc}")
+    assert page.count('data-held="Shikha Ohri"') >= 3                       # summary, rating, the link
+    assert page.count('final · Shikha Ohri') >= 2
+
+
+def test_rejected_items_stay_findable_and_approval_brings_them_back(server):
+    doc, _, _ = _ids()
+    act(server, f"/order/{doc}/summary", {"action": "reject"}, KARTIK)
+    q = server.get("/urja-praxis")
+    assert "Recently decided" in q and f'href="/order/{doc}"' in q
+    assert _db().execute("SELECT stage FROM documents WHERE id = ?", (doc,)).fetchone()[0] == "listed"
+    act(server, f"/order/{doc}/summary", APPROVE("Back again."), KARTIK)
+    assert _db().execute("SELECT stage FROM documents WHERE id = ?", (doc,)).fetchone()[0] == "read"
+    q = server.get("/urja-praxis")
+    assert "Recently decided" not in q and f'href="/order/{doc}"' in q        # back in the queue
+
+
+def test_memory_links_go_to_the_right_kind_of_page(server):
+    from regstudio import db, learning
+    doc, _, _ = _ids()
+    pid = _db().execute("SELECT pid FROM paragraphs WHERE doc_id = ? LIMIT 1", (doc,)).fetchone()[0]
+    with db.session() as conn:
+        learning.add_lesson(conn, "fact", "A cited fact for the link test.", "model", "all", doc, pid)
+    server("/whoami", {"name": "Reader"})
+    assert f'href="/order/{doc}"' in server.get("/memory")

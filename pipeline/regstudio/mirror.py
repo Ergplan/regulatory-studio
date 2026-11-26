@@ -222,6 +222,7 @@ def push(force: bool = False) -> dict:
     if batch or gone:
         call("pages", pages=batch, remove=gone)
         sent += len(batch)
+    call("pushed")   # every page now shows the decisions applied before this push, changed or not
     uploaded = 0
     for doc in sorted(files - known_files):
         code, data = local(f"/file/{doc}")

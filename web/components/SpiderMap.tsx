@@ -78,7 +78,7 @@ export default function SpiderMap({ center, nodes, typeLabels, title }: {
         </g>
         {placed.map((n) => (
           <a key={n.key} href={n.href} className={"node k-" + n.kind + " " + n.types.map((x) => "t-" + x).join(" ")}>
-            <title>{n.label}{n.sub ? " — " + n.sub : ""}</title>
+            <title>{n.label + (n.sub ? " — " + n.sub : "")}</title>
             <rect x={n.x} y={n.y - BOX_H / 2} width={BOX_W} height={BOX_H} rx={8} />
             <text x={n.x + 10} y={n.y - 13} className="node-type">{n.types.map((x) => ({ part_of: "Part of", more: "" } as Record<string, string>)[x] ?? typeLabels[x] ?? x).join(" · ")}</text>
             <text x={n.x + 10} y={n.y + 4} className="node-label">{clip(n.label, 30)}</text>

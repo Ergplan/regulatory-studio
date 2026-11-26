@@ -83,10 +83,14 @@ export async function recordFailure(email: string, ip: string) {
   await q("DELETE FROM rs_attempts WHERE at < now() - interval '1 day'");
 }
 
-/** What each team may submit. Everyone may comment; only the commercial team decides illustrations, only the legal team the law. */
+/** What each team may submit, first match wins. Everyone may comment; only the commercial team decides illustrations,
+ *  only the legal team the law. The same list is sent to the browser to disable buttons a team cannot use. */
+export const PERMISSIONS: { path: string; teams: Team[]; who: string }[] = [
+  { path: "^/(notes/|comment/|digest/[^/]+/note$)", teams: ["urja", "joulewise", "admin"], who: "" },
+  { path: "^/commercial/", teams: ["joulewise", "admin"], who: "the jouleWise commercial team" },
+  { path: "", teams: ["urja", "admin"], who: "the Urja Praxis legal team" },
+];
 export function allowed(team: Team, path: string): boolean {
-  if (team === "admin") return true;
-  if (/^\/(notes\/|comment\/|digest\/[^/]+\/note$)/.test(path)) return true;
-  if (/^\/commercial\//.test(path)) return team === "joulewise";
-  return team === "urja";
+  const rule = PERMISSIONS.find((r) => new RegExp(r.path).test(path))!;
+  return rule.teams.includes(team);
 }

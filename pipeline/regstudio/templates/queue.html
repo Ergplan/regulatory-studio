@@ -42,6 +42,11 @@
 {% if amendments %}<h2>Amendments to apply</h2>
 <table><tr><th>Commission</th><th>Amendment</th><th>Changes to check</th></tr>
 {% for a in amendments %}<tr><td>{{ a.commission|upper }}</td><td><a href="/amendment/{{ a.id }}">{{ a.title or a.id[:12] }}</a></td><td>{{ a.open_changes }}</td></tr>{% endfor %}</table>{% endif %}
+{% if recent %}<h2>Recently decided</h2>
+<p class="muted">Items decided in the last 30 days that have left the queue: marked not for publication, or regulations fully approved. Open one to see its decision record or change it.</p>
+<table><tr><th>Item</th><th>Status</th><th>When (UTC)</th></tr>
+{% for r in recent %}<tr><td><span class="pill">{{ r.what }}</span> {{ (r.commission or '')|upper }} · <a href="{{ r.href }}">{{ r.title|truncate(110) }}</a></td>
+<td><span class="pill {{ r.status }}">{{ r.status }}</span>{% if r.reviewer %} <span class="by">by {{ r.reviewer }}</span>{% endif %}</td><td>{{ r.at[:16] }}</td></tr>{% endfor %}</table>{% endif %}
 <h2>Weekly digests</h2>
 <table><tr><th>Week</th><th>Dates</th><th>Status</th></tr>
 {% for d in digests %}<tr><td><a href="/digest/{{ d.id }}">{{ d.id }}</a></td><td>{{ d.from_date }} to {{ d.to_date }}</td>

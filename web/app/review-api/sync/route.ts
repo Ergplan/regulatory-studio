@@ -60,6 +60,10 @@ export async function POST(req: Request) {
           [m.id, Number(m.n) || 0, Number(m.total) || 0, Number(m.size) || 0, data]);
         return json({ ok: true });
       }
+      case "pushed": {
+        await setMeta("pushed", { at: new Date().toISOString() });
+        return json({ ok: true });
+      }
       case "events": {
         const events = await q(`SELECT id, path, body, user_name, user_email, team, role, created_at FROM rs_events WHERE applied_at IS NULL ORDER BY id LIMIT 50`);
         return json({ events: events.map((e) => ({ ...e, id: Number(e.id) })) });

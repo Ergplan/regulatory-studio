@@ -16,6 +16,7 @@ from pathlib import Path
 from fastapi import BackgroundTasks, FastAPI, Form, HTTPException, Request
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
+from markupsafe import Markup, escape
 
 from . import access, amend, auth, commercial, config, db, deploy, hierarchy, learning, priority, registry
 
@@ -24,6 +25,16 @@ templates = Jinja2Templates(directory=str(Path(__file__).parent / "templates"))
 templates.env.globals.update(COMMISSIONS=config.COMMISSIONS, LINK_TYPES=config.LINK_TYPES,
                              TOPICS=config.TOPICS)
 templates.env.filters["inr"] = lambda v: commercial.fmt(float(v), 0 if float(v) == int(float(v)) else 2)
+
+
+def _held(held, key: str) -> str | None:
+    return held.get(key) if isinstance(held, dict) else None
+
+
+# A part a senior reviewer has decided carries data-held (the review site locks it for other reviewers) and a note.
+templates.env.globals["held_attr"] = lambda held, key: Markup(f' data-held="{escape(_held(held, key))}"') if _held(held, key) else ""
+templates.env.globals["held_note"] = lambda held, key: (
+    Markup(f'<span class="final">final · {escape(_held(held, key))}</span>') if _held(held, key) else "")
 
 
 @app.middleware("http")
@@ -120,15 +131,20 @@ def back(url: str) -> RedirectResponse:
     return RedirectResponse(url, status_code=303)
 
 
-def decisions_context(kind: str, obj: str, doc_id: str | None = None) -> dict:
-    """The senior reviewer's standing decision on the item (if any) and its decision record."""
+def decisions_context(kind: str, obj: str, doc_id: str | None = None, parts: dict | None = None) -> dict:
+    """The senior reviewer's standing decision on the item (if any), which parts of the page are held, and the record."""
     with db.session() as conn:
         h = hierarchy.held_by(conn, kind, obj)
         rows = hierarchy.history(conn, doc_id=doc_id) if doc_id else hierarchy.history(conn, kind=kind, obj=obj)
+        held = hierarchy.held_parts(conn, {"summary": (kind, obj), **(parts or {})})
     hold = None
     if h:
         hold = {"reviewer": h["reviewer"], "verb": hierarchy.PAST.get(h["action"], h["action"]), "when": hierarchy._when(h["at"])}
-    return {"hold": hold, "decisions": rows}
+    return {"hold": hold, "decisions": rows, "held": held}
+
+
+def _doc_parts(doc_id: str | None) -> dict:
+    return {k: (k, doc_id) for k in ("rating", "impact", "figures")} if doc_id else {}
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -193,6 +209,7 @@ def queue(request: Request):
         listed = conn.execute("SELECT count(*) FROM documents WHERE stage = 'listed'").fetchone()[0]
         errors = conn.execute("SELECT id, commission, title, error FROM documents WHERE stage = 'error'").fetchall()
         holds = hierarchy.holds_for(conn, [("order", o["id"]) for o in orders] + [("consultation", c["id"]) for c in consultations])
+        recent = _recently_decided(conn)
     orders = sorted((dict(o) | {"priority": priority.for_order(o)} for o in orders),
                     key=lambda o: (o["summary_status"] == "approved", -o["priority"]["score"]))
     consultations = sorted((dict(c) | {"priority": priority.for_consultation(c)} for c in consultations),
@@ -203,7 +220,30 @@ def queue(request: Request):
     return templates.TemplateResponse(request, "queue.html", {
         "reviewer": reviewer(request), "orders": orders, "first": first, "regs": regs, "digests": digests, "amendments": amendments,
         "listed": listed, "errors": errors, "sources": _download_health(), "deploy": deploy.last(), "scan": _last_scan(),
-        "consultations": consultations, "holds": holds})
+        "consultations": consultations, "holds": holds, "recent": recent})
+
+
+def _recently_decided(conn, days: int = 30) -> list[dict]:
+    """Items decided in the last month that have left the queue (not for publication, or fully approved), so they can
+    be found again and reopened. Listing them here also keeps their pages on the review site."""
+    rows = conn.execute(
+        """SELECT object, max(at) AS at FROM audit
+           WHERE action IN ('summary.reject', 'consultation.reject', 'regulation.approve') AND at > datetime('now', ?)
+           GROUP BY object ORDER BY max(at) DESC LIMIT 40""", (f"-{days} days",)).fetchall()
+    out = []
+    for r in rows:
+        oid = r["object"]
+        o = conn.execute("""SELECT d.title, d.case_number, d.commission, o.summary_status AS status, o.reviewer
+                            FROM orders o JOIN documents d ON d.id = o.doc_id WHERE o.doc_id = ?""", (oid,)).fetchone()
+        c = None if o else conn.execute("""SELECT d.title, d.commission, c.summary_status AS status, c.reviewer
+                                           FROM consultations c JOIN documents d ON d.id = c.doc_id WHERE c.doc_id = ?""", (oid,)).fetchone()
+        g = None if (o or c) else conn.execute("SELECT title, commission, status, reviewer FROM regulations WHERE id = ?", (oid,)).fetchone()
+        row, href, what = (o, f"/order/{oid}", "Order") if o else (c, f"/consultation/{oid}", "Draft") if c else (g, f"/regulation/{oid}", "Regulation")
+        if row is None or (what != "Regulation" and row["status"] != "rejected"):
+            continue                                  # back in the queue already
+        out.append({"href": href, "what": what, "title": row["title"] or (row["case_number"] if "case_number" in row.keys() else None) or oid[:12],
+                    "commission": row["commission"], "status": row["status"], "reviewer": row["reviewer"], "at": r["at"]})
+    return out
 
 
 def _last_scan() -> dict | None:
@@ -277,7 +317,7 @@ def order(request: Request, doc_id: str):
         "reviewer": reviewer(request), "d": d, "o": o, "links": links, "paras": paras,
         "parties": json.loads(o["parties"] or "[]"), "topics": json.loads(o["topics"] or "[]"),
         "targets": targets, "suggest": suggest, **impact_context(o), **notes_context(doc_id, o, True),
-        **decisions_context("order", doc_id, doc_id)})
+        **decisions_context("order", doc_id, doc_id, {**_doc_parts(doc_id), **{f"link:{l['id']}": ("link", str(l["id"])) for l in links}})})
 
 
 @app.post("/order/{doc_id}/summary")
@@ -299,6 +339,8 @@ def save_summary(request: Request, doc_id: str, action: str = Form(...), summary
         if action == "approve":
             if not summary.strip():
                 raise HTTPException(400, "Summary is empty.")
+            if conn.execute("SELECT stage FROM documents WHERE id = ?", (doc_id,)).fetchone()[0] == "listed":
+                db.set_stage(conn, doc_id, "read")     # approving an order marked not for publication puts it back in the queue
             conn.execute(
                 """UPDATE orders SET summary = ?, issue = ?, outcome = ?, topics = ?, summary_status = 'approved',
                        reviewer = ?, approved_at = datetime('now'),
@@ -388,7 +430,8 @@ def regulation(request: Request, reg_id: str):
             (reg_id,)).fetchall()
         regs = conn.execute("SELECT id, title FROM regulations WHERE id != ? ORDER BY id", (reg_id,)).fetchall()
     return templates.TemplateResponse(request, "regulation.html", {
-        "reviewer": reviewer(request), "r": r, "clauses": clauses, "regs": regs, **impact_context(r)})
+        "reviewer": reviewer(request), "r": r, "clauses": clauses, "regs": regs, **impact_context(r),
+        **decisions_context("regulation", reg_id, parts={**_doc_parts(r["doc_id"]), **{f"clause:{c['id']}": ("clause", c["id"]) for c in clauses}})})
 
 
 @app.post("/regulation/{reg_id:path}/meta")
@@ -561,7 +604,8 @@ def consultation(request: Request, doc_id: str):
         "reviewer": reviewer(request), "d": d, "c": c, "paras": paras, "KINDS": KINDS,
         "proposes": json.loads(c["proposes"] or "[]"), "related": json.loads(c["related"] or "[]"), **impact_context(c),
         "comment_drafts": comment_context(doc_id), **notes_context(doc_id, c, False),
-        **decisions_context("consultation", doc_id, doc_id)})
+        **decisions_context("consultation", doc_id, doc_id, {**_doc_parts(doc_id), **{
+            f"comments:{p}": ("comment_draft", f"{doc_id}:{p}") for p in IMPACT_GROUPS}})})
 
 
 def _iso_or_none(value: str) -> str | None:
@@ -907,7 +951,11 @@ def digest_note(request: Request, week: str, body: str = Form(...), quote: str =
 @app.get("/memory", response_class=HTMLResponse)
 def memory(request: Request):
     with db.session() as conn:
-        rows = [dict(r) for r in conn.execute("SELECT * FROM lessons ORDER BY kind, scope, id DESC")]
+        rows = [dict(r) for r in conn.execute(
+            """SELECT l.*, CASE WHEN c.doc_id IS NOT NULL THEN '/consultation/' || l.doc_id
+                                WHEN o.doc_id IS NOT NULL THEN '/order/' || l.doc_id END AS doc_href
+               FROM lessons l LEFT JOIN consultations c ON c.doc_id = l.doc_id LEFT JOIN orders o ON o.doc_id = l.doc_id
+               ORDER BY l.kind, l.scope, l.id DESC""")]
     scopes = ["all", *config.COMMISSIONS, *config.TOPICS]
     return templates.TemplateResponse(request, "memory.html", {
         "reviewer": reviewer(request), "scopes": scopes,

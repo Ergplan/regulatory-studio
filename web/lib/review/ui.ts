@@ -10,6 +10,7 @@ button{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid var(--li
 .err{color:var(--bad);margin-top:12px}.ok{color:var(--good)}table{width:100%;border-collapse:collapse;background:var(--card)}th,td{text-align:left;padding:8px;border-bottom:1px solid var(--line);vertical-align:top;font-size:14px}
 th{font-size:12px;color:var(--quiet)}.pill{display:inline-block;padding:1px 8px;border-radius:10px;font-size:12px;border:1px solid var(--line)}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:end}.row>div{flex:1;min-width:150px}form.inline{display:inline}a{color:var(--accent)}
+@media (max-width:760px){table{display:block;overflow-x:auto;max-width:100%}.link{overflow-wrap:anywhere}}
 .link{font:13px ui-monospace,Menlo,monospace;word-break:break-all;background:#f1f5ff;border:1px solid #c7d7f5;border-radius:8px;padding:10px;user-select:all}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}`;
 

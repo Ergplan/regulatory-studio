@@ -7,7 +7,7 @@ They are also written to <code>data/memory/house_notes.md</code> for Claude Code
 <h2>{{ title }} ({{ rows|length }})</h2>
 {% for l in rows %}<form method="post" action="/lesson/{{ l.id }}" class="card" style="padding:10px">
 <div class="row"><span class="pill">{{ l.kind }}</span><span class="pill">{{ l.scope }}</span>
-<span class="muted">from {{ 'Claude' if l.added_by == 'model' else l.added_by }}{% if l.comment_id %}, comment {{ l.comment_id }}{% endif %}{% if l.doc_id %} · <a href="/order/{{ l.doc_id }}">{{ l.doc_id[:10] }}</a> {{ l.pid }}{% endif %}{% if l.approved_by %} · approved by {{ l.approved_by }}{% endif %}</span></div>
+<span class="muted">from {{ 'Claude' if l.added_by == 'model' else l.added_by }}{% if l.comment_id %}, comment {{ l.comment_id }}{% endif %}{% if l.doc_id %} · {% if l.doc_href %}<a href="{{ l.doc_href }}">{{ l.doc_id[:10] }}</a>{% else %}{{ l.doc_id[:10] }}{% endif %} {{ l.pid }}{% endif %}{% if l.approved_by %} · approved by {{ l.approved_by }}{% endif %}</span></div>
 <textarea name="text" style="min-height:44px;margin-top:6px">{{ l.text }}</textarea>
 <div class="row"><select name="scope" style="width:auto">{% for s in scopes %}<option {{ 'selected' if s == l.scope }}>{{ s }}</option>{% endfor %}</select>
 {% if st != 'approved' %}<button class="good" name="action" value="approve">Remember</button>{% else %}<button name="action" value="save">Save wording</button>{% endif %}

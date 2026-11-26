@@ -200,6 +200,16 @@ def _describe(d: dict) -> str:
     return s
 
 
+def held_parts(conn, parts: dict[str, tuple[str, str]]) -> dict[str, str]:
+    """{page key: senior reviewer's name} for the parts of a page a senior reviewer has decided."""
+    out = {}
+    for key, (kind, obj) in parts.items():
+        h = held_by(conn, kind, obj)
+        if h:
+            out[key] = h["reviewer"]
+    return out
+
+
 def holds_for(conn, items: list[tuple[str, str]]) -> dict[str, dict]:
     """{object: hold row} for queue pages."""
     out = {}

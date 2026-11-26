@@ -2,7 +2,7 @@
 // by the studio's Mac. A form they submit is saved as an event; the Mac collects events in order, applies each
 // on the real review screen as that reviewer, and pushes the refreshed pages back. See pipeline/regstudio/mirror.py.
 import { q, meta, NoDatabase, type Row } from "@/lib/review/db";
-import { allowed, checkPassword, cookieOf, COOKIE, currentUser, hashPassword, ipOf, lockedOut, passwordProblem, recordFailure,
+import { allowed, PERMISSIONS, checkPassword, cookieOf, COOKIE, currentUser, hashPassword, ipOf, lockedOut, passwordProblem, recordFailure,
   sessionCookie, sha, startSession, TEAMS, token, ROLES, ROLE_NAME, type Role, type Team, type User } from "@/lib/review/auth";
 import { esc, invitePage, loginPage, messagePage, shell, brand } from "@/lib/review/ui";
 
@@ -64,7 +64,22 @@ function banner(c: Ctx, user: User, mac: any, events: Row[], queued: string | nu
   const script = `<script>(function(){var p=document.querySelector('[data-pending]');if(!p)return;var id=p.getAttribute('data-pending'),n=0;
 function t(){n++;fetch(${JSON.stringify(c.base)}+'/_/event/'+id+'?page='+encodeURIComponent(${JSON.stringify(c.path)}),{credentials:'same-origin',cache:'no-store'}).then(function(r){return r.json()}).then(function(s){
 if(s.done&&(s.fresh||s.waited>25)){location.replace(location.pathname+location.hash)}else if(n<90){setTimeout(t,n<10?3000:6000)}}).catch(function(){if(n<90)setTimeout(t,6000)})}setTimeout(t,2500)})();</script>`;
-  return who + bits.join("") + (queued || events.some((e) => !e.applied_at) ? script : "");
+  return who + bits.join("") + controls(c, user) + (queued || events.some((e) => !e.applied_at) ? script : "");
+}
+
+/** Disables, with a short note, the buttons this person's team or role cannot use. The Mac refuses them anyway;
+ *  this only saves the click. Runs on load and after each in-place update. */
+function controls(c: Ctx, user: User): string {
+  const cfg = JSON.stringify({ base: c.base, team: user.team, senior: user.role === "senior", rules: PERMISSIONS }).replace(/</g, "\\u003c");
+  return `<style>.rs-lock{display:block;margin-top:6px;font-size:12px;color:#5b6475}button[disabled].rs-locked{opacity:.45;cursor:not-allowed}</style>
+<script>(function(){var C=${cfg};function ok(path){for(var i=0;i<C.rules.length;i++){if(new RegExp(C.rules[i].path).test(path))return C.rules[i].teams.indexOf(C.team)>=0?null:C.rules[i].who}return null}
+function lock(f,why){if(f.getAttribute('data-locked'))return;f.setAttribute('data-locked','1');f.querySelectorAll('button,input[type=submit]').forEach(function(b){b.disabled=true;b.classList.add('rs-locked')});
+var n=document.createElement('span');n.className='rs-lock';n.textContent=why;f.appendChild(n)}
+function run(){document.querySelectorAll('form[method=post]').forEach(function(f){var a=(f.getAttribute('action')||'').slice(C.base.length);var who=ok(a);
+if(who){lock(f,'Decided by '+who+'. You can still comment.');return}
+if(!C.senior&&f.getAttribute('data-held')){lock(f,'Final decision by '+f.getAttribute('data-held')+' (senior reviewer). You can still comment.');return}
+if(!C.senior){var card=f.closest('.card');if(card&&card.querySelector('.held')&&a.indexOf('/notes/')!==0&&a.indexOf('/comment/')!==0)lock(f,'A senior reviewer has made the final decision here. You can still comment.')}})}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();document.addEventListener('rs:updated',run)})();</script>`;
 }
 
 async function page(c: Ctx, user: User): Promise<Response> {
@@ -260,7 +275,10 @@ async function eventStatus(c: Ctx, user: User): Promise<Response> {
   const pagePath = new URL(c.req.url).searchParams.get("page") || "/";
   const p = (await q("SELECT updated_at FROM rs_pages WHERE path = $1", [pagePath]))[0];
   const done = !!e.applied_at;
-  return Response.json({ done, status: e.status, note: e.status && e.status !== "applied" ? e.note : undefined, fresh: done && (e.status !== "applied" || !p || new Date(p.updated_at) >= new Date(e.applied_at)),
+  const pushed = (await meta("pushed"))?.at;   // the Mac's last complete push of pages, changed or not
+  const fresh = done && (e.status !== "applied" || !p || new Date(p.updated_at) >= new Date(e.applied_at)
+    || (!!pushed && new Date(pushed) >= new Date(e.applied_at)));
+  return Response.json({ done, status: e.status, note: e.status && e.status !== "applied" ? e.note : undefined, fresh,
     waited: done ? (Date.now() - new Date(e.applied_at).getTime()) / 1000 : 0 }, { headers: SECURITY });
 }
 

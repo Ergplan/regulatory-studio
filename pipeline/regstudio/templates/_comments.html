@@ -9,7 +9,7 @@ Each point must cite paragraph ids of this draft. Files are kept in <code>data/c
 <div id="comments-{{ k.persona }}" style="border-top:1px solid var(--line);margin-top:14px;padding-top:12px">
 <h3 style="margin:0 0 6px">{{ k.label }} <span class="pill {{ k.status }}">{{ k.status }}</span></h3>
 {% if k.body %}
-<form method="post" action="/comments/{{ d.id }}"><input type="hidden" name="persona" value="{{ k.persona }}">
+<form method="post" action="/comments/{{ d.id }}"{{ held_attr(held, 'comments:' ~ k.persona) }}><input type="hidden" name="persona" value="{{ k.persona }}">
 <label>Position</label><textarea name="position" style="min-height:70px">{{ k.body.position }}</textarea>
 {% for i in range(6) %}{% set p = k.body.points[i] if i < k.body.points|length else None %}
 <details {% if p %}open{% endif %}><summary>Point {{ i + 1 }}{% if p %}: {{ p.clause }}{% endif %}</summary>
@@ -21,6 +21,6 @@ Each point must cite paragraph ids of this draft. Files are kept in <code>data/c
 <div class="row"><button name="action" value="save">Save draft</button><button class="primary" name="action" value="approve">Approve for the website</button>
 <button class="bad" name="action" value="reject">Not for publication</button><button class="bad" name="action" value="remove">Remove</button></div></form>
 {% else %}<p class="muted">Queued. The next <code>regstudio run comments</code> drafts it.</p>
-<form method="post" action="/comments/{{ d.id }}"><input type="hidden" name="persona" value="{{ k.persona }}"><button class="bad" name="action" value="remove">Cancel request</button></form>{% endif %}
+<form method="post" action="/comments/{{ d.id }}"{{ held_attr(held, 'comments:' ~ k.persona) }}><input type="hidden" name="persona" value="{{ k.persona }}"><button class="bad" name="action" value="remove">Cancel request</button></form>{% endif %}
 </div>{% endfor %}
 </div>

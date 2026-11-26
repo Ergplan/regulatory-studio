@@ -5,7 +5,7 @@
 .impact-edit{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}.impact-edit td,.impact-edit th{padding:4px;border-bottom:1px solid var(--line);text-align:left}.impact-edit input{width:100%}
 :root{--ink:#1d2330;--quiet:#5b6475;--line:#d9dde5;--bg:#f7f8fa;--card:#fff;--accent:#1f5fbf;--good:#1d7a46;--bad:#b3261e;--warn:#9a6700}
 *{box-sizing:border-box}body{margin:0;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg)}
-header{display:flex;gap:16px;align-items:center;padding:10px 20px;background:var(--card);border-bottom:1px solid var(--line)}
+header{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;padding:10px 20px;background:var(--card);border-bottom:1px solid var(--line)}
 header a{color:var(--ink);text-decoration:none;font-weight:600}header .who{margin-left:auto;color:var(--quiet)}
 main{padding:20px;max-width:1400px;margin:0 auto}
 h1{font-size:20px;margin:0 0 4px}h2{font-size:16px;margin:24px 0 8px}
@@ -23,12 +23,21 @@ textarea{min-height:90px}label{display:block;font-size:12px;color:var(--quiet);m
 .held{padding:10px 12px;border-radius:6px;background:#eef4ff;border:1px solid #9db8e8;margin:0 0 10px}
 .pill.senior{color:#1f4f9f;border-color:#9db8e8;background:#eef4ff}.pill.override{color:#7a3e00;border-color:#e3b77a;background:#fff6ea}
 tr.refused td{color:var(--quiet)}.by{color:var(--quiet);font-size:12px}
+.final{display:inline-block;margin:0 0 6px;padding:1px 8px;border-radius:10px;font-size:12px;color:#1f4f9f;border:1px solid #9db8e8;background:#eef4ff}
 #rs-toasts{position:fixed;right:16px;bottom:16px;display:flex;flex-direction:column;gap:8px;z-index:50;max-width:min(420px,calc(100vw - 32px))}
 .rs-toast{background:#1d7a46;color:#fff;padding:10px 14px;border-radius:8px;box-shadow:0 4px 14px rgba(0,0,0,.18);transition:opacity .4s}
 .rs-toast.bad{background:#b3261e}.rs-toast.out{opacity:0}
 button.rs-done{color:var(--good);border-color:var(--good);background:#eef8f1}button.primary.rs-done{background:var(--good);color:#fff}
 .rs-chip{display:inline-block;margin-left:8px;color:var(--good);font-weight:600}
+@media (max-width:760px){
+ header{padding:8px 12px}header .hint{display:none}header .who{margin-left:0;width:100%}
+ main{padding:12px}
+ table{display:block;overflow-x:auto;max-width:100%}
+ .split{display:block!important;height:auto!important}.split .pdf{height:60vh;margin-bottom:12px}.split .side{overflow:visible!important}
+ input,select,textarea{max-width:100%!important}
+ code,.link{overflow-wrap:anywhere;word-break:break-word}
+}
 </style>{% block head %}{% endblock %}</head>
-<body><header><a href="/">Regulatory Studio · Review hub</a><a href="/urja-praxis" style="font-weight:400">Urja Praxis</a><a href="/jouleWise" style="font-weight:400">jouleWise</a><a href="/memory" style="font-weight:400">Memory</a><span class="muted">Nothing is published until approved here</span>
+<body><header><a href="/">Regulatory Studio · Review hub</a><a href="/urja-praxis" style="font-weight:400">Urja Praxis</a><a href="/jouleWise" style="font-weight:400">jouleWise</a><a href="/memory" style="font-weight:400">Memory</a><span class="muted hint">Nothing is published until approved here</span>
 <span class="who">{% if reviewer %}Reviewing as <b>{{ reviewer }}</b> · <a href="/logout">sign out</a>{% else %}No reviewer set{% endif %}</span></header>
 <main>{% block body %}{% endblock %}</main>{% include "_actions.html" %}</body></html>

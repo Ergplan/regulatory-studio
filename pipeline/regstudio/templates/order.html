@@ -19,7 +19,7 @@
 {% include "_priority.html" %}
 {% include "_checks.html" %}
 {% include "_review_notes.html" %}
-<div class="card">{% include "_hold.html" %}<form method="post" action="/order/{{ d.id }}/summary">
+<div class="card">{% include "_hold.html" %}<form method="post" action="/order/{{ d.id }}/summary"{{ held_attr(held, 'summary') }}>
 <label>Title on the website (plain English, e.g. "NPCL's 300 MW round-the-clock RE tender approved")</label><input name="title" value="{{ d.title or '' }}" maxlength="200">
 <label>Headline (what it decides, for a business reader)</label><input name="headline" value="{{ o.headline or '' }}" maxlength="120">
 <label>Issue</label><textarea name="issue" style="min-height:50px">{{ o.issue or '' }}</textarea>
@@ -41,12 +41,12 @@
 <span class="pill {{ l.status }}">{{ l.status }}</span>{% if l.added_by == 'reviewer' %}<span class="pill">added by {{ l.reviewer }}</span>{% endif %}</div>
 <div>Cited as “{{ l.citation_text }}” in <a href="#" onclick="return show('{{ l.pid }}')">{{ l.pid }}</a></div>
 <div class="excerpt">“{{ l.excerpt }}”</div>
-{% if l.status == 'proposed' %}<form method="post" action="/link/{{ l.id }}" class="row">
+{{ held_note(held, 'link:' ~ l.id) }}{% if l.status == 'proposed' %}<form method="post" action="/link/{{ l.id }}" class="row"{{ held_attr(held, 'link:' ~ l.id) }}>
 <select name="link_type" style="max-width:170px">{% for k, v in LINK_TYPES.items() %}<option value="{{ k }}" {% if k == l.link_type %}selected{% endif %}>{{ v }}</option>{% endfor %}</select>
 <input name="target" list="targets" placeholder="{{ 'keep ' ~ l.target_id if l.target_id else 'pick the provision' }}" style="max-width:260px"{% if suggest.get(l.id) %} value="{{ suggest[l.id] }}"{% endif %}>
 {% if suggest.get(l.id) %}<span class="muted small">suggested from the registry; check before approving</span>{% endif %}
 <button class="good" name="action" value="approve">Approve</button><button class="bad" name="action" value="reject">Reject</button></form>
-{% else %}<form method="post" action="/link/{{ l.id }}" class="inline"><button name="action" value="reopen">Reopen</button></form>{% endif %}
+{% else %}<form method="post" action="/link/{{ l.id }}" class="inline"{{ held_attr(held, 'link:' ~ l.id) }}><button name="action" value="reopen">Reopen</button></form>{% endif %}
 </div>{% endfor %}
 <h2>Add a link the reader missed</h2>
 <div class="card"><form method="post" action="/order/{{ d.id }}/link">

@@ -94,6 +94,7 @@
       if (label) mark(nf, sub, label);
     }
     var t = doc.querySelector('title'); if (t) document.title = t.textContent;
+    try { document.dispatchEvent(new CustomEvent('rs:updated')); } catch (e) {}
   }
   function mark(f, sub, label) {
     var b = null;
@@ -110,8 +111,9 @@
   function problem(r, text) {
     try { var j = JSON.parse(text); if (j && j.detail) return typeof j.detail === 'string' ? j.detail : 'Please check the form and try again.'; } catch (e) {}
     try {
-      var d = new DOMParser().parseFromString(text, 'text/html'), h = d.querySelector('h1, b'), p = d.querySelector('main p, .box p, p');
-      return ((h ? h.textContent + '. ' : '') + (p ? p.textContent : '')).trim() || ('Not saved (' + r.status + ').');
+      var d = new DOMParser().parseFromString(text, 'text/html'), h = d.querySelector('h1');
+      var p = Array.prototype.filter.call(d.querySelectorAll('p'), function (x) { return !x.classList.contains('muted') && !x.querySelector('a') && x.textContent.trim(); })[0];
+      return ((h ? h.textContent.trim().replace(/\.?$/, '. ') : '') + (p ? p.textContent.trim() : '')).trim() || ('Not saved (' + r.status + ').');
     } catch (e) { return 'Not saved (' + r.status + ').'; }
   }
   function sleep(ms) { return new Promise(function (ok) { setTimeout(ok, ms); }); }
@@ -153,8 +155,10 @@
           var pagePath = location.pathname.slice(siteBase.length) || '/';
           return applied(queued, pagePath, sub).then(function (ok) {
             if (!ok) { done(); if (sub) sub.textContent = 'Saved, waiting for the server'; toast('Saved. It will be applied as soon as the studio\'s server is back.'); return; }
-            return fetch(location.pathname, { credentials: 'same-origin', cache: 'no-store' }).then(function (r) { return r.text(); }).then(function (t) {
-              done(); restore(); swap(t, form, sub, label); toast('✓ ' + label);
+            return fetch(location.pathname, { credentials: 'same-origin', cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : null; }).then(function (t) {
+              done(); restore();
+              if (t) swap(t, form, sub, label); else mark(form, sub, label);   // the page has left the review site: keep what is shown
+              toast('✓ ' + label);
             });
           });
         }

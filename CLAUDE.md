@@ -88,6 +88,12 @@ is never senior.
   attempts. Rows are only added. Order, draft and edition pages show it as "Decision record".
 - Publishing is unchanged: the public site credits whoever approved last.
 
+Parts a senior reviewer has decided carry `data-held` and a "final · name" note (`held_attr`/`held_note`); the review site
+locks them, and buttons another team decides, for other users (`controls()` in `web/app/r`, from `PERMISSIONS` in
+`web/lib/review/auth.ts`, the same list `allowed()` enforces). The queue's "Recently decided" lists items marked not for
+publication or fully approved in the last 30 days, so they stay findable and on the review site; approving a rejected
+order puts it back in the queue.
+
 Review screen forms are sent in the background (`templates/_actions.html`): the changed panel is replaced in place,
 scroll position and unsaved text are kept, and the button shows the result ("Approved", "Remembered"). Without
 JavaScript the forms work as before. Forms with `data-full` are always sent the ordinary way.

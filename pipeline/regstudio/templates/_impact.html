@@ -1,11 +1,11 @@
 {# Market impact editor, shared by order, consultation and regulation pages. No scores: comments with paragraph citations. #}
 <div class="card" id="impact"><h2 style="margin-top:0">Market impact</h2>
-{% if impact_doc %}<form method="post" action="/rating/{{ impact_doc }}" class="row" style="align-items:end;margin-bottom:14px">
+{% if impact_doc %}<form method="post" action="/rating/{{ impact_doc }}" class="row" style="align-items:end;margin-bottom:14px"{{ held_attr(held, 'rating') }}>{{ held_note(held, 'rating') }}
 <div><label>Overall impact rating (the team's call; shown as "High impact" on the website)</label>
 <select name="rating"><option value="">Not rated</option>{% for r in RATINGS %}<option value="{{ r }}" {% if rating == r %}selected{% endif %}>{{ r|capitalize }}</option>{% endfor %}</select></div>
 <button>Save rating</button></form>{% endif %}
 {% if impact %}
-<form method="post" action="/impact/{{ impact_doc }}">
+<form method="post" action="/impact/{{ impact_doc }}"{{ held_attr(held, 'impact') }}>{{ held_note(held, 'impact') }}
 <p class="muted small">Every key point, procurement item and stakeholder comment must cite paragraph ids from this document
 (e.g. <code>p8.21</code>). Lines without a valid citation are dropped when you save.</p>
 <label>Business headline (the question this raises for an affected business; not a legal conclusion)</label>
@@ -44,7 +44,7 @@
 {% if impact_doc %}<div class="card" id="figures"><h2 style="margin-top:0">Charts in the summary</h2>
 <p class="muted small">Chosen automatically from figures and dates in the text; shown on the website with the approved summary.
 Each item cites paragraph ids. Tick a chart to remove it, or edit the list below. Charts with too few valid items are dropped on save.</p>
-<form method="post" action="/figures/{{ impact_doc }}">
+<form method="post" action="/figures/{{ impact_doc }}"{{ held_attr(held, 'figures') }}>{{ held_note(held, 'figures') }}
 {% for ch in figures %}<p><label style="display:inline"><input type="checkbox" name="drop_{{ loop.index0 }}" style="width:auto"> remove</label>
 <b>{{ ch.title }}</b> <span class="muted">({{ ch.type }}{% if ch.unit %}, {{ ch.unit }}{% endif %})</span><br>
 <span class="small">{% for it in ch['items'] %}{{ it.label }}: {% if it.value is defined %}{{ it.value }}{% else %}{{ it.start }}{% if it.end %} to {{ it.end }}{% endif %}{% endif %}{% if it.tag %} ({{ it.tag }}){% endif %} [{{ it.basis|join(', ') }}]{% if not loop.last %} · {% endif %}{% endfor %}</span></p>

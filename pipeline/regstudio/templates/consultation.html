@@ -12,7 +12,7 @@
 {% if not reviewer %}<div class="flash">Set your name on the <a href="/urja-praxis">queue page</a> before approving.</div>{% endif %}
 <div class="split">
 <div class="pdf"><iframe src="/file/{{ d.id }}#page=1" title="Draft PDF"></iframe></div>
-<div class="side" data-swap><div class="card">{% include "_hold.html" %}<form method="post" action="/consultation/{{ d.id }}">
+<div class="side" data-swap><div class="card">{% include "_hold.html" %}<form method="post" action="/consultation/{{ d.id }}"{{ held_attr(held, 'summary') }}>
 <label>Title on the website</label><input name="title" value="{{ d.title or '' }}" maxlength="300">
 <label>Kind</label><select name="kind">{% for k, v in KINDS.items() %}<option value="{{ k }}" {% if k == c.kind %}selected{% endif %}>{{ v }}</option>{% endfor %}</select>
 <div class="row"><div><label>Last date for comments (YYYY-MM-DD)</label><input name="comment_deadline" value="{{ c.comment_deadline or '' }}" placeholder="check the public notice"></div>
