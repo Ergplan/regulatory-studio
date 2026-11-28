@@ -166,6 +166,9 @@ def main(argv: list[str] | None = None) -> None:
     me = sub.add_parser("memory", help="write the approved house notes to data/memory/house_notes.md and show counts")
     cm = sub.add_parser("commercial", help="ask for a commercial illustration (beta) of these documents")
     cm.add_argument("doc", nargs="+")
+    rt = sub.add_parser("retry", help="send documents whose AI step failed (triage, read, consult, amend) back to try again")
+    rt.add_argument("doc", nargs="*", help="document ids or their first 8+ characters")
+    rt.add_argument("--all", action="store_true", help="every document whose AI step failed")
     pr = sub.add_parser("promote", help="send documents that triage left out ('listed') to be read after all")
     pr.add_argument("doc", nargs="+", help="document ids or their first 8+ characters")
     dp = sub.add_parser("deploy", help="push approved items to the public site, and the unreviewed preview to the preview site")
@@ -214,6 +217,9 @@ def main(argv: list[str] | None = None) -> None:
             print(s, json.dumps(_run_stage(s, args.limit, args.doc, args.personas)))
     elif args.cmd == "publish-pending":
         ids = list(args.ids) + ([l.strip() for l in open(args.file) if l.strip() and not l.startswith("#")] if args.file else [])
+        if "all" in ids:          # a file may say "all": every unreviewed draft that has a summary
+            args.all = True
+            ids = [i for i in ids if i != "all"]
         db.init()  # apply any pending migrations first
         flag = 0 if args.off else 1
         done, skipped = [], []
@@ -323,6 +329,23 @@ def main(argv: list[str] | None = None) -> None:
         from . import commercial
         with db.session() as conn:
             print(json.dumps({"requested": commercial.request(conn, args.doc)}))
+    elif args.cmd == "retry":
+        # Only the AI steps are retried; a PDF that cannot be read or a regulation without clauses stays in error.
+        back = {"triage": "extracted", "consult": "extracted", "amend": "extracted", "read": "triaged"}
+        db.init()
+        done, skipped = [], []
+        with db.session() as conn:
+            rows = conn.execute("SELECT id, error FROM documents WHERE stage = 'error'").fetchall()
+            want = [r for r in rows if args.all or any(r["id"].startswith(ref) for ref in args.doc)]
+            for r in want:
+                step = (r["error"] or "").split(":", 1)[0]
+                if step not in back:
+                    skipped.append(f"{r['id'][:12]} ({step or 'unknown'})")
+                    continue
+                db.set_stage(conn, r["id"], back[step])
+                db.audit(conn, "pipeline", "retry", r["id"], {"step": step})
+                done.append(r["id"][:12])
+        print(json.dumps({"retried": done, "left_in_error": skipped}))
     elif args.cmd == "promote":
         db.init()
         done = []

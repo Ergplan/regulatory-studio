@@ -47,6 +47,9 @@ if [ -f data/reader_outputs/promote.txt ]; then
   mv data/reader_outputs/promote.txt "data/reader_outputs/promote-done-$(date +%Y%m%d-%H%M).txt"
 fi
 
+# Documents whose AI step failed last time (for example when the AI was unavailable) get another try.
+run regstudio retry --all
+
 say "3/7  Reading and checking them (this is the long step; scanned PDFs are slow)"
 for stage in intake extract registry amend consult triage read headlines check impact figures commercial revise learn; do
   echo "     $stage"

@@ -695,3 +695,24 @@ def test_publish_pending_all_covers_drafts_and_editions_without_claiming_review(
     for item in every:
         if item["draft"]:
             assert item["reviewed_by"] is None and item["approved_at"] is None
+
+
+def test_retry_sends_ai_failures_back_and_a_file_can_say_all(server, tmp_path):
+    import subprocess, sys
+    doc, _, _ = _ids()
+    conn = _db()
+    conn.execute("UPDATE documents SET stage = 'error', error = 'triage: claude CLI not found' WHERE id = ?", (doc,))
+    other = conn.execute("SELECT id FROM documents WHERE id != ? LIMIT 1", (doc,)).fetchone()[0]
+    old = conn.execute("SELECT stage FROM documents WHERE id = ?", (other,)).fetchone()[0]
+    conn.execute("UPDATE documents SET stage = 'error', error = 'extract: unreadable PDF' WHERE id = ?", (other,))
+    conn.commit()
+    out = json.loads(subprocess.run([sys.executable, "-m", "regstudio.cli", "retry", "--all"], check=True, capture_output=True, text=True).stdout)
+    assert out["retried"] == [doc[:12]] and out["left_in_error"][0].startswith(other[:12])
+    assert _db().execute("SELECT stage FROM documents WHERE id = ?", (doc,)).fetchone()[0] == "extracted"
+    conn = _db(); conn.execute("UPDATE documents SET stage = ?, error = NULL WHERE id = ?", (old, other)); conn.commit()
+    f = tmp_path / "publish_pending.txt"
+    f.write_text("# as: Site Owner\nall\n")
+    subprocess.run([sys.executable, "-m", "regstudio.cli", "publish-pending", "--file", str(f), "--as", "Site Owner"], check=True, capture_output=True)
+    flagged = _db().execute("SELECT count(*) FROM orders WHERE pending_public = 1").fetchone()[0]
+    proposed = _db().execute("SELECT count(*) FROM orders WHERE summary IS NOT NULL AND summary_status = 'proposed'").fetchone()[0]
+    assert flagged == proposed

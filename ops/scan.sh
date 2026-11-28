@@ -8,6 +8,10 @@ set -u
 cd "$(dirname "$0")/.."
 source .venv/bin/activate
 [ -f ops/studio.env ] && { set -a; source ops/studio.env; set +a; }
+# Background jobs start with a bare PATH; find the Claude Code command where it is usually installed.
+command -v claude >/dev/null 2>&1 || for d in "$HOME/.local/bin" "$HOME/.claude/local" /opt/homebrew/bin /usr/local/bin "$HOME"/.nvm/versions/node/*/bin "$HOME/.npm-global/bin"; do
+  [ -x "$d/claude" ] && { export PATH="$d:$PATH"; break; }
+done
 mkdir -p data/store/logs data/store/backups
 LOG="data/store/logs/scan-$(date +%Y-%m-%d).log"
 STATUS=ok
@@ -19,6 +23,8 @@ step() { echo "--- $*"; "$@" || { STATUS="problems: see $LOG"; echo "FAILED: $*"
     && ls -t data/store/backups/working-*.db | tail -n +15 | xargs rm -f
   step regstudio download --limit 80          # last 14 days, skipping what is already fetched
   regstudio check-inbox || echo "check-inbox: problems listed above; intake skips bad files"
+  command -v claude >/dev/null 2>&1 || echo "WARNING: the claude command was not found; AI steps will fail (set REGSTUDIO_CLAUDE_BIN in ops/studio.env)"
+  regstudio retry --all                       # documents whose AI step failed last time get another try
   step regstudio run intake extract registry amend
   step regstudio run consult --limit 20
   step regstudio run triage --limit 120
