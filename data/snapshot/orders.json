@@ -9,7 +9,7 @@
   "date": "2026-10-28",
   "source_url": "https://cercind.gov.in/2026/Orders/13-SM-2026.pdf",
   "source_listing": false,
-  "pdf": "/pdf/f36d5dc4d09d1997.pdf",
+  "pdf": "https://cercind.gov.in/2026/Orders/13-SM-2026.pdf",
   "draft": false,
   "topics": [
    "power-market"
@@ -110,7 +110,7 @@
   "date": "2026-10-03",
   "source_url": "https://cercind.gov.in/2026/Orders/16-SM-2026.pdf",
   "source_listing": false,
-  "pdf": "/pdf/d506f89fd8836179.pdf",
+  "pdf": "https://cercind.gov.in/2026/Orders/16-SM-2026.pdf",
   "draft": true,
   "topics": [
    "dsm"
@@ -162,7 +162,26 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "clause",
+    "target": "cerc/deviation-settlement-mechanism-related-matters-2024/12",
+    "cited_as": "Regulation 12 of the DSM Regulations, 2024",
+    "pid": "p3.4",
+    "excerpt": "9. Accordingly, in exercise of the powers conferred under Regulation 12 of the DSM Regulations, 2024, the Commission issues the following directions:",
+    "page": 3
+   },
+   {
+    "type": "relaxes",
+    "kind": "clause",
+    "target": "cerc/deviation-settlement-mechanism-related-matters-2024/9(7)",
+    "cited_as": "Regulation 9(7) of the DSM Regulations, 2024",
+    "pid": "p3.5",
+    "excerpt": "(i) Sub-clause(i) of Regulation 9(7) of the DSM Regulations, 2024 shall, unless notified otherwise, continue to remain in force till 04.04.2027 (as against 04.10.2026)",
+    "page": 3
+   }
+  ]
  },
  {
   "id": "c2e7bf7e60c745127c604248070d1e46ab5050c13d974f4efdea32a7abd87ad6",
@@ -174,7 +193,7 @@
   "date": "2026-10-26",
   "source_url": "https://cercind.gov.in/2026/Orders/233-AT-2026.pdf",
   "source_listing": false,
-  "pdf": "/pdf/c2e7bf7e60c74512.pdf",
+  "pdf": "https://cercind.gov.in/2026/Orders/233-AT-2026.pdf",
   "draft": true,
   "topics": [
    "ppa-adoption",
@@ -298,7 +317,17 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s63",
+    "cited_as": "Section 63 of the Act",
+    "pid": "p25.2",
+    "excerpt": "Accordingly, under Section 63 of the Act, the Commission adopts the individual tariffs for the Solar Power Developers, as discovered and agreed to by the successful bidder(s), subject to the Petitioner tying up the capacity under the PPAs and PSAs.",
+    "page": 25
+   }
+  ]
  },
  {
   "id": "198e334df752469fe2028c92019ac36eddcd05df15f6e8868503782d5c9d0ee1",
@@ -310,7 +339,7 @@
   "date": "2026-10-26",
   "source_url": "https://cercind.gov.in/2026/Orders/779-MP-2025-Ors.pdf",
   "source_listing": false,
-  "pdf": "/pdf/198e334df752469f.pdf",
+  "pdf": "https://cercind.gov.in/2026/Orders/779-MP-2025-Ors.pdf",
   "draft": true,
   "topics": [
    "ists-charges",
@@ -488,7 +517,7 @@
   "date": "2026-11-02",
   "source_url": "https://cercind.gov.in/2026/Orders/979-MP-2025.pdf",
   "source_listing": false,
-  "pdf": "/pdf/5e7d1a2d457deaf4.pdf",
+  "pdf": "https://cercind.gov.in/2026/Orders/979-MP-2025.pdf",
   "draft": false,
   "topics": [
    "dsm"
@@ -688,6 +717,33 @@
   "sample": false,
   "links": [
    {
+    "type": "interprets",
+    "kind": "clause",
+    "target": "cerc/deviation-settlement-mechanism-related-matters-2024/8(4)",
+    "cited_as": "Regulation 8(4) of the DSM Regulations, 2024",
+    "pid": "p14.10",
+    "excerpt": "The Petitioner’s Project cannot be considered as a generating station based exclusively on wind resource for the purpose of Regulation 8(4) under the DSM Regulations 2024.",
+    "page": 14
+   },
+   {
+    "type": "interprets",
+    "kind": "clause",
+    "target": "cerc/deviation-settlement-mechanism-related-matters-2024/11",
+    "cited_as": "Regulations 11 and 12 of the DSM Regulations, 2024",
+    "pid": "p15.4",
+    "excerpt": "the power to relax or the power to remove difficulty under Regulations 11 and 12 of the DSM Regulations, 2024, respectively, cannot be exercised to create a new category or classification of generating station.",
+    "page": 15
+   },
+   {
+    "type": "interprets",
+    "kind": "clause",
+    "target": "cerc/deviation-settlement-mechanism-related-matters-2024/12",
+    "cited_as": "Regulations 11 and 12 of the DSM Regulations, 2024",
+    "pid": "p15.4",
+    "excerpt": "the power to relax or the power to remove difficulty under Regulations 11 and 12 of the DSM Regulations, 2024, respectively, cannot be exercised to create a new category or classification of generating station.",
+    "page": 15
+   },
+   {
     "type": "applies",
     "kind": "act_section",
     "target": "ea2003/s79",
@@ -708,7 +764,7 @@
   "date": "2026-10-08",
   "source_url": "https://www.uperc.org/App_File/PetitionNo-2355of2026(08-10-2026)-PDF1092026110031AM.pdf",
   "source_listing": false,
-  "pdf": "/pdf/0e21133838c1ad20.pdf",
+  "pdf": "https://www.uperc.org/App_File/PetitionNo-2355of2026(08-10-2026)-PDF1092026110031AM.pdf",
   "draft": true,
   "topics": [
    "open-access",
@@ -762,7 +818,7 @@
   "date": "2026-10-14",
   "source_url": "https://www.uperc.org/App_File/Pt-no-2416of2026NIDP-14-10-2026-PDF1014202661203PM.pdf",
   "source_listing": false,
-  "pdf": "/pdf/9bff38cc7767cd3b.pdf",
+  "pdf": "https://www.uperc.org/App_File/Pt-no-2416of2026NIDP-14-10-2026-PDF1014202661203PM.pdf",
   "draft": true,
   "topics": [
    "ppa-adoption",
@@ -863,7 +919,26 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s63",
+    "cited_as": "Section 63 of the Electricity Act, 2003",
+    "pid": "p11.2",
+    "excerpt": "the Commission adopts the tariff of Rs. 5.12/unit for procurement of 5 MW for the period 01.11.2026 to 31.03.2027 and Rs. 5.10/unit for procurement of 3 MW for the period 01.01.2027 to 31.03.2027 and approves the PPAs",
+    "page": 11
+   },
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s86",
+    "cited_as": "Section 86(1)(b) of the Electricity Act, 2003",
+    "pid": "p2.2",
+    "excerpt": "a) Approve the PPA under Section 86(1)(b) of the Electricity Act, 2003 and adopt the tariff of Rs. 5.12/kWh at the Uttar Pradesh State (STU) Periphery",
+    "page": 2
+   }
+  ]
  },
  {
   "id": "6e2c51e21f8db2c588709bfb26b0f82af9e7eaad0fda9c15aacb62b75cdc6fc1",
@@ -875,7 +950,7 @@
   "date": "2026-10-27",
   "source_url": "https://www.uperc.org/App_File/Pt-no-2418of2026NPCL-27-10-2026-pdf1028202641617PM.pdf",
   "source_listing": false,
-  "pdf": "/pdf/6e2c51e21f8db2c5.pdf",
+  "pdf": "https://www.uperc.org/App_File/Pt-no-2418of2026NPCL-27-10-2026-pdf1028202641617PM.pdf",
   "draft": true,
   "topics": [
    "ppa-adoption",
@@ -1007,7 +1082,17 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "interprets",
+    "kind": "act_section",
+    "target": "ea2003/s63",
+    "cited_as": "Section 63 of the Electricity Act read with the FDRE Guidelines",
+    "pid": "p18.3",
+    "excerpt": "The Commission is satisfied that small-scale allocation to multiple bidders would not bring economies of scale for sellers and thereby, not helping in discovering the lowest and competitive tariff as per the mandate of Section 63 of the Electricity Act read with the FDRE Guidelines.",
+    "page": 18
+   }
+  ]
  },
  {
   "id": "235f8a14010455416701a8beb7d1642698ff1ded3e2fc270076d055d611320a2",
@@ -1019,7 +1104,7 @@
   "date": "2026-11-07",
   "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU4OTRfMDctMTEtMjAyNl80MjY4MDE2",
   "source_listing": false,
-  "pdf": "/pdf/235f8a1401045541.pdf",
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU4OTRfMDctMTEtMjAyNl80MjY4MDE2",
   "draft": true,
   "topics": [
    "ppa-adoption",
@@ -1093,7 +1178,17 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s63",
+    "cited_as": "Section 63 read with Section 86(1)(b) of the Electricity Act, 2003",
+    "pid": "p23.2",
+    "excerpt": "The Petitioner has sought the approval of the Commission for adoption of discovered tariff of Rs. 2.34 per unit quoted by successful bidders under Competitive Bidding Process followed by e-reverse auction",
+    "page": 23
+   }
+  ]
  },
  {
   "id": "ddca106dd1445f0fbe384017d0b1cb54c82ee55ca1fd1b632a89c5299a32f9e9",
@@ -1105,7 +1200,7 @@
   "date": "2026-11-07",
   "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU4OTVfMDctMTEtMjAyNl8zODU4OTY5",
   "source_listing": false,
-  "pdf": "/pdf/ddca106dd1445f0f.pdf",
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU4OTVfMDctMTEtMjAyNl8zODU4OTY5",
   "draft": true,
   "topics": [
    "connectivity-gna"
@@ -1189,7 +1284,7 @@
   "date": "2026-11-06",
   "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU4ODdfMDYtMTEtMjAyNl8zNzM3MTYx",
   "source_listing": false,
-  "pdf": "/pdf/be28873788b9e610.pdf",
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU4ODdfMDYtMTEtMjAyNl8zNzM3MTYx",
   "draft": true,
   "topics": [],
   "significance": 2,
@@ -1373,7 +1468,88 @@
    "reviewers": 2,
    "numbers": true
   },
-  "commercial": null,
+  "commercial": {
+   "title": "Stockwell's BESS: extension charges against the bank guarantee",
+   "question": "How do the BESPA's extension charges for a later financial closure compare with the guarantee the procurer sought to encash?",
+   "inputs": [
+    {
+     "id": "mw",
+     "label": "Project capacity",
+     "value": 65,
+     "unit": "MW",
+     "basis": [
+      "p14.1"
+     ]
+    },
+    {
+     "id": "charge",
+     "label": "Extension charge",
+     "value": 1000,
+     "unit": "Rs/MW/day",
+     "basis": [
+      "p63.2"
+     ]
+    },
+    {
+     "id": "pbg",
+     "label": "Performance bank guarantee",
+     "value": 81250000,
+     "unit": "Rs",
+     "basis": [
+      "p14.1",
+      "p3.1"
+     ]
+    },
+    {
+     "id": "days",
+     "label": "Extension sought",
+     "value": 90,
+     "unit": "days",
+     "assumption": "Assumption for the illustration: a ninety-day extension of the financial closure date."
+    }
+   ],
+   "steps": [
+    {
+     "id": "per_day",
+     "label": "Extension charges a day",
+     "expr": "mw * charge",
+     "value": 65000.0,
+     "shown": "65,000",
+     "unit": "Rs"
+    },
+    {
+     "id": "cost",
+     "label": "Charges for the extension",
+     "expr": "per_day * days / 100000",
+     "value": 58.5,
+     "shown": "58.50",
+     "unit": "Rs lakh"
+    },
+    {
+     "id": "pbg_lakh",
+     "label": "Guarantee",
+     "expr": "pbg / 100000",
+     "value": 812.5,
+     "shown": "812.50",
+     "unit": "Rs lakh"
+    },
+    {
+     "id": "break_days",
+     "label": "Days of charges equal to the guarantee",
+     "expr": "pbg / per_day",
+     "value": 1250.0,
+     "shown": "1,250",
+     "unit": "days"
+    }
+   ],
+   "takeaway": "Paying extension charges under protest costs about Rs 58.50 lakh for the assumed extension, against a guarantee of Rs 812.50 lakh; it would take 1,250 days of charges to match the guarantee.",
+   "caveats": [
+    "Extension charges are refundable on commissioning within the extended time (p24.1); encashment is not.",
+    "Losing the guarantee may also end the BESPA, which this ignores."
+   ],
+   "approved_by": null,
+   "draft": true
+  },
   "summary": "GERC has refused interim protection to Stockwell Energy Vault Four, which won a 65 MW/130 MWh standalone battery project at GUVNL's Vasedi substation under the Phase VII tender and missed the 17 September 2026 financial closure date. The developer had claimed force majeure from the West Asia war, relying on a Ministry of Finance office memorandum of 29 April 2026 and Ministry of Power advisories. On the bank guarantee of Rs 8,12,50,000, the Commission applied the settled test: an unconditional guarantee is stopped only for egregious fraud or special equities, and loss of the project and its viability gap funding is a commercial consequence, not irreparable harm. It also declined a free stay on termination, noting GUVNL's objection that other developers in the same tender reached financial closure and that the developer had not shown how the war prevented financial closure as distinct from commissioning. Instead it let the developer use the contract's own extension route: apply within 15 days and pay Rs 1,000 per MW per day in advance for the whole extension. Payment is without prejudice to the force majeure claim, which the main petition will decide.",
   "headline": "GERC will not stop GUVNL encashing a BESS developer's guarantee over force majeure",
   "reviewed_by": null,
@@ -1381,7 +1557,17 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s86",
+    "cited_as": "Section 86(1)(f) of the Electricity Act, 2003",
+    "pid": "p65.1",
+    "excerpt": "The Commission can, in exercise of its powers under Section 86(1)(f) of the Electricity Act, 2003 read with Regulations 80 and 82 of the GERC (Conduct of Business) Regulations, 2004, mould the interim relief",
+    "page": 65
+   }
+  ]
  },
  {
   "id": "1834b0d3b5aa0976a7b4166f8a5f1c1c8d512833051eb46210b8a50b22794c9c",
@@ -1580,6 +1766,42 @@
     "pid": "p10.5",
     "excerpt": "The instant petition has been filed under Section 142 of the Electricity Act, 2003",
     "page": 10
+   },
+   {
+    "type": "interprets",
+    "kind": "clause",
+    "target": "rerc/terms-conditions-green-energy-open-access-2025/31",
+    "cited_as": "Regulation 31 of the GEOA Regulations, 2025 (saving clause)",
+    "pid": "p13.1",
+    "excerpt": "such migration is expressly addressed, recourse to the mutatis mutandis application of the RERC (Open Access) Regulations, 2016, under Regulation 31 of the GEOA Regulations does not arise for this purpose.",
+    "page": 13
+   },
+   {
+    "type": "applies",
+    "kind": "clause",
+    "target": "rerc/terms-conditions-green-energy-open-access-2025/7",
+    "cited_as": "Regulation 7 of the GEOA Regulations, 2025 (treatment for existing consumers)",
+    "pid": "p13.2",
+    "excerpt": "must exercise the prescribed option for conversion and comply with the applicable conditions of the GEOA Regulations, 2025, including the BESS requirement.",
+    "page": 13
+   },
+   {
+    "type": "interprets",
+    "kind": "clause",
+    "target": "rerc/terms-conditions-green-energy-open-access-2025/5",
+    "cited_as": "fourth proviso to Regulation 5(ii) of the RERC (Terms and Conditions for Green Energy Open Access) Regulations, 2025",
+    "pid": "p19.1",
+    "excerpt": "The fourth proviso to Regulation 5(ii) was intended to facilitate additional RE-based captive capacity, subject to the prescribed BESS requirement, and not to confer an entitlement to reduce contract demand merely to obtain a reduction in fixed charges.",
+    "page": 19
+   },
+   {
+    "type": "applies",
+    "kind": "clause",
+    "target": "rerc/terms-conditions-green-energy-open-access-2025/5",
+    "cited_as": "fourth and fifth provisos to Regulation 5(ii) of the GEOA Regulations, 2025",
+    "pid": "p19.3",
+    "excerpt": "The Commission holds that the fourth and fifth provisos to Regulation 5(ii) are unambiguous and that, on a plain reading, the interpretation adopted by the DISCOMs is justified.",
+    "page": 19
    }
   ]
  },
@@ -1663,7 +1885,17 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s86",
+    "cited_as": "Section 86(1)(b) of the Electricity Act, 2003",
+    "pid": "p16.6",
+    "excerpt": "in exercise of its powers under Section 86(1)(b) of the Act, approves prayer (a) of the Petition",
+    "page": 16
+   }
+  ]
  },
  {
   "id": "2b3baf2760e69dc50e1457e7df5c0af71f76a38d8b5060333ae03609af2f3540",
@@ -1838,7 +2070,96 @@
    "reviewers": 2,
    "numbers": true
   },
-  "commercial": null,
+  "commercial": {
+   "title": "Rajasthan's November peak block from NVVN at Rs 9.99",
+   "question": "What does the 40 MW evening block cost for November, and what would it cost at the top quotes RERC was shown?",
+   "inputs": [
+    {
+     "id": "mw",
+     "label": "Capacity, November",
+     "value": 40,
+     "unit": "MW",
+     "basis": [
+      "p5.8"
+     ]
+    },
+    {
+     "id": "hours",
+     "label": "Hours a day (16:30 to 21:30)",
+     "value": 5,
+     "unit": "hours",
+     "basis": [
+      "p5.8"
+     ]
+    },
+    {
+     "id": "rate",
+     "label": "Rate approved",
+     "value": 9.99,
+     "unit": "Rs/kWh",
+     "basis": [
+      "p5.8"
+     ]
+    },
+    {
+     "id": "high",
+     "label": "Highest quotes for comparable blocks",
+     "value": 20,
+     "unit": "Rs/kWh",
+     "basis": [
+      "p6.9"
+     ]
+    },
+    {
+     "id": "days",
+     "label": "Days of supply",
+     "value": 30,
+     "unit": "days",
+     "assumption": "Assumption for the illustration: supply on all thirty days of November."
+    }
+   ],
+   "steps": [
+    {
+     "id": "mwh",
+     "label": "Energy for the month",
+     "expr": "mw * hours * days",
+     "value": 6000.0,
+     "shown": "6,000",
+     "unit": "MWh"
+    },
+    {
+     "id": "cost",
+     "label": "Cost at the approved rate",
+     "expr": "mwh * rate / 10000",
+     "value": 5.99,
+     "shown": "5.99",
+     "unit": "Rs crore"
+    },
+    {
+     "id": "cost_high",
+     "label": "Cost at the highest quotes",
+     "expr": "mwh * high / 10000",
+     "value": 12.0,
+     "shown": "12.00",
+     "unit": "Rs crore"
+    },
+    {
+     "id": "saved",
+     "label": "Difference",
+     "expr": "cost_high - cost",
+     "value": 6.01,
+     "shown": "6.01",
+     "unit": "Rs crore"
+    }
+   ],
+   "takeaway": "The November block costs about Rs 5.99 crore; at the highest quotes it would have cost Rs 12.00 crore.",
+   "caveats": [
+    "The highest quotes were for comparable peak blocks, not necessarily this exact block.",
+    "Excludes transmission charges and losses."
+   ],
+   "approved_by": null,
+   "draft": true
+  },
   "summary": "RERC has let Rajasthan's discoms buy peak power from the only bidder, NVVN, in the October DEEP portal auction: 45 MW at Rs 9.49/kWh for the November morning peak, and 40 MW and 30 MW at Rs 9.99/kWh for the November and December evening peaks. RUVITL described a September 2026 crisis: average demand of about 14,518 MW against 12,340 MW a year earlier, a maximum of 17,557 MW, and state generation averaging about 4,795 MW against an expected 5,800 MW. Only about 10% of its evening exchange bids cleared, and about 5% in the high-price day-ahead market at over Rs 10/kWh. Exchange tenders on 2 and 8 October drew no bids. It expects peak deficits of up to 3,255 MW (morning) and 1,650 MW (evening) in December. RERC said emergency short-term buying needs no prior approval under its 2025 tariff regulations, but a single bidder still needs consent. It directed RUVITL to keep looking for cheaper peak power and to move on battery storage, FDRE and demand flexibility.",
   "headline": "Rajasthan pays up to Rs 9.99/kWh for peak power from the only bidder",
   "reviewed_by": null,
@@ -1846,7 +2167,17 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s63",
+    "cited_as": "Section 63 of the Electricity Act, 2003",
+    "pid": "p10.5",
+    "excerpt": "procurement of power through tariff-based competitive bidding is required to be undertaken in accordance with the guidelines issued by the Ministry of Power, Government of India, under Section 63 of the Electricity Act, 2003.",
+    "page": 10
+   }
+  ]
  },
  {
   "id": "58bbccf942f90361c26041dc4bb9b667e03a8c1c9074177bb067a7c0ccafe343",
@@ -1858,7 +2189,7 @@
   "date": "2026-10-22",
   "source_url": "https://tnerc.tn.gov.in/Orders/files/CO-MPNo21%20221020261438.pdf",
   "source_listing": false,
-  "pdf": "/pdf/58bbccf942f90361.pdf",
+  "pdf": "https://tnerc.tn.gov.in/Orders/files/CO-MPNo21%20221020261438.pdf",
   "draft": true,
   "topics": [],
   "significance": 4,
@@ -2073,7 +2404,103 @@
    "reviewers": 2,
    "numbers": true
   },
-  "commercial": null,
+  "commercial": {
+   "title": "Tamil Nadu's 300 MW storage-backed peak block against exchange prices",
+   "question": "What would the six-hour storage-backed peak block cost a year at the solar-plus-storage tariff, compared with buying it at the exchange price ceiling?",
+   "inputs": [
+    {
+     "id": "mw",
+     "label": "Peak supply from storage",
+     "value": 300,
+     "unit": "MW",
+     "basis": [
+      "p24.1"
+     ]
+    },
+    {
+     "id": "hours",
+     "label": "Peak hours a day",
+     "value": 6,
+     "unit": "hours",
+     "basis": [
+      "p24.1"
+     ]
+    },
+    {
+     "id": "tariff",
+     "label": "Discovered tariff",
+     "value": 3.12,
+     "unit": "Rs/kWh",
+     "basis": [
+      "p23.6"
+     ]
+    },
+    {
+     "id": "margin",
+     "label": "Trading margin to SECI",
+     "value": 0.07,
+     "unit": "Rs/kWh",
+     "basis": [
+      "p23.6"
+     ]
+    },
+    {
+     "id": "exchange",
+     "label": "Exchange price ceiling",
+     "value": 10,
+     "unit": "Rs/kWh",
+     "assumption": "Assumption for the illustration: the Rs 10/kWh ceiling on power exchanges, which TNERC's summer tender order says Tamil Nadu often pays at peak."
+    },
+    {
+     "id": "days",
+     "label": "Days a year",
+     "value": 365,
+     "unit": "days",
+     "assumption": "Assumption for the illustration: full supply every day."
+    }
+   ],
+   "steps": [
+    {
+     "id": "mwh",
+     "label": "Peak energy a year",
+     "expr": "mw * hours * days",
+     "value": 657000.0,
+     "shown": "6,57,000",
+     "unit": "MWh"
+    },
+    {
+     "id": "cost",
+     "label": "Cost at tariff plus margin",
+     "expr": "mwh * (tariff + margin) / 10000",
+     "value": 210.0,
+     "shown": "210",
+     "unit": "Rs crore"
+    },
+    {
+     "id": "cost_ex",
+     "label": "Cost at the exchange ceiling",
+     "expr": "mwh * exchange / 10000",
+     "value": 657.0,
+     "shown": "657",
+     "unit": "Rs crore"
+    },
+    {
+     "id": "gap",
+     "label": "Difference a year",
+     "expr": "cost_ex - cost",
+     "value": 447.0,
+     "shown": "447",
+     "unit": "Rs crore"
+    }
+   ],
+   "takeaway": "If every peak unit came at the single tariff, the block would cost about Rs 210 crore a year against Rs 657 crore at the exchange ceiling.",
+   "caveats": [
+    "The Rs 3.12 tariff covers the whole solar-plus-storage supply; the peak block is not priced separately.",
+    "Exchange prices are often below the ceiling; this is an upper bound on the saving."
+   ],
+   "approved_by": null,
+   "draft": true
+  },
   "summary": "TNERC has approved TNPDCL's purchase of 600 MW of solar power with 300 MW/1,800 MWh of energy storage from SECI's ISTS-connected Tranche XXI scheme for 25 years, at the e-reverse auction tariff of Rs 3.12/kWh plus SECI's trading margin of Rs 0.07/kWh. The contract gives TNPDCL solar power during solar hours and 300 MW for six hours a day, which TNPDCL picks within a peak window from 6 pm to 9 am. Supply is due 24 months from the PPA's effective date. Penalties are 1.5 times the tariff for missing 70% of peak energy in a month or 85% in a year. TNPDCL justified the purchase with its own peak-hour deficit study: even after the medium-term tenders, pumped storage, SECI and SJVN FDRE and two BESS tenders it has lined up, it expects a peak deficit of about 7,037 MW in 2026-27 rising to 14,457 MW by 2034-35. The Commission accepted the need on the resource adequacy plan, the RPO trajectory and the competitive tariff, and asked TNPDCL to file separately for tariff adoption.",
   "headline": "Tamil Nadu buys 600 MW of solar with 1,800 MWh of storage at Rs 3.12/kWh",
   "reviewed_by": null,
@@ -2081,7 +2508,17 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s63",
+    "cited_as": "Section 63 of the Electricity Act, 2003",
+    "pid": "p24.2",
+    "excerpt": "TNPDCL shall approach the Commission separately for tariff adoption after finalising the tender, in accordance with Section 63 of the Electricity Act, 2003.",
+    "page": 24
+   }
+  ]
  },
  {
   "id": "e226201a92cfd8f4b0a2fc13d4279e0c683b5a880df20396fb8e109df7e349e4",
@@ -2093,7 +2530,7 @@
   "date": "2026-10-22",
   "source_url": "https://tnerc.tn.gov.in/Orders/files/CO-MPNo23%20221020261439.pdf",
   "source_listing": false,
-  "pdf": "/pdf/e226201a92cfd8f4.pdf",
+  "pdf": "https://tnerc.tn.gov.in/Orders/files/CO-MPNo23%20221020261439.pdf",
   "draft": true,
   "topics": [],
   "significance": 4,
@@ -2304,7 +2741,17 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s63",
+    "cited_as": "Section 63 of the Electricity Act, 2003",
+    "pid": "p19.1",
+    "excerpt": "TNPDCL shall approach the Commission separately for tariff adoption after finalising the tender, in accordance with Section 63 of the Electricity Act, 2003.",
+    "page": 19
+   }
+  ]
  },
  {
   "id": "d58d1d4f67cb79ae65877d7818abff478c7a341b62e2eb52c03e6ee5284b1bd9",
@@ -2316,7 +2763,7 @@
   "date": "2026-11-18",
   "source_url": "https://cercind.gov.in/2026/orders/135-MP-2026.pdf",
   "source_listing": false,
-  "pdf": "/pdf/d58d1d4f67cb79ae.pdf",
+  "pdf": "https://cercind.gov.in/2026/orders/135-MP-2026.pdf",
   "draft": true,
   "topics": [
    "ists-charges",
@@ -2362,7 +2809,7 @@
   "date": "2026-11-10",
   "source_url": "https://cercind.gov.in/2026/Orders/130-GT-2016-Ors.pdf",
   "source_listing": false,
-  "pdf": "/pdf/1b291938e6b277f8.pdf",
+  "pdf": "https://cercind.gov.in/2026/Orders/130-GT-2016-Ors.pdf",
   "draft": true,
   "topics": [
    "generation-tariff",
@@ -2502,7 +2949,26 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "follows",
+    "kind": "document",
+    "target": "1b291938e6b277f80ad0a91f92397cd4198179d878219212393db5231623bf18",
+    "cited_as": "order dated 14.3.2016 in Review Petition No. 18/RP/2015",
+    "pid": "p10.2",
+    "excerpt": "the Commission’s order dated 14.3.2016 in Review Petition No. 18/RP/2015, to the extent upheld by APTEL, stands affirmed.",
+    "page": 10
+   },
+   {
+    "type": "follows",
+    "kind": "document",
+    "target": "1b291938e6b277f80ad0a91f92397cd4198179d878219212393db5231623bf18",
+    "cited_as": "Order dated 10.7.2015 in Petition No.197/GT/2013",
+    "pid": "p16.1",
+    "excerpt": "We have considered the rates already allowed, which are explained in detail in Para 33 to 43 of Order dated 10.7.2015 in Petition No.197/GT/2013.",
+    "page": 16
+   }
+  ]
  },
  {
   "id": "0701d3a4c27f3edfe7cd2972aea5d94a79840b8a8aa289d681d2a580e046bb87",
@@ -2514,7 +2980,7 @@
   "date": "2026-11-18",
   "source_url": "https://cercind.gov.in/2026/orders/246-MP-2026.pdf",
   "source_listing": false,
-  "pdf": "/pdf/0701d3a4c27f3edf.pdf",
+  "pdf": "https://cercind.gov.in/2026/orders/246-MP-2026.pdf",
   "draft": true,
   "topics": [
    "ists-charges",
@@ -2679,19 +3145,29 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s79",
+    "cited_as": "Section 79 (1) (c) and (k) of the Electricity Act, 2003",
+    "pid": "p1.3",
+    "excerpt": "Petition under Section 79 (1) (c) and (k) of the Electricity Act, 2003",
+    "page": 1
+   }
+  ]
  },
  {
   "id": "8d4c10cb7238f98941e0cec4b37ff6e3d0c3b95be139d100a71c1b0eb871c438",
   "path": "/orders/cerc/2026/94-at-2026-8d4c10",
   "commission": "cerc",
   "doc_type": "order",
-  "title": "NHPC Limited: Petition under Section 63 of the Electricity Act, 2003 for Adoption of Tariff of additional capacity of 1150 MW Firm & Despatchable Power under “Greenshoe Option” from ISTS connected RE ",
+  "title": "NHPC Limited",
   "case_number": "Petition No. 94/AT/2026",
   "date": "2026-11-19",
   "source_url": "https://cercind.gov.in/2026/Orders/94-AT-2026.pdf",
   "source_listing": false,
-  "pdf": "/pdf/8d4c10cb7238f989.pdf",
+  "pdf": "https://cercind.gov.in/2026/Orders/94-AT-2026.pdf",
   "draft": false,
   "topics": [
    "generation-tariff",
@@ -2873,7 +3349,17 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s63",
+    "cited_as": "Section 63 of the Act",
+    "pid": "p12.2",
+    "excerpt": "In terms of Section 63 of the Act, the Commission adopts the individual tariff in terms of the respective Letters of Award",
+    "page": 12
+   }
+  ]
  },
  {
   "id": "33db7203f1c812e9a21f46e75d55bc1f57c2ee566fabc1d3b110243acd39e442",
@@ -2885,7 +3371,7 @@
   "date": "2026-11-16",
   "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDBfMTctMTEtMjAyNl85ODAxODYy",
   "source_listing": false,
-  "pdf": "/pdf/33db7203f1c812e9.pdf",
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDBfMTctMTEtMjAyNl85ODAxODYy",
   "draft": true,
   "topics": [
    "connectivity-gna",
@@ -3056,7 +3542,26 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s86",
+    "cited_as": "Section 86 (1) (f), (k) and Section 94 of the Electricity Act, 2003",
+    "pid": "p70.3",
+    "excerpt": "We note that the present Petition has been filed under Section 86 (1) (f), (k) and Section 94 of the Electricity Act, 2003",
+    "page": 70
+   },
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s94",
+    "cited_as": "Section 94 of the Electricity Act, 2003",
+    "pid": "p70.3",
+    "excerpt": "We note that the present Petition has been filed under Section 86 (1) (f), (k) and Section 94 of the Electricity Act, 2003",
+    "page": 70
+   }
+  ]
  },
  {
   "id": "6cc00073cac6f1d2a10b1771353072d0a0d7d2cd3e111cfff80335e1d07b68b2",
@@ -3068,7 +3573,7 @@
   "date": "2026-11-18",
   "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDJfMTgtMTEtMjAyNl8zMDY4MjE0",
   "source_listing": false,
-  "pdf": "/pdf/6cc00073cac6f1d2.pdf",
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDJfMTgtMTEtMjAyNl8zMDY4MjE0",
   "draft": true,
   "topics": [
    "connectivity-gna",
@@ -3204,7 +3709,26 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s86",
+    "cited_as": "Section 86(1)(c) (e) (f), (k) read with Section 94 and other applicable provisions of the Electricity Act, 2003",
+    "pid": "p48.4",
+    "excerpt": "We note that the present Petition has been [iled by the Petitioner under Section 86(1)(c) (e) (f), (k) read with Section 94 and other applicable provisions of the Electricity Act, 2003",
+    "page": 48
+   },
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s94",
+    "cited_as": "Section 94",
+    "pid": "p48.4",
+    "excerpt": "We note that the present Petition has been [iled by the Petitioner under Section 86(1)(c) (e) (f), (k) read with Section 94 and other applicable provisions of the Electricity Act, 2003",
+    "page": 48
+   }
+  ]
  },
  {
   "id": "626c8ff53e9eff2827de6d3f03b07ca00fc1289da9aadc7905c901151028a8ed",
@@ -3216,7 +3740,7 @@
   "date": "2026-11-18",
   "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDNfMTgtMTEtMjAyNl85MTEyMTg3",
   "source_listing": false,
-  "pdf": "/pdf/626c8ff53e9eff28.pdf",
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDNfMTgtMTEtMjAyNl85MTEyMTg3",
   "draft": true,
   "topics": [
    "connectivity-gna",
@@ -3350,7 +3874,26 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s86",
+    "cited_as": "Section 86(1)(c) (e) (f), (k)",
+    "pid": "p47.4",
+    "excerpt": "the present Petition has been Ziled by the Petitioner under Section 86(1)(c) (e) (f), (k) read with Section 94",
+    "page": 47
+   },
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s94",
+    "cited_as": "Section 94",
+    "pid": "p47.4",
+    "excerpt": "the present Petition has been Ziled by the Petitioner under Section 86(1)(c) (e) (f), (k) read with Section 94",
+    "page": 47
+   }
+  ]
  },
  {
   "id": "4e26ffef45e723df090990a7e09f98286332a9ea64568d61495c87076252eda7",
@@ -3362,7 +3905,7 @@
   "date": "2026-11-18",
   "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDRfMTgtMTEtMjAyNl84Mzg5Nzc3",
   "source_listing": false,
-  "pdf": "/pdf/4e26ffef45e723df.pdf",
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDRfMTgtMTEtMjAyNl84Mzg5Nzc3",
   "draft": true,
   "topics": [
    "connectivity-gna"
@@ -3519,7 +4062,26 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s86",
+    "cited_as": "Section 86(1)(c) (e) (f), (k) read with Section 94 and other applicable provisions of the Electricity Act, 2003",
+    "pid": "p47.4",
+    "excerpt": "under Section 86(1)(c) (e) (f), (k) read with Section 94 and other applicable provisions of the Electricity Act, 2003",
+    "page": 47
+   },
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s94",
+    "cited_as": "Section 94",
+    "pid": "p47.4",
+    "excerpt": "under Section 86(1)(c) (e) (f), (k) read with Section 94 and other applicable provisions of the Electricity Act, 2003",
+    "page": 47
+   }
+  ]
  },
  {
   "id": "4fb711386190e40f457ec423c41e163e45249b58f9ccaf46e805c92f1abc99d2",
@@ -3531,7 +4093,7 @@
   "date": "2026-11-18",
   "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDVfMTgtMTEtMjAyNl82ODU3OTkz",
   "source_listing": false,
-  "pdf": "/pdf/4fb711386190e40f.pdf",
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDVfMTgtMTEtMjAyNl82ODU3OTkz",
   "draft": true,
   "topics": [
    "connectivity-gna",
@@ -3692,7 +4254,26 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s86",
+    "cited_as": "Section 86(1)(c) (e) (f), (k)",
+    "pid": "p47.5",
+    "excerpt": "under Section 86(1)(c) (e) (f), (k) read with Section 94 and other applicable provisions of the Electricity Act, 2003",
+    "page": 47
+   },
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s94",
+    "cited_as": "Section 94",
+    "pid": "p47.5",
+    "excerpt": "under Section 86(1)(c) (e) (f), (k) read with Section 94 and other applicable provisions of the Electricity Act, 2003",
+    "page": 47
+   }
+  ]
  },
  {
   "id": "de5be8add58669b906a07cad930492098de492817ff03322625eef507f6cb0cd",
@@ -3704,7 +4285,7 @@
   "date": "2026-11-18",
   "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDZfMTgtMTEtMjAyNl83MzAxMTQw",
   "source_listing": false,
-  "pdf": "/pdf/de5be8add58669b9.pdf",
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDZfMTgtMTEtMjAyNl83MzAxMTQw",
   "draft": true,
   "topics": [
    "connectivity-gna",
@@ -3846,7 +4427,26 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s86",
+    "cited_as": "Section 86(1)(c) (e) (f), (k) read with Section 94 and other applicable provisions of the Electricity Act, 2003",
+    "pid": "p47.7",
+    "excerpt": "the present Petition has been ^iled by the Petitioner under Section 86(1)(c) (e) (f), (k) read with Section 94 and other applicable provisions of the Electricity Act, 2003",
+    "page": 47
+   },
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s94",
+    "cited_as": "Section 94 and other applicable provisions of the Electricity Act, 2003",
+    "pid": "p47.7",
+    "excerpt": "the present Petition has been ^iled by the Petitioner under Section 86(1)(c) (e) (f), (k) read with Section 94 and other applicable provisions of the Electricity Act, 2003",
+    "page": 47
+   }
+  ]
  },
  {
   "id": "77cd4bf1ac6c1b1fd9f77a701810f88d7c67fdb7c5efaa74e2414810d547be52",
@@ -3858,7 +4458,7 @@
   "date": "2026-11-18",
   "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDdfMTgtMTEtMjAyNl81MzU2MDY5",
   "source_listing": false,
-  "pdf": "/pdf/77cd4bf1ac6c1b1f.pdf",
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDdfMTgtMTEtMjAyNl81MzU2MDY5",
   "draft": true,
   "topics": [
    "connectivity-gna",
@@ -4008,7 +4608,26 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s86",
+    "cited_as": "Section 86(1)(c) (e) (f), (k)",
+    "pid": "p47.7",
+    "excerpt": "under Section 86(1)(c) (e) (f), (k) read with Section 94 and other applicable provisions of the Electricity Act, 2003",
+    "page": 47
+   },
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s94",
+    "cited_as": "Section 94",
+    "pid": "p47.7",
+    "excerpt": "under Section 86(1)(c) (e) (f), (k) read with Section 94 and other applicable provisions of the Electricity Act, 2003",
+    "page": 47
+   }
+  ]
  },
  {
   "id": "6110b5d619f180c55823f395866da3bc974c7a444397538309b6622f6f9a469e",
@@ -4020,7 +4639,7 @@
   "date": "2026-11-18",
   "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDhfMTgtMTEtMjAyNl82NzYxNjI1",
   "source_listing": false,
-  "pdf": "/pdf/6110b5d619f180c5.pdf",
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDhfMTgtMTEtMjAyNl82NzYxNjI1",
   "draft": true,
   "topics": [
    "connectivity-gna",
@@ -4169,7 +4788,26 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s86",
+    "cited_as": "Section 86(1)(c) (e) (f), (k)",
+    "pid": "p46.3",
+    "excerpt": "the present Petition has been Ziled by the Petitioner under Section 86(1)(c) (e) (f), (k) read with Section94 and other applicable provisions of the Electricity Act, 2003",
+    "page": 46
+   },
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s94",
+    "cited_as": "Section94",
+    "pid": "p46.3",
+    "excerpt": "read with Section94 and other applicable provisions of the Electricity Act, 2003",
+    "page": 46
+   }
+  ]
  },
  {
   "id": "aedaf5855e0a7b46b347f755ec63e45605965de47dc59c06fdb8344b85e0c326",
@@ -4181,7 +4819,7 @@
   "date": "2026-11-18",
   "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDlfMTgtMTEtMjAyNl83OTc1ODQ2",
   "source_listing": false,
-  "pdf": "/pdf/aedaf5855e0a7b46.pdf",
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MDlfMTgtMTEtMjAyNl83OTc1ODQ2",
   "draft": true,
   "topics": [
    "connectivity-gna",
@@ -4273,7 +4911,26 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s86",
+    "cited_as": "Section 86(1)(c) (e) (f), (k)",
+    "pid": "p46.10",
+    "excerpt": "the present Petition has been Ziled by the Petitioner under Section 86(1)(c) (e) (f), (k) read with Section 94",
+    "page": 46
+   },
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s94",
+    "cited_as": "Section 94",
+    "pid": "p46.10",
+    "excerpt": "the present Petition has been Ziled by the Petitioner under Section 86(1)(c) (e) (f), (k) read with Section 94",
+    "page": 46
+   }
+  ]
  },
  {
   "id": "789e62a59c745f5d7e3211bdd53caef96808a5515bcc680c3eb60cb3321b0897",
@@ -4285,7 +4942,7 @@
   "date": "2026-11-18",
   "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MTBfMTgtMTEtMjAyNl8xMTc3MzMy",
   "source_listing": false,
-  "pdf": "/pdf/789e62a59c745f5d.pdf",
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MTBfMTgtMTEtMjAyNl8xMTc3MzMy",
   "draft": true,
   "topics": [
    "connectivity-gna",
@@ -4442,7 +5099,26 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s86",
+    "cited_as": "Section 86(1)(c) (e) (f), (k)",
+    "pid": "p47.4",
+    "excerpt": "under Section 86(1)(c) (e) (f), (k) read with Section 94 and other applicable provisions of the Electricity Act, 2003",
+    "page": 47
+   },
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s94",
+    "cited_as": "Section 94",
+    "pid": "p47.4",
+    "excerpt": "under Section 86(1)(c) (e) (f), (k) read with Section 94 and other applicable provisions of the Electricity Act, 2003",
+    "page": 47
+   }
+  ]
  },
  {
   "id": "54fad0eb3b8d56101c6a76334b1bbff43ce1d1eccfc71b7e3a34e1463944963c",
@@ -4454,7 +5130,7 @@
   "date": "2026-11-18",
   "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MTFfMTgtMTEtMjAyNl82NzM1MDc3",
   "source_listing": false,
-  "pdf": "/pdf/54fad0eb3b8d5610.pdf",
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MTFfMTgtMTEtMjAyNl82NzM1MDc3",
   "draft": true,
   "topics": [
    "connectivity-gna"
@@ -4596,7 +5272,26 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s86",
+    "cited_as": "Section 86(1)(c) (e) (f), (k) read with Section 94 and other applicable provisions of the Electricity Act, 2003",
+    "pid": "p47.2",
+    "excerpt": "We note that the present Petition has been [iled by the Petitioner under Section 86(1)(c) (e) (f), (k) read with Section 94 and other applicable provisions of the Electricity Act, 2003",
+    "page": 47
+   },
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s94",
+    "cited_as": "Section 94",
+    "pid": "p47.2",
+    "excerpt": "under Section 86(1)(c) (e) (f), (k) read with Section 94 and other applicable provisions of the Electricity Act, 2003",
+    "page": 47
+   }
+  ]
  },
  {
   "id": "f83aedf006bca7434e1d2664720aaa1257a669d2922d8562fcc1ed0c699b71cc",
@@ -4608,7 +5303,7 @@
   "date": "2026-11-18",
   "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MTJfMTgtMTEtMjAyNl85NjA5MTEz",
   "source_listing": false,
-  "pdf": "/pdf/f83aedf006bca743.pdf",
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MTJfMTgtMTEtMjAyNl85NjA5MTEz",
   "draft": true,
   "topics": [
    "connectivity-gna",
@@ -4755,7 +5450,26 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s86",
+    "cited_as": "Section 86(1)(c) (e) (f), (k)",
+    "pid": "p48.1",
+    "excerpt": "the present Petition has been Ziled by the Petitioner under Section 86(1)(c) (e) (f), (k) read with Section 94 and other applicable provisions of the Electricity Act, 2003",
+    "page": 48
+   },
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s94",
+    "cited_as": "Section 94",
+    "pid": "p48.1",
+    "excerpt": "the present Petition has been Ziled by the Petitioner under Section 86(1)(c) (e) (f), (k) read with Section 94 and other applicable provisions of the Electricity Act, 2003",
+    "page": 48
+   }
+  ]
  },
  {
   "id": "bf58ee6f527c4c4b712f3002fdcd4815367e9947e631387c77219922a9db3409",
@@ -4767,7 +5481,7 @@
   "date": "2026-11-19",
   "source_url": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MTVfMTktMTEtMjAyNl85NjQ3NTMz",
   "source_listing": false,
-  "pdf": "/pdf/bf58ee6f527c4c4b.pdf",
+  "pdf": "https://gercin.org/viewdocument/T3JkZXJzX2ZpbGVzXzU5MTVfMTktMTEtMjAyNl85NjQ3NTMz",
   "draft": true,
   "topics": [
    "ppa-adoption",
@@ -5034,7 +5748,17 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s86",
+    "cited_as": "Section 86(1) (f) of the Electricity Act, 2003",
+    "pid": "p22.6",
+    "excerpt": "The instant petitions have been filed under Section 86(1) (f) of the Electricity Act, 2003",
+    "page": 22
+   }
+  ]
  },
  {
   "id": "ff779e3e8ce7333d856b3f14c2e39738f2638ac84e078f9b18cb8080f14e40fb",
@@ -5197,7 +5921,17 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s86",
+    "cited_as": "Section 86 (1)(e) & (f) of the Electricity Act, 2003",
+    "pid": "p2.2",
+    "excerpt": "under Section 86 (1)(e) & (f) of the Electricity Act, 2003 read with Regulation 30 and 31 of the RERC (Terms and Conditions for Open Access) Regulations, 2016",
+    "page": 2
+   }
+  ]
  },
  {
   "id": "c8191ed3ce9981e2612ab6fb07461f484245c7821b6d9dd328865f36cee4623c",
@@ -5356,7 +6090,17 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s86",
+    "cited_as": "section 86(1)(e) of the Electricity Act, 2003",
+    "pid": "p21.2",
+    "excerpt": "The instant petition has been filed invoking the jurisdiction of the commission under section 86(1)(e) of the Electricity Act, 2003",
+    "page": 21
+   }
+  ]
  },
  {
   "id": "86b5c6677041d3d6b4ee8b4d1eeb00c0ec7fd4530f0b4a4dad5ea1198d5a3b85",
@@ -5418,7 +6162,7 @@
   "date": "2026-11-19",
   "source_url": "https://www.uperc.org/App_File/Orderdated19-11-2026(2127of2024)-PDF1119202663817PM.pdf",
   "source_listing": false,
-  "pdf": "/pdf/1046511af636c416.pdf",
+  "pdf": "https://www.uperc.org/App_File/Orderdated19-11-2026(2127of2024)-PDF1119202663817PM.pdf",
   "draft": true,
   "topics": [
    "transmission-tariff"
@@ -5601,19 +6345,29 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s86",
+    "cited_as": "section 86 of The Electricity Act, 2003",
+    "pid": "p1.5",
+    "excerpt": "Petition under section 86 of The Electricity Act, 2003",
+    "page": 1
+   }
+  ]
  },
  {
   "id": "0051a2c7c103765ac7c7888cabd426f27bec3a4266b4c3df6fb98b6630084f74",
   "path": "/orders/uperc/2026/2135-of-2024-0051a2",
   "commission": "uperc",
   "doc_type": "order",
-  "title": "2135 of 2024 - Obra-C Badaun Transmission Limited vs UPPCL and ors - Seeking Payment of Late Payment Surcharge.",
+  "title": "2135 of 2024 - Obra-C Badaun Transmission Limited vs UPPCL and ors - Seeking Payment of Late Payment Surcha...",
   "case_number": "Petition No. 2135 of 2024",
   "date": "2026-11-19",
   "source_url": "https://www.uperc.org/App_File/Orderdated19-11-2026(2135of2024)-pdf1120202610820PM.pdf",
   "source_listing": false,
-  "pdf": "/pdf/0051a2c7c103765a.pdf",
+  "pdf": "https://www.uperc.org/App_File/Orderdated19-11-2026(2135of2024)-pdf1120202610820PM.pdf",
   "draft": false,
   "topics": [
    "transmission-tariff"
@@ -5797,7 +6551,17 @@
   "revised_at": null,
   "language": "en",
   "sample": false,
-  "links": []
+  "links": [
+   {
+    "type": "applies",
+    "kind": "act_section",
+    "target": "ea2003/s86",
+    "cited_as": "Section 86 of the Electricity Act, 2003",
+    "pid": "p3.3",
+    "excerpt": "The instant Petition has been filed under Section 86 of the Electricity Act, 2003, read with Article 16.3 of the Transmission Service Agreement, dated 15.10.2018, seeking payment of Late Payment Surcharge.",
+    "page": 3
+   }
+  ]
  },
  {
   "id": "0c706a392522289cafb4db3ccbd82297047d39e0edc7cacb48cf75ef636c26e7",
@@ -5809,7 +6573,7 @@
   "date": "2026-11-16",
   "source_url": "https://www.uperc.org/App_File/Pt-no-2400of2026-UPPCL-16-11-2026-PDF1117202654704PM.pdf",
   "source_listing": false,
-  "pdf": "/pdf/0c706a392522289c.pdf",
+  "pdf": "https://www.uperc.org/App_File/Pt-no-2400of2026-UPPCL-16-11-2026-PDF1117202654704PM.pdf",
   "draft": true,
   "topics": [
    "ppa-adoption",
@@ -5855,7 +6619,7 @@
   "date": "2026-11-19",
   "source_url": "https://www.uperc.org/App_File/Pt-no-2403of2026UPPCL-19-11-2026-PDF1120202653045PM.pdf",
   "source_listing": false,
-  "pdf": "/pdf/c2b279ffed032b76.pdf",
+  "pdf": "https://www.uperc.org/App_File/Pt-no-2403of2026UPPCL-19-11-2026-PDF1120202653045PM.pdf",
   "draft": true,
   "topics": [
    "ppa-adoption",
@@ -5901,7 +6665,7 @@
   "date": "2026-11-19",
   "source_url": "https://www.uperc.org/App_File/Pt-no-2404of2026UPPCL-19-11-2026-PDF1120202653338PM.pdf",
   "source_listing": false,
-  "pdf": "/pdf/fb3a6b9a53c8614f.pdf",
+  "pdf": "https://www.uperc.org/App_File/Pt-no-2404of2026UPPCL-19-11-2026-PDF1120202653338PM.pdf",
   "draft": true,
   "topics": [
    "ppa-adoption",
@@ -5947,7 +6711,7 @@
   "date": "2026-11-19",
   "source_url": "https://www.uperc.org/App_File/Pt-no-2405of2026UPPCL-19-11-2026-PDF1120202653445PM.pdf",
   "source_listing": false,
-  "pdf": "/pdf/f6db0d73693a0da7.pdf",
+  "pdf": "https://www.uperc.org/App_File/Pt-no-2405of2026UPPCL-19-11-2026-PDF1120202653445PM.pdf",
   "draft": true,
   "topics": [
    "ppa-adoption",

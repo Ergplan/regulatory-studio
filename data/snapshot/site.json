@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-27T00:31:52+00:00",
+ "generated_at": "2026-11-28T15:29:26+00:00",
  "commissions": {
   "cerc": "Central Electricity Regulatory Commission",
   "aptel": "Appellate Tribunal for Electricity",
@@ -40,6 +40,6 @@
   "amends": "Amends",
   "made_under": "Made under"
  },
- "preview": false,
+ "preview": true,
  "contains_sample_data": false
 }
